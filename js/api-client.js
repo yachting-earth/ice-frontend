@@ -1,0 +1,52 @@
+/**
+ * Fetch wrapper for the Yachting Earth API.
+ *
+ * Always resolves (never throws on API-level errors) - callers check
+ * `response.success` and read `response.error` / `response.code`.
+ * Network failures are normalized into the same response shape.
+ */
+async function apiRequest(endpoint, options = {}) {
+    const token = Auth.getToken();
+
+    const headers = {
+        'Content-Type': 'application/json',
+        ...(options.headers || {})
+    };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    let response;
+    try {
+        response = await fetch(`${CONFIG.API_BASE_URL}${endpoint}`, {
+            ...options,
+            headers
+        });
+    } catch (err) {
+        return {
+            success: false,
+            error: 'Kunde inte nå servern. Kontrollera din anslutning.',
+            code: 'NETWORK_ERROR',
+            status: 0
+        };
+    }
+
+    if (response.status === 401 && !endpoint.startsWith('/auth/')) {
+        Auth.clear();
+        if (!location.hash.startsWith('#/login')) {
+            location.hash = '#/login';
+        }
+    }
+
+    try {
+        return await response.json();
+    } catch (err) {
+        return {
+            success: false,
+            error: 'Ogiltigt svar från servern.',
+            code: 'PARSE_ERROR',
+            status: response.status
+        };
+    }
+}
