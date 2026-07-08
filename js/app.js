@@ -11,6 +11,7 @@ const Router = {
         { pattern: '#/login', page: LoginPage, guestOnly: true },
         { pattern: '#/register', page: RegisterPage, guestOnly: true },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
+        { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
         { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true },
         { pattern: '#/crew-join', page: CrewInvitePage }
@@ -95,6 +96,7 @@ function renderTopbar() {
     topbar.innerHTML = `
         <a class="topbar__brand" href="#/dashboard">⚓ Yachting Earth</a>
         <div class="topbar__actions">
+            <a class="btn btn-ghost btn-sm" href="#/ice-contacts">ICE-kontakter</a>
             <span class="topbar__user">${escapeHtml(user.name || user.email || '')}</span>
             <button class="btn btn-ghost btn-sm" id="logout-btn" type="button">Logga ut</button>
         </div>`;

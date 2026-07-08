@@ -22,6 +22,7 @@ const DashboardPage = {
                     </div>
                     <a class="btn btn-primary" href="#/trips/new">+ Skapa ny resa</a>
                 </div>
+                <div id="ice-contact-warning"></div>
                 <div class="trip-filters" id="trip-filters"></div>
                 <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> Laddar resor...</div></div>
             </div>`;
@@ -34,6 +35,21 @@ const DashboardPage = {
         }
 
         await this.loadTrips();
+        this.checkIceContacts();
+    },
+
+    async checkIceContacts() {
+        const response = await apiRequest('/ice-contacts');
+        if (!response.success) return;
+
+        const warningBox = document.getElementById('ice-contact-warning');
+        if (warningBox && (response.data || []).length === 0) {
+            warningBox.innerHTML = `
+                <div class="alert alert-warning">
+                    Du har ingen ICE-kontakt än — utan en kan ingen larmas om din resa inte bekräftas i tid.
+                    <a href="#/ice-contacts">Lägg till en ICE-kontakt</a>
+                </div>`;
+        }
     },
 
     renderFilters(container) {
