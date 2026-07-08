@@ -32,7 +32,9 @@ async function apiRequest(endpoint, options = {}) {
         };
     }
 
-    if (response.status === 401 && !endpoint.startsWith('/auth/')) {
+    // /auth/ and /sar/ return 401 for bad credentials as part of their
+    // normal flow - only treat 401 as "session expired" elsewhere
+    if (response.status === 401 && !endpoint.startsWith('/auth/') && !endpoint.startsWith('/sar/')) {
         Auth.clear();
         if (!location.hash.startsWith('#/login')) {
             location.hash = '#/login';

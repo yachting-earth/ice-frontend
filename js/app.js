@@ -14,7 +14,9 @@ const Router = {
         { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
         { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true },
-        { pattern: '#/crew-join', page: CrewInvitePage }
+        { pattern: '#/crew-join', page: CrewInvitePage },
+        { pattern: '#/ice-portal', page: IcePortalPage },
+        { pattern: '#/sar', page: SarPage }
     ],
 
     start() {
@@ -88,7 +90,11 @@ function renderTopbar() {
     const authed = Auth.isAuthenticated();
 
     if (!authed) {
-        topbar.innerHTML = `<a class="topbar__brand" href="#/login">⚓ Yachting Earth</a>`;
+        topbar.innerHTML = `
+            <a class="topbar__brand" href="#/login">⚓ Yachting Earth</a>
+            <div class="topbar__actions">
+                <a class="btn btn-ghost btn-sm" href="#/sar">SAR</a>
+            </div>`;
         return;
     }
 
