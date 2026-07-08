@@ -9,7 +9,7 @@ const CONFIG = (() => {
     const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
     return {
-        API_BASE_URL: isLocal ? 'http://localhost:8080/api' : 'https://manjo.se/api',
+        API_BASE_URL: isLocal ? 'http://localhost:8080' : 'https://ice-api.manjo.se',
         GRACE_PERIOD_OPTIONS: [
             { seconds: 3600, label: '1 timme' },
             { seconds: 14400, label: '4 timmar' },
