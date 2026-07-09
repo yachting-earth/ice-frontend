@@ -83,8 +83,20 @@ const TripDetailPage = {
 
                 <div class="card">
                     <h3>Rutter</h3>
+                    <div id="routes-alert"></div>
                     <div id="routes-list"></div>
                     <div id="trip-route-map" class="map-container"></div>
+                    <hr class="section-divider">
+                    <h3>Lägg till alternativ rutt</h3>
+                    <div class="field">
+                        <label for="new-route-windy-url">Windy-länk</label>
+                        <input type="url" id="new-route-windy-url" placeholder="https://www.windy.com/route-planner/boat/...">
+                    </div>
+                    <div class="field">
+                        <label for="new-route-reason">Anledning (valfritt)</label>
+                        <input type="text" id="new-route-reason" placeholder="t.ex. Om vinden vrider nordlig">
+                    </div>
+                    <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ Lägg till rutt</button>
                 </div>
 
                 <div class="card">
@@ -116,6 +128,7 @@ const TripDetailPage = {
 
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
         document.getElementById('vessel-photo-submit').addEventListener('click', () => this.handleVesselPhotoSubmit(vessel.id));
+        document.getElementById('add-route-btn').addEventListener('click', () => this.handleAddRoute());
     },
 
     formatDimensions(vessel) {
@@ -206,22 +219,72 @@ const TripDetailPage = {
 
     renderRoutes(routes) {
         const list = document.getElementById('routes-list');
+        routes = routes || [];
 
-        if (!routes || routes.length === 0) {
+        if (routes.length === 0) {
             list.innerHTML = `<p class="text-muted">Inga rutter tillagda.</p>`;
         } else {
-            list.innerHTML = routes.map((r) => `
-                <div class="route-item">
-                    <div class="route-item__title">${r.route_order === 1 ? 'Huvudrutt' : `Alternativ rutt ${r.route_order}`}</div>
-                    ${r.reason ? `<div class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(r.reason)}</div>` : ''}
+            list.innerHTML = routes.map((r, i) => `
+                <div class="route-item" data-route-id="${r.id}">
+                    <div class="route-item__title">
+                        ${i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`}
+                        <div class="btn-group" style="margin-left:auto;">
+                            <button class="btn btn-ghost btn-sm move-route-up" type="button" data-id="${r.id}" ${i === 0 ? 'disabled' : ''} title="Flytta upp">↑</button>
+                            <button class="btn btn-ghost btn-sm move-route-down" type="button" data-id="${r.id}" ${i === routes.length - 1 ? 'disabled' : ''} title="Flytta ner">↓</button>
+                            <button class="btn btn-ghost btn-sm edit-route-btn" type="button" data-id="${r.id}">Redigera</button>
+                            <button class="btn btn-danger btn-sm delete-route-btn" type="button" data-id="${r.id}">Ta bort</button>
+                        </div>
+                    </div>
+                    <div class="route-item__view" data-id="${r.id}">
+                        ${r.reason ? `<div class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(r.reason)}</div>` : ''}
+                    </div>
+                    <div class="route-item__edit" data-id="${r.id}" hidden>
+                        <div class="field">
+                            <label>Windy-länk</label>
+                            <input type="url" class="edit-route-windy-url" data-id="${r.id}" value="${escapeHtml(r.raw_windy_url || '')}">
+                        </div>
+                        <div class="field">
+                            <label>Anledning</label>
+                            <input type="text" class="edit-route-reason" data-id="${r.id}" value="${escapeHtml(r.reason || '')}">
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-sm save-route-btn" type="button" data-id="${r.id}">Spara</button>
+                            <button class="btn btn-ghost btn-sm cancel-route-edit-btn" type="button" data-id="${r.id}">Avbryt</button>
+                        </div>
+                    </div>
                 </div>
             `).join('');
         }
 
+        list.querySelectorAll('.move-route-up').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleMoveRoute(btn.dataset.id, -1));
+        });
+        list.querySelectorAll('.move-route-down').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleMoveRoute(btn.dataset.id, 1));
+        });
+        list.querySelectorAll('.delete-route-btn').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleDeleteRoute(btn.dataset.id));
+        });
+        list.querySelectorAll('.edit-route-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                list.querySelector(`.route-item__view[data-id="${btn.dataset.id}"]`).hidden = true;
+                list.querySelector(`.route-item__edit[data-id="${btn.dataset.id}"]`).hidden = false;
+            });
+        });
+        list.querySelectorAll('.cancel-route-edit-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                list.querySelector(`.route-item__view[data-id="${btn.dataset.id}"]`).hidden = false;
+                list.querySelector(`.route-item__edit[data-id="${btn.dataset.id}"]`).hidden = true;
+            });
+        });
+        list.querySelectorAll('.save-route-btn').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleSaveRoute(btn.dataset.id));
+        });
+
         const mapEl = document.getElementById('trip-route-map');
         const colors = ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'];
-        const mapRoutes = (routes || [])
-            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: colors[i % colors.length], label: r.reason || `Rutt ${r.route_order}` }))
+        const mapRoutes = routes
+            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: colors[i % colors.length], label: r.reason || (i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`) }))
             .filter((r) => r.coordinates.length > 1);
 
         if (mapRoutes.length > 0) {
@@ -229,6 +292,94 @@ const TripDetailPage = {
         } else {
             mapEl.innerHTML = '<div class="empty-state">Ingen rutt att visa</div>';
         }
+    },
+
+    async handleAddRoute() {
+        const alertBox = document.getElementById('routes-alert');
+        const windyUrl = document.getElementById('new-route-windy-url').value.trim();
+        const reason = document.getElementById('new-route-reason').value.trim();
+
+        const urlError = Validate.windyUrl(windyUrl);
+        if (urlError) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
+            return;
+        }
+
+        const response = await apiRequest(`/trips/${this.state.tripId}/routes`, {
+            method: 'POST',
+            body: JSON.stringify({ windy_url: windyUrl, reason: reason || null })
+        });
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte lägga till rutten.')}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        showToast('Rutt tillagd', 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    async handleSaveRoute(routeId) {
+        const alertBox = document.getElementById('routes-alert');
+        const windyUrl = document.querySelector(`.edit-route-windy-url[data-id="${routeId}"]`).value.trim();
+        const reason = document.querySelector(`.edit-route-reason[data-id="${routeId}"]`).value.trim();
+
+        const urlError = Validate.windyUrl(windyUrl);
+        if (urlError) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
+            return;
+        }
+
+        const response = await apiRequest(`/routes/${routeId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ windy_url: windyUrl, reason: reason || null })
+        });
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara rutten.')}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        showToast('Rutten har sparats', 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    async handleDeleteRoute(routeId) {
+        if (!confirm('Ta bort den här rutten?')) return;
+
+        const response = await apiRequest(`/routes/${routeId}`, { method: 'DELETE' });
+        if (!response.success) {
+            document.getElementById('routes-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte ta bort rutten.')}</div>`;
+            return;
+        }
+
+        showToast('Rutten har tagits bort', 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    async handleMoveRoute(routeId, direction) {
+        const routes = this.state.data.routes || [];
+        const ids = routes.map((r) => r.id);
+        const index = ids.indexOf(routeId);
+        const targetIndex = index + direction;
+
+        if (index === -1 || targetIndex < 0 || targetIndex >= ids.length) return;
+
+        [ids[index], ids[targetIndex]] = [ids[targetIndex], ids[index]];
+
+        const response = await apiRequest(`/trips/${this.state.tripId}/routes/reorder`, {
+            method: 'PUT',
+            body: JSON.stringify({ route_ids: ids })
+        });
+
+        if (!response.success) {
+            document.getElementById('routes-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte ändra ordning.')}</div>`;
+            return;
+        }
+
+        await this.load(document.getElementById('page-content'));
     },
 
     renderCrew(crew) {

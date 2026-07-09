@@ -232,7 +232,11 @@ const CreateTripPage = {
             <div class="route-item" data-index="${i}">
                 <div class="route-item__title">
                     ${i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`}
-                    ${i > 0 ? `<button class="btn btn-ghost btn-sm" type="button" data-remove="${i}" style="margin-left:auto;">Ta bort</button>` : ''}
+                    <div class="btn-group" style="margin-left:auto;">
+                        <button class="btn btn-ghost btn-sm" type="button" data-move-up="${i}" ${i === 0 ? 'disabled' : ''} title="Flytta upp">↑</button>
+                        <button class="btn btn-ghost btn-sm" type="button" data-move-down="${i}" ${i === this.state.routes.length - 1 ? 'disabled' : ''} title="Flytta ner">↓</button>
+                        ${i > 0 ? `<button class="btn btn-ghost btn-sm" type="button" data-remove="${i}">Ta bort</button>` : ''}
+                    </div>
                 </div>
                 <div class="field">
                     <label>Windy-länk</label>
@@ -266,7 +270,32 @@ const CreateTripPage = {
                 this.updateMapPreview();
             });
         });
+        routesContainer.querySelectorAll('[data-move-up]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const i = Number(e.target.dataset.moveUp);
+                this.moveRoute(i, i - 1);
+            });
+        });
+        routesContainer.querySelectorAll('[data-move-down]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const i = Number(e.target.dataset.moveDown);
+                this.moveRoute(i, i + 1);
+            });
+        });
 
+        this.updateMapPreview();
+    },
+
+    moveRoute(from, to) {
+        if (to < 0 || to >= this.state.routes.length) return;
+        const routes = this.state.routes;
+        [routes[from], routes[to]] = [routes[to], routes[from]];
+        // The reason field only applies to alternative routes - clear it for
+        // whichever route just became primary (index 0)
+        if (from === 0 || to === 0) {
+            routes[0].reason = '';
+        }
+        this.renderRoutes();
         this.updateMapPreview();
     },
 
