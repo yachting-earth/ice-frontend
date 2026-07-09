@@ -32,9 +32,10 @@ async function apiRequest(endpoint, options = {}) {
         };
     }
 
-    // /auth/ and /sar/ return 401 for bad credentials as part of their
-    // normal flow - only treat 401 as "session expired" elsewhere
-    if (response.status === 401 && !endpoint.startsWith('/auth/') && !endpoint.startsWith('/sar/')) {
+    // /auth/, /sar/ and delete-account return 401 for bad credentials as
+    // part of their normal flow - only treat 401 as "session expired" elsewhere
+    if (response.status === 401 && !endpoint.startsWith('/auth/') && !endpoint.startsWith('/sar/')
+        && endpoint !== '/user/delete-account') {
         Auth.clear();
         if (!location.hash.startsWith('#/login')) {
             location.hash = '#/login';

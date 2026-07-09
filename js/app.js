@@ -11,6 +11,7 @@ const Router = {
         { pattern: '#/login', page: LoginPage, guestOnly: true },
         { pattern: '#/register', page: RegisterPage, guestOnly: true },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
+        { pattern: '#/profile', page: ProfilePage, auth: true },
         { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
         { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true },
@@ -129,7 +130,7 @@ function renderTopbar() {
                 <span class="topbar__hamburger-line"></span>
                 <span class="topbar__hamburger-line"></span>
             </button>
-            <div class="topbar__badge" id="topbar-badge" title="${escapeHtml(userLabel)}">${badgeContent}</div>
+            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" title="${escapeHtml(userLabel)} - Min sida">${badgeContent}</a>
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {

@@ -22,6 +22,12 @@ const Auth = {
         return localStorage.getItem(this.KEYS.token);
     },
 
+    updateUser({ name, email, picture } = {}) {
+        if (name !== undefined) localStorage.setItem(this.KEYS.userName, name);
+        if (email !== undefined) localStorage.setItem(this.KEYS.userEmail, email);
+        if (picture !== undefined) localStorage.setItem(this.KEYS.userPicture, picture);
+    },
+
     getUser() {
         return {
             id: localStorage.getItem(this.KEYS.userId),

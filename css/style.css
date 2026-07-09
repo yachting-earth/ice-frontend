@@ -11,6 +11,14 @@ html, body {
     padding: 0;
 }
 
+/* Without this, the `hidden` attribute is silently overridden by any
+   class here that sets `display` (e.g. .btn's inline-flex, .stack's
+   flex) - same specificity, and the author stylesheet wins over the
+   user-agent default. */
+[hidden] {
+    display: none !important;
+}
+
 body {
     font-family: var(--font-sans);
     font-size: var(--font-size-base);
@@ -201,6 +209,11 @@ ul { margin: 0; padding: 0; list-style: none; }
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.topbar__badge:hover,
+.topbar__badge--active {
+    box-shadow: 0 0 0 2px var(--color-primary-dark);
 }
 
 /* Mobile responsive */
