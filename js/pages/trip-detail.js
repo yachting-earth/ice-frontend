@@ -172,6 +172,8 @@ const TripDetailPage = {
             const accepted = !!c.accepted_at;
             return `
                 <div class="crew-row">
+                    ${c.photo_path ? `<img class="crew-photo" data-crew-id="${c.id}" alt=""
+                        style="width:40px;height:40px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);" hidden>` : ''}
                     <div class="crew-row__info">
                         <span class="crew-row__name">${escapeHtml(c.name || c.email || 'Okänd')}</span>
                         <span class="crew-row__detail">
@@ -194,6 +196,24 @@ const TripDetailPage = {
         });
         container.querySelectorAll('.remove-crew-btn').forEach((btn) => {
             btn.addEventListener('click', () => this.handleRemoveCrew(btn.dataset.crewId));
+        });
+
+        this.loadCrewPhotos(container);
+    },
+
+    // Photos are auth-protected, so a plain <img src> won't do (no way to
+    // attach the Authorization header) - fetch as blob and swap in
+    async loadCrewPhotos(container) {
+        const token = Auth.getToken();
+        container.querySelectorAll('.crew-photo').forEach(async (img) => {
+            try {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/photos/${img.dataset.crewId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!response.ok) return;
+                img.src = URL.createObjectURL(await response.blob());
+                img.hidden = false;
+            } catch (err) { /* leave the photo hidden */ }
         });
     },
 

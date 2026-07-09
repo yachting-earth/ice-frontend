@@ -52,3 +52,40 @@ async function apiRequest(endpoint, options = {}) {
         };
     }
 }
+
+/**
+ * Multipart file upload variant of apiRequest. Sends FormData and lets
+ * the browser set the Content-Type (with boundary) itself - apiRequest's
+ * hardcoded application/json would break multipart parsing server-side.
+ */
+async function apiUpload(endpoint, formData, method = 'POST') {
+    const token = Auth.getToken();
+    const headers = {};
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    let response;
+    try {
+        response = await fetch(`${CONFIG.API_BASE_URL}${endpoint}`, { method, headers, body: formData });
+    } catch (err) {
+        return {
+            success: false,
+            error: 'Kunde inte nå servern. Kontrollera din anslutning.',
+            code: 'NETWORK_ERROR',
+            status: 0
+        };
+    }
+
+    try {
+        return await response.json();
+    } catch (err) {
+        return {
+            success: false,
+            error: 'Ogiltigt svar från servern.',
+            code: 'PARSE_ERROR',
+            status: response.status
+        };
+    }
+}
