@@ -14,6 +14,7 @@ const Router = {
         { pattern: '#/vessels', page: VesselsPage, auth: true },
         { pattern: '#/profile', page: ProfilePage, auth: true },
         { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
+        { pattern: '#/ice-account', page: IceAccountPage, auth: true },
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
         { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true },
         { pattern: '#/crew-join', page: CrewInvitePage },
@@ -122,6 +123,7 @@ function renderTopbar() {
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">Mina resor</a>
                 <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">Mina båtar</a>
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">ICE-kontakter</a>
+                <a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">Mitt ICE-konto</a>
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
             </div>
             <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
