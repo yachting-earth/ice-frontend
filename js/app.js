@@ -11,6 +11,7 @@ const Router = {
         { pattern: '#/login', page: LoginPage, guestOnly: true },
         { pattern: '#/register', page: RegisterPage, guestOnly: true },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
+        { pattern: '#/vessels', page: VesselsPage, auth: true },
         { pattern: '#/profile', page: ProfilePage, auth: true },
         { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
@@ -119,6 +120,7 @@ function renderTopbar() {
         <div class="topbar__right">
             <div class="topbar__menu" id="topbar-menu">
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">Mina resor</a>
+                <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">Mina båtar</a>
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">ICE-kontakter</a>
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
             </div>
