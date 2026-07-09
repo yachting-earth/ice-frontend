@@ -7,6 +7,8 @@ const TripDetailPage = {
         cancelled: 'Inställd'
     },
 
+    ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
+
     state: { tripId: null, data: null, map: null },
 
     async render(container, params) {
@@ -190,6 +192,7 @@ const TripDetailPage = {
             list.innerHTML = routes.map((r, i) => `
                 <div class="route-item" data-route-id="${r.id}">
                     <div class="route-item__title">
+                        <span class="route-color-dot" style="background:${this.ROUTE_COLORS[i % this.ROUTE_COLORS.length]};"></span>
                         ${i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`}
                         <div class="btn-group" style="margin-left:auto;">
                             <button class="btn btn-ghost btn-sm move-route-up" type="button" data-id="${r.id}" ${i === 0 ? 'disabled' : ''} title="Flytta upp">↑</button>
@@ -245,9 +248,8 @@ const TripDetailPage = {
         });
 
         const mapEl = document.getElementById('trip-route-map');
-        const colors = ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'];
         const mapRoutes = routes
-            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: colors[i % colors.length], label: r.reason || (i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`) }))
+            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length], label: r.reason || (i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`) }))
             .filter((r) => r.coordinates.length > 1);
 
         if (mapRoutes.length > 0) {

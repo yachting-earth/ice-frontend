@@ -1,4 +1,6 @@
 const CreateTripPage = {
+    ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
+
     state: {
         vessels: [],
         routes: [{ windyUrl: '', reason: '' }],
@@ -231,6 +233,7 @@ const CreateTripPage = {
         routesContainer.innerHTML = this.state.routes.map((route, i) => `
             <div class="route-item" data-index="${i}">
                 <div class="route-item__title">
+                    <span class="route-color-dot" style="background:${this.ROUTE_COLORS[i % this.ROUTE_COLORS.length]};"></span>
                     ${i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`}
                     <div class="btn-group" style="margin-left:auto;">
                         <button class="btn btn-ghost btn-sm" type="button" data-move-up="${i}" ${i === 0 ? 'disabled' : ''} title="Flytta upp">↑</button>
@@ -307,10 +310,9 @@ const CreateTripPage = {
         }
         mapEl.innerHTML = '';
 
-        const colors = ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'];
         const routes = this.state.routes
             .map((r) => parseWindyUrl(r.windyUrl))
-            .map((coords, i) => coords ? { coordinates: coords, color: colors[i % colors.length] } : null)
+            .map((coords, i) => coords ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null)
             .filter(Boolean);
 
         if (routes.length === 0) return;
