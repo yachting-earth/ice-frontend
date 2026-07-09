@@ -9,7 +9,7 @@ const TripDetailPage = {
 
     ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
 
-    state: { tripId: null, data: null, map: null },
+    state: { tripId: null, data: null, vessels: [], map: null },
 
     async render(container, params) {
         this.state.tripId = params.tripId;
@@ -18,7 +18,10 @@ const TripDetailPage = {
     },
 
     async load(container) {
-        const response = await apiRequest(`/trips/${this.state.tripId}`);
+        const [response, vesselsResponse] = await Promise.all([
+            apiRequest(`/trips/${this.state.tripId}`),
+            apiRequest('/vessels')
+        ]);
 
         if (!response.success) {
             container.innerHTML = `
@@ -30,6 +33,7 @@ const TripDetailPage = {
         }
 
         this.state.data = response.data;
+        this.state.vessels = vesselsResponse.data || [];
         this.renderPage(container);
     },
 
@@ -73,6 +77,17 @@ const TripDetailPage = {
                         </p>
                     </div>
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
+                    <div id="vessel-change-alert"></div>
+                    ${this.state.vessels.length > 1 ? `
+                    <div class="field-row" style="margin-top: var(--space-3);">
+                        <div class="field">
+                            <label for="vessel-select">Byt båt</label>
+                            <select id="vessel-select">
+                                ${this.state.vessels.map((v) => `<option value="${v.id}" ${String(v.id) === String(trip.vessel_id) ? 'selected' : ''}>${escapeHtml(v.vessel_name)}</option>`).join('')}
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" type="button" id="vessel-change-btn" style="align-self:flex-end;">Byt båt</button>
+                    </div>` : ''}
                 </div>
 
                 <div class="card">
@@ -122,6 +137,34 @@ const TripDetailPage = {
 
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
         document.getElementById('add-route-btn').addEventListener('click', () => this.handleAddRoute());
+        document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
+    },
+
+    async handleChangeVessel() {
+        const alertBox = document.getElementById('vessel-change-alert');
+        const vesselId = document.getElementById('vessel-select').value;
+
+        if (String(vesselId) === String(this.state.data.trip.vessel_id)) {
+            return;
+        }
+
+        const btn = document.getElementById('vessel-change-btn');
+        btn.disabled = true;
+
+        const response = await apiRequest(`/trips/${this.state.tripId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ vessel_id: vesselId })
+        });
+
+        btn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte byta båt.')}</div>`;
+            return;
+        }
+
+        showToast('Båten har bytts.', 'success');
+        await this.load(document.getElementById('page-content'));
     },
 
     formatDimensions(vessel) {
