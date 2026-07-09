@@ -98,15 +98,22 @@ const IceContactsPage = {
         listContainer.querySelectorAll('[data-delete]').forEach((btn) => {
             btn.addEventListener('click', () => this.handleDelete(Number(btn.dataset.delete)));
         });
+        listContainer.querySelectorAll('[data-copy-confirm]').forEach((btn) => {
+            btn.addEventListener('click', () => this.copyConfirmLink(btn.dataset.copyConfirm));
+        });
     },
 
     renderContactCard(contact) {
+        const confirmed = !!contact.confirmed_at;
         return `
             <div class="trip-card">
                 <div class="stack" style="flex:1; gap: 0.35rem;">
                     <div class="trip-card__top">
                         <span class="trip-card__title">${escapeHtml(contact.name)}</span>
                         <span class="badge badge-published">${this.CHANNEL_LABELS[contact.preferred_channel] || escapeHtml(contact.preferred_channel)}</span>
+                        <span class="crew-status ${confirmed ? 'crew-status--accepted' : 'crew-status--pending'}">
+                            ${confirmed ? '✓ Bekräftad' : '⏳ Väntar på bekräftelse'}
+                        </span>
                     </div>
                     <div class="trip-card__meta">
                         <span>${escapeHtml(contact.relationship || '')}</span>
@@ -115,10 +122,25 @@ const IceContactsPage = {
                     </div>
                 </div>
                 <div class="trip-card__actions">
+                    ${!confirmed && contact.confirmation_token ? `<button class="btn btn-ghost btn-sm" type="button" data-copy-confirm="${escapeHtml(contact.confirmation_token)}">Kopiera bekräftelselänk</button>` : ''}
                     <button class="btn btn-secondary btn-sm" type="button" data-edit="${contact.id}">Ändra</button>
                     <button class="btn btn-ghost btn-sm" type="button" data-delete="${contact.id}">Ta bort</button>
                 </div>
             </div>`;
+    },
+
+    buildConfirmLink(token) {
+        return `${location.origin}${location.pathname}#/ice-confirm?token=${token}`;
+    },
+
+    async copyConfirmLink(token) {
+        const link = this.buildConfirmLink(token);
+        try {
+            await navigator.clipboard.writeText(link);
+            showToast('Länk kopierad', 'success');
+        } catch (err) {
+            showToast(link, 'info');
+        }
     },
 
     startEdit(contactId) {
@@ -138,13 +160,15 @@ const IceContactsPage = {
         document.getElementById('contact-name').focus();
     },
 
-    resetForm() {
+    resetForm(keepAlert = false) {
         this.state.editingId = null;
         document.getElementById('contact-form').reset();
         document.getElementById('contact-form-title').textContent = 'Lägg till kontakt';
         document.getElementById('contact-submit').textContent = 'Spara kontakt';
         document.getElementById('contact-cancel').hidden = true;
-        document.getElementById('contact-alert').innerHTML = '';
+        if (!keepAlert) {
+            document.getElementById('contact-alert').innerHTML = '';
+        }
     },
 
     validate(values) {
@@ -185,8 +209,19 @@ const IceContactsPage = {
             return;
         }
 
-        showToast(this.state.editingId ? 'Kontakten uppdaterad.' : 'Kontakten tillagd.', 'success');
-        this.resetForm();
+        if (!this.state.editingId) {
+            const link = response.data.confirmation_link || this.buildConfirmLink(response.data.confirmation_token);
+            const alertBox = document.getElementById('contact-alert');
+            alertBox.innerHTML = `
+                <div class="alert alert-success">
+                    Kontakten tillagd. ${response.data.confirmation_sent ? 'Ett bekräftelsemejl har skickats.' : 'E-postutskick misslyckades - dela länken manuellt:'}
+                    ${!response.data.confirmation_sent ? `<br><code style="word-break: break-all;">${escapeHtml(link)}</code>` : ''}
+                </div>`;
+        } else {
+            showToast('Kontakten uppdaterad.', 'success');
+        }
+
+        this.resetForm(true);
         await this.loadContacts();
     },
 

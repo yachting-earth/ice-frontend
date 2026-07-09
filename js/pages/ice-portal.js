@@ -83,11 +83,17 @@ const IcePortalPage = {
                         Planerad avgång: <strong>${formatDateTime(trip.departure_scheduled)}</strong><br>
                         Planerad ankomst: <strong>${formatDateTime(trip.arrival_scheduled)}</strong>
                     </p>
-                    <p class="mb-0">
-                        Fartyg: ${escapeHtml(vessel?.vessel_name || '–')}
-                        ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
-                        ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
-                    </p>
+                    <div style="display:flex; align-items:center; gap: var(--space-3);">
+                        ${vessel?.photo_path
+                            ? `<img src="${CONFIG.API_BASE_URL}/vessels/${vessel.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
+                                    alt="" style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">`
+                            : ''}
+                        <p class="mb-0">
+                            Fartyg: ${escapeHtml(vessel?.vessel_name || '–')}
+                            ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
+                            ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
+                        </p>
+                    </div>
                 </div>
 
                 <div class="card">

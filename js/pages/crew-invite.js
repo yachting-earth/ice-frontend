@@ -187,6 +187,7 @@ const CrewInvitePage = {
 
         if (response.data.auth_token) {
             Auth.setSession(response.data);
+            renderTopbar();
         }
 
         document.getElementById('accept-form').outerHTML = `

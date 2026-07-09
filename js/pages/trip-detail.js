@@ -58,11 +58,15 @@ const TripDetailPage = {
 
                 <div class="card">
                     <h3>Fartyg</h3>
-                    <p class="mb-0">
-                        ${escapeHtml(vessel?.vessel_name || '–')}
-                        ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
-                        ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
-                    </p>
+                    <div style="display:flex; align-items:center; gap: var(--space-3);">
+                        ${vessel?.photo_path ? `<img id="vessel-photo" alt="" hidden
+                            style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">` : ''}
+                        <p class="mb-0">
+                            ${escapeHtml(vessel?.vessel_name || '–')}
+                            ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
+                            ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
+                        </p>
+                    </div>
                 </div>
 
                 <div class="card">
@@ -94,8 +98,26 @@ const TripDetailPage = {
         this.renderActions(trip);
         this.renderRoutes(routes);
         this.renderCrew(crew);
+        if (vessel?.photo_path) {
+            this.loadVesselPhoto(vessel.id);
+        }
 
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
+    },
+
+    // Photos are auth-protected, so a plain <img src> won't do (no way to
+    // attach the Authorization header) - fetch as blob and swap in
+    async loadVesselPhoto(vesselId) {
+        const img = document.getElementById('vessel-photo');
+        if (!img) return;
+        try {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/vessels/${vesselId}/photo`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            });
+            if (!response.ok) return;
+            img.src = URL.createObjectURL(await response.blob());
+            img.hidden = false;
+        } catch (err) { /* leave the photo hidden */ }
     },
 
     renderActions(trip) {

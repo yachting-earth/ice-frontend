@@ -105,6 +105,13 @@ const CreateTripPage = {
                     <label for="vessel-callsign">Anropssignal (valfritt)</label>
                     <input type="text" id="vessel-callsign">
                 </div>
+                <div class="field">
+                    <label for="vessel-photo">Fartygsfoto (valfritt)</label>
+                    <input type="file" id="vessel-photo" accept="image/jpeg,image/png">
+                    <small>Används av sjöräddningen för att identifiera fartyget. JPEG/PNG, max 10 MB.</small>
+                    <img id="vessel-photo-preview" alt="" hidden
+                         style="margin-top: var(--space-2); width: 96px; height: 96px; border-radius: var(--radius-md); object-fit: cover;">
+                </div>
                 <button class="btn btn-secondary btn-sm" type="button" id="save-vessel-btn">Spara fartyg</button>
             </div>`;
 
@@ -114,6 +121,18 @@ const CreateTripPage = {
         });
 
         document.getElementById('save-vessel-btn').addEventListener('click', () => this.handleAddVessel());
+
+        const photoInput = document.getElementById('vessel-photo');
+        photoInput.addEventListener('change', () => {
+            const preview = document.getElementById('vessel-photo-preview');
+            const file = photoInput.files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.hidden = false;
+            } else {
+                preview.hidden = true;
+            }
+        });
     },
 
     async handleAddVessel() {
@@ -121,6 +140,7 @@ const CreateTripPage = {
         const name = document.getElementById('vessel-name').value.trim();
         const mmsi = document.getElementById('vessel-mmsi').value.trim();
         const callSign = document.getElementById('vessel-callsign').value.trim();
+        const photoFile = document.getElementById('vessel-photo').files[0] || null;
 
         if (!name) {
             alertBox.innerHTML = `<div class="alert alert-error">Fartygsnamn krävs</div>`;
@@ -137,9 +157,22 @@ const CreateTripPage = {
             return;
         }
 
-        this.state.vessels.push(response.data);
+        let vessel = response.data;
+
+        if (photoFile) {
+            const formData = new FormData();
+            formData.append('photo', photoFile);
+            const photoResponse = await apiUpload(`/vessels/${vessel.id}/photo`, formData, 'PUT');
+            if (!photoResponse.success) {
+                showToast(`Fartyget sparades, men fotot kunde inte laddas upp (${photoResponse.error || 'okänt fel'})`, 'error');
+            } else {
+                vessel = { ...vessel, photo_path: true };
+            }
+        }
+
+        this.state.vessels.push(vessel);
         this.renderVesselSection();
-        document.getElementById('vessel-select').value = response.data.id;
+        document.getElementById('vessel-select').value = vessel.id;
         showToast('Fartyg tillagt', 'success');
     },
 
