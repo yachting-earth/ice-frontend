@@ -113,9 +113,6 @@ function renderTopbar() {
     const user = Auth.getUser();
     const userLabel = user.name || user.email || '';
     const initial = userLabel.trim().charAt(0).toUpperCase() || '?';
-    const badgeContent = user.picture
-        ? `<img src="${escapeHtml(user.picture)}" alt="">`
-        : escapeHtml(initial);
 
     topbar.innerHTML = `
         <a class="topbar__brand" href="#/dashboard">⚓ Yachting Earth</a>
@@ -130,7 +127,7 @@ function renderTopbar() {
                 <span class="topbar__hamburger-line"></span>
                 <span class="topbar__hamburger-line"></span>
             </button>
-            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" title="${escapeHtml(userLabel)} - Min sida">${badgeContent}</a>
+            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" title="${escapeHtml(userLabel)} - Min sida">${escapeHtml(initial)}</a>
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {
@@ -138,6 +135,24 @@ function renderTopbar() {
         location.hash = '#/login';
     });
     setupHamburgerMenu();
+    loadTopbarPhoto(user.id);
+}
+
+// The badge photo is auth-protected, so a plain <img src> won't do (no way
+// to attach the Authorization header) - fetch as blob and swap in. Always
+// attempted (rather than gated on a stored flag) since localStorage from a
+// previous login on this device may be stale or absent.
+async function loadTopbarPhoto(userId) {
+    if (!userId) return;
+    try {
+        const response = await fetch(`${CONFIG.API_BASE_URL}/users/${userId}/photo`, {
+            headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+        });
+        if (!response.ok) return;
+        const badge = document.getElementById('topbar-badge');
+        if (!badge) return;
+        badge.innerHTML = `<img src="${URL.createObjectURL(await response.blob())}" alt="">`;
+    } catch (err) { /* leave the initial shown */ }
 }
 
 function setupHamburgerMenu() {

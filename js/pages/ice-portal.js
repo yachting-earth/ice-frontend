@@ -70,11 +70,17 @@ const IcePortalPage = {
 
                 <div class="card">
                     <h3>Skeppare</h3>
-                    <p class="mb-0">
-                        ${escapeHtml(skipper?.name || '–')}
-                        ${skipper?.phone ? ` · ${escapeHtml(skipper.phone)}` : ''}
-                        ${skipper?.email ? ` · ${escapeHtml(skipper.email)}` : ''}
-                    </p>
+                    <div style="display:flex; align-items:center; gap: var(--space-3);">
+                        ${skipper?.photo_path
+                            ? `<img src="${CONFIG.API_BASE_URL}/users/${skipper.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
+                                    alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">`
+                            : ''}
+                        <p class="mb-0">
+                            ${escapeHtml(skipper?.name || '–')}
+                            ${skipper?.phone ? ` · ${escapeHtml(skipper.phone)}` : ''}
+                            ${skipper?.email ? ` · ${escapeHtml(skipper.email)}` : ''}
+                        </p>
+                    </div>
                 </div>
 
                 <div class="card">

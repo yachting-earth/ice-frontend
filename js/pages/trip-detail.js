@@ -59,13 +59,21 @@ const TripDetailPage = {
                 <div class="card">
                     <h3>Fartyg</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
-                        ${vessel?.photo_path ? `<img id="vessel-photo" alt="" hidden
-                            style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">` : ''}
+                        <img id="vessel-photo" alt=""
+                            style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;background:var(--color-bg);" hidden>
                         <p class="mb-0">
                             ${escapeHtml(vessel?.vessel_name || '–')}
                             ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
                             ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
                         </p>
+                    </div>
+                    <div id="vessel-photo-alert"></div>
+                    <div class="field-row" style="margin-top: var(--space-3);">
+                        <div class="field">
+                            <label for="vessel-photo-input">${vessel?.photo_path ? 'Byt fartygsfoto' : 'Lägg till fartygsfoto'}</label>
+                            <input type="file" id="vessel-photo-input" accept="image/jpeg,image/png">
+                        </div>
+                        <button class="btn btn-secondary btn-sm" type="button" id="vessel-photo-submit" style="align-self:flex-end;">Spara foto</button>
                     </div>
                 </div>
 
@@ -103,6 +111,7 @@ const TripDetailPage = {
         }
 
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
+        document.getElementById('vessel-photo-submit').addEventListener('click', () => this.handleVesselPhotoSubmit(vessel.id));
     },
 
     // Photos are auth-protected, so a plain <img src> won't do (no way to
@@ -118,6 +127,34 @@ const TripDetailPage = {
             img.src = URL.createObjectURL(await response.blob());
             img.hidden = false;
         } catch (err) { /* leave the photo hidden */ }
+    },
+
+    async handleVesselPhotoSubmit(vesselId) {
+        const alertBox = document.getElementById('vessel-photo-alert');
+        const photoFile = document.getElementById('vessel-photo-input').files[0];
+
+        if (!photoFile) {
+            alertBox.innerHTML = `<div class="alert alert-error">Välj en bild först.</div>`;
+            return;
+        }
+
+        const submitBtn = document.getElementById('vessel-photo-submit');
+        submitBtn.disabled = true;
+
+        const formData = new FormData();
+        formData.append('photo', photoFile);
+        const response = await apiUpload(`/vessels/${vesselId}/photo`, formData, 'PUT');
+
+        submitBtn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara fotot.')}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        showToast('Fartygsfotot har sparats.', 'success');
+        await this.loadVesselPhoto(vesselId);
     },
 
     renderActions(trip) {
@@ -194,19 +231,23 @@ const TripDetailPage = {
             const accepted = !!c.accepted_at;
             return `
                 <div class="crew-row">
-                    ${c.photo_path ? `<img class="crew-photo" data-crew-id="${c.id}" alt=""
-                        style="width:40px;height:40px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);" hidden>` : ''}
+                    <img class="crew-photo" data-crew-id="${c.id}" alt=""
+                        style="width:40px;height:40px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);background:var(--color-bg);" hidden>
                     <div class="crew-row__info">
                         <span class="crew-row__name">${escapeHtml(c.name || c.email || 'Okänd')}</span>
                         <span class="crew-row__detail">
                             ${c.email ? escapeHtml(c.email) : ''}${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
                             ${c.ice_contact ? ` · ICE: ${escapeHtml(c.ice_contact)}` : ''}
                         </span>
+                        <label class="text-muted" style="font-size: var(--font-size-sm); display:block; margin-top: var(--space-1);">
+                            <input type="file" class="crew-photo-input" data-crew-id="${c.id}" accept="image/jpeg,image/png" style="max-width: 220px;">
+                        </label>
                     </div>
                     <div class="stack" style="flex-direction: row; align-items: center; gap: var(--space-3);">
                         <span class="crew-status ${accepted ? 'crew-status--accepted' : 'crew-status--pending'}">
                             ${accepted ? '✓ Accepterad' : '⏳ Väntar'}
                         </span>
+                        <button class="btn btn-ghost btn-sm crew-photo-submit" data-crew-id="${c.id}" type="button">${c.photo_path ? 'Byt foto' : 'Lägg till foto'}</button>
                         ${!accepted && c.invitation_token ? `<button class="btn btn-ghost btn-sm copy-link-btn" data-token="${escapeHtml(c.invitation_token)}" type="button">Kopiera länk</button>` : ''}
                         <button class="btn btn-danger btn-sm remove-crew-btn" data-crew-id="${c.id}" type="button">Ta bort</button>
                     </div>
@@ -219,8 +260,33 @@ const TripDetailPage = {
         container.querySelectorAll('.remove-crew-btn').forEach((btn) => {
             btn.addEventListener('click', () => this.handleRemoveCrew(btn.dataset.crewId));
         });
+        container.querySelectorAll('.crew-photo-submit').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleCrewPhotoSubmit(btn.dataset.crewId));
+        });
 
         this.loadCrewPhotos(container);
+    },
+
+    async handleCrewPhotoSubmit(crewId) {
+        const input = document.querySelector(`.crew-photo-input[data-crew-id="${crewId}"]`);
+        const photoFile = input.files[0];
+
+        if (!photoFile) {
+            showToast('Välj en bild först.', 'error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('photo', photoFile);
+        const response = await apiUpload(`/crew/${crewId}/photo`, formData, 'PUT');
+
+        if (!response.success) {
+            showToast(response.error || 'Kunde inte spara fotot.', 'error');
+            return;
+        }
+
+        showToast('Fotot har sparats.', 'success');
+        await this.load(document.getElementById('page-content'));
     },
 
     // Photos are auth-protected, so a plain <img src> won't do (no way to

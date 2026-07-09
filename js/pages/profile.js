@@ -14,6 +14,23 @@ const ProfilePage = {
                 </div>
                 <div class="card">
                     <div class="card-header">
+                        <h2>Foto</h2>
+                    </div>
+                    <div id="photo-alert"></div>
+                    <div style="display:flex; align-items:center; gap: var(--space-3);">
+                        <img id="profile-photo-preview" alt=""
+                             style="width:96px;height:96px;border-radius:50%;object-fit:cover;background:var(--color-bg);" hidden>
+                        <div class="field" style="flex:1;">
+                            <label for="profile-photo">Byt foto (valfritt)</label>
+                            <input type="file" id="profile-photo" accept="image/jpeg,image/png">
+                            <small>Används av sjöräddningen för att identifiera dig som skeppare. JPEG/PNG, max 10 MB.</small>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" type="button" id="photo-submit" style="margin-top: var(--space-3);">Spara foto</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
                         <h2>Mina uppgifter</h2>
                     </div>
                     <div id="profile-alert"></div>
@@ -48,7 +65,61 @@ const ProfilePage = {
             this.handleDeleteAccount();
         });
 
+        document.getElementById('profile-photo').addEventListener('change', () => {
+            const preview = document.getElementById('profile-photo-preview');
+            const file = document.getElementById('profile-photo').files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.hidden = false;
+            }
+        });
+        document.getElementById('photo-submit').addEventListener('click', () => this.handlePhotoSubmit());
+
         await this.loadProfile();
+        await this.loadOwnPhoto();
+    },
+
+    async loadOwnPhoto() {
+        const preview = document.getElementById('profile-photo-preview');
+        try {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/users/${Auth.getUser().id}/photo`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            });
+            if (!response.ok) return;
+            preview.src = URL.createObjectURL(await response.blob());
+            preview.hidden = false;
+        } catch (err) { /* leave the preview hidden */ }
+    },
+
+    async handlePhotoSubmit() {
+        const alertBox = document.getElementById('photo-alert');
+        const photoFile = document.getElementById('profile-photo').files[0];
+
+        if (!photoFile) {
+            alertBox.innerHTML = `<div class="alert alert-error">Välj en bild först.</div>`;
+            return;
+        }
+
+        const submitBtn = document.getElementById('photo-submit');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Sparar...';
+
+        const formData = new FormData();
+        formData.append('photo', photoFile);
+        const response = await apiUpload('/user/photo', formData, 'PUT');
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Spara foto';
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara fotot.')}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        Auth.updateUser({ picture: String(Date.now()) });
+        renderTopbar();
+        showToast('Fotot har sparats.', 'success');
     },
 
     async loadProfile() {
