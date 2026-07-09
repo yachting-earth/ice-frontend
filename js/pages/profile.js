@@ -237,7 +237,12 @@ const ProfilePage = {
             body: JSON.stringify({ password, confirm: true })
         });
 
-        if (!response.success) {
+        // A wrong password is the only outcome that should keep the user on
+        // this page - anything else (success, or the account already being
+        // gone e.g. from a retried/duplicate request) means there's no
+        // account left to stay signed into, so log out immediately rather
+        // than leaving a stale session showing a scary error.
+        if (!response.success && response.code !== 'NOT_FOUND') {
             confirmBtn.disabled = false;
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte ta bort kontot.')}</div>`;
             return;
