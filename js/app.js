@@ -93,24 +93,66 @@ function renderTopbar() {
     if (!authed) {
         topbar.innerHTML = `
             <a class="topbar__brand" href="#/login">⚓ Yachting Earth</a>
-            <div class="topbar__actions">
-                <a class="btn btn-ghost btn-sm" href="#/sar">SAR</a>
+            <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="topbar__hamburger-line"></span>
+                <span class="topbar__hamburger-line"></span>
+                <span class="topbar__hamburger-line"></span>
+            </button>
+            <div class="topbar__menu" id="topbar-menu">
+                <a class="topbar__menu-link" href="#/sar">SAR</a>
             </div>`;
+        setupHamburgerMenu();
         return;
     }
 
     const user = Auth.getUser();
     topbar.innerHTML = `
         <a class="topbar__brand" href="#/dashboard">⚓ Yachting Earth</a>
-        <div class="topbar__actions">
-            <a class="btn btn-ghost btn-sm" href="#/ice-contacts">ICE-kontakter</a>
-            <span class="topbar__user">${escapeHtml(user.name || user.email || '')}</span>
-            <button class="btn btn-ghost btn-sm" id="logout-btn" type="button">Logga ut</button>
+        <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="topbar__hamburger-line"></span>
+            <span class="topbar__hamburger-line"></span>
+            <span class="topbar__hamburger-line"></span>
+        </button>
+        <div class="topbar__menu" id="topbar-menu">
+            <a class="topbar__menu-link" href="#/ice-contacts">ICE-kontakter</a>
+            <span class="topbar__menu-user">${escapeHtml(user.name || user.email || '')}</span>
+            <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {
         Auth.clear();
         location.hash = '#/login';
+    });
+    setupHamburgerMenu();
+}
+
+function setupHamburgerMenu() {
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('topbar-menu');
+
+    if (!hamburger || !menu) return;
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        menu.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
+    });
+
+    const menuLinks = menu.querySelectorAll('.topbar__menu-link');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            menu.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            hamburger.classList.remove('active');
+            menu.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+        }
     });
 }
 
