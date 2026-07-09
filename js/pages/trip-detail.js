@@ -40,7 +40,7 @@ const TripDetailPage = {
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>${escapeHtml(vessel?.vessel_name || 'Okänt fartyg')}
+                        <h1>${escapeHtml(vessel?.vessel_name || 'Okänd båt')}
                             <span class="badge badge-${trip.status}">${this.STATUS_LABELS[trip.status] || trip.status}</span>
                         </h1>
                         <div class="page-header__meta">
@@ -57,7 +57,7 @@ const TripDetailPage = {
                 <div class="card" id="actions-card"></div>
 
                 <div class="card">
-                    <h3>Fartyg</h3>
+                    <h3>Båt</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         <img id="vessel-photo" alt=""
                             style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;background:var(--color-bg);" hidden>
@@ -71,14 +71,6 @@ const TripDetailPage = {
                         </p>
                     </div>
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
-                    <div id="vessel-photo-alert"></div>
-                    <div class="field-row" style="margin-top: var(--space-3);">
-                        <div class="field">
-                            <label for="vessel-photo-input">${vessel?.photo_path ? 'Byt fartygsfoto' : 'Lägg till fartygsfoto'}</label>
-                            <input type="file" id="vessel-photo-input" accept="image/jpeg,image/png">
-                        </div>
-                        <button class="btn btn-secondary btn-sm" type="button" id="vessel-photo-submit" style="align-self:flex-end;">Spara foto</button>
-                    </div>
                 </div>
 
                 <div class="card">
@@ -127,7 +119,6 @@ const TripDetailPage = {
         }
 
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
-        document.getElementById('vessel-photo-submit').addEventListener('click', () => this.handleVesselPhotoSubmit(vessel.id));
         document.getElementById('add-route-btn').addEventListener('click', () => this.handleAddRoute());
     },
 
@@ -152,34 +143,6 @@ const TripDetailPage = {
             img.src = URL.createObjectURL(await response.blob());
             img.hidden = false;
         } catch (err) { /* leave the photo hidden */ }
-    },
-
-    async handleVesselPhotoSubmit(vesselId) {
-        const alertBox = document.getElementById('vessel-photo-alert');
-        const photoFile = document.getElementById('vessel-photo-input').files[0];
-
-        if (!photoFile) {
-            alertBox.innerHTML = `<div class="alert alert-error">Välj en bild först.</div>`;
-            return;
-        }
-
-        const submitBtn = document.getElementById('vessel-photo-submit');
-        submitBtn.disabled = true;
-
-        const formData = new FormData();
-        formData.append('photo', photoFile);
-        const response = await apiUpload(`/vessels/${vesselId}/photo`, formData, 'PUT');
-
-        submitBtn.disabled = false;
-
-        if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara fotot.')}</div>`;
-            return;
-        }
-
-        alertBox.innerHTML = '';
-        showToast('Fartygsfotot har sparats.', 'success');
-        await this.loadVesselPhoto(vesselId);
     },
 
     renderActions(trip) {
