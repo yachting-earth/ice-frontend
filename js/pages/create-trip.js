@@ -105,6 +105,34 @@ const CreateTripPage = {
                     <label for="vessel-callsign">Anropssignal (valfritt)</label>
                     <input type="text" id="vessel-callsign">
                 </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="vessel-model">Modell (valfritt)</label>
+                        <input type="text" id="vessel-model" placeholder="t.ex. Bavaria 34">
+                    </div>
+                    <div class="field">
+                        <label for="vessel-year">Årsmodell (valfritt)</label>
+                        <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="t.ex. 2011">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="vessel-length">Längd, meter (valfritt)</label>
+                        <input type="number" id="vessel-length" inputmode="decimal" step="0.01" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="vessel-width">Bredd, meter (valfritt)</label>
+                        <input type="number" id="vessel-width" inputmode="decimal" step="0.01" min="0">
+                    </div>
+                    <div class="field">
+                        <label for="vessel-draft">Djup, meter (valfritt)</label>
+                        <input type="number" id="vessel-draft" inputmode="decimal" step="0.01" min="0">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="vessel-notes">Övrigt (valfritt)</label>
+                    <textarea id="vessel-notes" rows="3" placeholder="Övrig information om båten"></textarea>
+                </div>
                 <div class="field">
                     <label for="vessel-photo">Fartygsfoto (valfritt)</label>
                     <input type="file" id="vessel-photo" accept="image/jpeg,image/png">
@@ -140,16 +168,37 @@ const CreateTripPage = {
         const name = document.getElementById('vessel-name').value.trim();
         const mmsi = document.getElementById('vessel-mmsi').value.trim();
         const callSign = document.getElementById('vessel-callsign').value.trim();
+        const model = document.getElementById('vessel-model').value.trim();
+        const year = document.getElementById('vessel-year').value.trim();
+        const length = document.getElementById('vessel-length').value.trim();
+        const width = document.getElementById('vessel-width').value.trim();
+        const draft = document.getElementById('vessel-draft').value.trim();
+        const notes = document.getElementById('vessel-notes').value.trim();
         const photoFile = document.getElementById('vessel-photo').files[0] || null;
 
-        if (!name) {
-            alertBox.innerHTML = `<div class="alert alert-error">Fartygsnamn krävs</div>`;
+        const error = Validate.name(name)
+            || Validate.vesselYear(year)
+            || Validate.vesselDimension(length, 'Längd')
+            || Validate.vesselDimension(width, 'Bredd')
+            || Validate.vesselDimension(draft, 'Djup');
+        if (error) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
             return;
         }
 
         const response = await apiRequest('/vessels', {
             method: 'POST',
-            body: JSON.stringify({ vessel_name: name, mmsi: mmsi || null, call_sign: callSign || null })
+            body: JSON.stringify({
+                vessel_name: name,
+                mmsi: mmsi || null,
+                call_sign: callSign || null,
+                model: model || null,
+                year_built: year ? Number(year) : null,
+                length_m: length ? Number(length) : null,
+                width_m: width ? Number(width) : null,
+                draft_m: draft ? Number(draft) : null,
+                notes: notes || null
+            })
         });
 
         if (!response.success) {

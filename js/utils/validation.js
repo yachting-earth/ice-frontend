@@ -35,5 +35,24 @@ const Validate = {
             return 'Ogiltig Windy-länk. Måste vara från windy.com/route-planner';
         }
         return null;
+    },
+
+    vesselYear(value) {
+        if (!value) return null;
+        const maxYear = new Date().getFullYear() + 1;
+        const year = Number(value);
+        if (!Number.isInteger(year) || year < 1900 || year > maxYear) {
+            return `Årsmodell måste vara ett heltal mellan 1900 och ${maxYear}`;
+        }
+        return null;
+    },
+
+    vesselDimension(value, label) {
+        if (value === '' || value === null || value === undefined) return null;
+        const num = Number(value);
+        if (!Number.isFinite(num) || num <= 0 || num > 200) {
+            return `${label} måste vara ett positivt tal i meter (max 200)`;
+        }
+        return null;
     }
 };

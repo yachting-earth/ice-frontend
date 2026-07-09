@@ -24,6 +24,14 @@ const IcePortalPage = {
 
     state: { tripId: null, token: null, map: null },
 
+    formatVesselDimensions(vessel) {
+        return [
+            vessel?.length_m ? `L ${Number(vessel.length_m)} m` : '',
+            vessel?.width_m ? `B ${Number(vessel.width_m)} m` : '',
+            vessel?.draft_m ? `D ${Number(vessel.draft_m)} m` : ''
+        ].filter(Boolean).join(' × ');
+    },
+
     async render(container, params, query) {
         this.state.tripId = query.get('trip');
         this.state.token = query.get('token');
@@ -96,10 +104,14 @@ const IcePortalPage = {
                             : ''}
                         <p class="mb-0">
                             Fartyg: ${escapeHtml(vessel?.vessel_name || '–')}
+                            ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
+                            ${vessel?.year_built ? ` · Årsmodell ${escapeHtml(String(vessel.year_built))}` : ''}
                             ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
                             ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
+                            ${IcePortalPage.formatVesselDimensions(vessel) ? ` · ${escapeHtml(IcePortalPage.formatVesselDimensions(vessel))}` : ''}
                         </p>
                     </div>
+                    ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
                 </div>
 
                 <div class="card">

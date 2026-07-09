@@ -63,10 +63,14 @@ const TripDetailPage = {
                             style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;background:var(--color-bg);" hidden>
                         <p class="mb-0">
                             ${escapeHtml(vessel?.vessel_name || '–')}
+                            ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
+                            ${vessel?.year_built ? ` · Årsmodell ${escapeHtml(String(vessel.year_built))}` : ''}
                             ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
                             ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
+                            ${this.formatDimensions(vessel) ? ` · ${escapeHtml(this.formatDimensions(vessel))}` : ''}
                         </p>
                     </div>
+                    ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
                     <div id="vessel-photo-alert"></div>
                     <div class="field-row" style="margin-top: var(--space-3);">
                         <div class="field">
@@ -112,6 +116,14 @@ const TripDetailPage = {
 
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
         document.getElementById('vessel-photo-submit').addEventListener('click', () => this.handleVesselPhotoSubmit(vessel.id));
+    },
+
+    formatDimensions(vessel) {
+        return [
+            vessel?.length_m ? `L ${Number(vessel.length_m)} m` : '',
+            vessel?.width_m ? `B ${Number(vessel.width_m)} m` : '',
+            vessel?.draft_m ? `D ${Number(vessel.draft_m)} m` : ''
+        ].filter(Boolean).join(' × ');
     },
 
     // Photos are auth-protected, so a plain <img src> won't do (no way to

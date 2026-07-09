@@ -38,6 +38,34 @@ const VesselsPage = {
                             <label for="vessel-callsign">Anropssignal (valfritt)</label>
                             <input type="text" id="vessel-callsign">
                         </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="vessel-model">Modell (valfritt)</label>
+                                <input type="text" id="vessel-model" placeholder="t.ex. Bavaria 34">
+                            </div>
+                            <div class="field">
+                                <label for="vessel-year">Årsmodell (valfritt)</label>
+                                <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="t.ex. 2011">
+                            </div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="vessel-length">Längd, meter (valfritt)</label>
+                                <input type="number" id="vessel-length" inputmode="decimal" step="0.01" min="0">
+                            </div>
+                            <div class="field">
+                                <label for="vessel-width">Bredd, meter (valfritt)</label>
+                                <input type="number" id="vessel-width" inputmode="decimal" step="0.01" min="0">
+                            </div>
+                            <div class="field">
+                                <label for="vessel-draft">Djup, meter (valfritt)</label>
+                                <input type="number" id="vessel-draft" inputmode="decimal" step="0.01" min="0">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="vessel-notes">Övrigt (valfritt)</label>
+                            <textarea id="vessel-notes" rows="3" placeholder="Övrig information om båten"></textarea>
+                        </div>
                         <div class="field">
                             <label for="vessel-photo">Fartygsfoto (valfritt)</label>
                             <input type="file" id="vessel-photo" accept="image/jpeg,image/png">
@@ -106,6 +134,12 @@ const VesselsPage = {
     },
 
     renderVesselCard(vessel) {
+        const dims = [
+            vessel.length_m ? `L ${Number(vessel.length_m)} m` : '',
+            vessel.width_m ? `B ${Number(vessel.width_m)} m` : '',
+            vessel.draft_m ? `D ${Number(vessel.draft_m)} m` : ''
+        ].filter(Boolean).join(' × ');
+
         return `
             <div class="trip-card">
                 ${vessel.photo_path ? `<img id="vessel-thumb-${vessel.id}" alt="" hidden
@@ -115,9 +149,13 @@ const VesselsPage = {
                         <span class="trip-card__title">${escapeHtml(vessel.vessel_name)}</span>
                     </div>
                     <div class="trip-card__meta">
+                        ${vessel.model ? `<span>${escapeHtml(vessel.model)}</span>` : ''}
+                        ${vessel.year_built ? `<span>Årsmodell ${escapeHtml(String(vessel.year_built))}</span>` : ''}
+                        ${dims ? `<span>${escapeHtml(dims)}</span>` : ''}
                         ${vessel.mmsi ? `<span>MMSI ${escapeHtml(vessel.mmsi)}</span>` : ''}
                         ${vessel.call_sign ? `<span>Anropssignal ${escapeHtml(vessel.call_sign)}</span>` : ''}
                     </div>
+                    ${vessel.notes ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(vessel.notes)}</div>` : ''}
                 </div>
                 <div class="trip-card__actions">
                     <button class="btn btn-secondary btn-sm" type="button" data-edit="${vessel.id}">Ändra</button>
@@ -151,6 +189,12 @@ const VesselsPage = {
         document.getElementById('vessel-name').value = vessel.vessel_name || '';
         document.getElementById('vessel-mmsi').value = vessel.mmsi || '';
         document.getElementById('vessel-callsign').value = vessel.call_sign || '';
+        document.getElementById('vessel-model').value = vessel.model || '';
+        document.getElementById('vessel-year').value = vessel.year_built ?? '';
+        document.getElementById('vessel-length').value = vessel.length_m ?? '';
+        document.getElementById('vessel-width').value = vessel.width_m ?? '';
+        document.getElementById('vessel-draft').value = vessel.draft_m ?? '';
+        document.getElementById('vessel-notes').value = vessel.notes || '';
         document.getElementById('vessel-photo').value = '';
         const preview = document.getElementById('vessel-photo-preview');
         preview.hidden = true;
@@ -179,10 +223,20 @@ const VesselsPage = {
         const name = document.getElementById('vessel-name').value.trim();
         const mmsi = document.getElementById('vessel-mmsi').value.trim();
         const callSign = document.getElementById('vessel-callsign').value.trim();
+        const model = document.getElementById('vessel-model').value.trim();
+        const year = document.getElementById('vessel-year').value.trim();
+        const length = document.getElementById('vessel-length').value.trim();
+        const width = document.getElementById('vessel-width').value.trim();
+        const draft = document.getElementById('vessel-draft').value.trim();
+        const notes = document.getElementById('vessel-notes').value.trim();
 
-        const nameError = Validate.name(name);
-        if (nameError) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(nameError)}</div>`;
+        const error = Validate.name(name)
+            || Validate.vesselYear(year)
+            || Validate.vesselDimension(length, 'Längd')
+            || Validate.vesselDimension(width, 'Bredd')
+            || Validate.vesselDimension(draft, 'Djup');
+        if (error) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
             return;
         }
 
@@ -190,7 +244,17 @@ const VesselsPage = {
         submitBtn.disabled = true;
         alertBox.innerHTML = '';
 
-        const body = JSON.stringify({ vessel_name: name, mmsi: mmsi || null, call_sign: callSign || null });
+        const body = JSON.stringify({
+            vessel_name: name,
+            mmsi: mmsi || null,
+            call_sign: callSign || null,
+            model: model || null,
+            year_built: year ? Number(year) : null,
+            length_m: length ? Number(length) : null,
+            width_m: width ? Number(width) : null,
+            draft_m: draft ? Number(draft) : null,
+            notes: notes || null
+        });
         const response = this.state.editingId
             ? await apiRequest(`/vessels/${this.state.editingId}`, { method: 'PUT', body })
             : await apiRequest('/vessels', { method: 'POST', body });
