@@ -6,14 +6,16 @@ const Auth = {
         token: 'auth_token',
         userId: 'user_id',
         userName: 'user_name',
-        userEmail: 'user_email'
+        userEmail: 'user_email',
+        userPicture: 'user_picture'
     },
 
-    setSession({ auth_token, user_id, name, email }) {
+    setSession({ auth_token, user_id, name, email, picture }) {
         localStorage.setItem(this.KEYS.token, auth_token);
         localStorage.setItem(this.KEYS.userId, user_id);
         if (name) localStorage.setItem(this.KEYS.userName, name);
         if (email) localStorage.setItem(this.KEYS.userEmail, email);
+        if (picture) localStorage.setItem(this.KEYS.userPicture, picture);
     },
 
     getToken() {
@@ -24,7 +26,8 @@ const Auth = {
         return {
             id: localStorage.getItem(this.KEYS.userId),
             name: localStorage.getItem(this.KEYS.userName),
-            email: localStorage.getItem(this.KEYS.userEmail)
+            email: localStorage.getItem(this.KEYS.userEmail),
+            picture: localStorage.getItem(this.KEYS.userPicture)
         };
     },
 

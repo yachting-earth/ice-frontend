@@ -89,34 +89,47 @@ const Router = {
 function renderTopbar() {
     const topbar = document.getElementById('topbar');
     const authed = Auth.isAuthenticated();
+    const currentPath = (location.hash || '#/dashboard').split('?')[0];
+    const activeClass = (path) => (currentPath === path ? ' topbar__menu-link--active' : '');
 
     if (!authed) {
         topbar.innerHTML = `
             <a class="topbar__brand" href="#/login">⚓ Yachting Earth</a>
-            <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span class="topbar__hamburger-line"></span>
-                <span class="topbar__hamburger-line"></span>
-                <span class="topbar__hamburger-line"></span>
-            </button>
-            <div class="topbar__menu" id="topbar-menu">
-                <a class="topbar__menu-link" href="#/sar">SAR</a>
+            <div class="topbar__right">
+                <div class="topbar__menu" id="topbar-menu">
+                    <a class="topbar__menu-link${activeClass('#/sar')}" href="#/sar">SAR</a>
+                </div>
+                <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="topbar__hamburger-line"></span>
+                    <span class="topbar__hamburger-line"></span>
+                    <span class="topbar__hamburger-line"></span>
+                </button>
             </div>`;
         setupHamburgerMenu();
         return;
     }
 
     const user = Auth.getUser();
+    const userLabel = user.name || user.email || '';
+    const initial = userLabel.trim().charAt(0).toUpperCase() || '?';
+    const badgeContent = user.picture
+        ? `<img src="${escapeHtml(user.picture)}" alt="">`
+        : escapeHtml(initial);
+
     topbar.innerHTML = `
         <a class="topbar__brand" href="#/dashboard">⚓ Yachting Earth</a>
-        <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
-            <span class="topbar__hamburger-line"></span>
-            <span class="topbar__hamburger-line"></span>
-            <span class="topbar__hamburger-line"></span>
-        </button>
-        <div class="topbar__menu" id="topbar-menu">
-            <a class="topbar__menu-link" href="#/ice-contacts">ICE-kontakter</a>
-            <span class="topbar__menu-user">${escapeHtml(user.name || user.email || '')}</span>
-            <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
+        <div class="topbar__right">
+            <div class="topbar__menu" id="topbar-menu">
+                <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">Mina resor</a>
+                <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">ICE-kontakter</a>
+                <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
+            </div>
+            <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="topbar__hamburger-line"></span>
+                <span class="topbar__hamburger-line"></span>
+                <span class="topbar__hamburger-line"></span>
+            </button>
+            <div class="topbar__badge" id="topbar-badge" title="${escapeHtml(userLabel)}">${badgeContent}</div>
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {

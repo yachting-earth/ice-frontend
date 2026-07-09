@@ -55,7 +55,8 @@ const LoginPage = {
                 auth_token: response.data.auth_token,
                 user_id: response.data.user_id,
                 name: response.data.name,
-                email: response.data.email
+                email: response.data.email,
+                picture: response.data.picture
             });
             location.hash = '#/dashboard';
             return;
