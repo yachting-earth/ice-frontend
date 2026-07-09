@@ -9,7 +9,7 @@ const TripDetailPage = {
 
     ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
 
-    state: { tripId: null, data: null, vessels: [], map: null },
+    state: { tripId: null, data: null, vessels: [], map: null, forceDelete: false },
 
     async render(container, params) {
         this.state.tripId = params.tripId;
@@ -192,13 +192,21 @@ const TripDetailPage = {
 
     renderActions(trip) {
         const actionsCard = document.getElementById('actions-card');
+        this.state.forceDelete = false;
+        const deleteBtnLabel = 'Radera resa';
+        const deleteBtnHtml = `<button class="btn btn-danger" type="button" id="delete-trip-btn">${deleteBtnLabel}</button>`;
 
         if (trip.status === 'draft' || trip.status === 'published') {
             actionsCard.innerHTML = `
                 <h3>Åtgärder</h3>
                 <p class="text-muted">Resan är inte aktiv än. Aktivera den manuellt, eller så aktiveras den automatiskt när första besättningsmedlemmen accepterar sin inbjudan.</p>
-                <button class="btn btn-primary" type="button" id="activate-btn">Aktivera resa</button>`;
+                <div id="delete-trip-alert"></div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="button" id="activate-btn">Aktivera resa</button>
+                    ${deleteBtnHtml}
+                </div>`;
             document.getElementById('activate-btn').addEventListener('click', () => this.handleActivate());
+            document.getElementById('delete-trip-btn').addEventListener('click', () => this.handleDeleteTrip());
             return;
         }
 
@@ -213,16 +221,24 @@ const TripDetailPage = {
                         </div>
                     </div>
                     <button class="btn btn-primary" type="button" id="verify-btn">✓ Verifiera ankomst</button>
+                    <div id="delete-trip-alert"></div>
+                    ${deleteBtnHtml}
                 </div>`;
 
             actionsCard.querySelectorAll('.snooze-btn').forEach((btn) => {
                 btn.addEventListener('click', () => this.handleSnooze(Number(btn.dataset.minutes)));
             });
             document.getElementById('verify-btn').addEventListener('click', () => this.handleVerify());
+            document.getElementById('delete-trip-btn').addEventListener('click', () => this.handleDeleteTrip());
             return;
         }
 
-        actionsCard.innerHTML = `<h3>Åtgärder</h3><p class="text-muted mb-0">Resan är ${this.STATUS_LABELS[trip.status]?.toLowerCase() || trip.status} - inga fler åtgärder tillgängliga.</p>`;
+        actionsCard.innerHTML = `
+            <h3>Åtgärder</h3>
+            <p class="text-muted">Resan är ${this.STATUS_LABELS[trip.status]?.toLowerCase() || trip.status} - inga fler åtgärder tillgängliga.</p>
+            <div id="delete-trip-alert"></div>
+            ${deleteBtnHtml}`;
+        document.getElementById('delete-trip-btn').addEventListener('click', () => this.handleDeleteTrip());
     },
 
     renderRoutes(routes) {
@@ -556,6 +572,37 @@ const TripDetailPage = {
         document.getElementById('invite-name').value = '';
 
         await this.load(document.getElementById('page-content'));
+    },
+
+    async handleDeleteTrip() {
+        const alertBox = document.getElementById('delete-trip-alert');
+        const btn = document.getElementById('delete-trip-btn');
+
+        if (this.state.forceDelete) {
+            if (!confirm('Det finns registrerade personer på resan. Radera resan ändå? Kom ihåg att notifiera dem själv.')) return;
+        } else if (!confirm('Radera den här resan?')) {
+            return;
+        }
+
+        btn.disabled = true;
+        const response = await apiRequest(`/trips/${this.state.tripId}${this.state.forceDelete ? '?force=true' : ''}`, { method: 'DELETE' });
+        btn.disabled = false;
+
+        if (!response.success) {
+            if (response.code === 'TRIP_HAS_REGISTERED_PERSONS') {
+                this.state.forceDelete = true;
+                btn.textContent = 'Radera ändå';
+                const crewCount = response.details?.crew_count || 0;
+                const iceCount = response.details?.ice_count || 0;
+                alertBox.innerHTML = `<div class="alert alert-error">Resan har ${crewCount} besättningsmedlem(mar) och ${iceCount} ICE-kontakt(er) registrerade som kan behöva notifieras. Klicka igen för att radera ändå.</div>`;
+                return;
+            }
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte radera resan.')}</div>`;
+            return;
+        }
+
+        showToast('Resan har raderats', 'success');
+        location.hash = '#/dashboard';
     },
 
     async handleRemoveCrew(crewId) {
