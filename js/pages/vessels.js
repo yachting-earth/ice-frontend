@@ -17,6 +17,7 @@ const VesselsPage = {
                         <div class="page-header__meta">Fartyg du kan välja när du skapar en ny resa</div>
                     </div>
                 </div>
+                <div id="vessel-list-container"><div class="loading-state"><span class="spinner"></span> Laddar båtar...</div></div>
                 <div class="card">
                     <div class="card-header">
                         <h2 id="vessel-form-title">Lägg till båt</h2>
@@ -76,7 +77,6 @@ const VesselsPage = {
                         <button class="btn btn-primary" type="submit" id="vessel-submit">Spara båt</button>
                     </form>
                 </div>
-                <div id="vessel-list-container"><div class="loading-state"><span class="spinner"></span> Laddar båtar...</div></div>
             </div>`;
 
         document.getElementById('vessel-form').addEventListener('submit', (e) => {
