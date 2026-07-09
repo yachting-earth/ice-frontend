@@ -51,7 +51,13 @@ function renderRouteMap(containerEl, routes) {
 
         const polyline = L.polyline(route.coordinates, { color: route.color || '#1e88a8', weight: 4 }).addTo(map);
         if (route.label) {
-            polyline.bindTooltip(route.label);
+            // Set the label via textContent, not as a string: Leaflet inserts a
+            // string tooltip as innerHTML, so a user-supplied label (e.g. a
+            // route's free-text "reason") would be a stored-XSS vector. Passing
+            // an HTMLElement makes Leaflet use it as-is instead.
+            const tooltipLabel = document.createElement('span');
+            tooltipLabel.textContent = route.label;
+            polyline.bindTooltip(tooltipLabel);
         }
 
         L.circleMarker(route.coordinates[0], { radius: 7, color: '#1a7f4e', fillColor: '#1a7f4e', fillOpacity: 1 })
