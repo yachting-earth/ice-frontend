@@ -31,7 +31,7 @@ const Validate = {
 
     windyUrl(value) {
         if (!value) return 'Windy-länk krävs';
-        if (!/^https:\/\/www\.windy\.com\/route-planner\/boat\/[\d.,;-]+/i.test(value)) {
+        if (!/^https:\/\/www\.windy\.com\/route-planner\/(?:[a-z]+\/)?[\d.,;-]+/i.test(value)) {
             return 'Ogiltig Windy-länk. Måste vara från windy.com/route-planner';
         }
         return null;

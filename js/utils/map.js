@@ -4,7 +4,7 @@
 
 /** Parse a Windy route-planner URL into [[lat, lon], ...] pairs (client-side preview only). */
 function parseWindyUrl(url) {
-    const match = url.match(/route-planner\/boat\/([\d.,;-]+)/i);
+    const match = url.match(/route-planner\/(?:[a-z]+\/)?([\d.,;-]+)/i);
     if (!match) return null;
 
     const coords = match[1].split(';').map((pair) => {
