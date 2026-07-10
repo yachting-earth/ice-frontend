@@ -95,6 +95,23 @@ const Router = {
     }
 };
 
+// Cached per session: whether the logged-in account is a confirmed ICE
+// contact for anyone, i.e. whether "Mitt ICE-konto" has anything to show.
+// null = not checked yet, reset to null on logout so a different account
+// logging in on the same tab doesn't inherit a stale answer.
+let iceAccountVisible = null;
+
+async function checkIceAccountVisibility() {
+    if (iceAccountVisible !== null) return iceAccountVisible;
+    try {
+        const response = await apiRequest('/ice-contacts/me');
+        iceAccountVisible = !!(response.success && Array.isArray(response.data) && response.data.length > 0);
+    } catch (err) {
+        iceAccountVisible = false;
+    }
+    return iceAccountVisible;
+}
+
 function renderTopbar() {
     const topbar = document.getElementById('topbar');
     const authed = Auth.isAuthenticated();
@@ -129,7 +146,7 @@ function renderTopbar() {
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">Mina resor</a>
                 <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">Mina båtar</a>
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">ICE-kontakter</a>
-                <a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">Mitt ICE-konto</a>
+                ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">Mitt ICE-konto</a>` : ''}
                 ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">Admin</a>` : ''}
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
             </div>
@@ -142,11 +159,18 @@ function renderTopbar() {
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {
+        iceAccountVisible = null;
         Auth.clear();
         location.hash = '#/login';
     });
     setupHamburgerMenu();
     loadTopbarPhoto(user.id);
+
+    if (iceAccountVisible === null) {
+        checkIceAccountVisibility().then((visible) => {
+            if (visible) renderTopbar();
+        });
+    }
 }
 
 // The badge photo is auth-protected, so a plain <img src> won't do (no way
