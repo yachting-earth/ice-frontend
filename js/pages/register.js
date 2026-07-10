@@ -75,7 +75,8 @@ const RegisterPage = {
                 user_id: response.data.user_id,
                 name: response.data.name,
                 email: response.data.email,
-                picture: response.data.picture
+                picture: response.data.picture,
+                is_admin: response.data.is_admin
             });
             location.hash = '#/dashboard';
             return;
