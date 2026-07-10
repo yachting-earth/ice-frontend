@@ -725,11 +725,11 @@ const I18n = {
   setLang(lang) {
     if (!this.SUPPORTED.includes(lang)) return;
     localStorage.setItem('ye_lang', lang);
-    this.load(lang).then(() => {
-      this._lang = lang;
-      document.documentElement.lang = lang;
-      if (window.Router) Router.handleRoute();
-    });
+    // A soft re-render leaves stale strings behind in places that only read
+    // a dictionary once (e.g. EN_INLINE-derived state); reload so every
+    // page picks up the new language from scratch.
+    if (lang === this._lang) return;
+    location.reload();
   }
 };
 

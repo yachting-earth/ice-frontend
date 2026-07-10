@@ -179,7 +179,7 @@ function renderTopbar() {
 
 // Language selector shared by both the authed and guest topbars. A plain
 // <select> (no framework, no fancy dropdown) that persists the choice via
-// I18n.setLang - which itself re-renders the current route.
+// I18n.setLang - which itself reloads the page.
 function renderLangSelector() {
     const current = I18n._lang || I18n.getLang();
     const options = I18n.SUPPORTED.map((lang) =>
@@ -191,12 +191,14 @@ function renderLangSelector() {
 function setupLangSelector() {
     const select = document.getElementById('lang-select');
     if (!select) return;
-    select.addEventListener('change', () => {
+    select.addEventListener('change', async () => {
         const lang = select.value;
-        I18n.setLang(lang);
         if (Auth.isAuthenticated()) {
-            apiRequest('/user/profile', { method: 'PUT', body: JSON.stringify({ locale: lang }) });
+            // Await the save before reloading - I18n.setLang() below reloads
+            // the page, which would otherwise cancel this in-flight request.
+            await apiRequest('/user/profile', { method: 'PUT', body: JSON.stringify({ locale: lang }) });
         }
+        I18n.setLang(lang);
     });
 }
 
