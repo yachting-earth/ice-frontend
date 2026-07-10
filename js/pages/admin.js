@@ -3,20 +3,53 @@ const AdminPage = {
         users: 'Användare',
         routes: 'Rutter',
         vessels: 'Båtar',
-        ice_contacts: 'ICE-kontakter'
+        ice_contacts: 'ICE-kontakter',
+        logs: 'Systemloggar'
     },
 
     TAB_CONFIG: {
         users: { endpoint: '/admin/users', title: 'Användare', emptyText: 'Inga användare' },
         routes: { endpoint: '/admin/routes', title: 'Rutter', emptyText: 'Inga rutter' },
         vessels: { endpoint: '/admin/vessels', title: 'Båtar', emptyText: 'Inga båtar' },
-        ice_contacts: { endpoint: '/admin/ice-contacts', title: 'ICE-kontakter', emptyText: 'Inga ICE-kontakter' }
+        ice_contacts: { endpoint: '/admin/ice-contacts', title: 'ICE-kontakter', emptyText: 'Inga ICE-kontakter' },
+        logs: { title: 'Systemloggar', emptyText: 'Inga loggar matchar filtret' }
+    },
+
+    LOG_LEVEL_LABELS: {
+        info: 'Info',
+        warning: 'Varning',
+        error: 'Fel'
+    },
+
+    LOG_CATEGORY_LABELS: {
+        cron: 'Cron',
+        email: 'E-post',
+        notification: 'Notifiering',
+        database: 'Databas',
+        api: 'Backend/API',
+        auth: 'Autentisering',
+        trip: 'Resa',
+        route: 'Rutt',
+        vessel: 'Båt',
+        crew: 'Besättning',
+        ice: 'ICE-kontakt',
+        sar: 'SAR',
+        user: 'Användare',
+        admin: 'Admin',
+        photo: 'Foto'
     },
 
     state: {
         activeTab: 'users',
         stats: null,
-        users: []
+        users: [],
+        logs: {
+            items: [],
+            filters: { level: '', category: '', q: '' },
+            page: 1,
+            pagination: { page: 1, per_page: 50, total: 0, total_pages: 1 },
+            searchDebounce: null
+        }
     },
 
     async render(container) {
@@ -87,6 +120,11 @@ const AdminPage = {
         const config = this.TAB_CONFIG[tab];
         document.getElementById('admin-section-title').textContent = config.title;
         document.getElementById('admin-alert').innerHTML = '';
+
+        if (tab === 'logs') {
+            await this.loadLogs(1);
+            return;
+        }
 
         const container = document.getElementById('admin-section-container');
         container.innerHTML = `<div class="loading-state"><span class="spinner"></span> Laddar...</div>`;
@@ -277,5 +315,147 @@ const AdminPage = {
                 <td>${escapeHtml(contact.skipper_name || '')}<br><span class="page-header__meta">${escapeHtml(contact.skipper_email || '')}</span></td>
                 <td>${escapeHtml(formatDateTime(contact.created_at))}</td>
             </tr>`;
+    },
+
+    // ==================== Systemloggar ====================
+
+    async loadLogs(page) {
+        const container = document.getElementById('admin-section-container');
+        const isFirstRender = !container.querySelector('#log-filters-bar');
+
+        if (isFirstRender) {
+            container.innerHTML = `
+                <div id="log-filters-bar" class="log-filters">
+                    <div class="field field--search">
+                        <label for="log-search">Sök</label>
+                        <input type="text" id="log-search" placeholder="Sök i meddelande eller ID..." value="${escapeHtml(this.state.logs.filters.q)}">
+                    </div>
+                    <div class="field">
+                        <label for="log-level">Loggnivå</label>
+                        <select id="log-level">
+                            <option value="">Alla nivåer</option>
+                            ${Object.entries(this.LOG_LEVEL_LABELS).map(([value, label]) => `
+                                <option value="${value}" ${this.state.logs.filters.level === value ? 'selected' : ''}>${escapeHtml(label)}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="log-category">Kategori</label>
+                        <select id="log-category">
+                            <option value="">Alla kategorier</option>
+                            ${Object.entries(this.LOG_CATEGORY_LABELS).map(([value, label]) => `
+                                <option value="${value}" ${this.state.logs.filters.category === value ? 'selected' : ''}>${escapeHtml(label)}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                </div>
+                <div id="log-results"><div class="loading-state"><span class="spinner"></span> Laddar...</div></div>
+                <div id="log-pagination"></div>`;
+
+            document.getElementById('log-search').addEventListener('input', (event) => {
+                this.state.logs.filters.q = event.target.value;
+                clearTimeout(this.state.logs.searchDebounce);
+                this.state.logs.searchDebounce = setTimeout(() => this.loadLogs(1), 300);
+            });
+
+            document.getElementById('log-level').addEventListener('change', (event) => {
+                this.state.logs.filters.level = event.target.value;
+                this.loadLogs(1);
+            });
+
+            document.getElementById('log-category').addEventListener('change', (event) => {
+                this.state.logs.filters.category = event.target.value;
+                this.loadLogs(1);
+            });
+        }
+
+        const resultsContainer = document.getElementById('log-results');
+        resultsContainer.innerHTML = `<div class="loading-state"><span class="spinner"></span> Laddar...</div>`;
+
+        const params = new URLSearchParams();
+        params.set('page', String(page));
+        if (this.state.logs.filters.level) params.set('level', this.state.logs.filters.level);
+        if (this.state.logs.filters.category) params.set('category', this.state.logs.filters.category);
+        if (this.state.logs.filters.q) params.set('q', this.state.logs.filters.q);
+
+        const response = await apiRequest(`/admin/logs?${params.toString()}`);
+
+        if (!response.success) {
+            resultsContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta loggar.')}</div>`;
+            document.getElementById('log-pagination').innerHTML = '';
+            return;
+        }
+
+        this.state.logs.items = response.data.logs || [];
+        this.state.logs.pagination = response.data.pagination || { page: 1, per_page: 50, total: 0, total_pages: 1 };
+        this.state.logs.page = this.state.logs.pagination.page;
+
+        this.renderLogsTable(resultsContainer);
+        this.renderLogsPagination();
+    },
+
+    renderLogsTable(container) {
+        if (this.state.logs.items.length === 0) {
+            container.innerHTML = `<div class="empty-state"><h3>${escapeHtml(this.TAB_CONFIG.logs.emptyText)}</h3></div>`;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="table-scroll">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Tid</th>
+                            <th>Nivå</th>
+                            <th>Kategori</th>
+                            <th>Meddelande</th>
+                            <th>Användare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${this.state.logs.items.map((log) => this.renderLogRow(log)).join('')}
+                    </tbody>
+                </table>
+            </div>`;
+    },
+
+    renderLogRow(log) {
+        const levelLabel = this.LOG_LEVEL_LABELS[log.level] || log.level;
+        const categoryLabel = this.LOG_CATEGORY_LABELS[log.category] || log.category;
+
+        const stackTrace = log.stack_trace
+            ? `<details class="log-stack-trace"><summary>Stackspår</summary><pre>${escapeHtml(log.stack_trace)}</pre></details>`
+            : '';
+
+        return `
+            <tr>
+                <td>${escapeHtml(formatDateTime(log.created_at))}</td>
+                <td><span class="badge badge-log-${escapeHtml(log.level)}">${escapeHtml(levelLabel)}</span></td>
+                <td>${escapeHtml(categoryLabel)}</td>
+                <td class="log-message-cell">${escapeHtml(log.message)}${stackTrace}</td>
+                <td>${log.user_id ? escapeHtml(String(log.user_id)) : ''}</td>
+            </tr>`;
+    },
+
+    renderLogsPagination() {
+        const container = document.getElementById('log-pagination');
+        const { page, total, total_pages: totalPages } = this.state.logs.pagination;
+
+        if (total === 0) {
+            container.innerHTML = '';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="pagination">
+                <button class="btn btn-secondary btn-sm" type="button" id="log-prev-page" ${page <= 1 ? 'disabled' : ''}>Föregående</button>
+                <span class="pagination__info">Sida ${page} av ${totalPages} (${total} loggar)</span>
+                <button class="btn btn-secondary btn-sm" type="button" id="log-next-page" ${page >= totalPages ? 'disabled' : ''}>Nästa</button>
+            </div>`;
+
+        const prevBtn = document.getElementById('log-prev-page');
+        const nextBtn = document.getElementById('log-next-page');
+        if (prevBtn) prevBtn.addEventListener('click', () => this.loadLogs(page - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => this.loadLogs(page + 1));
     }
 };
