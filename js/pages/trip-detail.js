@@ -9,7 +9,11 @@ const TripDetailPage = {
 
     ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
 
-    state: { tripId: null, data: null, vessels: [], map: null, forceDelete: false },
+    state: {
+        tripId: null, data: null, vessels: [], map: null, forceDelete: false,
+        editDrawMaps: {}, editRoutes: {},
+        newRouteMode: 'windy', newRouteCoordinates: [], newRouteDrawMap: null
+    },
 
     async render(container, params) {
         this.state.tripId = params.tripId;
@@ -38,6 +42,14 @@ const TripDetailPage = {
     },
 
     renderPage(container) {
+        if (this.state.newRouteDrawMap) this.state.newRouteDrawMap.destroy();
+        Object.values(this.state.editDrawMaps).forEach((m) => m.destroy());
+        this.state.editDrawMaps = {};
+        this.state.editRoutes = {};
+        this.state.newRouteMode = 'windy';
+        this.state.newRouteCoordinates = [];
+        this.state.newRouteDrawMap = null;
+
         const { trip, vessel, crew, routes } = this.state.data;
         const graceLabel = CONFIG.GRACE_PERIOD_OPTIONS.find((g) => g.seconds === Number(trip.grace_period_seconds))?.label
             || `${Math.round(trip.grace_period_seconds / 3600)} tim`;
@@ -97,10 +109,11 @@ const TripDetailPage = {
                     <div id="trip-route-map" class="map-container"></div>
                     <hr class="section-divider">
                     <h3>Lägg till alternativ rutt</h3>
-                    <div class="field">
-                        <label for="new-route-windy-url">Windy-länk</label>
-                        <input type="url" id="new-route-windy-url" placeholder="https://www.windy.com/route-planner/boat/...">
+                    <div class="route-mode-toggle btn-group">
+                        <button type="button" class="btn btn-sm" id="new-route-mode-windy">Importera från Windy</button>
+                        <button type="button" class="btn btn-sm" id="new-route-mode-manual">Rita manuellt</button>
                     </div>
+                    <div id="new-route-body"></div>
                     <div class="field">
                         <label for="new-route-reason">Anledning (valfritt)</label>
                         <input type="text" id="new-route-reason" placeholder="t.ex. Om vinden vrider nordlig">
@@ -138,6 +151,64 @@ const TripDetailPage = {
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
         document.getElementById('add-route-btn').addEventListener('click', () => this.handleAddRoute());
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
+
+        document.getElementById('new-route-mode-windy').addEventListener('click', () => {
+            this.state.newRouteMode = 'windy';
+            this.renderNewRouteBody();
+        });
+        document.getElementById('new-route-mode-manual').addEventListener('click', () => {
+            this.state.newRouteMode = 'manual';
+            this.renderNewRouteBody();
+        });
+        this.renderNewRouteBody();
+    },
+
+    renderNewRouteBody() {
+        const container = document.getElementById('new-route-body');
+        if (!container) return;
+
+        document.getElementById('new-route-mode-windy').classList.toggle('btn-primary', this.state.newRouteMode !== 'manual');
+        document.getElementById('new-route-mode-windy').classList.toggle('btn-ghost', this.state.newRouteMode === 'manual');
+        document.getElementById('new-route-mode-manual').classList.toggle('btn-primary', this.state.newRouteMode === 'manual');
+        document.getElementById('new-route-mode-manual').classList.toggle('btn-ghost', this.state.newRouteMode !== 'manual');
+
+        if (this.state.newRouteDrawMap) {
+            this.state.newRouteDrawMap.destroy();
+            this.state.newRouteDrawMap = null;
+        }
+
+        if (this.state.newRouteMode === 'manual') {
+            container.innerHTML = `
+                <div class="field">
+                    <label>Rita rutt på kartan</label>
+                    <small class="text-muted">Klicka på kartan för att lägga till punkter. Dra en punkt för att flytta den, klicka på en punkt och välj "Ta bort punkt" för att radera den.</small>
+                    <div id="new-route-draw-map" class="map-container route-draw-map"></div>
+                    <div class="route-draw-footer">
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="new-route-draw-count">${this.state.newRouteCoordinates.length}</span> punkter</span>
+                        <button class="btn btn-ghost btn-sm" type="button" id="new-route-clear">Rensa rutt</button>
+                    </div>
+                </div>`;
+
+            this.state.newRouteDrawMap = renderRouteDrawMap(document.getElementById('new-route-draw-map'), {
+                initialCoordinates: this.state.newRouteCoordinates,
+                onChange: (coords) => {
+                    this.state.newRouteCoordinates = coords;
+                    document.getElementById('new-route-draw-count').textContent = coords.length;
+                }
+            });
+
+            document.getElementById('new-route-clear').addEventListener('click', () => {
+                this.state.newRouteCoordinates = [];
+                this.state.newRouteDrawMap?.clear();
+                document.getElementById('new-route-draw-count').textContent = '0';
+            });
+        } else {
+            container.innerHTML = `
+                <div class="field">
+                    <label for="new-route-windy-url">Windy-länk</label>
+                    <input type="url" id="new-route-windy-url" placeholder="https://www.windy.com/route-planner/boat/...">
+                </div>`;
+        }
     },
 
     async handleChangeVessel() {
@@ -268,14 +339,11 @@ const TripDetailPage = {
                         ${r.reason ? `<div class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(r.reason)}</div>` : ''}
                     </div>
                     <div class="route-item__edit" data-id="${r.id}" hidden>
-                        <div class="field">
-                            <label>Windy-länk</label>
-                            <input type="url" class="edit-route-windy-url" data-id="${r.id}" value="${escapeHtml(r.raw_windy_url || '')}">
+                        <div class="route-mode-toggle btn-group">
+                            <button type="button" class="btn btn-sm edit-mode-windy" data-id="${r.id}">Importera från Windy</button>
+                            <button type="button" class="btn btn-sm edit-mode-manual" data-id="${r.id}">Rita manuellt</button>
                         </div>
-                        <div class="field">
-                            <label>Anledning</label>
-                            <input type="text" class="edit-route-reason" data-id="${r.id}" value="${escapeHtml(r.reason || '')}">
-                        </div>
+                        <div class="route-edit-body" data-id="${r.id}"></div>
                         <div class="btn-group">
                             <button class="btn btn-primary btn-sm save-route-btn" type="button" data-id="${r.id}">Spara</button>
                             <button class="btn btn-ghost btn-sm cancel-route-edit-btn" type="button" data-id="${r.id}">Avbryt</button>
@@ -298,6 +366,19 @@ const TripDetailPage = {
             btn.addEventListener('click', () => {
                 list.querySelector(`.route-item__view[data-id="${btn.dataset.id}"]`).hidden = true;
                 list.querySelector(`.route-item__edit[data-id="${btn.dataset.id}"]`).hidden = false;
+                this.initRouteEditMode(btn.dataset.id, routes);
+            });
+        });
+        list.querySelectorAll('.edit-mode-windy').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                this.state.editRoutes[btn.dataset.id].mode = 'windy';
+                this.renderRouteEditBody(btn.dataset.id);
+            });
+        });
+        list.querySelectorAll('.edit-mode-manual').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                this.state.editRoutes[btn.dataset.id].mode = 'manual';
+                this.renderRouteEditBody(btn.dataset.id);
             });
         });
         list.querySelectorAll('.cancel-route-edit-btn').forEach((btn) => {
@@ -322,20 +403,106 @@ const TripDetailPage = {
         }
     },
 
+    initRouteEditMode(routeId, routes) {
+        if (!this.state.editRoutes[routeId]) {
+            const route = (routes || []).find((r) => r.id === routeId);
+            this.state.editRoutes[routeId] = {
+                mode: route?.raw_windy_url ? 'windy' : 'manual',
+                windyUrl: route?.raw_windy_url || '',
+                reason: route?.reason || '',
+                coordinates: parseWktLineString(route?.geometry_wkt)
+            };
+        }
+        this.renderRouteEditBody(routeId);
+    },
+
+    renderRouteEditBody(routeId) {
+        const editState = this.state.editRoutes[routeId];
+        const body = document.querySelector(`.route-edit-body[data-id="${routeId}"]`);
+        if (!body || !editState) return;
+
+        document.querySelector(`.edit-mode-windy[data-id="${routeId}"]`)?.classList.toggle('btn-primary', editState.mode !== 'manual');
+        document.querySelector(`.edit-mode-windy[data-id="${routeId}"]`)?.classList.toggle('btn-ghost', editState.mode === 'manual');
+        document.querySelector(`.edit-mode-manual[data-id="${routeId}"]`)?.classList.toggle('btn-primary', editState.mode === 'manual');
+        document.querySelector(`.edit-mode-manual[data-id="${routeId}"]`)?.classList.toggle('btn-ghost', editState.mode !== 'manual');
+
+        if (this.state.editDrawMaps[routeId]) {
+            this.state.editDrawMaps[routeId].destroy();
+            delete this.state.editDrawMaps[routeId];
+        }
+
+        if (editState.mode === 'manual') {
+            body.innerHTML = `
+                <div class="field">
+                    <label>Rita rutt på kartan</label>
+                    <small class="text-muted">Klicka på kartan för att lägga till punkter. Dra en punkt för att flytta den, klicka på en punkt och välj "Ta bort punkt" för att radera den.</small>
+                    <div id="edit-route-draw-map-${routeId}" class="map-container route-draw-map"></div>
+                    <div class="route-draw-footer">
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="edit-route-draw-count-${routeId}">${editState.coordinates.length}</span> punkter</span>
+                        <button class="btn btn-ghost btn-sm" type="button" id="edit-route-clear-${routeId}">Rensa rutt</button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Anledning</label>
+                    <input type="text" class="edit-route-reason" data-id="${routeId}" value="${escapeHtml(editState.reason || '')}">
+                </div>`;
+
+            this.state.editDrawMaps[routeId] = renderRouteDrawMap(document.getElementById(`edit-route-draw-map-${routeId}`), {
+                initialCoordinates: editState.coordinates,
+                onChange: (coords) => {
+                    editState.coordinates = coords;
+                    document.getElementById(`edit-route-draw-count-${routeId}`).textContent = coords.length;
+                }
+            });
+
+            document.getElementById(`edit-route-clear-${routeId}`).addEventListener('click', () => {
+                editState.coordinates = [];
+                this.state.editDrawMaps[routeId]?.clear();
+                document.getElementById(`edit-route-draw-count-${routeId}`).textContent = '0';
+            });
+        } else {
+            body.innerHTML = `
+                <div class="field">
+                    <label>Windy-länk</label>
+                    <input type="url" class="edit-route-windy-url" data-id="${routeId}" value="${escapeHtml(editState.windyUrl || '')}">
+                </div>
+                <div class="field">
+                    <label>Anledning</label>
+                    <input type="text" class="edit-route-reason" data-id="${routeId}" value="${escapeHtml(editState.reason || '')}">
+                </div>`;
+
+            document.querySelector(`.edit-route-windy-url[data-id="${routeId}"]`)
+                .addEventListener('input', (e) => { editState.windyUrl = e.target.value; });
+        }
+
+        document.querySelector(`.edit-route-reason[data-id="${routeId}"]`)
+            ?.addEventListener('input', (e) => { editState.reason = e.target.value; });
+    },
+
     async handleAddRoute() {
         const alertBox = document.getElementById('routes-alert');
-        const windyUrl = document.getElementById('new-route-windy-url').value.trim();
         const reason = document.getElementById('new-route-reason').value.trim();
 
-        const urlError = Validate.windyUrl(windyUrl);
-        if (urlError) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
-            return;
+        let body;
+        if (this.state.newRouteMode === 'manual') {
+            if (this.state.newRouteCoordinates.length < 2) {
+                alertBox.innerHTML = `<div class="alert alert-error">Rita minst två punkter för rutten.</div>`;
+                return;
+            }
+            body = { coordinates: this.state.newRouteCoordinates, reason: reason || null };
+        } else {
+            const windyUrl = document.getElementById('new-route-windy-url').value.trim();
+            const urlError = Validate.windyUrl(windyUrl);
+            if (urlError) {
+                alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
+                return;
+            }
+            body = { windy_url: windyUrl, reason: reason || null };
         }
 
         const response = await apiRequest(`/trips/${this.state.tripId}/routes`, {
             method: 'POST',
-            body: JSON.stringify({ windy_url: windyUrl, reason: reason || null })
+            body: JSON.stringify(body)
         });
 
         if (!response.success) {
@@ -350,18 +517,29 @@ const TripDetailPage = {
 
     async handleSaveRoute(routeId) {
         const alertBox = document.getElementById('routes-alert');
-        const windyUrl = document.querySelector(`.edit-route-windy-url[data-id="${routeId}"]`).value.trim();
-        const reason = document.querySelector(`.edit-route-reason[data-id="${routeId}"]`).value.trim();
+        const editState = this.state.editRoutes[routeId];
+        const reason = (document.querySelector(`.edit-route-reason[data-id="${routeId}"]`)?.value ?? editState.reason ?? '').trim();
 
-        const urlError = Validate.windyUrl(windyUrl);
-        if (urlError) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
-            return;
+        let body;
+        if (editState.mode === 'manual') {
+            if (editState.coordinates.length < 2) {
+                alertBox.innerHTML = `<div class="alert alert-error">Rita minst två punkter för rutten.</div>`;
+                return;
+            }
+            body = { coordinates: editState.coordinates, reason: reason || null };
+        } else {
+            const windyUrl = document.querySelector(`.edit-route-windy-url[data-id="${routeId}"]`).value.trim();
+            const urlError = Validate.windyUrl(windyUrl);
+            if (urlError) {
+                alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
+                return;
+            }
+            body = { windy_url: windyUrl, reason: reason || null };
         }
 
         const response = await apiRequest(`/routes/${routeId}`, {
             method: 'PUT',
-            body: JSON.stringify({ windy_url: windyUrl, reason: reason || null })
+            body: JSON.stringify(body)
         });
 
         if (!response.success) {

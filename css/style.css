@@ -778,6 +778,22 @@ ul { margin: 0; padding: 0; list-style: none; }
     background: var(--color-primary-light);
 }
 
+.route-mode-toggle {
+    margin-bottom: var(--space-2);
+}
+
+.route-draw-map {
+    height: 280px;
+    cursor: crosshair;
+}
+
+.route-draw-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-2);
+}
+
 /* ==================== Change log ==================== */
 
 .change-log {

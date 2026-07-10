@@ -76,3 +76,86 @@ function renderRouteMap(containerEl, routes) {
 
     return map;
 }
+
+/**
+ * Render an interactive Leaflet map for manually drawing a route: click to
+ * add a waypoint, drag a waypoint to move it, click a waypoint and confirm
+ * the popup to delete it. Returns a controller object; call destroy() when
+ * the containing UI is torn down.
+ *
+ * options: { initialCoordinates: [[lat, lon], ...], color, onChange(coords) }
+ */
+function renderRouteDrawMap(containerEl, options = {}) {
+    if (typeof L === 'undefined' || !containerEl) return null;
+
+    const { initialCoordinates = [], color = '#1e88a8', onChange = () => {} } = options;
+
+    const map = L.map(containerEl).setView([56, 12], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(map);
+
+    const coordinates = [];
+    const markers = [];
+    const polyline = L.polyline([], { color, weight: 4 }).addTo(map);
+
+    function notify() {
+        polyline.setLatLngs(coordinates);
+        onChange(coordinates.map((c) => [...c]));
+    }
+
+    function removeWaypoint(marker) {
+        const index = markers.indexOf(marker);
+        if (index === -1) return;
+        map.removeLayer(marker);
+        markers.splice(index, 1);
+        coordinates.splice(index, 1);
+        notify();
+    }
+
+    function addWaypoint(lat, lon) {
+        const marker = L.marker([lat, lon], { draggable: true }).addTo(map);
+        markers.push(marker);
+        coordinates.push([lat, lon]);
+
+        marker.on('drag', () => {
+            const ll = marker.getLatLng();
+            coordinates[markers.indexOf(marker)] = [ll.lat, ll.lng];
+            polyline.setLatLngs(coordinates);
+        });
+        marker.on('dragend', () => notify());
+
+        const popupEl = document.createElement('button');
+        popupEl.type = 'button';
+        popupEl.className = 'btn btn-danger btn-sm';
+        popupEl.textContent = 'Ta bort punkt';
+        popupEl.addEventListener('click', () => {
+            marker.closePopup();
+            removeWaypoint(marker);
+        });
+        marker.bindPopup(popupEl);
+
+        notify();
+    }
+
+    map.on('click', (e) => addWaypoint(e.latlng.lat, e.latlng.lng));
+
+    initialCoordinates.forEach(([lat, lon]) => addWaypoint(lat, lon));
+
+    if (coordinates.length) {
+        map.fitBounds(coordinates, { padding: [24, 24] });
+    }
+
+    return {
+        getCoordinates: () => coordinates.map((c) => [...c]),
+        clear() {
+            markers.splice(0).forEach((m) => map.removeLayer(m));
+            coordinates.length = 0;
+            notify();
+        },
+        destroy() {
+            map.remove();
+        }
+    };
+}

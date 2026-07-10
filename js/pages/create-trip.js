@@ -3,13 +3,16 @@ const CreateTripPage = {
 
     state: {
         vessels: [],
-        routes: [{ windyUrl: '', reason: '' }],
-        map: null
+        routes: [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [] }],
+        map: null,
+        drawMaps: {}
     },
 
     async render(container) {
-        this.state.routes = [{ windyUrl: '', reason: '' }];
+        this.state.routes = [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [] }];
         this.state.map = null;
+        Object.values(this.state.drawMaps).forEach((m) => m.destroy());
+        this.state.drawMaps = {};
 
         container.innerHTML = `
             <div class="page page--narrow" style="max-width: 640px;">
@@ -60,7 +63,7 @@ const CreateTripPage = {
             </div>`;
 
         document.getElementById('add-route-btn').addEventListener('click', () => {
-            this.state.routes.push({ windyUrl: '', reason: '' });
+            this.state.routes.push({ mode: 'windy', windyUrl: '', reason: '', coordinates: [] });
             this.renderRoutes();
         });
         document.getElementById('create-trip-submit').addEventListener('click', () => this.handleSubmit());
@@ -232,6 +235,9 @@ const CreateTripPage = {
     },
 
     renderRoutes() {
+        Object.values(this.state.drawMaps).forEach((m) => m.destroy());
+        this.state.drawMaps = {};
+
         const routesContainer = document.getElementById('routes-container');
 
         routesContainer.innerHTML = this.state.routes.map((route, i) => `
@@ -245,11 +251,25 @@ const CreateTripPage = {
                         ${i > 0 ? `<button class="btn btn-ghost btn-sm" type="button" data-remove="${i}">Ta bort</button>` : ''}
                     </div>
                 </div>
+                <div class="route-mode-toggle btn-group">
+                    <button type="button" class="btn btn-sm ${route.mode !== 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="windy" data-index="${i}">Importera från Windy</button>
+                    <button type="button" class="btn btn-sm ${route.mode === 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="manual" data-index="${i}">Rita manuellt</button>
+                </div>
+                ${route.mode === 'manual' ? `
+                <div class="field">
+                    <label>Rita rutt på kartan</label>
+                    <small class="text-muted">Klicka på kartan för att lägga till punkter. Dra en punkt för att flytta den, klicka på en punkt och välj "Ta bort punkt" för att radera den.</small>
+                    <div id="route-draw-map-${i}" class="map-container route-draw-map"></div>
+                    <div class="route-draw-footer">
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="route-draw-count-${i}">${route.coordinates.length}</span> punkter</span>
+                        <button class="btn btn-ghost btn-sm" type="button" data-clear-route="${i}">Rensa rutt</button>
+                    </div>
+                </div>` : `
                 <div class="field">
                     <label>Windy-länk</label>
                     <input type="url" class="route-windy-url" data-index="${i}" value="${escapeHtml(route.windyUrl)}"
                            placeholder="https://www.windy.com/route-planner/boat/...">
-                </div>
+                </div>`}
                 ${i > 0 ? `
                 <div class="field">
                     <label>Anledning</label>
@@ -274,7 +294,6 @@ const CreateTripPage = {
             btn.addEventListener('click', (e) => {
                 this.state.routes.splice(Number(e.target.dataset.remove), 1);
                 this.renderRoutes();
-                this.updateMapPreview();
             });
         });
         routesContainer.querySelectorAll('[data-move-up]').forEach((btn) => {
@@ -289,8 +308,47 @@ const CreateTripPage = {
                 this.moveRoute(i, i + 1);
             });
         });
+        routesContainer.querySelectorAll('[data-mode]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const i = Number(e.target.dataset.index);
+                const mode = e.target.dataset.mode;
+                if (this.state.routes[i].mode === mode) return;
+                this.state.routes[i].mode = mode;
+                this.renderRoutes();
+            });
+        });
+        routesContainer.querySelectorAll('[data-clear-route]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const i = Number(e.target.dataset.clearRoute);
+                this.state.routes[i].coordinates = [];
+                this.state.drawMaps[i]?.clear();
+                document.getElementById(`route-draw-count-${i}`).textContent = '0';
+                this.updateMapPreview();
+            });
+        });
+
+        this.state.routes.forEach((route, i) => {
+            if (route.mode === 'manual') this.initDrawMap(i);
+        });
 
         this.updateMapPreview();
+    },
+
+    initDrawMap(i) {
+        const container = document.getElementById(`route-draw-map-${i}`);
+        if (!container) return;
+        const route = this.state.routes[i];
+
+        this.state.drawMaps[i] = renderRouteDrawMap(container, {
+            initialCoordinates: route.coordinates,
+            color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length],
+            onChange: (coords) => {
+                route.coordinates = coords;
+                const countEl = document.getElementById(`route-draw-count-${i}`);
+                if (countEl) countEl.textContent = coords.length;
+                this.updateMapPreview();
+            }
+        });
     },
 
     moveRoute(from, to) {
@@ -303,7 +361,6 @@ const CreateTripPage = {
             routes[0].reason = '';
         }
         this.renderRoutes();
-        this.updateMapPreview();
     },
 
     updateMapPreview() {
@@ -315,8 +372,8 @@ const CreateTripPage = {
         mapEl.innerHTML = '';
 
         const routes = this.state.routes
-            .map((r) => parseWindyUrl(r.windyUrl))
-            .map((coords, i) => coords ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null)
+            .map((r) => r.mode === 'manual' ? r.coordinates : parseWindyUrl(r.windyUrl))
+            .map((coords, i) => (coords && coords.length > 1) ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null)
             .filter(Boolean);
 
         if (routes.length === 0) return;
@@ -347,15 +404,25 @@ const CreateTripPage = {
             return;
         }
 
-        const primaryUrlError = Validate.windyUrl(this.state.routes[0].windyUrl);
-        if (primaryUrlError) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(primaryUrlError)}</div>`;
-            return;
+        const primaryRoute = this.state.routes[0];
+        if (primaryRoute.mode === 'manual') {
+            if (primaryRoute.coordinates.length < 2) {
+                alertBox.innerHTML = `<div class="alert alert-error">Rita minst två punkter för huvudrutten.</div>`;
+                return;
+            }
+        } else {
+            const primaryUrlError = Validate.windyUrl(primaryRoute.windyUrl);
+            if (primaryUrlError) {
+                alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(primaryUrlError)}</div>`;
+                return;
+            }
         }
 
         const routes = this.state.routes
-            .filter((r) => r.windyUrl.trim())
-            .map((r) => ({ windy_url: r.windyUrl.trim(), reason: r.reason.trim() || null }));
+            .filter((r) => r.mode === 'manual' ? r.coordinates.length >= 2 : r.windyUrl.trim())
+            .map((r) => r.mode === 'manual'
+                ? { coordinates: r.coordinates, reason: r.reason.trim() || null }
+                : { windy_url: r.windyUrl.trim(), reason: r.reason.trim() || null });
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="spinner"></span> Skapar resa...';
