@@ -187,7 +187,6 @@ const AdminPage = {
                             <th>Ankomst</th>
                             <th>Resestatus</th>
                             <th>Ordning</th>
-                            <th>Sträcka</th>
                             <th>Skapad</th>
                         </tr>
                     </thead>
@@ -199,7 +198,6 @@ const AdminPage = {
     },
 
     renderRouteRow(route) {
-        const distanceKm = route.distance_meters != null ? (route.distance_meters / 1000).toFixed(1) + ' km' : '–';
         return `
             <tr>
                 <td>${escapeHtml(route.skipper_name || '')}<br><span class="page-header__meta">${escapeHtml(route.skipper_email || '')}</span></td>
@@ -207,7 +205,6 @@ const AdminPage = {
                 <td>${escapeHtml(formatDateTime(route.arrival_scheduled))}</td>
                 <td>${route.trip_status ? `<span class="badge badge-${escapeHtml(route.trip_status)}">${escapeHtml(route.trip_status)}</span>` : ''}</td>
                 <td>${escapeHtml(String(route.route_order ?? ''))}</td>
-                <td>${escapeHtml(distanceKm)}</td>
                 <td>${escapeHtml(formatDateTime(route.created_at))}</td>
             </tr>`;
     },
