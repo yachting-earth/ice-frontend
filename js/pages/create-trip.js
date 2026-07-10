@@ -371,12 +371,23 @@ const CreateTripPage = {
         }
         mapEl.innerHTML = '';
 
+        // Manual-mode routes already have their own dedicated drawing map
+        // rendered above (see initDrawMap) - only Windy-imported routes go
+        // into this combined overview, otherwise a manually drawn route
+        // would be rendered on two maps at once.
         const routes = this.state.routes
-            .map((r) => r.mode === 'manual' ? r.coordinates : parseWindyUrl(r.windyUrl))
-            .map((coords, i) => (coords && coords.length > 1) ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null)
+            .map((r, i) => {
+                if (r.mode === 'manual') return null;
+                const coords = parseWindyUrl(r.windyUrl);
+                return (coords && coords.length > 1) ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null;
+            })
             .filter(Boolean);
 
-        if (routes.length === 0) return;
+        if (routes.length === 0) {
+            mapEl.hidden = true;
+            return;
+        }
+        mapEl.hidden = false;
         this.state.map = renderRouteMap(mapEl, routes);
     },
 
