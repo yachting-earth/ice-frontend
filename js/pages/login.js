@@ -57,7 +57,8 @@ const LoginPage = {
                 name: response.data.name,
                 email: response.data.email,
                 picture: response.data.picture,
-                is_admin: response.data.is_admin
+                is_admin: response.data.is_admin,
+                email_verified: response.data.email_verified
             });
             location.hash = '#/dashboard';
             return;

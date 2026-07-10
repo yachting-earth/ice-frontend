@@ -22,6 +22,7 @@ const DashboardPage = {
                     </div>
                     <a class="btn btn-primary" href="#/trips/new">+ Skapa ny resa</a>
                 </div>
+                <div id="email-verify-warning"></div>
                 <div id="ice-contact-warning"></div>
                 <div class="trip-filters" id="trip-filters"></div>
                 <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> Laddar resor...</div></div>
@@ -36,6 +37,55 @@ const DashboardPage = {
 
         await this.loadTrips();
         this.checkIceContacts();
+        this.checkEmailVerified();
+    },
+
+    // Read verification state fresh from the server (the stored session flag
+    // can be stale after verifying in another tab) and nag until confirmed.
+    async checkEmailVerified() {
+        const response = await apiRequest('/user/profile');
+        if (!response.success) return;
+
+        const verified = !!response.data.email_verified;
+        Auth.updateUser({ email_verified: verified });
+
+        const box = document.getElementById('email-verify-warning');
+        if (!box || verified) return;
+
+        box.innerHTML = `
+            <div class="alert alert-warning">
+                Bekräfta din e-postadress (<strong>${escapeHtml(response.data.email || '')}</strong>)
+                för att kunna skapa resor och lägga till båtar. Kontrollera din inkorg efter länken.
+                <button class="btn btn-sm btn-secondary" type="button" id="resend-verify-btn"
+                        style="margin-left: var(--space-2);">Skicka länken igen</button>
+            </div>`;
+
+        document.getElementById('resend-verify-btn').addEventListener('click', () => this.resendVerification());
+    },
+
+    async resendVerification() {
+        const btn = document.getElementById('resend-verify-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Skickar...';
+
+        const response = await apiRequest('/auth/resend-verification', { method: 'POST' });
+
+        if (response.success && response.data.already_verified) {
+            // Verified elsewhere in the meantime - drop the banner.
+            Auth.updateUser({ email_verified: true });
+            document.getElementById('email-verify-warning').innerHTML = '';
+            showToast('Din e-postadress är redan bekräftad.', 'success');
+            return;
+        }
+
+        if (response.success && response.data.verification_sent) {
+            showToast('En ny verifieringslänk har skickats.', 'success');
+        } else {
+            showToast('Kunde inte skicka länken just nu. Försök igen senare.', 'error');
+        }
+
+        btn.disabled = false;
+        btn.textContent = 'Skicka länken igen';
     },
 
     async checkIceContacts() {

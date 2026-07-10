@@ -8,26 +8,33 @@ const Auth = {
         userName: 'user_name',
         userEmail: 'user_email',
         userPicture: 'user_picture',
-        userIsAdmin: 'user_is_admin'
+        userIsAdmin: 'user_is_admin',
+        userEmailVerified: 'user_email_verified'
     },
 
-    setSession({ auth_token, user_id, name, email, picture, is_admin }) {
+    setSession({ auth_token, user_id, name, email, picture, is_admin, email_verified }) {
         localStorage.setItem(this.KEYS.token, auth_token);
         localStorage.setItem(this.KEYS.userId, user_id);
         if (name) localStorage.setItem(this.KEYS.userName, name);
         if (email) localStorage.setItem(this.KEYS.userEmail, email);
         if (picture) localStorage.setItem(this.KEYS.userPicture, picture);
         localStorage.setItem(this.KEYS.userIsAdmin, is_admin ? '1' : '0');
+        // Defaults to verified when the field is absent (login response, or
+        // an older session) so we never nag an established account by mistake.
+        localStorage.setItem(this.KEYS.userEmailVerified, email_verified === false ? '0' : '1');
     },
 
     getToken() {
         return localStorage.getItem(this.KEYS.token);
     },
 
-    updateUser({ name, email, picture } = {}) {
+    updateUser({ name, email, picture, email_verified } = {}) {
         if (name !== undefined) localStorage.setItem(this.KEYS.userName, name);
         if (email !== undefined) localStorage.setItem(this.KEYS.userEmail, email);
         if (picture !== undefined) localStorage.setItem(this.KEYS.userPicture, picture);
+        if (email_verified !== undefined) {
+            localStorage.setItem(this.KEYS.userEmailVerified, email_verified ? '1' : '0');
+        }
     },
 
     getUser() {
@@ -36,7 +43,8 @@ const Auth = {
             name: localStorage.getItem(this.KEYS.userName),
             email: localStorage.getItem(this.KEYS.userEmail),
             picture: localStorage.getItem(this.KEYS.userPicture),
-            isAdmin: localStorage.getItem(this.KEYS.userIsAdmin) === '1'
+            isAdmin: localStorage.getItem(this.KEYS.userIsAdmin) === '1',
+            emailVerified: localStorage.getItem(this.KEYS.userEmailVerified) !== '0'
         };
     },
 

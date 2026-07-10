@@ -201,8 +201,24 @@ const ProfilePage = {
         }
 
         this.state.user = response.data;
+        // response.data.email is still the CURRENT address - a changed email
+        // only lands after the link mailed to the new address is clicked.
         Auth.updateUser({ name: response.data.name, email: response.data.email });
         renderTopbar();
+
+        if (response.data.email_change_pending) {
+            // Reset the field back to the current address so it doesn't look
+            // like the change already took effect.
+            const emailInput = document.getElementById('profile-email');
+            if (emailInput) emailInput.value = response.data.email || '';
+            alertBox.innerHTML = `
+                <div class="alert alert-info">
+                    En bekräftelselänk har skickats till <strong>${escapeHtml(response.data.pending_email || '')}</strong>.
+                    Din e-postadress ändras först när du klickat på länken. Vi har även meddelat din nuvarande adress.
+                </div>`;
+            return;
+        }
+
         alertBox.innerHTML = '';
         showToast('Dina uppgifter har uppdaterats.', 'success');
     },

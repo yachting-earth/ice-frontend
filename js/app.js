@@ -19,6 +19,7 @@ const Router = {
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
         { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true },
         { pattern: '#/crew-join', page: CrewInvitePage },
+        { pattern: '#/verify-email', page: VerifyEmailPage },
         { pattern: '#/ice-confirm', page: IceConfirmPage },
         { pattern: '#/ice-portal', page: IcePortalPage },
         { pattern: '#/sar', page: SarPage }
