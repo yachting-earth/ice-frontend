@@ -433,7 +433,7 @@ const AdminPage = {
                 <td><span class="badge badge-log-${escapeHtml(log.level)}">${escapeHtml(levelLabel)}</span></td>
                 <td>${escapeHtml(categoryLabel)}</td>
                 <td class="log-message-cell">${escapeHtml(log.message)}${stackTrace}</td>
-                <td>${log.user_id ? escapeHtml(String(log.user_id)) : ''}</td>
+                <td>${log.user_id ? escapeHtml(log.user_email || String(log.user_id)) : ''}</td>
             </tr>`;
     },
 
