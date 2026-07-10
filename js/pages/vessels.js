@@ -267,6 +267,10 @@ const VesselsPage = {
 
         const vessel = response.data;
 
+        if (vessel.mmsi_notice?.already_registered_elsewhere) {
+            showToast('Detta MMSI-nummer finns redan registrerat i systemet.', 'info');
+        }
+
         if (this.state.photoFile) {
             const formData = new FormData();
             formData.append('photo', this.state.photoFile);

@@ -210,6 +210,10 @@ const CreateTripPage = {
 
         let vessel = response.data;
 
+        if (vessel.mmsi_notice?.already_registered_elsewhere) {
+            showToast('Detta MMSI-nummer finns redan registrerat i systemet.', 'info');
+        }
+
         if (photoFile) {
             const formData = new FormData();
             formData.append('photo', photoFile);
@@ -372,6 +376,10 @@ const CreateTripPage = {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Skapa resa';
             return;
+        }
+
+        if (response.data.schedule_notice?.conflicting_trip_exists) {
+            showToast('Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.', 'info');
         }
 
         showToast('Resa skapad', 'success');

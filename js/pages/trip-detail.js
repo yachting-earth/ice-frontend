@@ -163,6 +163,10 @@ const TripDetailPage = {
             return;
         }
 
+        if (response.data.schedule_notice?.conflicting_trip_exists) {
+            showToast('Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.', 'info');
+        }
+
         showToast('Båten har bytts.', 'success');
         await this.load(document.getElementById('page-content'));
     },
@@ -509,7 +513,10 @@ const TripDetailPage = {
     async handleActivate() {
         const response = await apiRequest(`/trips/${this.state.tripId}/activate`, { method: 'POST' });
         if (!response.success) {
-            document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error)}</div>`;
+            const message = response.code === 'MMSI_ALREADY_ACTIVE'
+                ? 'Resan kan inte aktiveras — ett annat aktivt resa använder redan detta MMSI-nummer.'
+                : response.error;
+            document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(message)}</div>`;
             return;
         }
         showToast('Resan är aktiverad', 'success');
