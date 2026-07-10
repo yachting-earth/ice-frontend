@@ -1,0 +1,771 @@
+/**
+ * Global I18n object + t() helper.
+ *
+ * English (en) is the fallback/reference language - bundled inline below so
+ * first render never flashes raw keys even if the fetch for a non-fallback
+ * language is slow or fails. Swedish (sv) and any future language are
+ * fetched from frontend/i18n/{lang}.json (same origin, no CORS).
+ *
+ * Adding a language: copy frontend/i18n/en.json -> xx.json, translate the
+ * values, and add 'xx' to I18n.SUPPORTED below. See frontend/i18n/README.md.
+ */
+const EN_INLINE = {
+  "common": {
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "loading": "Loading…",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "phone": "Phone",
+    "optional": "(optional)",
+    "gracePeriod": {
+      "h1": "1 hour",
+      "h4": "4 hours",
+      "h12": "12 hours",
+      "h24": "24 hours",
+      "h48": "48 hours"
+    }
+  },
+  "errors": {
+    "AUTH_REQUIRED": "You must log in again.",
+    "AUTH_INVALID": "Incorrect email or password.",
+    "ACCESS_DENIED": "You don't have access to this.",
+    "VALIDATION_ERROR": "Check the highlighted fields.",
+    "INVALID_EMAIL": "Invalid email address.",
+    "INVALID_PHONE": "Invalid phone number.",
+    "ACCOUNT_REQUIRED": "An account is required for this.",
+    "PASSWORD_WEAK": "Password is too weak.",
+    "EMAIL_NOT_VERIFIED": "Please verify your email address first.",
+    "VERIFICATION_INVALID": "The verification link is invalid.",
+    "VERIFICATION_EXPIRED": "The verification link has expired.",
+    "NOT_FOUND": "Not found.",
+    "RESOURCE_CONFLICT": "This already exists.",
+    "MMSI_ALREADY_ACTIVE": "There is already an active trip for this vessel.",
+    "INVALID_ETA": "Invalid arrival time.",
+    "NOTIFICATION_FAILED": "Failed to send the notification.",
+    "SERVER_ERROR": "An unexpected error occurred.",
+    "DATABASE_ERROR": "A database error occurred.",
+    "RATE_LIMITED": "Too many attempts. Try again later.",
+    "NETWORK_ERROR": "Could not reach the server. Check your connection.",
+    "PARSE_ERROR": "Invalid response from the server.",
+    "UNKNOWN": "An unexpected error occurred."
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "passwordNeedsUppercase": "Password must contain at least one uppercase letter",
+    "passwordNeedsNumber": "Password must contain at least one number",
+    "nameRequired": "Name is required",
+    "nameTooShort": "Name must be at least 2 characters",
+    "phoneRequired": "Phone number is required",
+    "phoneInvalid": "Invalid phone number (use international format, e.g. +46701234567)",
+    "windyUrlRequired": "Windy link is required",
+    "windyUrlInvalid": "Invalid Windy link. Must be from windy.com/route-planner",
+    "vesselYearInvalid": "Model year must be a whole number between 1900 and {maxYear}",
+    "vesselDimensionInvalid": "{label} must be a positive number in metres (max 200)"
+  },
+  "trip": {
+    "status": {
+      "all": "All",
+      "draft": "Draft",
+      "published": "Published",
+      "active": "Active",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "app": {
+    "brand": "Yachting Earth",
+    "nav": {
+      "myTrips": "My trips",
+      "myVessels": "My vessels",
+      "iceContacts": "ICE contacts",
+      "myIceAccount": "My ICE account",
+      "admin": "Admin",
+      "logout": "Log out",
+      "sar": "SAR"
+    },
+    "toggleNav": "Toggle navigation menu",
+    "profileBadgeTitle": "{name} - My page",
+    "renderError": "Something went wrong showing this page. Try reloading."
+  },
+  "dashboard": {
+    "title": "My trips",
+    "subtitle": "Overview of all your planned and ongoing trips",
+    "newTrip": "+ New trip",
+    "loadingTrips": "Loading trips…",
+    "loadFailed": "Could not fetch trips.",
+    "emptyTitle": "No trips yet",
+    "emptyBody": "Create your first trip to get started.",
+    "verifyEmailBanner": "Confirm your email address (<strong>{email}</strong>) to be able to create trips and add vessels. Check your inbox for the link.",
+    "resendLink": "Resend the link",
+    "resending": "Sending…",
+    "alreadyVerified": "Your email address is already confirmed.",
+    "verificationResent": "A new verification link has been sent.",
+    "verificationResendFailed": "Could not send the link right now. Try again later.",
+    "noIceContact": "You don't have an ICE contact yet — without one, no one can be alerted if your trip isn't confirmed in time.",
+    "addIceContact": "Add an ICE contact",
+    "vesselFallback": "Vessel #{id}",
+    "departure": "Departure: {datetime}",
+    "arrival": "Arrival: {datetime}",
+    "grace": "Grace period: {label}",
+    "graceHours": "{hours} h",
+    "iceNotified": "⚠ ICE contact notified",
+    "view": "View"
+  },
+  "login": {
+    "tagline": "Safe voyage, safe return",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "submit": "Log in",
+    "submitting": "Logging in…",
+    "noAccount": "No account?",
+    "registerLink": "Register",
+    "errorDefault": "Login failed."
+  },
+  "register": {
+    "tagline": "Create account",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone (optional)",
+    "phonePlaceholder": "+46701234567",
+    "passwordLabel": "Password",
+    "passwordHint": "At least 8 characters, one uppercase letter and one number.",
+    "confirmPasswordLabel": "Confirm password",
+    "submit": "Create account",
+    "submitting": "Creating account…",
+    "haveAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "passwordMismatch": "Passwords don't match",
+    "errorDefault": "Could not create the account."
+  },
+  "verifyEmail": {
+    "noToken": "No verification link found. Check that you clicked the whole link.",
+    "backToStart": "Back to start",
+    "confirming": "Confirming your email address…",
+    "failedTitle": "Verification failed",
+    "emailTaken": "The new email address is already in use by another account.",
+    "linkInvalid": "The link is invalid or has expired.",
+    "toOverview": "To your overview",
+    "toLogin": "To login",
+    "changedTitle": "Email address updated",
+    "confirmedTitle": "Email address confirmed",
+    "changedBody": "Your email address has been changed to <strong>{email}</strong>.",
+    "confirmedBody": "Thank you! Your account is now confirmed and you have full access to Yachting Earth."
+  },
+  "profile": {
+    "title": "My page",
+    "subtitle": "View and manage your account details",
+    "photoHeading": "Photo",
+    "photoChangeLabel": "Change photo (optional)",
+    "photoHint": "Used by search and rescue to identify you as skipper. JPEG/PNG, max 10 MB.",
+    "photoSubmit": "Save photo",
+    "photoSaving": "Saving…",
+    "photoChooseFirst": "Choose an image first.",
+    "photoSaveFailed": "Could not save the photo.",
+    "photoSaved": "The photo has been saved.",
+    "detailsHeading": "My details",
+    "loadingDetails": "Loading your details…",
+    "loadFailed": "Could not fetch your details.",
+    "nameLabel": "Name",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "languageLabel": "Language",
+    "submit": "Save changes",
+    "saveFailed": "Could not save the changes.",
+    "emailChangePending": "A confirmation link has been sent to <strong>{email}</strong>. Your email address only changes once you click the link. We've also notified your current address.",
+    "saved": "Your details have been updated.",
+    "deleteHeading": "Delete account",
+    "deleteWarning": "Deleting your account permanently removes your vessels and ICE contacts, and ends your trips. This cannot be undone.",
+    "deleteButton": "Delete my account",
+    "deletePasswordLabel": "Confirm with your password",
+    "deleteConfirmButton": "Delete permanently",
+    "deleteCancelButton": "Cancel",
+    "passwordRequired": "Enter your password to confirm.",
+    "deleteFailed": "Could not delete the account.",
+    "deleted": "Your account has been deleted."
+  },
+  "createTrip": {
+    "title": "Create new trip",
+    "submit": "Create trip",
+    "submitting": "Creating trip…",
+    "scheduleConflictNotice": "Note: another trip with the same MMSI number is already scheduled during an overlapping time period.",
+    "created": "Trip created",
+    "vessel": {
+      "heading": "Vessel",
+      "loading": "Loading vessels…",
+      "selectLabel": "Select vessel",
+      "mmsiSuffix": " (MMSI {mmsi})",
+      "noneRegistered": "You don't have any registered vessels yet. Add one below.",
+      "addNew": "+ Add new vessel",
+      "nameLabel": "Vessel name",
+      "namePlaceholder": "e.g. Thrym",
+      "mmsiLabel": "MMSI (optional)",
+      "callSignLabel": "Call sign (optional)",
+      "modelLabel": "Model (optional)",
+      "modelPlaceholder": "e.g. Bavaria 34",
+      "yearLabel": "Model year (optional)",
+      "yearPlaceholder": "e.g. 2011",
+      "lengthLabel": "Length, metres (optional)",
+      "widthLabel": "Width, metres (optional)",
+      "draftLabel": "Draft, metres (optional)",
+      "notesLabel": "Notes (optional)",
+      "notesPlaceholder": "Other information about the boat",
+      "photoLabel": "Vessel photo (optional)",
+      "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
+      "saveButton": "Save vessel",
+      "saveFailed": "Could not save the vessel.",
+      "mmsiAlreadyRegistered": "This MMSI number is already registered in the system.",
+      "photoUploadFailed": "The vessel was saved, but the photo could not be uploaded ({error})",
+      "unknownError": "unknown error",
+      "added": "Vessel added",
+      "length": "Length",
+      "width": "Width",
+      "draft": "Draft"
+    },
+    "schedule": {
+      "heading": "Schedule",
+      "departureLabel": "Departure (UTC)",
+      "arrivalLabel": "Planned arrival (UTC)",
+      "gracePeriodLabel": "Grace period before the ICE contact is alerted",
+      "gracePeriodHint": "Time after the planned arrival before the ICE contact is notified if you haven't verified your arrival."
+    },
+    "routes": {
+      "heading": "Routes",
+      "addAlternative": "+ Add alternative route",
+      "primary": "Primary route",
+      "alternative": "Alternative route {index}",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "modeWindy": "Import from Windy",
+      "modeManual": "Draw manually",
+      "drawLabel": "Draw the route on the map",
+      "drawHint": "Click the map to add points. Drag a point to move it, click a point and choose \"Remove point\" to delete it.",
+      "points": "points",
+      "clear": "Clear route",
+      "windyUrlLabel": "Windy link",
+      "windyUrlPlaceholder": "https://www.windy.com/route-planner/boat/...",
+      "reasonLabel": "Reason",
+      "reasonPlaceholder": "e.g. If the wind turns northerly"
+    },
+    "errors": {
+      "vesselRequired": "Select or add a vessel.",
+      "datesRequired": "Enter both departure and arrival times.",
+      "arrivalBeforeDeparture": "The arrival time must be after the departure time.",
+      "primaryRouteMinPoints": "Draw at least two points for the primary route.",
+      "createFailed": "Could not create the trip."
+    }
+  },
+  "crewInvite": {
+    "noToken": "No invitation link found. Check that you clicked the whole link.",
+    "loading": "Loading invitation...",
+    "invalidInvite": "The invitation is invalid or has expired.",
+    "backToStart": "Back to start",
+    "accountSection": {
+      "loggedIn": "You are logged in as <strong>{name}</strong> - the invitation will be linked to your account.",
+      "saveAccountLabel": "Save my account so I can log in later{emailSuffix}",
+      "passwordHint": "At least 8 characters, one uppercase letter and one number.",
+      "confirmPasswordLabel": "Confirm password",
+      "haveAccount": "Already have an account? {loginLink} and open the link again so the invitation gets linked to your account."
+    },
+    "loginLink": "Log in",
+    "title": "You're invited on a trip!",
+    "summary": {
+      "skipper": "Skipper",
+      "vessel": "Vessel",
+      "departure": "Departure",
+      "arrival": "Arrival",
+      "crewCount": "Crew so far",
+      "crewCountValue": "{count} people"
+    },
+    "nameLabel": "Your name",
+    "phoneLabel": "Phone number (optional)",
+    "phonePlaceholder": "+46701234567",
+    "iceContactLabel": "Your ICE contact (in case of emergency)",
+    "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
+    "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
+    "photoLabel": "Photo of you (optional but recommended)",
+    "photoHint": "Used by search and rescue to identify the crew. JPEG/PNG, max 10 MB.",
+    "submit": "Accept & join",
+    "submitting": "Joining...",
+    "passwordMismatch": "Passwords don't match",
+    "photoUploadFailed": "However, the photo could not be uploaded ({reason}).",
+    "unknownError": "unknown error",
+    "acceptFailed": "Could not join the trip.",
+    "acceptSuccess": "You are now part of the crew. Have a pleasant and safe trip!",
+    "toOverview": "To your overview"
+  },
+  "iceConfirm": {
+    "noToken": "No confirmation link found. Check that you clicked the whole link.",
+    "loading": "Loading...",
+    "invalidLink": "The link is invalid or has already been used.",
+    "backToStart": "Back to start",
+    "accountSection": {
+      "loggedIn": "You are logged in as <strong>{name}</strong> - the confirmation will be linked to your account.",
+      "passwordHint": "At least 8 characters, one uppercase letter and one number.",
+      "confirmPasswordLabel": "Confirm password",
+      "deleteAfterTripLabel": "Automatically delete my account and my data once the trip(s) I'm an ICE contact for have ended",
+      "retentionNote": "By default we keep your account permanently so you can log in again for future trips and update your details. Check the box above if you'd instead like the account and your data to be deleted automatically some time after the trip is over.",
+      "haveAccount": "Already have an account? {loginLink} and open the link again so the confirmation gets linked to your account."
+    },
+    "loginLink": "Log in",
+    "title": "Confirm as ICE contact",
+    "intro": "{skipper} has added you as their ICE contact (In Case of Emergency){relationshipSuffix}. This means you may be contacted if they don't check in from a voyage in time.",
+    "passwordMismatch": "Passwords don't match",
+    "confirming": "Confirming...",
+    "accountConflict": "You already have an account with this email address. Log in and open the link again to confirm.",
+    "confirmFailed": "Could not confirm.",
+    "policyNoteDelete": "Your account and your data will be automatically deleted once the trip(s) you're an ICE contact for have ended.",
+    "policyNoteKeep": "Your account is kept permanently so you can log in again for future trips and update your details.",
+    "confirmSuccess": "Thank you! You are now confirmed as an ICE contact.",
+    "toOverview": "To your overview"
+  },
+  "iceContacts": {
+    "title": "ICE contacts",
+    "subtitle": "Your ICE (In Case of Emergency) contacts, who are alerted if a trip isn't confirmed in time",
+    "addTitle": "Add contact",
+    "cancelEdit": "Cancel edit",
+    "relationshipLabel": "Relationship",
+    "relationshipPlaceholder": "e.g. spouse, brother, friend",
+    "phonePlaceholder": "+46701234567",
+    "channelLabel": "Preferred notification channel",
+    "channelLabels": {
+      "email": "Email",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp"
+    },
+    "channelHint": "Alerts are sent to the contact via this channel when a trip isn't confirmed in time.",
+    "submitAdd": "Save contact",
+    "loadingContacts": "Loading contacts...",
+    "loadFailed": "Could not fetch contacts.",
+    "emptyTitle": "No ICE contacts yet",
+    "emptyBody": "Without an ICE contact, the system can't alert anyone if your trip isn't confirmed in time. Add at least one contact above.",
+    "confirmed": "✓ Confirmed",
+    "pending": "⏳ Awaiting confirmation",
+    "copyConfirmLink": "Copy confirmation link",
+    "editButton": "Edit",
+    "linkCopied": "Link copied",
+    "editTitle": "Edit: {name}",
+    "relationshipRequired": "Relationship is required",
+    "relationshipTooLong": "Relationship: max 50 characters",
+    "saveFailed": "Could not save the contact.",
+    "addedEmailSent": "Contact added. A confirmation email has been sent.",
+    "addedEmailFailed": "Contact added. Sending the email failed - share the link manually:",
+    "updated": "Contact updated.",
+    "deleteConfirm": "Remove the ICE contact {name}?",
+    "deleteFailed": "Could not remove the contact.",
+    "deleted": "Contact removed."
+  },
+  "iceAccount": {
+    "title": "My ICE account",
+    "subtitle": "Skippers you're an ICE (In Case of Emergency) contact for, and your own details",
+    "deletePolicyHeading": "Delete account after the trip",
+    "deletePolicyLabel": "Automatically delete my account and my details once the trip(s) I'm an ICE contact for have ended",
+    "deletePolicyHint": "By default your account is kept permanently. Check the box if you'd rather have it deleted automatically some time after you're no longer an ICE contact for any active trip.",
+    "loading": "Loading...",
+    "policySaveFailed": "Could not save the setting.",
+    "policyEnabled": "Your account will now be automatically deleted once the trip(s) have ended.",
+    "policyDisabled": "Your account will be kept permanently.",
+    "loadContactsFailed": "Could not fetch your connections.",
+    "emptyTitle": "No connections yet",
+    "emptyBody": "You're not confirmed as an ICE contact for any skipper with this account.",
+    "editMyDetails": "Edit my details",
+    "phonePlaceholder": "+46701234567",
+    "channelLabel": "Preferred notification channel",
+    "channelLabels": {
+      "email": "Email",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp"
+    },
+    "saveFailed": "Could not save the changes.",
+    "updated": "Your details have been updated."
+  },
+  "icePortal": {
+    "invalidLink": "Invalid link - trip or access code is missing. Use the link from the notification message.",
+    "loadingTrip": "Loading trip…",
+    "loadFailed": "Could not fetch the trip. The link may be invalid or revoked.",
+    "title": "Trip information",
+    "readOnlyNotice": "Read-only view for ICE contact and search and rescue (SAR)",
+    "alertTriggered": "<strong>Alert triggered - arrival not confirmed in time</strong>",
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "trip": {
+      "heading": "Trip",
+      "plannedDeparture": "Planned departure: <strong>{datetime}</strong>",
+      "plannedArrival": "Planned arrival: <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Vessel: {name}",
+      "yearBuilt": "Model year {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Call sign {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m"
+    },
+    "routes": {
+      "heading": "Routes",
+      "empty": "No routes registered.",
+      "primary": "Primary route",
+      "alternate": "Alternate route {order}",
+      "mapLabel": "Route {order}",
+      "noMap": "No route to display"
+    },
+    "crew": {
+      "heading": "Crew aboard",
+      "empty": "No confirmed crew registered.",
+      "unknownName": "Unknown",
+      "ownIceContact": "Own ICE contact: {contact}"
+    },
+    "log": {
+      "heading": "Change log",
+      "empty": "No changes logged.",
+      "actions": {
+        "update": "Trip updated",
+        "snooze": "Arrival time postponed",
+        "verify": "Arrival verified",
+        "activate": "Trip activated",
+        "crewPhotoUpdated": "Crew photo updated"
+      },
+      "snoozeDetail": " (+{minutes} min)",
+      "updateDetail": " - new arrival {datetime}"
+    }
+  },
+  "sar": {
+    "tagline": "Search and rescue (SAR) access",
+    "instructions": "Enter the trip ID and PIN code you received from the person in distress's contact for read-only access to the trip's crew list, routes and change log.",
+    "referenceLabel": "Trip ID",
+    "referencePlaceholder": "YE-XXXXXX",
+    "pinLabel": "PIN code",
+    "pinPlaceholder": "6 digits",
+    "submit": "Show trip",
+    "missingFields": "Enter both the trip ID and PIN code.",
+    "checking": "Checking…",
+    "invalidCredentials": "Incorrect trip ID or PIN code. Check the details and try again."
+  },
+  "vessels": {
+    "title": "My vessels",
+    "subtitle": "Vessels you can pick when creating a new trip",
+    "loadingVessels": "Loading vessels...",
+    "form": {
+      "addTitle": "Add vessel",
+      "editTitle": "Edit: {name}",
+      "cancelEdit": "Cancel change",
+      "nameLabel": "Vessel name",
+      "namePlaceholder": "e.g. Thrym",
+      "mmsiLabel": "MMSI (optional)",
+      "callSignLabel": "Call sign (optional)",
+      "modelLabel": "Model (optional)",
+      "modelPlaceholder": "e.g. Bavaria 34",
+      "yearLabel": "Model year (optional)",
+      "yearPlaceholder": "e.g. 2011",
+      "lengthLabel": "Length, metres (optional)",
+      "widthLabel": "Width, metres (optional)",
+      "draftLabel": "Draft, metres (optional)",
+      "notesLabel": "Notes (optional)",
+      "notesPlaceholder": "Other information about the vessel",
+      "photoLabel": "Vessel photo (optional)",
+      "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
+      "submit": "Save vessel",
+      "submitEdit": "Save changes"
+    },
+    "dimensions": {
+      "length": "Length",
+      "width": "Width",
+      "draft": "Draft"
+    },
+    "loadFailed": "Could not fetch vessels.",
+    "emptyTitle": "No vessels yet",
+    "emptyBody": "Add a vessel above so you can pick it when creating a trip.",
+    "card": {
+      "yearBuilt": "Model year {year}",
+      "mmsi": "MMSI {mmsi}",
+      "callSign": "Call sign {callSign}",
+      "editButton": "Edit"
+    },
+    "saveFailed": "Could not save the vessel.",
+    "mmsiAlreadyRegistered": "This MMSI number is already registered in the system.",
+    "photoUploadFailed": "The vessel was saved, but the photo could not be uploaded ({error})",
+    "unknownError": "unknown error",
+    "updated": "The vessel has been updated.",
+    "added": "The vessel has been added.",
+    "confirmDelete": "Remove the vessel {name}?",
+    "deleteFailed": "Could not remove the vessel.",
+    "deleted": "The vessel has been removed."
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "System statistics and user management - click a tile to see details",
+    "loadingStats": "Loading statistics...",
+    "statsLoadFailed": "Could not fetch statistics.",
+    "loadTabFailed": "Could not fetch {title}.",
+    "yes": "Yes",
+    "no": "No",
+    "cannotDeleteSelf": "You can't delete your own account from here",
+    "confirmDeleteUser": "Delete the user {name} ({email}) and all associated data? This cannot be undone.",
+    "deleteUserFailed": "Could not delete the user.",
+    "userDeleted": "The user has been deleted.",
+    "stats": {
+      "users": "Users",
+      "routes": "Routes",
+      "vessels": "Vessels",
+      "iceContacts": "ICE contacts",
+      "logs": "System logs"
+    },
+    "empty": {
+      "users": "No users",
+      "routes": "No routes",
+      "vessels": "No vessels",
+      "iceContacts": "No ICE contacts",
+      "logs": "No logs match the filter"
+    },
+    "table": {
+      "adminHeader": "Admin",
+      "created": "Created",
+      "skipper": "Skipper",
+      "departure": "Departure",
+      "arrival": "Arrival",
+      "tripStatus": "Trip status",
+      "order": "Order",
+      "owner": "Owner",
+      "mmsi": "MMSI",
+      "callSign": "Call sign",
+      "model": "Model",
+      "relationship": "Relationship",
+      "channel": "Channel",
+      "confirmed": "Confirmed"
+    },
+    "logLevel": {
+      "info": "Info",
+      "warning": "Warning",
+      "error": "Error"
+    },
+    "logCategory": {
+      "cron": "Cron",
+      "email": "Email",
+      "notification": "Notification",
+      "database": "Database",
+      "api": "Backend/API",
+      "auth": "Authentication",
+      "trip": "Trip",
+      "route": "Route",
+      "vessel": "Vessel",
+      "crew": "Crew",
+      "ice": "ICE contact",
+      "sar": "SAR",
+      "user": "User",
+      "admin": "Admin",
+      "photo": "Photo"
+    },
+    "logs": {
+      "searchLabel": "Search",
+      "searchPlaceholder": "Search in message or ID...",
+      "levelLabel": "Log level",
+      "allLevels": "All levels",
+      "categoryLabel": "Category",
+      "allCategories": "All categories",
+      "loadFailed": "Could not fetch logs.",
+      "stackTrace": "Stack trace",
+      "prevPage": "Previous",
+      "nextPage": "Next",
+      "pageInfo": "Page {page} of {totalPages} ({total} logs)",
+      "table": {
+        "time": "Time",
+        "level": "Level",
+        "category": "Category",
+        "message": "Message",
+        "user": "User"
+      }
+    }
+  },
+  "tripDetail": {
+    "loading": "Loading trip…",
+    "loadFailed": "Could not fetch the trip.",
+    "backToDashboard": "Back to my trips",
+    "unknownVessel": "Unknown vessel",
+    "header": {
+      "meta": "Departure {departure} · Arrival {arrival} · Grace period {grace}",
+      "iceNotified": "ICE contact notified"
+    },
+    "vessel": {
+      "heading": "Vessel",
+      "yearBuilt": "Model year {year}",
+      "mmsi": "MMSI {mmsi}",
+      "callSign": "Call sign {callSign}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m",
+      "changeLabel": "Change vessel",
+      "changeButton": "Change vessel",
+      "changeFailed": "Could not change the vessel.",
+      "mmsiConflictNotice": "Note: another trip with the same MMSI number is already scheduled during an overlapping time period.",
+      "changed": "The vessel has been changed."
+    },
+    "routes": {
+      "heading": "Routes",
+      "addAltHeading": "Add alternative route",
+      "importWindy": "Import from Windy",
+      "drawManual": "Draw manually",
+      "reasonOptionalLabel": "Reason (optional)",
+      "reasonPlaceholder": "e.g. If the wind turns northerly",
+      "addButton": "Add route",
+      "empty": "No routes added yet.",
+      "mainRoute": "Main route",
+      "altRoute": "Alternative route {n}",
+      "moveUpTitle": "Move up",
+      "moveDownTitle": "Move down",
+      "noRouteToShow": "No route to display",
+      "drawOnMapLabel": "Draw route on the map",
+      "drawHint": "Click the map to add points. Drag a point to move it, click a point and choose \"Remove point\" to delete it.",
+      "pointsLabel": "points",
+      "clearRoute": "Clear route",
+      "windyUrlLabel": "Windy link",
+      "reasonLabel": "Reason",
+      "minPointsError": "Draw at least two points for the route.",
+      "addFailed": "Could not add the route.",
+      "added": "Route added",
+      "saveFailed": "Could not save the route.",
+      "saved": "The route has been saved",
+      "deleteConfirm": "Remove this route?",
+      "deleteFailed": "Could not remove the route.",
+      "deleted": "The route has been removed",
+      "reorderFailed": "Could not change the order."
+    },
+    "crew": {
+      "heading": "Crew",
+      "inviteHeading": "Invite crew member",
+      "nameOptionalLabel": "Name (optional)",
+      "sendInviteButton": "Send invitation",
+      "empty": "No crew invited yet.",
+      "unknownName": "Unknown",
+      "iceContactLabel": "ICE: {contact}",
+      "accepted": "✓ Accepted",
+      "pending": "⏳ Pending",
+      "changePhoto": "Change photo",
+      "addPhoto": "Add photo",
+      "copyLink": "Copy link",
+      "choosePhotoFirst": "Choose an image first.",
+      "photoSaveFailed": "Could not save the photo.",
+      "photoSaved": "The photo has been saved.",
+      "linkCopied": "Link copied",
+      "inviteFailed": "Could not send the invitation.",
+      "inviteCreatedNotice": "Invitation created. Email sending isn't set up yet - share the link manually:",
+      "removeConfirm": "Remove this crew member from the trip?",
+      "removeFailed": "Could not remove the crew member",
+      "removed": "Crew member removed"
+    },
+    "actions": {
+      "heading": "Actions",
+      "notActiveHint": "The trip isn't active yet. Activate it manually, or it will activate automatically once the first crew member accepts their invitation.",
+      "activateButton": "Activate trip",
+      "snoozeLabel": "Snooze arrival time",
+      "verifyButton": "✓ Verify arrival",
+      "inactiveHint": "The trip is {status} - no further actions available.",
+      "deleteButton": "Delete trip",
+      "mmsiConflictError": "The trip cannot be activated — another active trip is already using this MMSI number.",
+      "activated": "The trip has been activated",
+      "actionFailed": "The action failed.",
+      "snoozed": "Arrival time postponed {minutes} min",
+      "verifyConfirm": "Confirm that the vessel has arrived safely?",
+      "verified": "Arrival verified - the trip is completed",
+      "deleteForceConfirm": "There are registered people on the trip. Delete the trip anyway? Remember to notify them yourself.",
+      "deleteConfirm": "Delete this trip?",
+      "deleteAnywayButton": "Delete anyway",
+      "deleteHasPersonsWarning": "The trip has {crewCount} crew member(s) and {iceCount} ICE contact(s) registered who may need to be notified. Click again to delete anyway.",
+      "deleteFailed": "Could not delete the trip.",
+      "deleted": "The trip has been deleted"
+    }
+  }
+};
+
+const I18n = {
+  SUPPORTED: ['en', 'sv'],
+  DEFAULT: 'en',
+  _dicts: { en: EN_INLINE },
+  _lang: null,
+
+  getLang() {
+    const hashQuery = (location.hash.split('?')[1] || '');
+    const fromQuery = new URLSearchParams(hashQuery).get('lang');
+    if (fromQuery && this.SUPPORTED.includes(fromQuery)) return fromQuery;
+
+    const fromStorage = localStorage.getItem('ye_lang');
+    if (fromStorage && this.SUPPORTED.includes(fromStorage)) return fromStorage;
+
+    const browserLang = (navigator.language || '').split('-')[0];
+    if (browserLang && this.SUPPORTED.includes(browserLang)) return browserLang;
+
+    return this.DEFAULT;
+  },
+
+  async load(lang) {
+    this._lang = lang;
+    if (this._dicts[lang]) return;
+    try {
+      const res = await fetch(`i18n/${lang}.json`, { cache: 'no-cache' });
+      this._dicts[lang] = await res.json();
+    } catch (err) {
+      console.warn(`I18n: failed to load "${lang}", falling back to ${this.DEFAULT}`, err);
+    }
+  },
+
+  setLang(lang) {
+    if (!this.SUPPORTED.includes(lang)) return;
+    localStorage.setItem('ye_lang', lang);
+    this.load(lang).then(() => {
+      this._lang = lang;
+      document.documentElement.lang = lang;
+      if (window.Router) Router.handleRoute();
+    });
+  }
+};
+
+function lookup(dict, key) {
+  return key.split('.').reduce((node, part) => (node && typeof node === 'object' ? node[part] : undefined), dict);
+}
+
+function interpolate(text, vars) {
+  if (!vars) return text;
+  return Object.keys(vars).reduce((s, k) => s.replace(new RegExp(`\\{${k}\\}`, 'g'), vars[k]), text);
+}
+
+function t(key, vars) {
+  const lang = I18n._lang || I18n.DEFAULT;
+  let text = lookup(I18n._dicts[lang], key);
+
+  if (text === undefined && lang !== I18n.DEFAULT) {
+    text = lookup(I18n._dicts[I18n.DEFAULT], key);
+  }
+
+  if (text === undefined) {
+    if (CONFIG && CONFIG.API_BASE_URL && CONFIG.API_BASE_URL.includes('localhost')) {
+      console.warn(`I18n: missing key "${key}"`);
+    }
+    text = key;
+  }
+
+  return interpolate(text, vars);
+}
+
+t.error = (code, vars) => t('errors.' + (code || 'UNKNOWN'), vars);
+
+// Grace-period seconds -> translated label, e.g. 86400 -> "24 hours" / "24 timmar".
+// CONFIG.GRACE_PERIOD_OPTIONS (config.js) only carries seconds/hours since it
+// loads before the active language dictionary is ready.
+function formatGracePeriod(seconds) {
+    const option = CONFIG.GRACE_PERIOD_OPTIONS.find((g) => g.seconds === Number(seconds));
+    return option ? t('common.gracePeriod.h' + option.hours) : String(seconds);
+}

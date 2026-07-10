@@ -6,29 +6,21 @@
  * No account/login involved; access is granted by the opaque token.
  */
 const IcePortalPage = {
-    STATUS_LABELS: {
-        draft: 'Utkast',
-        published: 'Publicerad',
-        active: 'Aktiv',
-        completed: 'Avslutad',
-        cancelled: 'Inställd'
-    },
-
-    ACTION_LABELS: {
-        UPDATE: 'Resan uppdaterad',
-        SNOOZE: 'Ankomsttid framflyttad',
-        VERIFY: 'Ankomst verifierad',
-        ACTIVATE: 'Resan aktiverad',
-        CREW_PHOTO_UPDATED: 'Besättningsfoto uppdaterat'
+    ACTION_LABEL_KEYS: {
+        UPDATE: 'update',
+        SNOOZE: 'snooze',
+        VERIFY: 'verify',
+        ACTIVATE: 'activate',
+        CREW_PHOTO_UPDATED: 'crewPhotoUpdated'
     },
 
     state: { tripId: null, token: null, map: null },
 
     formatVesselDimensions(vessel) {
         return [
-            vessel?.length_m ? `L ${Number(vessel.length_m)} m` : '',
-            vessel?.width_m ? `B ${Number(vessel.width_m)} m` : '',
-            vessel?.draft_m ? `D ${Number(vessel.draft_m)} m` : ''
+            vessel?.length_m ? t('icePortal.vessel.dimLength', { value: Number(vessel.length_m) }) : '',
+            vessel?.width_m ? t('icePortal.vessel.dimWidth', { value: Number(vessel.width_m) }) : '',
+            vessel?.draft_m ? t('icePortal.vessel.dimDraft', { value: Number(vessel.draft_m) }) : ''
         ].filter(Boolean).join(' × ');
     },
 
@@ -39,19 +31,19 @@ const IcePortalPage = {
         if (!this.state.tripId || !this.state.token) {
             container.innerHTML = `
                 <div class="page">
-                    <div class="alert alert-error">Ogiltig länk - resa eller åtkomstkod saknas. Använd länken från notifieringsmeddelandet.</div>
+                    <div class="alert alert-error">${escapeHtml(t('icePortal.invalidLink'))}</div>
                 </div>`;
             return;
         }
 
-        container.innerHTML = `<div class="page"><div class="loading-state"><span class="spinner"></span> Laddar resa...</div></div>`;
+        container.innerHTML = `<div class="page"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('icePortal.loadingTrip'))}</div></div>`;
 
         const response = await apiRequest(`/trips/${this.state.tripId}?token=${encodeURIComponent(this.state.token)}`);
 
         if (!response.success) {
             container.innerHTML = `
                 <div class="page">
-                    <div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta resan. Länken kan vara ogiltig eller återkallad.')}</div>
+                    <div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('icePortal.loadFailed')))}</div>
                 </div>`;
             return;
         }
@@ -66,18 +58,18 @@ const IcePortalPage = {
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>Reseinformation
-                            <span class="badge badge-${trip.status}">${this.STATUS_LABELS[trip.status] || trip.status}</span>
+                        <h1>${escapeHtml(t('icePortal.title'))}
+                            <span class="badge badge-${trip.status}">${escapeHtml(t('trip.status.' + trip.status) || trip.status)}</span>
                         </h1>
                         <div class="page-header__meta">
-                            Skrivskyddad vy för nödkontakt (ICE) och sjöräddning (SAR)
-                            ${trip.ice_notified ? ' · <strong>Larm utlöst - ankomst ej bekräftad i tid</strong>' : ''}
+                            ${escapeHtml(t('icePortal.readOnlyNotice'))}
+                            ${trip.ice_notified ? ' · ' + t('icePortal.alertTriggered') : ''}
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3>Skeppare</h3>
+                    <h3>${escapeHtml(t('icePortal.skipper.heading'))}</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         ${skipper?.photo_path
                             ? `<img src="${CONFIG.API_BASE_URL}/users/${skipper.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
@@ -92,10 +84,10 @@ const IcePortalPage = {
                 </div>
 
                 <div class="card">
-                    <h3>Resa</h3>
+                    <h3>${escapeHtml(t('icePortal.trip.heading'))}</h3>
                     <p>
-                        Planerad avgång: <strong>${formatDateTime(trip.departure_scheduled)}</strong><br>
-                        Planerad ankomst: <strong>${formatDateTime(trip.arrival_scheduled)}</strong>
+                        ${t('icePortal.trip.plannedDeparture', { datetime: formatDateTime(trip.departure_scheduled) })}<br>
+                        ${t('icePortal.trip.plannedArrival', { datetime: formatDateTime(trip.arrival_scheduled) })}
                     </p>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         ${vessel?.photo_path
@@ -103,11 +95,11 @@ const IcePortalPage = {
                                     alt="" style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">`
                             : ''}
                         <p class="mb-0">
-                            Fartyg: ${escapeHtml(vessel?.vessel_name || '–')}
+                            ${escapeHtml(t('icePortal.vessel.nameLine', { name: vessel?.vessel_name || '–' }))}
                             ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
-                            ${vessel?.year_built ? ` · Årsmodell ${escapeHtml(String(vessel.year_built))}` : ''}
-                            ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
-                            ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
+                            ${vessel?.year_built ? ` · ${escapeHtml(t('icePortal.vessel.yearBuilt', { year: String(vessel.year_built) }))}` : ''}
+                            ${vessel?.mmsi ? ` · ${escapeHtml(t('icePortal.vessel.mmsi', { value: vessel.mmsi }))}` : ''}
+                            ${vessel?.call_sign ? ` · ${escapeHtml(t('icePortal.vessel.callSign', { value: vessel.call_sign }))}` : ''}
                             ${IcePortalPage.formatVesselDimensions(vessel) ? ` · ${escapeHtml(IcePortalPage.formatVesselDimensions(vessel))}` : ''}
                         </p>
                     </div>
@@ -115,18 +107,18 @@ const IcePortalPage = {
                 </div>
 
                 <div class="card">
-                    <h3>Rutter</h3>
+                    <h3>${escapeHtml(t('icePortal.routes.heading'))}</h3>
                     <div id="portal-routes-list"></div>
                     <div id="portal-route-map" class="map-container"></div>
                 </div>
 
                 <div class="card">
-                    <h3>Besättning ombord</h3>
+                    <h3>${escapeHtml(t('icePortal.crew.heading'))}</h3>
                     <div id="portal-crew-container"></div>
                 </div>
 
                 <div class="card">
-                    <h3>Ändringslogg</h3>
+                    <h3>${escapeHtml(t('icePortal.log.heading'))}</h3>
                     <div id="portal-log-container"></div>
                 </div>
             </div>`;
@@ -140,11 +132,11 @@ const IcePortalPage = {
         const list = document.getElementById('portal-routes-list');
 
         if (!routes || routes.length === 0) {
-            list.innerHTML = `<p class="text-muted">Inga rutter registrerade.</p>`;
+            list.innerHTML = `<p class="text-muted">${escapeHtml(t('icePortal.routes.empty'))}</p>`;
         } else {
             list.innerHTML = routes.map((r) => `
                 <div class="route-item">
-                    <div class="route-item__title">${r.route_order === 1 ? 'Huvudrutt' : `Alternativ rutt ${r.route_order}`}</div>
+                    <div class="route-item__title">${escapeHtml(r.route_order === 1 ? t('icePortal.routes.primary') : t('icePortal.routes.alternate', { order: r.route_order }))}</div>
                     ${r.reason ? `<div class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(r.reason)}</div>` : ''}
                 </div>
             `).join('');
@@ -153,13 +145,13 @@ const IcePortalPage = {
         const mapEl = document.getElementById('portal-route-map');
         const colors = ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'];
         const mapRoutes = (routes || [])
-            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: colors[i % colors.length], label: r.reason || `Rutt ${r.route_order}` }))
+            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: colors[i % colors.length], label: r.reason || t('icePortal.routes.mapLabel', { order: r.route_order }) }))
             .filter((r) => r.coordinates.length > 1);
 
         if (mapRoutes.length > 0) {
             this.state.map = renderRouteMap(mapEl, mapRoutes);
         } else {
-            mapEl.innerHTML = '<div class="empty-state">Ingen rutt att visa</div>';
+            mapEl.innerHTML = `<div class="empty-state">${escapeHtml(t('icePortal.routes.noMap'))}</div>`;
         }
     },
 
@@ -168,7 +160,7 @@ const IcePortalPage = {
         const accepted = (crew || []).filter((c) => c.accepted_at);
 
         if (accepted.length === 0) {
-            container.innerHTML = `<p class="text-muted">Ingen bekräftad besättning registrerad.</p>`;
+            container.innerHTML = `<p class="text-muted">${escapeHtml(t('icePortal.crew.empty'))}</p>`;
             return;
         }
 
@@ -180,10 +172,10 @@ const IcePortalPage = {
                           style="width:48px;height:48px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);">`
                     : ''}
                 <div class="crew-row__info">
-                    <span class="crew-row__name">${escapeHtml(c.name || 'Okänd')}</span>
+                    <span class="crew-row__name">${escapeHtml(c.name || t('icePortal.crew.unknownName'))}</span>
                     <span class="crew-row__detail">
                         ${c.phone ? escapeHtml(c.phone) : ''}
-                        ${c.ice_contact ? ` · Egen nödkontakt: ${escapeHtml(c.ice_contact)}` : ''}
+                        ${c.ice_contact ? ` · ${escapeHtml(t('icePortal.crew.ownIceContact', { contact: c.ice_contact }))}` : ''}
                     </span>
                 </div>
             </div>
@@ -194,18 +186,20 @@ const IcePortalPage = {
         const container = document.getElementById('portal-log-container');
 
         if (!auditLog || auditLog.length === 0) {
-            container.innerHTML = `<p class="text-muted">Inga ändringar loggade.</p>`;
+            container.innerHTML = `<p class="text-muted">${escapeHtml(t('icePortal.log.empty'))}</p>`;
             return;
         }
 
         container.innerHTML = `<div class="change-log">${auditLog.map((entry) => {
-            let text = this.ACTION_LABELS[entry.action] || entry.action;
+            let text = this.ACTION_LABEL_KEYS[entry.action]
+                ? t('icePortal.log.actions.' + this.ACTION_LABEL_KEYS[entry.action])
+                : entry.action;
             try {
                 const value = JSON.parse(entry.new_value);
                 if (entry.action === 'SNOOZE' && value?.minutes) {
-                    text += ` (+${value.minutes} min)`;
+                    text += t('icePortal.log.snoozeDetail', { minutes: value.minutes });
                 } else if (entry.action === 'UPDATE' && value?.arrival_scheduled) {
-                    text += ` - ny ankomst ${formatDateTime(value.arrival_scheduled)}`;
+                    text += t('icePortal.log.updateDetail', { datetime: formatDateTime(value.arrival_scheduled) });
                 }
             } catch (err) { /* new_value isn't always JSON - show the plain label */ }
 

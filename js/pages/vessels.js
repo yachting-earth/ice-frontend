@@ -13,68 +13,68 @@ const VesselsPage = {
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>Mina båtar</h1>
-                        <div class="page-header__meta">Fartyg du kan välja när du skapar en ny resa</div>
+                        <h1>${escapeHtml(t('vessels.title'))}</h1>
+                        <div class="page-header__meta">${escapeHtml(t('vessels.subtitle'))}</div>
                     </div>
                 </div>
-                <div id="vessel-list-container"><div class="loading-state"><span class="spinner"></span> Laddar båtar...</div></div>
+                <div id="vessel-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('vessels.loadingVessels'))}</div></div>
                 <div class="card">
                     <div class="card-header">
-                        <h2 id="vessel-form-title">Lägg till båt</h2>
-                        <button class="btn btn-ghost btn-sm" type="button" id="vessel-cancel" hidden>Avbryt ändring</button>
+                        <h2 id="vessel-form-title">${escapeHtml(t('vessels.form.addTitle'))}</h2>
+                        <button class="btn btn-ghost btn-sm" type="button" id="vessel-cancel" hidden>${escapeHtml(t('vessels.form.cancelEdit'))}</button>
                     </div>
                     <div id="vessel-alert"></div>
                     <form id="vessel-form" novalidate>
                         <div class="field-row">
                             <div class="field">
-                                <label for="vessel-name">Fartygsnamn</label>
-                                <input type="text" id="vessel-name" placeholder="t.ex. Thrym">
+                                <label for="vessel-name">${escapeHtml(t('vessels.form.nameLabel'))}</label>
+                                <input type="text" id="vessel-name" placeholder="${escapeHtml(t('vessels.form.namePlaceholder'))}">
                             </div>
                             <div class="field">
-                                <label for="vessel-mmsi">MMSI (valfritt)</label>
+                                <label for="vessel-mmsi">${escapeHtml(t('vessels.form.mmsiLabel'))}</label>
                                 <input type="text" id="vessel-mmsi">
                             </div>
                         </div>
                         <div class="field">
-                            <label for="vessel-callsign">Anropssignal (valfritt)</label>
+                            <label for="vessel-callsign">${escapeHtml(t('vessels.form.callSignLabel'))}</label>
                             <input type="text" id="vessel-callsign">
                         </div>
                         <div class="field-row">
                             <div class="field">
-                                <label for="vessel-model">Modell (valfritt)</label>
-                                <input type="text" id="vessel-model" placeholder="t.ex. Bavaria 34">
+                                <label for="vessel-model">${escapeHtml(t('vessels.form.modelLabel'))}</label>
+                                <input type="text" id="vessel-model" placeholder="${escapeHtml(t('vessels.form.modelPlaceholder'))}">
                             </div>
                             <div class="field">
-                                <label for="vessel-year">Årsmodell (valfritt)</label>
-                                <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="t.ex. 2011">
+                                <label for="vessel-year">${escapeHtml(t('vessels.form.yearLabel'))}</label>
+                                <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="${escapeHtml(t('vessels.form.yearPlaceholder'))}">
                             </div>
                         </div>
                         <div class="field-row">
                             <div class="field">
-                                <label for="vessel-length">Längd, meter (valfritt)</label>
+                                <label for="vessel-length">${escapeHtml(t('vessels.form.lengthLabel'))}</label>
                                 <input type="number" id="vessel-length" inputmode="decimal" step="0.01" min="0">
                             </div>
                             <div class="field">
-                                <label for="vessel-width">Bredd, meter (valfritt)</label>
+                                <label for="vessel-width">${escapeHtml(t('vessels.form.widthLabel'))}</label>
                                 <input type="number" id="vessel-width" inputmode="decimal" step="0.01" min="0">
                             </div>
                             <div class="field">
-                                <label for="vessel-draft">Djup, meter (valfritt)</label>
+                                <label for="vessel-draft">${escapeHtml(t('vessels.form.draftLabel'))}</label>
                                 <input type="number" id="vessel-draft" inputmode="decimal" step="0.01" min="0">
                             </div>
                         </div>
                         <div class="field">
-                            <label for="vessel-notes">Övrigt (valfritt)</label>
-                            <textarea id="vessel-notes" rows="3" placeholder="Övrig information om båten"></textarea>
+                            <label for="vessel-notes">${escapeHtml(t('vessels.form.notesLabel'))}</label>
+                            <textarea id="vessel-notes" rows="3" placeholder="${escapeHtml(t('vessels.form.notesPlaceholder'))}"></textarea>
                         </div>
                         <div class="field">
-                            <label for="vessel-photo">Fartygsfoto (valfritt)</label>
+                            <label for="vessel-photo">${escapeHtml(t('vessels.form.photoLabel'))}</label>
                             <input type="file" id="vessel-photo" accept="image/jpeg,image/png">
-                            <small>Används av sjöräddningen för att identifiera fartyget. JPEG/PNG, max 10 MB.</small>
+                            <small>${escapeHtml(t('vessels.form.photoHint'))}</small>
                             <img id="vessel-photo-preview" alt="" hidden
                                  style="margin-top: var(--space-2); width: 96px; height: 96px; border-radius: var(--radius-md); object-fit: cover;">
                         </div>
-                        <button class="btn btn-primary" type="submit" id="vessel-submit">Spara båt</button>
+                        <button class="btn btn-primary" type="submit" id="vessel-submit">${escapeHtml(t('vessels.form.submit'))}</button>
                     </form>
                 </div>
             </div>`;
@@ -106,7 +106,7 @@ const VesselsPage = {
         const response = await apiRequest('/vessels');
 
         if (!response.success) {
-            listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta båtar.')}</div>`;
+            listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('vessels.loadFailed')))}</div>`;
             return;
         }
 
@@ -115,8 +115,8 @@ const VesselsPage = {
         if (this.state.vessels.length === 0) {
             listContainer.innerHTML = `
                 <div class="empty-state">
-                    <h3>Inga båtar än</h3>
-                    <p>Lägg till en båt ovan för att kunna välja den när du skapar en resa.</p>
+                    <h3>${escapeHtml(t('vessels.emptyTitle'))}</h3>
+                    <p>${escapeHtml(t('vessels.emptyBody'))}</p>
                 </div>`;
             return;
         }
@@ -150,16 +150,16 @@ const VesselsPage = {
                     </div>
                     <div class="trip-card__meta">
                         ${vessel.model ? `<span>${escapeHtml(vessel.model)}</span>` : ''}
-                        ${vessel.year_built ? `<span>Årsmodell ${escapeHtml(String(vessel.year_built))}</span>` : ''}
+                        ${vessel.year_built ? `<span>${escapeHtml(t('vessels.card.yearBuilt', { year: vessel.year_built }))}</span>` : ''}
                         ${dims ? `<span>${escapeHtml(dims)}</span>` : ''}
-                        ${vessel.mmsi ? `<span>MMSI ${escapeHtml(vessel.mmsi)}</span>` : ''}
-                        ${vessel.call_sign ? `<span>Anropssignal ${escapeHtml(vessel.call_sign)}</span>` : ''}
+                        ${vessel.mmsi ? `<span>${escapeHtml(t('vessels.card.mmsi', { mmsi: vessel.mmsi }))}</span>` : ''}
+                        ${vessel.call_sign ? `<span>${escapeHtml(t('vessels.card.callSign', { callSign: vessel.call_sign }))}</span>` : ''}
                     </div>
                     ${vessel.notes ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(vessel.notes)}</div>` : ''}
                 </div>
                 <div class="trip-card__actions">
-                    <button class="btn btn-secondary btn-sm" type="button" data-edit="${vessel.id}">Ändra</button>
-                    <button class="btn btn-ghost btn-sm" type="button" data-delete="${vessel.id}">Ta bort</button>
+                    <button class="btn btn-secondary btn-sm" type="button" data-edit="${vessel.id}">${escapeHtml(t('vessels.card.editButton'))}</button>
+                    <button class="btn btn-ghost btn-sm" type="button" data-delete="${vessel.id}">${escapeHtml(t('common.remove'))}</button>
                 </div>
             </div>`;
     },
@@ -185,7 +185,7 @@ const VesselsPage = {
 
         this.state.editingId = vesselId;
         this.state.photoFile = null;
-        document.getElementById('vessel-form-title').textContent = `Ändra: ${vessel.vessel_name}`;
+        document.getElementById('vessel-form-title').textContent = t('vessels.form.editTitle', { name: vessel.vessel_name });
         document.getElementById('vessel-name').value = vessel.vessel_name || '';
         document.getElementById('vessel-mmsi').value = vessel.mmsi || '';
         document.getElementById('vessel-callsign').value = vessel.call_sign || '';
@@ -198,7 +198,7 @@ const VesselsPage = {
         document.getElementById('vessel-photo').value = '';
         const preview = document.getElementById('vessel-photo-preview');
         preview.hidden = true;
-        document.getElementById('vessel-submit').textContent = 'Spara ändringar';
+        document.getElementById('vessel-submit').textContent = t('vessels.form.submitEdit');
         document.getElementById('vessel-cancel').hidden = false;
         document.getElementById('vessel-alert').innerHTML = '';
         document.getElementById('vessel-name').focus();
@@ -210,8 +210,8 @@ const VesselsPage = {
         this.state.photoFile = null;
         document.getElementById('vessel-form').reset();
         document.getElementById('vessel-photo-preview').hidden = true;
-        document.getElementById('vessel-form-title').textContent = 'Lägg till båt';
-        document.getElementById('vessel-submit').textContent = 'Spara båt';
+        document.getElementById('vessel-form-title').textContent = t('vessels.form.addTitle');
+        document.getElementById('vessel-submit').textContent = t('vessels.form.submit');
         document.getElementById('vessel-cancel').hidden = true;
         if (!keepAlert) {
             document.getElementById('vessel-alert').innerHTML = '';
@@ -232,9 +232,9 @@ const VesselsPage = {
 
         const error = Validate.name(name)
             || Validate.vesselYear(year)
-            || Validate.vesselDimension(length, 'Längd')
-            || Validate.vesselDimension(width, 'Bredd')
-            || Validate.vesselDimension(draft, 'Djup');
+            || Validate.vesselDimension(length, t('vessels.dimensions.length'))
+            || Validate.vesselDimension(width, t('vessels.dimensions.width'))
+            || Validate.vesselDimension(draft, t('vessels.dimensions.draft'));
         if (error) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
             return;
@@ -261,14 +261,14 @@ const VesselsPage = {
 
         if (!response.success) {
             submitBtn.disabled = false;
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara båten.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('vessels.saveFailed')))}</div>`;
             return;
         }
 
         const vessel = response.data;
 
         if (vessel.mmsi_notice?.already_registered_elsewhere) {
-            showToast('Detta MMSI-nummer finns redan registrerat i systemet.', 'info');
+            showToast(t('vessels.mmsiAlreadyRegistered'), 'info');
         }
 
         if (this.state.photoFile) {
@@ -276,12 +276,13 @@ const VesselsPage = {
             formData.append('photo', this.state.photoFile);
             const photoResponse = await apiUpload(`/vessels/${vessel.id}/photo`, formData, 'PUT');
             if (!photoResponse.success) {
-                showToast(`Båten sparades, men fotot kunde inte laddas upp (${photoResponse.error || 'okänt fel'})`, 'error');
+                const photoError = photoResponse.code ? t.error(photoResponse.code) : (photoResponse.error || t('vessels.unknownError'));
+                showToast(t('vessels.photoUploadFailed', { error: photoError }), 'error');
             }
         }
 
         submitBtn.disabled = false;
-        showToast(this.state.editingId ? 'Båten uppdaterad.' : 'Båten tillagd.', 'success');
+        showToast(this.state.editingId ? t('vessels.updated') : t('vessels.added'), 'success');
         this.resetForm();
         await this.loadVessels();
     },
@@ -289,17 +290,17 @@ const VesselsPage = {
     async handleDelete(vesselId) {
         const vessel = this.state.vessels.find((v) => v.id === vesselId);
         if (!vessel) return;
-        if (!confirm(`Ta bort båten ${vessel.vessel_name}?`)) return;
+        if (!confirm(t('vessels.confirmDelete', { name: vessel.vessel_name }))) return;
 
         const response = await apiRequest(`/vessels/${vesselId}`, { method: 'DELETE' });
 
         if (!response.success) {
-            showToast(response.error || 'Kunde inte ta bort båten.', 'error');
+            showToast(response.code ? t.error(response.code) : (response.error || t('vessels.deleteFailed')), 'error');
             return;
         }
 
         if (this.state.editingId === vesselId) this.resetForm();
-        showToast('Båten borttagen.', 'success');
+        showToast(t('vessels.deleted'), 'success');
         await this.loadVessels();
     }
 };

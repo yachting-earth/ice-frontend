@@ -4,35 +4,35 @@
  */
 const Validate = {
     email(value) {
-        if (!value) return 'E-post krävs';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Ogiltig e-postadress';
+        if (!value) return t('validation.emailRequired');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return t('validation.emailInvalid');
         return null;
     },
 
     password(value) {
-        if (!value) return 'Lösenord krävs';
-        if (value.length < 8) return 'Lösenordet måste vara minst 8 tecken';
-        if (!/[A-Z]/.test(value)) return 'Lösenordet måste innehålla minst en stor bokstav';
-        if (!/[0-9]/.test(value)) return 'Lösenordet måste innehålla minst en siffra';
+        if (!value) return t('validation.passwordRequired');
+        if (value.length < 8) return t('validation.passwordTooShort');
+        if (!/[A-Z]/.test(value)) return t('validation.passwordNeedsUppercase');
+        if (!/[0-9]/.test(value)) return t('validation.passwordNeedsNumber');
         return null;
     },
 
     name(value) {
-        if (!value) return 'Namn krävs';
-        if (value.length < 2) return 'Namnet måste vara minst 2 tecken';
+        if (!value) return t('validation.nameRequired');
+        if (value.length < 2) return t('validation.nameTooShort');
         return null;
     },
 
     phone(value, optional = false) {
-        if (!value) return optional ? null : 'Telefonnummer krävs';
-        if (!/^\+?[1-9]\d{1,14}$/.test(value)) return 'Ogiltigt telefonnummer (använd internationellt format, t.ex. +46701234567)';
+        if (!value) return optional ? null : t('validation.phoneRequired');
+        if (!/^\+?[1-9]\d{1,14}$/.test(value)) return t('validation.phoneInvalid');
         return null;
     },
 
     windyUrl(value) {
-        if (!value) return 'Windy-länk krävs';
+        if (!value) return t('validation.windyUrlRequired');
         if (!/^https:\/\/www\.windy\.com\/route-planner\/(?:[a-z]+\/)?[\d.,;-]+/i.test(value)) {
-            return 'Ogiltig Windy-länk. Måste vara från windy.com/route-planner';
+            return t('validation.windyUrlInvalid');
         }
         return null;
     },
@@ -42,7 +42,7 @@ const Validate = {
         const maxYear = new Date().getFullYear() + 1;
         const year = Number(value);
         if (!Number.isInteger(year) || year < 1900 || year > maxYear) {
-            return `Årsmodell måste vara ett heltal mellan 1900 och ${maxYear}`;
+            return t('validation.vesselYearInvalid', { maxYear });
         }
         return null;
     },
@@ -51,7 +51,7 @@ const Validate = {
         if (value === '' || value === null || value === undefined) return null;
         const num = Number(value);
         if (!Number.isFinite(num) || num <= 0 || num > 200) {
-            return `${label} måste vara ett positivt tal i meter (max 200)`;
+            return t('validation.vesselDimensionInvalid', { label });
         }
         return null;
     }

@@ -1,42 +1,55 @@
 const AdminPage = {
-    STAT_LABELS: {
-        users: 'Användare',
-        routes: 'Rutter',
-        vessels: 'Båtar',
-        ice_contacts: 'ICE-kontakter',
-        logs: 'Systemloggar'
+    // Built from the active i18n dictionary at call time (not module-load
+    // time) - these were plain data objects before i18n, but t() needs the
+    // language dictionary loaded first, which only happens after this script
+    // has already been parsed. See formatGracePeriod() in utils/datetime.js
+    // for the same constraint.
+    statLabels() {
+        return {
+            users: t('admin.stats.users'),
+            routes: t('admin.stats.routes'),
+            vessels: t('admin.stats.vessels'),
+            ice_contacts: t('admin.stats.iceContacts'),
+            logs: t('admin.stats.logs')
+        };
     },
 
-    TAB_CONFIG: {
-        users: { endpoint: '/admin/users', title: 'Användare', emptyText: 'Inga användare' },
-        routes: { endpoint: '/admin/routes', title: 'Rutter', emptyText: 'Inga rutter' },
-        vessels: { endpoint: '/admin/vessels', title: 'Båtar', emptyText: 'Inga båtar' },
-        ice_contacts: { endpoint: '/admin/ice-contacts', title: 'ICE-kontakter', emptyText: 'Inga ICE-kontakter' },
-        logs: { title: 'Systemloggar', emptyText: 'Inga loggar matchar filtret' }
+    tabConfig() {
+        return {
+            users: { endpoint: '/admin/users', title: t('admin.stats.users'), emptyText: t('admin.empty.users') },
+            routes: { endpoint: '/admin/routes', title: t('admin.stats.routes'), emptyText: t('admin.empty.routes') },
+            vessels: { endpoint: '/admin/vessels', title: t('admin.stats.vessels'), emptyText: t('admin.empty.vessels') },
+            ice_contacts: { endpoint: '/admin/ice-contacts', title: t('admin.stats.iceContacts'), emptyText: t('admin.empty.iceContacts') },
+            logs: { title: t('admin.stats.logs'), emptyText: t('admin.empty.logs') }
+        };
     },
 
-    LOG_LEVEL_LABELS: {
-        info: 'Info',
-        warning: 'Varning',
-        error: 'Fel'
+    logLevelLabels() {
+        return {
+            info: t('admin.logLevel.info'),
+            warning: t('admin.logLevel.warning'),
+            error: t('admin.logLevel.error')
+        };
     },
 
-    LOG_CATEGORY_LABELS: {
-        cron: 'Cron',
-        email: 'E-post',
-        notification: 'Notifiering',
-        database: 'Databas',
-        api: 'Backend/API',
-        auth: 'Autentisering',
-        trip: 'Resa',
-        route: 'Rutt',
-        vessel: 'Båt',
-        crew: 'Besättning',
-        ice: 'ICE-kontakt',
-        sar: 'SAR',
-        user: 'Användare',
-        admin: 'Admin',
-        photo: 'Foto'
+    logCategoryLabels() {
+        return {
+            cron: t('admin.logCategory.cron'),
+            email: t('admin.logCategory.email'),
+            notification: t('admin.logCategory.notification'),
+            database: t('admin.logCategory.database'),
+            api: t('admin.logCategory.api'),
+            auth: t('admin.logCategory.auth'),
+            trip: t('admin.logCategory.trip'),
+            route: t('admin.logCategory.route'),
+            vessel: t('admin.logCategory.vessel'),
+            crew: t('admin.logCategory.crew'),
+            ice: t('admin.logCategory.ice'),
+            sar: t('admin.logCategory.sar'),
+            user: t('admin.logCategory.user'),
+            admin: t('admin.logCategory.admin'),
+            photo: t('admin.logCategory.photo')
+        };
     },
 
     state: {
@@ -57,17 +70,17 @@ const AdminPage = {
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>Admin</h1>
-                        <div class="page-header__meta">Systemstatistik och användarhantering - klicka på ett kort för att se detaljer</div>
+                        <h1>${escapeHtml(t('admin.title'))}</h1>
+                        <div class="page-header__meta">${escapeHtml(t('admin.subtitle'))}</div>
                     </div>
                 </div>
-                <div id="admin-stats-container"><div class="loading-state"><span class="spinner"></span> Laddar statistik...</div></div>
+                <div id="admin-stats-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('admin.loadingStats'))}</div></div>
                 <div class="card">
                     <div class="card-header">
-                        <h2 id="admin-section-title">Användare</h2>
+                        <h2 id="admin-section-title">${escapeHtml(t('admin.stats.users'))}</h2>
                     </div>
                     <div id="admin-alert"></div>
-                    <div id="admin-section-container"><div class="loading-state"><span class="spinner"></span> Laddar...</div></div>
+                    <div id="admin-section-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('common.loading'))}</div></div>
                 </div>
             </div>`;
 
@@ -79,7 +92,7 @@ const AdminPage = {
         const response = await apiRequest('/admin/stats');
 
         if (!response.success) {
-            container.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta statistik.')}</div>`;
+            container.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('admin.statsLoadFailed')))}</div>`;
             return;
         }
 
@@ -90,10 +103,11 @@ const AdminPage = {
     renderStatGrid() {
         const container = document.getElementById('admin-stats-container');
         const stats = this.state.stats || {};
+        const statLabels = this.statLabels();
 
         container.innerHTML = `
             <div class="stat-grid">
-                ${Object.entries(this.STAT_LABELS).map(([key, label]) => `
+                ${Object.entries(statLabels).map(([key, label]) => `
                     <div class="stat-tile stat-tile--clickable${key === this.state.activeTab ? ' stat-tile--active' : ''}"
                         data-tab="${key}" role="button" tabindex="0" aria-pressed="${key === this.state.activeTab}">
                         <div class="stat-tile__value">${escapeHtml(String(stats[key] ?? 0))}</div>
@@ -117,7 +131,7 @@ const AdminPage = {
         this.state.activeTab = tab;
         this.renderStatGrid();
 
-        const config = this.TAB_CONFIG[tab];
+        const config = this.tabConfig()[tab];
         document.getElementById('admin-section-title').textContent = config.title;
         document.getElementById('admin-alert').innerHTML = '';
 
@@ -127,12 +141,12 @@ const AdminPage = {
         }
 
         const container = document.getElementById('admin-section-container');
-        container.innerHTML = `<div class="loading-state"><span class="spinner"></span> Laddar...</div>`;
+        container.innerHTML = `<div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('common.loading'))}</div>`;
 
         const response = await apiRequest(config.endpoint);
 
         if (!response.success) {
-            container.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || `Kunde inte hämta ${config.title.toLowerCase()}.`)}</div>`;
+            container.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('admin.loadTabFailed', { title: config.title.toLowerCase() })))}</div>`;
             return;
         }
 
@@ -159,11 +173,11 @@ const AdminPage = {
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Namn</th>
-                            <th>E-post</th>
-                            <th>Telefon</th>
-                            <th>Admin</th>
-                            <th>Skapad</th>
+                            <th>${escapeHtml(t('common.name'))}</th>
+                            <th>${escapeHtml(t('common.email'))}</th>
+                            <th>${escapeHtml(t('common.phone'))}</th>
+                            <th>${escapeHtml(t('admin.table.adminHeader'))}</th>
+                            <th>${escapeHtml(t('admin.table.created'))}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -185,11 +199,11 @@ const AdminPage = {
                 <td>${escapeHtml(user.name || '')}</td>
                 <td>${escapeHtml(user.email || '')}</td>
                 <td>${escapeHtml(user.phone || '')}</td>
-                <td>${user.is_admin ? '<span class="badge badge-active">Ja</span>' : ''}</td>
+                <td>${user.is_admin ? `<span class="badge badge-active">${escapeHtml(t('admin.yes'))}</span>` : ''}</td>
                 <td>${escapeHtml(formatDateTime(user.created_at))}</td>
                 <td>
                     <button class="btn btn-danger btn-sm" type="button" data-delete-user="${user.id}"
-                        ${isSelf ? 'disabled title="Du kan inte radera ditt eget konto härifrån"' : ''}>Radera</button>
+                        ${isSelf ? `disabled title="${escapeHtml(t('admin.cannotDeleteSelf'))}"` : ''}>${escapeHtml(t('common.delete'))}</button>
                 </td>
             </tr>`;
     },
@@ -198,18 +212,18 @@ const AdminPage = {
         const user = this.state.users.find((u) => u.id === userId);
         if (!user) return;
 
-        if (!confirm(`Radera användaren ${user.name} (${user.email}) och all tillhörande data? Detta går inte att ångra.`)) return;
+        if (!confirm(t('admin.confirmDeleteUser', { name: user.name, email: user.email }))) return;
 
         const alertBox = document.getElementById('admin-alert');
         const response = await apiRequest(`/admin/users/${userId}`, { method: 'DELETE' });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte radera användaren.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('admin.deleteUserFailed')))}</div>`;
             return;
         }
 
         alertBox.innerHTML = '';
-        showToast('Användaren har raderats.', 'success');
+        showToast(t('admin.userDeleted'), 'success');
         await this.loadTab('users');
         await this.loadStats();
     },
@@ -220,12 +234,12 @@ const AdminPage = {
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Skeppare</th>
-                            <th>Avgång</th>
-                            <th>Ankomst</th>
-                            <th>Resestatus</th>
-                            <th>Ordning</th>
-                            <th>Skapad</th>
+                            <th>${escapeHtml(t('admin.table.skipper'))}</th>
+                            <th>${escapeHtml(t('admin.table.departure'))}</th>
+                            <th>${escapeHtml(t('admin.table.arrival'))}</th>
+                            <th>${escapeHtml(t('admin.table.tripStatus'))}</th>
+                            <th>${escapeHtml(t('admin.table.order'))}</th>
+                            <th>${escapeHtml(t('admin.table.created'))}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -253,12 +267,12 @@ const AdminPage = {
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Namn</th>
-                            <th>Ägare</th>
-                            <th>MMSI</th>
-                            <th>Anropssignal</th>
-                            <th>Modell</th>
-                            <th>Skapad</th>
+                            <th>${escapeHtml(t('common.name'))}</th>
+                            <th>${escapeHtml(t('admin.table.owner'))}</th>
+                            <th>${escapeHtml(t('admin.table.mmsi'))}</th>
+                            <th>${escapeHtml(t('admin.table.callSign'))}</th>
+                            <th>${escapeHtml(t('admin.table.model'))}</th>
+                            <th>${escapeHtml(t('admin.table.created'))}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -286,14 +300,14 @@ const AdminPage = {
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Namn</th>
-                            <th>Relation</th>
-                            <th>E-post</th>
-                            <th>Telefon</th>
-                            <th>Kanal</th>
-                            <th>Bekräftad</th>
-                            <th>Skeppare</th>
-                            <th>Skapad</th>
+                            <th>${escapeHtml(t('common.name'))}</th>
+                            <th>${escapeHtml(t('admin.table.relationship'))}</th>
+                            <th>${escapeHtml(t('common.email'))}</th>
+                            <th>${escapeHtml(t('common.phone'))}</th>
+                            <th>${escapeHtml(t('admin.table.channel'))}</th>
+                            <th>${escapeHtml(t('admin.table.confirmed'))}</th>
+                            <th>${escapeHtml(t('admin.table.skipper'))}</th>
+                            <th>${escapeHtml(t('admin.table.created'))}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -311,7 +325,7 @@ const AdminPage = {
                 <td>${escapeHtml(contact.email || '')}</td>
                 <td>${escapeHtml(contact.phone || '')}</td>
                 <td>${escapeHtml(contact.preferred_channel || '')}</td>
-                <td>${contact.confirmed_at ? '<span class="badge badge-active">Ja</span>' : '<span class="badge badge-draft">Nej</span>'}</td>
+                <td>${contact.confirmed_at ? `<span class="badge badge-active">${escapeHtml(t('admin.yes'))}</span>` : `<span class="badge badge-draft">${escapeHtml(t('admin.no'))}</span>`}</td>
                 <td>${escapeHtml(contact.skipper_name || '')}<br><span class="page-header__meta">${escapeHtml(contact.skipper_email || '')}</span></td>
                 <td>${escapeHtml(formatDateTime(contact.created_at))}</td>
             </tr>`;
@@ -324,32 +338,35 @@ const AdminPage = {
         const isFirstRender = !container.querySelector('#log-filters-bar');
 
         if (isFirstRender) {
+            const logLevelLabels = this.logLevelLabels();
+            const logCategoryLabels = this.logCategoryLabels();
+
             container.innerHTML = `
                 <div id="log-filters-bar" class="log-filters">
                     <div class="field field--search">
-                        <label for="log-search">Sök</label>
-                        <input type="text" id="log-search" placeholder="Sök i meddelande eller ID..." value="${escapeHtml(this.state.logs.filters.q)}">
+                        <label for="log-search">${escapeHtml(t('admin.logs.searchLabel'))}</label>
+                        <input type="text" id="log-search" placeholder="${escapeHtml(t('admin.logs.searchPlaceholder'))}" value="${escapeHtml(this.state.logs.filters.q)}">
                     </div>
                     <div class="field">
-                        <label for="log-level">Loggnivå</label>
+                        <label for="log-level">${escapeHtml(t('admin.logs.levelLabel'))}</label>
                         <select id="log-level">
-                            <option value="">Alla nivåer</option>
-                            ${Object.entries(this.LOG_LEVEL_LABELS).map(([value, label]) => `
+                            <option value="">${escapeHtml(t('admin.logs.allLevels'))}</option>
+                            ${Object.entries(logLevelLabels).map(([value, label]) => `
                                 <option value="${value}" ${this.state.logs.filters.level === value ? 'selected' : ''}>${escapeHtml(label)}</option>
                             `).join('')}
                         </select>
                     </div>
                     <div class="field">
-                        <label for="log-category">Kategori</label>
+                        <label for="log-category">${escapeHtml(t('admin.logs.categoryLabel'))}</label>
                         <select id="log-category">
-                            <option value="">Alla kategorier</option>
-                            ${Object.entries(this.LOG_CATEGORY_LABELS).map(([value, label]) => `
+                            <option value="">${escapeHtml(t('admin.logs.allCategories'))}</option>
+                            ${Object.entries(logCategoryLabels).map(([value, label]) => `
                                 <option value="${value}" ${this.state.logs.filters.category === value ? 'selected' : ''}>${escapeHtml(label)}</option>
                             `).join('')}
                         </select>
                     </div>
                 </div>
-                <div id="log-results"><div class="loading-state"><span class="spinner"></span> Laddar...</div></div>
+                <div id="log-results"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('common.loading'))}</div></div>
                 <div id="log-pagination"></div>`;
 
             document.getElementById('log-search').addEventListener('input', (event) => {
@@ -370,7 +387,7 @@ const AdminPage = {
         }
 
         const resultsContainer = document.getElementById('log-results');
-        resultsContainer.innerHTML = `<div class="loading-state"><span class="spinner"></span> Laddar...</div>`;
+        resultsContainer.innerHTML = `<div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('common.loading'))}</div>`;
 
         const params = new URLSearchParams();
         params.set('page', String(page));
@@ -381,7 +398,7 @@ const AdminPage = {
         const response = await apiRequest(`/admin/logs?${params.toString()}`);
 
         if (!response.success) {
-            resultsContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta loggar.')}</div>`;
+            resultsContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('admin.logs.loadFailed')))}</div>`;
             document.getElementById('log-pagination').innerHTML = '';
             return;
         }
@@ -396,7 +413,7 @@ const AdminPage = {
 
     renderLogsTable(container) {
         if (this.state.logs.items.length === 0) {
-            container.innerHTML = `<div class="empty-state"><h3>${escapeHtml(this.TAB_CONFIG.logs.emptyText)}</h3></div>`;
+            container.innerHTML = `<div class="empty-state"><h3>${escapeHtml(this.tabConfig().logs.emptyText)}</h3></div>`;
             return;
         }
 
@@ -405,11 +422,11 @@ const AdminPage = {
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Tid</th>
-                            <th>Nivå</th>
-                            <th>Kategori</th>
-                            <th>Meddelande</th>
-                            <th>Användare</th>
+                            <th>${escapeHtml(t('admin.logs.table.time'))}</th>
+                            <th>${escapeHtml(t('admin.logs.table.level'))}</th>
+                            <th>${escapeHtml(t('admin.logs.table.category'))}</th>
+                            <th>${escapeHtml(t('admin.logs.table.message'))}</th>
+                            <th>${escapeHtml(t('admin.logs.table.user'))}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -420,11 +437,11 @@ const AdminPage = {
     },
 
     renderLogRow(log) {
-        const levelLabel = this.LOG_LEVEL_LABELS[log.level] || log.level;
-        const categoryLabel = this.LOG_CATEGORY_LABELS[log.category] || log.category;
+        const levelLabel = this.logLevelLabels()[log.level] || log.level;
+        const categoryLabel = this.logCategoryLabels()[log.category] || log.category;
 
         const stackTrace = log.stack_trace
-            ? `<details class="log-stack-trace"><summary>Stackspår</summary><pre>${escapeHtml(log.stack_trace)}</pre></details>`
+            ? `<details class="log-stack-trace"><summary>${escapeHtml(t('admin.logs.stackTrace'))}</summary><pre>${escapeHtml(log.stack_trace)}</pre></details>`
             : '';
 
         return `
@@ -448,9 +465,9 @@ const AdminPage = {
 
         container.innerHTML = `
             <div class="pagination">
-                <button class="btn btn-secondary btn-sm" type="button" id="log-prev-page" ${page <= 1 ? 'disabled' : ''}>Föregående</button>
-                <span class="pagination__info">Sida ${page} av ${totalPages} (${total} loggar)</span>
-                <button class="btn btn-secondary btn-sm" type="button" id="log-next-page" ${page >= totalPages ? 'disabled' : ''}>Nästa</button>
+                <button class="btn btn-secondary btn-sm" type="button" id="log-prev-page" ${page <= 1 ? 'disabled' : ''}>${escapeHtml(t('admin.logs.prevPage'))}</button>
+                <span class="pagination__info">${escapeHtml(t('admin.logs.pageInfo', { page, totalPages, total }))}</span>
+                <button class="btn btn-secondary btn-sm" type="button" id="log-next-page" ${page >= totalPages ? 'disabled' : ''}>${escapeHtml(t('admin.logs.nextPage'))}</button>
             </div>`;
 
         const prevBtn = document.getElementById('log-prev-page');

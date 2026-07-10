@@ -14,15 +14,15 @@ const VerifyEmailPage = {
         if (!token) {
             container.innerHTML = `
                 <div class="page page--narrow">
-                    <div class="alert alert-error">Ingen verifieringslänk hittades. Kontrollera att du klickade på hela länken.</div>
-                    <a class="btn btn-secondary" href="#/login">Till startsidan</a>
+                    <div class="alert alert-error">${escapeHtml(t('verifyEmail.noToken'))}</div>
+                    <a class="btn btn-secondary" href="#/login">${escapeHtml(t('verifyEmail.backToStart'))}</a>
                 </div>`;
             return;
         }
 
         container.innerHTML = `
             <div class="page page--narrow">
-                <div class="loading-state"><span class="spinner"></span> Bekräftar din e-postadress...</div>
+                <div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('verifyEmail.confirming'))}</div>
             </div>`;
 
         const response = await apiRequest('/auth/verify-email', {
@@ -32,14 +32,14 @@ const VerifyEmailPage = {
 
         if (!response.success) {
             const message = response.code === 'RESOURCE_CONFLICT'
-                ? 'Den nya e-postadressen är redan upptagen av ett annat konto.'
-                : (response.error || 'Länken är ogiltig eller har gått ut.');
+                ? t('verifyEmail.emailTaken')
+                : (response.code ? t.error(response.code) : (response.error || t('verifyEmail.linkInvalid')));
             container.innerHTML = `
                 <div class="page page--narrow">
-                    <h1>Verifiering misslyckades</h1>
+                    <h1>${escapeHtml(t('verifyEmail.failedTitle'))}</h1>
                     <div class="alert alert-error">${escapeHtml(message)}</div>
                     <a class="btn btn-secondary" href="${Auth.isAuthenticated() ? '#/dashboard' : '#/login'}">
-                        ${Auth.isAuthenticated() ? 'Till din översikt' : 'Till inloggning'}
+                        ${escapeHtml(Auth.isAuthenticated() ? t('verifyEmail.toOverview') : t('verifyEmail.toLogin'))}
                     </a>
                 </div>`;
             return;
@@ -53,17 +53,17 @@ const VerifyEmailPage = {
             renderTopbar();
         }
 
-        const heading = isChange ? 'E-postadressen har uppdaterats' : 'E-postadressen är bekräftad';
+        const heading = isChange ? t('verifyEmail.changedTitle') : t('verifyEmail.confirmedTitle');
         const body = isChange
-            ? `Din e-postadress har ändrats till <strong>${escapeHtml(response.data.email || '')}</strong>.`
-            : 'Tack! Ditt konto är nu bekräftat och du har full tillgång till Yachting Earth.';
+            ? t('verifyEmail.changedBody', { email: escapeHtml(response.data.email || '') })
+            : t('verifyEmail.confirmedBody');
         const cta = Auth.isAuthenticated()
-            ? '<a class="btn btn-primary" href="#/dashboard">Till din översikt</a>'
-            : '<a class="btn btn-primary" href="#/login">Logga in</a>';
+            ? `<a class="btn btn-primary" href="#/dashboard">${escapeHtml(t('verifyEmail.toOverview'))}</a>`
+            : `<a class="btn btn-primary" href="#/login">${escapeHtml(t('login.submit'))}</a>`;
 
         container.innerHTML = `
             <div class="page page--narrow">
-                <h1>${heading}</h1>
+                <h1>${escapeHtml(heading)}</h1>
                 <div class="alert alert-success">${body}</div>
                 ${cta}
             </div>`;

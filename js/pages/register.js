@@ -3,35 +3,35 @@ const RegisterPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">⚓ Yachting Earth</div>
-                    <div class="auth-card__tagline">Skapa konto</div>
+                    <div class="auth-card__logo">⚓ ${escapeHtml(t('app.brand'))}</div>
+                    <div class="auth-card__tagline">${escapeHtml(t('register.tagline'))}</div>
                     <div id="register-alert"></div>
                     <form id="register-form" novalidate>
                         <div class="field">
-                            <label for="name">Namn</label>
+                            <label for="name">${escapeHtml(t('register.nameLabel'))}</label>
                             <input type="text" id="name" autocomplete="name" required>
                         </div>
                         <div class="field">
-                            <label for="email">E-post</label>
+                            <label for="email">${escapeHtml(t('register.emailLabel'))}</label>
                             <input type="email" id="email" autocomplete="email" required>
                         </div>
                         <div class="field">
-                            <label for="phone">Telefon (valfritt)</label>
-                            <input type="tel" id="phone" autocomplete="tel" placeholder="+46701234567">
+                            <label for="phone">${escapeHtml(t('register.phoneLabel'))}</label>
+                            <input type="tel" id="phone" autocomplete="tel" placeholder="${escapeHtml(t('register.phonePlaceholder'))}">
                         </div>
                         <div class="field">
-                            <label for="password">Lösenord</label>
+                            <label for="password">${escapeHtml(t('register.passwordLabel'))}</label>
                             <input type="password" id="password" autocomplete="new-password" required>
-                            <small>Minst 8 tecken, en stor bokstav och en siffra.</small>
+                            <small>${escapeHtml(t('register.passwordHint'))}</small>
                         </div>
                         <div class="field">
-                            <label for="confirm-password">Bekräfta lösenord</label>
+                            <label for="confirm-password">${escapeHtml(t('register.confirmPasswordLabel'))}</label>
                             <input type="password" id="confirm-password" autocomplete="new-password" required>
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit" id="register-submit">Skapa konto</button>
+                        <button class="btn btn-primary btn-block" type="submit" id="register-submit">${escapeHtml(t('register.submit'))}</button>
                     </form>
                     <div class="auth-card__footer">
-                        Har du redan ett konto? <a href="#/login">Logga in</a>
+                        ${escapeHtml(t('register.haveAccount'))} <a href="#/login">${escapeHtml(t('register.loginLink'))}</a>
                     </div>
                 </div>
             </div>`;
@@ -54,7 +54,7 @@ const RegisterPage = {
 
         const error = Validate.name(name) || Validate.email(email)
             || Validate.phone(phone, true) || Validate.password(password)
-            || (password !== confirmPassword ? 'Lösenorden matchar inte' : null);
+            || (password !== confirmPassword ? t('register.passwordMismatch') : null);
 
         if (error) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
@@ -62,7 +62,7 @@ const RegisterPage = {
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Skapar konto...';
+        submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('register.submitting'))}`;
 
         const response = await apiRequest('/auth/register', {
             method: 'POST',
@@ -79,12 +79,16 @@ const RegisterPage = {
                 is_admin: response.data.is_admin,
                 email_verified: response.data.email_verified
             });
+            if (response.data.locale) {
+                localStorage.setItem('ye_lang', response.data.locale);
+                await I18n.load(response.data.locale);
+            }
             location.hash = '#/dashboard';
             return;
         }
 
-        alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte skapa kontot.')}</div>`;
+        alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('register.errorDefault')))}</div>`;
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Skapa konto';
+        submitBtn.textContent = t('register.submit');
     }
 };

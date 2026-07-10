@@ -7,20 +7,20 @@ const CrewInvitePage = {
         if (!this.state.token) {
             container.innerHTML = `
                 <div class="page page--narrow">
-                    <div class="alert alert-error">Ingen inbjudningslänk hittades. Kontrollera att du klickade på hela länken.</div>
+                    <div class="alert alert-error">${t('crewInvite.noToken')}</div>
                 </div>`;
             return;
         }
 
-        container.innerHTML = `<div class="page page--narrow"><div class="loading-state"><span class="spinner"></span> Laddar inbjudan...</div></div>`;
+        container.innerHTML = `<div class="page page--narrow"><div class="loading-state"><span class="spinner"></span> ${t('crewInvite.loading')}</div></div>`;
 
         const preview = await apiRequest(`/crew/invite/${this.state.token}`);
 
         if (!preview.success) {
             container.innerHTML = `
                 <div class="page page--narrow">
-                    <div class="alert alert-error">${escapeHtml(preview.error || 'Inbjudan är ogiltig eller har gått ut.')}</div>
-                    <a class="btn btn-secondary" href="#/login">Till startsidan</a>
+                    <div class="alert alert-error">${escapeHtml(preview.code ? t.error(preview.code) : (preview.error || t('crewInvite.invalidInvite')))}</div>
+                    <a class="btn btn-secondary" href="#/login">${t('crewInvite.backToStart')}</a>
                 </div>`;
             return;
         }
@@ -36,38 +36,37 @@ const CrewInvitePage = {
         // invited email, or continue as a one-off temp crew member.
         const accountSection = authed
             ? `<div class="alert alert-info">
-                   Du är inloggad som <strong>${escapeHtml(user.name || user.email || '')}</strong>
-                   - inbjudan kopplas till ditt konto.
+                   ${t('crewInvite.accountSection.loggedIn', { name: escapeHtml(user.name || user.email || '') })}
                </div>`
             : `<div class="checkbox-field">
                    <input type="checkbox" id="create-account">
-                   <label for="create-account">Spara mitt konto så jag kan logga in senare${this.state.invitedEmail ? ` (${escapeHtml(this.state.invitedEmail)})` : ''}</label>
+                   <label for="create-account">${t('crewInvite.accountSection.saveAccountLabel', { emailSuffix: this.state.invitedEmail ? ` (${escapeHtml(this.state.invitedEmail)})` : '' })}</label>
                </div>
                <div id="password-fields" hidden>
                    <div class="field">
-                       <label for="account-password">Lösenord</label>
+                       <label for="account-password">${t('common.password')}</label>
                        <input type="password" id="account-password" autocomplete="new-password">
-                       <small>Minst 8 tecken, en stor bokstav och en siffra.</small>
+                       <small>${t('crewInvite.accountSection.passwordHint')}</small>
                    </div>
                    <div class="field">
-                       <label for="account-password-confirm">Bekräfta lösenord</label>
+                       <label for="account-password-confirm">${t('crewInvite.accountSection.confirmPasswordLabel')}</label>
                        <input type="password" id="account-password-confirm" autocomplete="new-password">
                    </div>
                </div>
                <p class="text-muted" style="font-size: var(--font-size-sm);">
-                   Har du redan ett konto? <a href="#/login">Logga in</a> och öppna länken igen så kopplas inbjudan till kontot.
+                   ${t('crewInvite.accountSection.haveAccount', { loginLink: `<a href="#/login">${t('crewInvite.loginLink')}</a>` })}
                </p>`;
 
         container.innerHTML = `
             <div class="page page--narrow">
-                <h1>Du är inbjuden på en resa!</h1>
+                <h1>${t('crewInvite.title')}</h1>
                 <div class="invite-summary">
                     <dl>
-                        <dt>Skeppare</dt><dd>${escapeHtml(p.skipper || '–')}</dd>
-                        <dt>Fartyg</dt><dd>${escapeHtml(p.vessel || '–')}</dd>
-                        <dt>Avgång</dt><dd>${formatDateTime(p.planned_departure)}</dd>
-                        <dt>Ankomst</dt><dd>${formatDateTime(p.planned_arrival)}</dd>
-                        <dt>Besättning hittills</dt><dd>${p.current_crew_count} personer</dd>
+                        <dt>${t('crewInvite.summary.skipper')}</dt><dd>${escapeHtml(p.skipper || '–')}</dd>
+                        <dt>${t('crewInvite.summary.vessel')}</dt><dd>${escapeHtml(p.vessel || '–')}</dd>
+                        <dt>${t('crewInvite.summary.departure')}</dt><dd>${formatDateTime(p.planned_departure)}</dd>
+                        <dt>${t('crewInvite.summary.arrival')}</dt><dd>${formatDateTime(p.planned_arrival)}</dd>
+                        <dt>${t('crewInvite.summary.crewCount')}</dt><dd>${t('crewInvite.summary.crewCountValue', { count: p.current_crew_count })}</dd>
                     </dl>
                 </div>
 
@@ -75,28 +74,28 @@ const CrewInvitePage = {
 
                 <form id="accept-form" novalidate>
                     <div class="field">
-                        <label for="name">Ditt namn</label>
+                        <label for="name">${t('crewInvite.nameLabel')}</label>
                         <input type="text" id="name" value="${escapeHtml(p.invited_name || (authed ? (user.name || '') : ''))}" required>
                     </div>
                     <div class="field">
-                        <label for="phone">Telefonnummer (valfritt)</label>
-                        <input type="tel" id="phone" placeholder="+46701234567">
+                        <label for="phone">${t('crewInvite.phoneLabel')}</label>
+                        <input type="tel" id="phone" placeholder="${t('crewInvite.phonePlaceholder')}">
                     </div>
                     <div class="field">
-                        <label for="ice-contact">Din ICE-kontakt (vid nödsituation)</label>
-                        <input type="text" id="ice-contact" placeholder="t.ex. Erik (make) +46701234568">
-                        <small>Namn och telefonnummer till någon som ska kontaktas om något händer.</small>
+                        <label for="ice-contact">${t('crewInvite.iceContactLabel')}</label>
+                        <input type="text" id="ice-contact" placeholder="${t('crewInvite.iceContactPlaceholder')}">
+                        <small>${t('crewInvite.iceContactHint')}</small>
                     </div>
                     <div class="field">
-                        <label for="photo">Foto på dig (valfritt men rekommenderat)</label>
+                        <label for="photo">${t('crewInvite.photoLabel')}</label>
                         <input type="file" id="photo" accept="image/jpeg,image/png">
-                        <small>Används av sjöräddningen för att identifiera besättningen. JPEG/PNG, max 10 MB.</small>
+                        <small>${t('crewInvite.photoHint')}</small>
                         <img id="photo-preview" alt="" hidden
                              style="margin-top: var(--space-2); width: 96px; height: 96px; border-radius: 50%; object-fit: cover;">
                     </div>
                     ${accountSection}
                     <div class="btn-group">
-                        <button class="btn btn-primary" type="submit" id="accept-submit">Acceptera & gå med</button>
+                        <button class="btn btn-primary" type="submit" id="accept-submit">${t('crewInvite.submit')}</button>
                     </div>
                 </form>
             </div>`;
@@ -144,7 +143,7 @@ const CrewInvitePage = {
             password = document.getElementById('account-password').value;
             const confirm = document.getElementById('account-password-confirm').value;
             error = Validate.password(password)
-                || (password !== confirm ? 'Lösenorden stämmer inte överens' : null);
+                || (password !== confirm ? t('crewInvite.passwordMismatch') : null);
         }
 
         if (error) {
@@ -153,7 +152,7 @@ const CrewInvitePage = {
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Går med...';
+        submitBtn.innerHTML = `<span class="spinner"></span> ${t('crewInvite.submitting')}`;
 
         // Photo first: the upload is authorized by the invitation token,
         // which is consumed by the accept call below
@@ -163,7 +162,8 @@ const CrewInvitePage = {
             formData.append('photo', photoFile);
             const photoResponse = await apiUpload(`/crew/invite/${this.state.token}/photo`, formData);
             if (!photoResponse.success) {
-                photoWarning = ` Fotot kunde dock inte laddas upp (${photoResponse.error || 'okänt fel'}).`;
+                const reason = photoResponse.code ? t.error(photoResponse.code) : (photoResponse.error || t('crewInvite.unknownError'));
+                photoWarning = ' ' + t('crewInvite.photoUploadFailed', { reason });
             }
         }
 
@@ -179,9 +179,9 @@ const CrewInvitePage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte gå med i resan.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('crewInvite.acceptFailed')))}</div>`;
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Acceptera & gå med';
+            submitBtn.textContent = t('crewInvite.submit');
             return;
         }
 
@@ -192,8 +192,8 @@ const CrewInvitePage = {
 
         document.getElementById('accept-form').outerHTML = `
             <div class="alert alert-success">
-                Du är nu med i besättningen. Ha en trevlig och säker resa!${escapeHtml(photoWarning)}
-                ${response.data.auth_token ? '<br><a href="#/dashboard">Till din översikt</a>' : ''}
+                ${t('crewInvite.acceptSuccess')}${escapeHtml(photoWarning)}
+                ${response.data.auth_token ? `<br><a href="#/dashboard">${t('crewInvite.toOverview')}</a>` : ''}
             </div>`;
     }
 };

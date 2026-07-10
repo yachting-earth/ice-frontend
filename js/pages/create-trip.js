@@ -17,48 +17,48 @@ const CreateTripPage = {
         container.innerHTML = `
             <div class="page page--narrow" style="max-width: 640px;">
                 <div class="page-header">
-                    <h1>Skapa ny resa</h1>
+                    <h1>${escapeHtml(t('createTrip.title'))}</h1>
                 </div>
                 <div id="create-trip-alert"></div>
 
                 <div class="card">
-                    <h3>Fartyg</h3>
-                    <div id="vessel-section"><div class="loading-state"><span class="spinner"></span> Laddar fartyg...</div></div>
+                    <h3>${escapeHtml(t('createTrip.vessel.heading'))}</h3>
+                    <div id="vessel-section"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('createTrip.vessel.loading'))}</div></div>
                 </div>
 
                 <div class="card">
-                    <h3>Tidsplan</h3>
+                    <h3>${escapeHtml(t('createTrip.schedule.heading'))}</h3>
                     <div class="field-row">
                         <div class="field">
-                            <label for="departure">Avgång (UTC)</label>
+                            <label for="departure">${escapeHtml(t('createTrip.schedule.departureLabel'))}</label>
                             <input type="datetime-local" id="departure" required>
                         </div>
                         <div class="field">
-                            <label for="arrival">Planerad ankomst (UTC)</label>
+                            <label for="arrival">${escapeHtml(t('createTrip.schedule.arrivalLabel'))}</label>
                             <input type="datetime-local" id="arrival" required>
                         </div>
                     </div>
                     <div class="field">
-                        <label for="grace-period">Marginal innan ICE-kontakt varnas</label>
+                        <label for="grace-period">${escapeHtml(t('createTrip.schedule.gracePeriodLabel'))}</label>
                         <select id="grace-period">
-                            ${CONFIG.GRACE_PERIOD_OPTIONS.map((g) => `<option value="${g.seconds}" ${g.seconds === 86400 ? 'selected' : ''}>${g.label}</option>`).join('')}
+                            ${CONFIG.GRACE_PERIOD_OPTIONS.map((g) => `<option value="${g.seconds}" ${g.seconds === 86400 ? 'selected' : ''}>${escapeHtml(formatGracePeriod(g.seconds))}</option>`).join('')}
                         </select>
-                        <small>Tid efter planerad ankomst innan ICE-kontakten notifieras om du inte har verifierat ankomst.</small>
+                        <small>${escapeHtml(t('createTrip.schedule.gracePeriodHint'))}</small>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3>Rutter</h3>
-                        <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ Lägg till alternativ rutt</button>
+                        <h3>${escapeHtml(t('createTrip.routes.heading'))}</h3>
+                        <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">${escapeHtml(t('createTrip.routes.addAlternative'))}</button>
                     </div>
                     <div id="routes-container"></div>
                     <div id="route-map" class="map-container"></div>
                 </div>
 
                 <div class="btn-group">
-                    <a class="btn btn-ghost" href="#/dashboard">Avbryt</a>
-                    <button class="btn btn-primary" type="button" id="create-trip-submit">Skapa resa</button>
+                    <a class="btn btn-ghost" href="#/dashboard">${escapeHtml(t('common.cancel'))}</a>
+                    <button class="btn btn-primary" type="button" id="create-trip-submit">${escapeHtml(t('createTrip.submit'))}</button>
                 </div>
             </div>`;
 
@@ -89,63 +89,63 @@ const CreateTripPage = {
         section.innerHTML = `
             ${this.state.vessels.length > 0 ? `
                 <div class="field">
-                    <label for="vessel-select">Välj fartyg</label>
+                    <label for="vessel-select">${escapeHtml(t('createTrip.vessel.selectLabel'))}</label>
                     <select id="vessel-select">
-                        ${this.state.vessels.map((v) => `<option value="${v.id}">${escapeHtml(v.vessel_name)}${v.mmsi ? ` (MMSI ${escapeHtml(v.mmsi)})` : ''}</option>`).join('')}
+                        ${this.state.vessels.map((v) => `<option value="${v.id}">${escapeHtml(v.vessel_name)}${v.mmsi ? escapeHtml(t('createTrip.vessel.mmsiSuffix', { mmsi: v.mmsi })) : ''}</option>`).join('')}
                     </select>
-                </div>` : `<div class="alert alert-info">Du har inga fartyg registrerade än. Lägg till ett nedan.</div>`}
-            <button class="btn btn-ghost btn-sm" type="button" id="toggle-new-vessel">+ Lägg till nytt fartyg</button>
+                </div>` : `<div class="alert alert-info">${escapeHtml(t('createTrip.vessel.noneRegistered'))}</div>`}
+            <button class="btn btn-ghost btn-sm" type="button" id="toggle-new-vessel">${escapeHtml(t('createTrip.vessel.addNew'))}</button>
             <div id="new-vessel-form" style="display:${this.state.vessels.length > 0 ? 'none' : 'block'}; margin-top: var(--space-3);">
                 <div class="field-row">
                     <div class="field">
-                        <label for="vessel-name">Fartygsnamn</label>
-                        <input type="text" id="vessel-name" placeholder="t.ex. Thrym">
+                        <label for="vessel-name">${escapeHtml(t('createTrip.vessel.nameLabel'))}</label>
+                        <input type="text" id="vessel-name" placeholder="${escapeHtml(t('createTrip.vessel.namePlaceholder'))}">
                     </div>
                     <div class="field">
-                        <label for="vessel-mmsi">MMSI (valfritt)</label>
+                        <label for="vessel-mmsi">${escapeHtml(t('createTrip.vessel.mmsiLabel'))}</label>
                         <input type="text" id="vessel-mmsi">
                     </div>
                 </div>
                 <div class="field">
-                    <label for="vessel-callsign">Anropssignal (valfritt)</label>
+                    <label for="vessel-callsign">${escapeHtml(t('createTrip.vessel.callSignLabel'))}</label>
                     <input type="text" id="vessel-callsign">
                 </div>
                 <div class="field-row">
                     <div class="field">
-                        <label for="vessel-model">Modell (valfritt)</label>
-                        <input type="text" id="vessel-model" placeholder="t.ex. Bavaria 34">
+                        <label for="vessel-model">${escapeHtml(t('createTrip.vessel.modelLabel'))}</label>
+                        <input type="text" id="vessel-model" placeholder="${escapeHtml(t('createTrip.vessel.modelPlaceholder'))}">
                     </div>
                     <div class="field">
-                        <label for="vessel-year">Årsmodell (valfritt)</label>
-                        <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="t.ex. 2011">
+                        <label for="vessel-year">${escapeHtml(t('createTrip.vessel.yearLabel'))}</label>
+                        <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="${escapeHtml(t('createTrip.vessel.yearPlaceholder'))}">
                     </div>
                 </div>
                 <div class="field-row">
                     <div class="field">
-                        <label for="vessel-length">Längd, meter (valfritt)</label>
+                        <label for="vessel-length">${escapeHtml(t('createTrip.vessel.lengthLabel'))}</label>
                         <input type="number" id="vessel-length" inputmode="decimal" step="0.01" min="0">
                     </div>
                     <div class="field">
-                        <label for="vessel-width">Bredd, meter (valfritt)</label>
+                        <label for="vessel-width">${escapeHtml(t('createTrip.vessel.widthLabel'))}</label>
                         <input type="number" id="vessel-width" inputmode="decimal" step="0.01" min="0">
                     </div>
                     <div class="field">
-                        <label for="vessel-draft">Djup, meter (valfritt)</label>
+                        <label for="vessel-draft">${escapeHtml(t('createTrip.vessel.draftLabel'))}</label>
                         <input type="number" id="vessel-draft" inputmode="decimal" step="0.01" min="0">
                     </div>
                 </div>
                 <div class="field">
-                    <label for="vessel-notes">Övrigt (valfritt)</label>
-                    <textarea id="vessel-notes" rows="3" placeholder="Övrig information om båten"></textarea>
+                    <label for="vessel-notes">${escapeHtml(t('createTrip.vessel.notesLabel'))}</label>
+                    <textarea id="vessel-notes" rows="3" placeholder="${escapeHtml(t('createTrip.vessel.notesPlaceholder'))}"></textarea>
                 </div>
                 <div class="field">
-                    <label for="vessel-photo">Fartygsfoto (valfritt)</label>
+                    <label for="vessel-photo">${escapeHtml(t('createTrip.vessel.photoLabel'))}</label>
                     <input type="file" id="vessel-photo" accept="image/jpeg,image/png">
-                    <small>Används av sjöräddningen för att identifiera fartyget. JPEG/PNG, max 10 MB.</small>
+                    <small>${escapeHtml(t('createTrip.vessel.photoHint'))}</small>
                     <img id="vessel-photo-preview" alt="" hidden
                          style="margin-top: var(--space-2); width: 96px; height: 96px; border-radius: var(--radius-md); object-fit: cover;">
                 </div>
-                <button class="btn btn-secondary btn-sm" type="button" id="save-vessel-btn">Spara fartyg</button>
+                <button class="btn btn-secondary btn-sm" type="button" id="save-vessel-btn">${escapeHtml(t('createTrip.vessel.saveButton'))}</button>
             </div>`;
 
         document.getElementById('toggle-new-vessel').addEventListener('click', () => {
@@ -183,9 +183,9 @@ const CreateTripPage = {
 
         const error = Validate.name(name)
             || Validate.vesselYear(year)
-            || Validate.vesselDimension(length, 'Längd')
-            || Validate.vesselDimension(width, 'Bredd')
-            || Validate.vesselDimension(draft, 'Djup');
+            || Validate.vesselDimension(length, t('createTrip.vessel.length'))
+            || Validate.vesselDimension(width, t('createTrip.vessel.width'))
+            || Validate.vesselDimension(draft, t('createTrip.vessel.draft'));
         if (error) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
             return;
@@ -207,14 +207,14 @@ const CreateTripPage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara fartyget.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('createTrip.vessel.saveFailed')))}</div>`;
             return;
         }
 
         let vessel = response.data;
 
         if (vessel.mmsi_notice?.already_registered_elsewhere) {
-            showToast('Detta MMSI-nummer finns redan registrerat i systemet.', 'info');
+            showToast(t('createTrip.vessel.mmsiAlreadyRegistered'), 'info');
         }
 
         if (photoFile) {
@@ -222,7 +222,8 @@ const CreateTripPage = {
             formData.append('photo', photoFile);
             const photoResponse = await apiUpload(`/vessels/${vessel.id}/photo`, formData, 'PUT');
             if (!photoResponse.success) {
-                showToast(`Fartyget sparades, men fotot kunde inte laddas upp (${photoResponse.error || 'okänt fel'})`, 'error');
+                const photoError = photoResponse.code ? t.error(photoResponse.code) : (photoResponse.error || t('createTrip.vessel.unknownError'));
+                showToast(t('createTrip.vessel.photoUploadFailed', { error: photoError }), 'error');
             } else {
                 vessel = { ...vessel, photo_path: true };
             }
@@ -231,7 +232,7 @@ const CreateTripPage = {
         this.state.vessels.push(vessel);
         this.renderVesselSection();
         document.getElementById('vessel-select').value = vessel.id;
-        showToast('Fartyg tillagt', 'success');
+        showToast(t('createTrip.vessel.added'), 'success');
     },
 
     renderRoutes() {
@@ -244,37 +245,37 @@ const CreateTripPage = {
             <div class="route-item" data-index="${i}">
                 <div class="route-item__title">
                     <span class="route-color-dot" style="background:${this.ROUTE_COLORS[i % this.ROUTE_COLORS.length]};"></span>
-                    ${i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`}
+                    ${i === 0 ? escapeHtml(t('createTrip.routes.primary')) : escapeHtml(t('createTrip.routes.alternative', { index: i }))}
                     <div class="btn-group" style="margin-left:auto;">
-                        <button class="btn btn-ghost btn-sm" type="button" data-move-up="${i}" ${i === 0 ? 'disabled' : ''} title="Flytta upp">↑</button>
-                        <button class="btn btn-ghost btn-sm" type="button" data-move-down="${i}" ${i === this.state.routes.length - 1 ? 'disabled' : ''} title="Flytta ner">↓</button>
-                        ${i > 0 ? `<button class="btn btn-ghost btn-sm" type="button" data-remove="${i}">Ta bort</button>` : ''}
+                        <button class="btn btn-ghost btn-sm" type="button" data-move-up="${i}" ${i === 0 ? 'disabled' : ''} title="${escapeHtml(t('createTrip.routes.moveUp'))}">↑</button>
+                        <button class="btn btn-ghost btn-sm" type="button" data-move-down="${i}" ${i === this.state.routes.length - 1 ? 'disabled' : ''} title="${escapeHtml(t('createTrip.routes.moveDown'))}">↓</button>
+                        ${i > 0 ? `<button class="btn btn-ghost btn-sm" type="button" data-remove="${i}">${escapeHtml(t('common.remove'))}</button>` : ''}
                     </div>
                 </div>
                 <div class="route-mode-toggle btn-group">
-                    <button type="button" class="btn btn-sm ${route.mode !== 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="windy" data-index="${i}">Importera från Windy</button>
-                    <button type="button" class="btn btn-sm ${route.mode === 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="manual" data-index="${i}">Rita manuellt</button>
+                    <button type="button" class="btn btn-sm ${route.mode !== 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="windy" data-index="${i}">${escapeHtml(t('createTrip.routes.modeWindy'))}</button>
+                    <button type="button" class="btn btn-sm ${route.mode === 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="manual" data-index="${i}">${escapeHtml(t('createTrip.routes.modeManual'))}</button>
                 </div>
                 ${route.mode === 'manual' ? `
                 <div class="field">
-                    <label>Rita rutt på kartan</label>
-                    <small class="text-muted">Klicka på kartan för att lägga till punkter. Dra en punkt för att flytta den, klicka på en punkt och välj "Ta bort punkt" för att radera den.</small>
+                    <label>${escapeHtml(t('createTrip.routes.drawLabel'))}</label>
+                    <small class="text-muted">${escapeHtml(t('createTrip.routes.drawHint'))}</small>
                     <div id="route-draw-map-${i}" class="map-container route-draw-map"></div>
                     <div class="route-draw-footer">
-                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="route-draw-count-${i}">${route.coordinates.length}</span> punkter</span>
-                        <button class="btn btn-ghost btn-sm" type="button" data-clear-route="${i}">Rensa rutt</button>
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="route-draw-count-${i}">${route.coordinates.length}</span> ${escapeHtml(t('createTrip.routes.points'))}</span>
+                        <button class="btn btn-ghost btn-sm" type="button" data-clear-route="${i}">${escapeHtml(t('createTrip.routes.clear'))}</button>
                     </div>
                 </div>` : `
                 <div class="field">
-                    <label>Windy-länk</label>
+                    <label>${escapeHtml(t('createTrip.routes.windyUrlLabel'))}</label>
                     <input type="url" class="route-windy-url" data-index="${i}" value="${escapeHtml(route.windyUrl)}"
-                           placeholder="https://www.windy.com/route-planner/boat/...">
+                           placeholder="${escapeHtml(t('createTrip.routes.windyUrlPlaceholder'))}">
                 </div>`}
                 ${i > 0 ? `
                 <div class="field">
-                    <label>Anledning</label>
+                    <label>${escapeHtml(t('createTrip.routes.reasonLabel'))}</label>
                     <input type="text" class="route-reason" data-index="${i}" value="${escapeHtml(route.reason)}"
-                           placeholder="t.ex. Om vinden vrider nordlig">
+                           placeholder="${escapeHtml(t('createTrip.routes.reasonPlaceholder'))}">
                 </div>` : ''}
             </div>
         `).join('');
@@ -408,22 +409,22 @@ const CreateTripPage = {
         const gracePeriod = Number(document.getElementById('grace-period').value);
 
         if (!vesselId) {
-            alertBox.innerHTML = `<div class="alert alert-error">Välj eller lägg till ett fartyg.</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.vesselRequired'))}</div>`;
             return;
         }
         if (!departure || !arrival) {
-            alertBox.innerHTML = `<div class="alert alert-error">Ange både avgångs- och ankomsttid.</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.datesRequired'))}</div>`;
             return;
         }
         if (toApiDatetime(arrival) <= toApiDatetime(departure)) {
-            alertBox.innerHTML = `<div class="alert alert-error">Ankomsttiden måste vara efter avgångstiden.</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.arrivalBeforeDeparture'))}</div>`;
             return;
         }
 
         const primaryRoute = this.state.routes[0];
         if (primaryRoute.mode === 'manual') {
             if (primaryRoute.coordinates.length < 2) {
-                alertBox.innerHTML = `<div class="alert alert-error">Rita minst två punkter för huvudrutten.</div>`;
+                alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.primaryRouteMinPoints'))}</div>`;
                 return;
             }
         } else {
@@ -441,7 +442,7 @@ const CreateTripPage = {
                 : { windy_url: r.windyUrl.trim(), reason: r.reason.trim() || null });
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Skapar resa...';
+        submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('createTrip.submitting'))}`;
 
         const response = await apiRequest('/trips', {
             method: 'POST',
@@ -455,17 +456,17 @@ const CreateTripPage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte skapa resan.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('createTrip.errors.createFailed')))}</div>`;
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Skapa resa';
+            submitBtn.textContent = t('createTrip.submit');
             return;
         }
 
         if (response.data.schedule_notice?.conflicting_trip_exists) {
-            showToast('Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.', 'info');
+            showToast(t('createTrip.scheduleConflictNotice'), 'info');
         }
 
-        showToast('Resa skapad', 'success');
+        showToast(t('createTrip.created'), 'success');
         location.hash = `#/trips/${response.data.trip_id}`;
     }
 };

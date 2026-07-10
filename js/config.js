@@ -10,12 +10,15 @@ const CONFIG = (() => {
 
     return {
         API_BASE_URL: isLocal ? 'http://localhost:8080' : 'https://ice-api.manjo.se',
+        // Labels are looked up via t('common.gracePeriod.hNN') at render time
+        // (formatGracePeriod() in i18n.js) rather than stored here, since
+        // config.js loads before the active language dictionary.
         GRACE_PERIOD_OPTIONS: [
-            { seconds: 3600, label: '1 timme' },
-            { seconds: 14400, label: '4 timmar' },
-            { seconds: 43200, label: '12 timmar' },
-            { seconds: 86400, label: '24 timmar' },
-            { seconds: 172800, label: '48 timmar' }
+            { seconds: 3600, hours: 1 },
+            { seconds: 14400, hours: 4 },
+            { seconds: 43200, hours: 12 },
+            { seconds: 86400, hours: 24 },
+            { seconds: 172800, hours: 48 }
         ],
         MAX_SNOOZE_MINUTES: 72,
         SNOOZE_PRESETS: [15, 30, 60, 72]

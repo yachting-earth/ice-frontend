@@ -7,20 +7,20 @@ const IceConfirmPage = {
         if (!this.state.token) {
             container.innerHTML = `
                 <div class="page page--narrow">
-                    <div class="alert alert-error">Ingen bekräftelselänk hittades. Kontrollera att du klickade på hela länken.</div>
+                    <div class="alert alert-error">${t('iceConfirm.noToken')}</div>
                 </div>`;
             return;
         }
 
-        container.innerHTML = `<div class="page page--narrow"><div class="loading-state"><span class="spinner"></span> Laddar...</div></div>`;
+        container.innerHTML = `<div class="page page--narrow"><div class="loading-state"><span class="spinner"></span> ${t('iceConfirm.loading')}</div></div>`;
 
         const preview = await apiRequest(`/ice-contacts/confirm/${this.state.token}`);
 
         if (!preview.success) {
             container.innerHTML = `
                 <div class="page page--narrow">
-                    <div class="alert alert-error">${escapeHtml(preview.error || 'Länken är ogiltig eller har redan använts.')}</div>
-                    <a class="btn btn-secondary" href="#/login">Till startsidan</a>
+                    <div class="alert alert-error">${escapeHtml(preview.code ? t.error(preview.code) : (preview.error || t('iceConfirm.invalidLink')))}</div>
+                    <a class="btn btn-secondary" href="#/login">${t('iceConfirm.backToStart')}</a>
                 </div>`;
             return;
         }
@@ -35,39 +35,37 @@ const IceConfirmPage = {
         // fields are always shown, with an opt-in for automatic deletion.
         const accountSection = authed
             ? `<div class="alert alert-info">
-                   Du är inloggad som <strong>${escapeHtml(user.name || user.email || '')}</strong>
-                   - bekräftelsen kopplas till ditt konto.
+                   ${t('iceConfirm.accountSection.loggedIn', { name: escapeHtml(user.name || user.email || '') })}
                </div>`
             : `<div class="field">
-                   <label for="account-password">Lösenord</label>
+                   <label for="account-password">${t('common.password')}</label>
                    <input type="password" id="account-password" autocomplete="new-password">
-                   <small>Minst 8 tecken, en stor bokstav och en siffra.</small>
+                   <small>${t('iceConfirm.accountSection.passwordHint')}</small>
                </div>
                <div class="field">
-                   <label for="account-password-confirm">Bekräfta lösenord</label>
+                   <label for="account-password-confirm">${t('iceConfirm.accountSection.confirmPasswordLabel')}</label>
                    <input type="password" id="account-password-confirm" autocomplete="new-password">
                </div>
                <div class="checkbox-field">
                    <input type="checkbox" id="delete-after-trip">
-                   <label for="delete-after-trip">Radera mitt konto och mina uppgifter automatiskt när resan/resorna jag är nödkontakt för är avslutade</label>
+                   <label for="delete-after-trip">${t('iceConfirm.accountSection.deleteAfterTripLabel')}</label>
                </div>
                <p class="text-muted" style="font-size: var(--font-size-sm);">
-                   Som standard behåller vi ditt konto permanent så att du kan logga in igen vid framtida resor
-                   och uppdatera dina uppgifter. Kryssa i rutan ovan om du istället vill att kontot och dina
-                   uppgifter raderas automatiskt en tid efter att resan är över.
+                   ${t('iceConfirm.accountSection.retentionNote')}
                </p>
                <p class="text-muted" style="font-size: var(--font-size-sm);">
-                   Har du redan ett konto? <a href="#/login">Logga in</a> och öppna länken igen så kopplas bekräftelsen till kontot.
+                   ${t('iceConfirm.accountSection.haveAccount', { loginLink: `<a href="#/login">${t('iceConfirm.loginLink')}</a>` })}
                </p>`;
 
         container.innerHTML = `
             <div class="page page--narrow">
-                <h1>Bekräfta som nödkontakt</h1>
+                <h1>${t('iceConfirm.title')}</h1>
                 <div class="invite-summary">
                     <p>
-                        <strong>${escapeHtml(p.skipper || '–')}</strong> har lagt till dig som sin ICE-kontakt
-                        (In Case of Emergency)${p.relationship ? ` (${escapeHtml(p.relationship)})` : ''}.
-                        Det innebär att du kan bli kontaktad om personen inte checkar in från en segling i tid.
+                        ${t('iceConfirm.intro', {
+                            skipper: `<strong>${escapeHtml(p.skipper || '–')}</strong>`,
+                            relationshipSuffix: p.relationship ? ` (${escapeHtml(p.relationship)})` : ''
+                        })}
                     </p>
                 </div>
 
@@ -76,7 +74,7 @@ const IceConfirmPage = {
                 <form id="confirm-form" novalidate>
                     ${accountSection}
                     <div class="btn-group">
-                        <button class="btn btn-primary" type="submit" id="confirm-submit">Bekräfta</button>
+                        <button class="btn btn-primary" type="submit" id="confirm-submit">${t('common.confirm')}</button>
                     </div>
                 </form>
             </div>`;
@@ -103,7 +101,7 @@ const IceConfirmPage = {
             const confirm = document.getElementById('account-password-confirm').value;
             deleteAfterTrip = document.getElementById('delete-after-trip').checked;
             error = Validate.password(password)
-                || (password !== confirm ? 'Lösenorden stämmer inte överens' : null);
+                || (password !== confirm ? t('iceConfirm.passwordMismatch') : null);
         }
 
         if (error) {
@@ -112,7 +110,7 @@ const IceConfirmPage = {
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Bekräftar...';
+        submitBtn.innerHTML = `<span class="spinner"></span> ${t('iceConfirm.confirming')}`;
 
         const response = await apiRequest(`/ice-contacts/confirm/${this.state.token}`, {
             method: 'POST',
@@ -125,14 +123,14 @@ const IceConfirmPage = {
 
         if (!response.success) {
             const message = response.code === 'RESOURCE_CONFLICT'
-                ? 'Du har redan ett konto med den här e-postadressen. Logga in och öppna länken igen för att bekräfta.'
-                : (response.error || 'Kunde inte bekräfta.');
+                ? t('iceConfirm.accountConflict')
+                : (response.code ? t.error(response.code) : (response.error || t('iceConfirm.confirmFailed')));
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(message)}</div>`;
             if (response.code === 'RESOURCE_CONFLICT') {
-                alertBox.innerHTML += `<a class="btn btn-secondary" href="#/login" style="margin-top: var(--space-2);">Logga in</a>`;
+                alertBox.innerHTML += `<a class="btn btn-secondary" href="#/login" style="margin-top: var(--space-2);">${t('iceConfirm.loginLink')}</a>`;
             }
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Bekräfta';
+            submitBtn.textContent = t('common.confirm');
             return;
         }
 
@@ -143,15 +141,15 @@ const IceConfirmPage = {
 
         const policyNote = createAccount
             ? (deleteAfterTrip
-                ? 'Ditt konto och dina uppgifter raderas automatiskt när resan/resorna du är nödkontakt för är avslutade.'
-                : 'Ditt konto behålls permanent så att du kan logga in igen vid framtida resor och uppdatera dina uppgifter.')
+                ? t('iceConfirm.policyNoteDelete')
+                : t('iceConfirm.policyNoteKeep'))
             : '';
 
         document.getElementById('confirm-form').outerHTML = `
             <div class="alert alert-success">
-                Tack! Du är nu bekräftad som nödkontakt.
+                ${t('iceConfirm.confirmSuccess')}
                 ${policyNote ? `<br>${escapeHtml(policyNote)}` : ''}
-                ${response.data.auth_token ? '<br><a href="#/dashboard">Till din översikt</a>' : ''}
+                ${response.data.auth_token ? `<br><a href="#/dashboard">${t('iceConfirm.toOverview')}</a>` : ''}
             </div>`;
     }
 };

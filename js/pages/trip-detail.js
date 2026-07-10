@@ -1,12 +1,4 @@
 const TripDetailPage = {
-    STATUS_LABELS: {
-        draft: 'Utkast',
-        published: 'Publicerad',
-        active: 'Aktiv',
-        completed: 'Avslutad',
-        cancelled: 'Inställd'
-    },
-
     ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
 
     state: {
@@ -17,7 +9,7 @@ const TripDetailPage = {
 
     async render(container, params) {
         this.state.tripId = params.tripId;
-        container.innerHTML = `<div class="page"><div class="loading-state"><span class="spinner"></span> Laddar resa...</div></div>`;
+        container.innerHTML = `<div class="page"><div class="loading-state"><span class="spinner"></span> ${t('tripDetail.loading')}</div></div>`;
         await this.load(container);
     },
 
@@ -30,8 +22,8 @@ const TripDetailPage = {
         if (!response.success) {
             container.innerHTML = `
                 <div class="page">
-                    <div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta resan.')}</div>
-                    <a class="btn btn-secondary" href="#/dashboard">Tillbaka till mina resor</a>
+                    <div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.loadFailed')))}</div>
+                    <a class="btn btn-secondary" href="#/dashboard">${t('tripDetail.backToDashboard')}</a>
                 </div>`;
             return;
         }
@@ -51,23 +43,21 @@ const TripDetailPage = {
         this.state.newRouteDrawMap = null;
 
         const { trip, vessel, crew, routes } = this.state.data;
-        const graceLabel = CONFIG.GRACE_PERIOD_OPTIONS.find((g) => g.seconds === Number(trip.grace_period_seconds))?.label
-            || `${Math.round(trip.grace_period_seconds / 3600)} tim`;
+        const graceLabel = formatGracePeriod(trip.grace_period_seconds);
 
         container.innerHTML = `
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>${escapeHtml(vessel?.vessel_name || 'Okänd båt')}
-                            <span class="badge badge-${trip.status}">${this.STATUS_LABELS[trip.status] || trip.status}</span>
+                        <h1>${escapeHtml(vessel?.vessel_name || t('tripDetail.unknownVessel'))}
+                            <span class="badge badge-${trip.status}">${t('trip.status.' + trip.status) || trip.status}</span>
                         </h1>
                         <div class="page-header__meta">
-                            Avgång ${formatDateTime(trip.departure_scheduled)} · Ankomst ${formatDateTime(trip.arrival_scheduled)}
-                            · Marginal ${graceLabel}
-                            ${trip.ice_notified ? ' · <strong>ICE-kontakt notifierad</strong>' : ''}
+                            ${t('tripDetail.header.meta', { departure: formatDateTime(trip.departure_scheduled), arrival: formatDateTime(trip.arrival_scheduled), grace: graceLabel })}
+                            ${trip.ice_notified ? ` · <strong>${t('tripDetail.header.iceNotified')}</strong>` : ''}
                         </div>
                     </div>
-                    <a class="btn btn-ghost btn-sm" href="#/dashboard">← Tillbaka</a>
+                    <a class="btn btn-ghost btn-sm" href="#/dashboard">← ${t('common.back')}</a>
                 </div>
 
                 <div id="trip-detail-alert"></div>
@@ -75,16 +65,16 @@ const TripDetailPage = {
                 <div class="card" id="actions-card"></div>
 
                 <div class="card">
-                    <h3>Båt</h3>
+                    <h3>${t('tripDetail.vessel.heading')}</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         <img id="vessel-photo" alt=""
                             style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;background:var(--color-bg);" hidden>
                         <p class="mb-0">
                             ${escapeHtml(vessel?.vessel_name || '–')}
                             ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
-                            ${vessel?.year_built ? ` · Årsmodell ${escapeHtml(String(vessel.year_built))}` : ''}
-                            ${vessel?.mmsi ? ` · MMSI ${escapeHtml(vessel.mmsi)}` : ''}
-                            ${vessel?.call_sign ? ` · Anropssignal ${escapeHtml(vessel.call_sign)}` : ''}
+                            ${vessel?.year_built ? ` · ${t('tripDetail.vessel.yearBuilt', { year: escapeHtml(String(vessel.year_built)) })}` : ''}
+                            ${vessel?.mmsi ? ` · ${t('tripDetail.vessel.mmsi', { mmsi: escapeHtml(vessel.mmsi) })}` : ''}
+                            ${vessel?.call_sign ? ` · ${t('tripDetail.vessel.callSign', { callSign: escapeHtml(vessel.call_sign) })}` : ''}
                             ${this.formatDimensions(vessel) ? ` · ${escapeHtml(this.formatDimensions(vessel))}` : ''}
                         </p>
                     </div>
@@ -93,51 +83,51 @@ const TripDetailPage = {
                     ${this.state.vessels.length > 1 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
                         <div class="field">
-                            <label for="vessel-select">Byt båt</label>
+                            <label for="vessel-select">${t('tripDetail.vessel.changeLabel')}</label>
                             <select id="vessel-select">
                                 ${this.state.vessels.map((v) => `<option value="${v.id}" ${String(v.id) === String(trip.vessel_id) ? 'selected' : ''}>${escapeHtml(v.vessel_name)}</option>`).join('')}
                             </select>
                         </div>
-                        <button class="btn btn-secondary btn-sm" type="button" id="vessel-change-btn" style="align-self:flex-end;">Byt båt</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="vessel-change-btn" style="align-self:flex-end;">${t('tripDetail.vessel.changeButton')}</button>
                     </div>` : ''}
                 </div>
 
                 <div class="card">
-                    <h3>Rutter</h3>
+                    <h3>${t('tripDetail.routes.heading')}</h3>
                     <div id="routes-alert"></div>
                     <div id="routes-list"></div>
                     <div id="trip-route-map" class="map-container"></div>
                     <hr class="section-divider">
-                    <h3>Lägg till alternativ rutt</h3>
+                    <h3>${t('tripDetail.routes.addAltHeading')}</h3>
                     <div class="route-mode-toggle btn-group">
-                        <button type="button" class="btn btn-sm" id="new-route-mode-windy">Importera från Windy</button>
-                        <button type="button" class="btn btn-sm" id="new-route-mode-manual">Rita manuellt</button>
+                        <button type="button" class="btn btn-sm" id="new-route-mode-windy">${t('tripDetail.routes.importWindy')}</button>
+                        <button type="button" class="btn btn-sm" id="new-route-mode-manual">${t('tripDetail.routes.drawManual')}</button>
                     </div>
                     <div id="new-route-body"></div>
                     <div class="field">
-                        <label for="new-route-reason">Anledning (valfritt)</label>
-                        <input type="text" id="new-route-reason" placeholder="t.ex. Om vinden vrider nordlig">
+                        <label for="new-route-reason">${t('tripDetail.routes.reasonOptionalLabel')}</label>
+                        <input type="text" id="new-route-reason" placeholder="${t('tripDetail.routes.reasonPlaceholder')}">
                     </div>
-                    <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ Lägg till rutt</button>
+                    <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ ${t('tripDetail.routes.addButton')}</button>
                 </div>
 
                 <div class="card">
-                    <h3>Besättning</h3>
+                    <h3>${t('tripDetail.crew.heading')}</h3>
                     <div id="crew-list-container"></div>
                     <hr class="section-divider">
-                    <h3>Bjud in besättningsmedlem</h3>
+                    <h3>${t('tripDetail.crew.inviteHeading')}</h3>
                     <div id="invite-alert"></div>
                     <div class="field-row">
                         <div class="field">
-                            <label for="invite-email">E-post</label>
+                            <label for="invite-email">${t('common.email')}</label>
                             <input type="email" id="invite-email">
                         </div>
                         <div class="field">
-                            <label for="invite-name">Namn (valfritt)</label>
+                            <label for="invite-name">${t('tripDetail.crew.nameOptionalLabel')}</label>
                             <input type="text" id="invite-name">
                         </div>
                     </div>
-                    <button class="btn btn-secondary" type="button" id="invite-crew-btn">Skicka inbjudan</button>
+                    <button class="btn btn-secondary" type="button" id="invite-crew-btn">${t('tripDetail.crew.sendInviteButton')}</button>
                 </div>
             </div>`;
 
@@ -180,12 +170,12 @@ const TripDetailPage = {
         if (this.state.newRouteMode === 'manual') {
             container.innerHTML = `
                 <div class="field">
-                    <label>Rita rutt på kartan</label>
-                    <small class="text-muted">Klicka på kartan för att lägga till punkter. Dra en punkt för att flytta den, klicka på en punkt och välj "Ta bort punkt" för att radera den.</small>
+                    <label>${t('tripDetail.routes.drawOnMapLabel')}</label>
+                    <small class="text-muted">${t('tripDetail.routes.drawHint')}</small>
                     <div id="new-route-draw-map" class="map-container route-draw-map"></div>
                     <div class="route-draw-footer">
-                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="new-route-draw-count">${this.state.newRouteCoordinates.length}</span> punkter</span>
-                        <button class="btn btn-ghost btn-sm" type="button" id="new-route-clear">Rensa rutt</button>
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="new-route-draw-count">${this.state.newRouteCoordinates.length}</span> ${t('tripDetail.routes.pointsLabel')}</span>
+                        <button class="btn btn-ghost btn-sm" type="button" id="new-route-clear">${t('tripDetail.routes.clearRoute')}</button>
                     </div>
                 </div>`;
 
@@ -205,7 +195,7 @@ const TripDetailPage = {
         } else {
             container.innerHTML = `
                 <div class="field">
-                    <label for="new-route-windy-url">Windy-länk</label>
+                    <label for="new-route-windy-url">${t('tripDetail.routes.windyUrlLabel')}</label>
                     <input type="url" id="new-route-windy-url" placeholder="https://www.windy.com/route-planner/boat/...">
                 </div>`;
         }
@@ -230,23 +220,23 @@ const TripDetailPage = {
         btn.disabled = false;
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte byta båt.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.vessel.changeFailed')))}</div>`;
             return;
         }
 
         if (response.data.schedule_notice?.conflicting_trip_exists) {
-            showToast('Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.', 'info');
+            showToast(t('tripDetail.vessel.mmsiConflictNotice'), 'info');
         }
 
-        showToast('Båten har bytts.', 'success');
+        showToast(t('tripDetail.vessel.changed'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
     formatDimensions(vessel) {
         return [
-            vessel?.length_m ? `L ${Number(vessel.length_m)} m` : '',
-            vessel?.width_m ? `B ${Number(vessel.width_m)} m` : '',
-            vessel?.draft_m ? `D ${Number(vessel.draft_m)} m` : ''
+            vessel?.length_m ? t('tripDetail.vessel.dimLength', { value: Number(vessel.length_m) }) : '',
+            vessel?.width_m ? t('tripDetail.vessel.dimWidth', { value: Number(vessel.width_m) }) : '',
+            vessel?.draft_m ? t('tripDetail.vessel.dimDraft', { value: Number(vessel.draft_m) }) : ''
         ].filter(Boolean).join(' × ');
     },
 
@@ -268,16 +258,16 @@ const TripDetailPage = {
     renderActions(trip) {
         const actionsCard = document.getElementById('actions-card');
         this.state.forceDelete = false;
-        const deleteBtnLabel = 'Radera resa';
+        const deleteBtnLabel = t('tripDetail.actions.deleteButton');
         const deleteBtnHtml = `<button class="btn btn-danger" type="button" id="delete-trip-btn">${deleteBtnLabel}</button>`;
 
         if (trip.status === 'draft' || trip.status === 'published') {
             actionsCard.innerHTML = `
-                <h3>Åtgärder</h3>
-                <p class="text-muted">Resan är inte aktiv än. Aktivera den manuellt, eller så aktiveras den automatiskt när första besättningsmedlemmen accepterar sin inbjudan.</p>
+                <h3>${t('tripDetail.actions.heading')}</h3>
+                <p class="text-muted">${t('tripDetail.actions.notActiveHint')}</p>
                 <div id="delete-trip-alert"></div>
                 <div class="btn-group">
-                    <button class="btn btn-primary" type="button" id="activate-btn">Aktivera resa</button>
+                    <button class="btn btn-primary" type="button" id="activate-btn">${t('tripDetail.actions.activateButton')}</button>
                     ${deleteBtnHtml}
                 </div>`;
             document.getElementById('activate-btn').addEventListener('click', () => this.handleActivate());
@@ -287,15 +277,15 @@ const TripDetailPage = {
 
         if (trip.status === 'active') {
             actionsCard.innerHTML = `
-                <h3>Åtgärder</h3>
+                <h3>${t('tripDetail.actions.heading')}</h3>
                 <div class="stack">
                     <div>
-                        <label style="font-size: var(--font-size-sm); font-weight:600; color: var(--color-text-muted);">Snooza ankomsttid</label>
+                        <label style="font-size: var(--font-size-sm); font-weight:600; color: var(--color-text-muted);">${t('tripDetail.actions.snoozeLabel')}</label>
                         <div class="btn-group" style="margin-top: var(--space-2);">
                             ${CONFIG.SNOOZE_PRESETS.map((m) => `<button class="btn btn-secondary btn-sm snooze-btn" data-minutes="${m}" type="button">+${m} min</button>`).join('')}
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="button" id="verify-btn">✓ Verifiera ankomst</button>
+                    <button class="btn btn-primary" type="button" id="verify-btn">${t('tripDetail.actions.verifyButton')}</button>
                     <div id="delete-trip-alert"></div>
                     ${deleteBtnHtml}
                 </div>`;
@@ -309,8 +299,8 @@ const TripDetailPage = {
         }
 
         actionsCard.innerHTML = `
-            <h3>Åtgärder</h3>
-            <p class="text-muted">Resan är ${this.STATUS_LABELS[trip.status]?.toLowerCase() || trip.status} - inga fler åtgärder tillgängliga.</p>
+            <h3>${t('tripDetail.actions.heading')}</h3>
+            <p class="text-muted">${t('tripDetail.actions.inactiveHint', { status: t('trip.status.' + trip.status).toLowerCase() })}</p>
             <div id="delete-trip-alert"></div>
             ${deleteBtnHtml}`;
         document.getElementById('delete-trip-btn').addEventListener('click', () => this.handleDeleteTrip());
@@ -321,18 +311,18 @@ const TripDetailPage = {
         routes = routes || [];
 
         if (routes.length === 0) {
-            list.innerHTML = `<p class="text-muted">Inga rutter tillagda.</p>`;
+            list.innerHTML = `<p class="text-muted">${t('tripDetail.routes.empty')}</p>`;
         } else {
             list.innerHTML = routes.map((r, i) => `
                 <div class="route-item" data-route-id="${r.id}">
                     <div class="route-item__title">
                         <span class="route-color-dot" style="background:${this.ROUTE_COLORS[i % this.ROUTE_COLORS.length]};"></span>
-                        ${i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`}
+                        ${i === 0 ? t('tripDetail.routes.mainRoute') : t('tripDetail.routes.altRoute', { n: i })}
                         <div class="btn-group" style="margin-left:auto;">
-                            <button class="btn btn-ghost btn-sm move-route-up" type="button" data-id="${r.id}" ${i === 0 ? 'disabled' : ''} title="Flytta upp">↑</button>
-                            <button class="btn btn-ghost btn-sm move-route-down" type="button" data-id="${r.id}" ${i === routes.length - 1 ? 'disabled' : ''} title="Flytta ner">↓</button>
-                            <button class="btn btn-ghost btn-sm edit-route-btn" type="button" data-id="${r.id}">Redigera</button>
-                            <button class="btn btn-danger btn-sm delete-route-btn" type="button" data-id="${r.id}">Ta bort</button>
+                            <button class="btn btn-ghost btn-sm move-route-up" type="button" data-id="${r.id}" ${i === 0 ? 'disabled' : ''} title="${t('tripDetail.routes.moveUpTitle')}">↑</button>
+                            <button class="btn btn-ghost btn-sm move-route-down" type="button" data-id="${r.id}" ${i === routes.length - 1 ? 'disabled' : ''} title="${t('tripDetail.routes.moveDownTitle')}">↓</button>
+                            <button class="btn btn-ghost btn-sm edit-route-btn" type="button" data-id="${r.id}">${t('common.edit')}</button>
+                            <button class="btn btn-danger btn-sm delete-route-btn" type="button" data-id="${r.id}">${t('common.remove')}</button>
                         </div>
                     </div>
                     <div class="route-item__view" data-id="${r.id}">
@@ -340,13 +330,13 @@ const TripDetailPage = {
                     </div>
                     <div class="route-item__edit" data-id="${r.id}" hidden>
                         <div class="route-mode-toggle btn-group">
-                            <button type="button" class="btn btn-sm edit-mode-windy" data-id="${r.id}">Importera från Windy</button>
-                            <button type="button" class="btn btn-sm edit-mode-manual" data-id="${r.id}">Rita manuellt</button>
+                            <button type="button" class="btn btn-sm edit-mode-windy" data-id="${r.id}">${t('tripDetail.routes.importWindy')}</button>
+                            <button type="button" class="btn btn-sm edit-mode-manual" data-id="${r.id}">${t('tripDetail.routes.drawManual')}</button>
                         </div>
                         <div class="route-edit-body" data-id="${r.id}"></div>
                         <div class="btn-group">
-                            <button class="btn btn-primary btn-sm save-route-btn" type="button" data-id="${r.id}">Spara</button>
-                            <button class="btn btn-ghost btn-sm cancel-route-edit-btn" type="button" data-id="${r.id}">Avbryt</button>
+                            <button class="btn btn-primary btn-sm save-route-btn" type="button" data-id="${r.id}">${t('common.save')}</button>
+                            <button class="btn btn-ghost btn-sm cancel-route-edit-btn" type="button" data-id="${r.id}">${t('common.cancel')}</button>
                         </div>
                     </div>
                 </div>
@@ -393,13 +383,13 @@ const TripDetailPage = {
 
         const mapEl = document.getElementById('trip-route-map');
         const mapRoutes = routes
-            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length], label: r.reason || (i === 0 ? 'Huvudrutt' : `Alternativ rutt ${i}`) }))
+            .map((r, i) => ({ coordinates: parseWktLineString(r.geometry_wkt), color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length], label: r.reason || (i === 0 ? t('tripDetail.routes.mainRoute') : t('tripDetail.routes.altRoute', { n: i })) }))
             .filter((r) => r.coordinates.length > 1);
 
         if (mapRoutes.length > 0) {
             this.state.map = renderRouteMap(mapEl, mapRoutes);
         } else {
-            mapEl.innerHTML = '<div class="empty-state">Ingen rutt att visa</div>';
+            mapEl.innerHTML = `<div class="empty-state">${t('tripDetail.routes.noRouteToShow')}</div>`;
         }
     },
 
@@ -434,16 +424,16 @@ const TripDetailPage = {
         if (editState.mode === 'manual') {
             body.innerHTML = `
                 <div class="field">
-                    <label>Rita rutt på kartan</label>
-                    <small class="text-muted">Klicka på kartan för att lägga till punkter. Dra en punkt för att flytta den, klicka på en punkt och välj "Ta bort punkt" för att radera den.</small>
+                    <label>${t('tripDetail.routes.drawOnMapLabel')}</label>
+                    <small class="text-muted">${t('tripDetail.routes.drawHint')}</small>
                     <div id="edit-route-draw-map-${routeId}" class="map-container route-draw-map"></div>
                     <div class="route-draw-footer">
-                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="edit-route-draw-count-${routeId}">${editState.coordinates.length}</span> punkter</span>
-                        <button class="btn btn-ghost btn-sm" type="button" id="edit-route-clear-${routeId}">Rensa rutt</button>
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="edit-route-draw-count-${routeId}">${editState.coordinates.length}</span> ${t('tripDetail.routes.pointsLabel')}</span>
+                        <button class="btn btn-ghost btn-sm" type="button" id="edit-route-clear-${routeId}">${t('tripDetail.routes.clearRoute')}</button>
                     </div>
                 </div>
                 <div class="field">
-                    <label>Anledning</label>
+                    <label>${t('tripDetail.routes.reasonLabel')}</label>
                     <input type="text" class="edit-route-reason" data-id="${routeId}" value="${escapeHtml(editState.reason || '')}">
                 </div>`;
 
@@ -463,11 +453,11 @@ const TripDetailPage = {
         } else {
             body.innerHTML = `
                 <div class="field">
-                    <label>Windy-länk</label>
+                    <label>${t('tripDetail.routes.windyUrlLabel')}</label>
                     <input type="url" class="edit-route-windy-url" data-id="${routeId}" value="${escapeHtml(editState.windyUrl || '')}">
                 </div>
                 <div class="field">
-                    <label>Anledning</label>
+                    <label>${t('tripDetail.routes.reasonLabel')}</label>
                     <input type="text" class="edit-route-reason" data-id="${routeId}" value="${escapeHtml(editState.reason || '')}">
                 </div>`;
 
@@ -486,7 +476,7 @@ const TripDetailPage = {
         let body;
         if (this.state.newRouteMode === 'manual') {
             if (this.state.newRouteCoordinates.length < 2) {
-                alertBox.innerHTML = `<div class="alert alert-error">Rita minst två punkter för rutten.</div>`;
+                alertBox.innerHTML = `<div class="alert alert-error">${t('tripDetail.routes.minPointsError')}</div>`;
                 return;
             }
             body = { coordinates: this.state.newRouteCoordinates, reason: reason || null };
@@ -506,12 +496,12 @@ const TripDetailPage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte lägga till rutten.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.routes.addFailed')))}</div>`;
             return;
         }
 
         alertBox.innerHTML = '';
-        showToast('Rutt tillagd', 'success');
+        showToast(t('tripDetail.routes.added'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
@@ -523,7 +513,7 @@ const TripDetailPage = {
         let body;
         if (editState.mode === 'manual') {
             if (editState.coordinates.length < 2) {
-                alertBox.innerHTML = `<div class="alert alert-error">Rita minst två punkter för rutten.</div>`;
+                alertBox.innerHTML = `<div class="alert alert-error">${t('tripDetail.routes.minPointsError')}</div>`;
                 return;
             }
             body = { coordinates: editState.coordinates, reason: reason || null };
@@ -543,25 +533,25 @@ const TripDetailPage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara rutten.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.routes.saveFailed')))}</div>`;
             return;
         }
 
         alertBox.innerHTML = '';
-        showToast('Rutten har sparats', 'success');
+        showToast(t('tripDetail.routes.saved'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
     async handleDeleteRoute(routeId) {
-        if (!confirm('Ta bort den här rutten?')) return;
+        if (!confirm(t('tripDetail.routes.deleteConfirm'))) return;
 
         const response = await apiRequest(`/routes/${routeId}`, { method: 'DELETE' });
         if (!response.success) {
-            document.getElementById('routes-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte ta bort rutten.')}</div>`;
+            document.getElementById('routes-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.routes.deleteFailed')))}</div>`;
             return;
         }
 
-        showToast('Rutten har tagits bort', 'success');
+        showToast(t('tripDetail.routes.deleted'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
@@ -581,7 +571,7 @@ const TripDetailPage = {
         });
 
         if (!response.success) {
-            document.getElementById('routes-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte ändra ordning.')}</div>`;
+            document.getElementById('routes-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.routes.reorderFailed')))}</div>`;
             return;
         }
 
@@ -592,7 +582,7 @@ const TripDetailPage = {
         const container = document.getElementById('crew-list-container');
 
         if (!crew || crew.length === 0) {
-            container.innerHTML = `<p class="text-muted">Ingen besättning inbjuden än.</p>`;
+            container.innerHTML = `<p class="text-muted">${t('tripDetail.crew.empty')}</p>`;
             return;
         }
 
@@ -603,10 +593,10 @@ const TripDetailPage = {
                     <img class="crew-photo" data-crew-id="${c.id}" alt=""
                         style="width:40px;height:40px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);background:var(--color-bg);" hidden>
                     <div class="crew-row__info">
-                        <span class="crew-row__name">${escapeHtml(c.name || c.email || 'Okänd')}</span>
+                        <span class="crew-row__name">${escapeHtml(c.name || c.email || t('tripDetail.crew.unknownName'))}</span>
                         <span class="crew-row__detail">
                             ${c.email ? escapeHtml(c.email) : ''}${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
-                            ${c.ice_contact ? ` · ICE: ${escapeHtml(c.ice_contact)}` : ''}
+                            ${c.ice_contact ? ` · ${t('tripDetail.crew.iceContactLabel', { contact: escapeHtml(c.ice_contact) })}` : ''}
                         </span>
                         <label class="text-muted" style="font-size: var(--font-size-sm); display:block; margin-top: var(--space-1);">
                             <input type="file" class="crew-photo-input" data-crew-id="${c.id}" accept="image/jpeg,image/png" style="max-width: 220px;">
@@ -614,11 +604,11 @@ const TripDetailPage = {
                     </div>
                     <div class="stack" style="flex-direction: row; align-items: center; gap: var(--space-3);">
                         <span class="crew-status ${accepted ? 'crew-status--accepted' : 'crew-status--pending'}">
-                            ${accepted ? '✓ Accepterad' : '⏳ Väntar'}
+                            ${accepted ? t('tripDetail.crew.accepted') : t('tripDetail.crew.pending')}
                         </span>
-                        <button class="btn btn-ghost btn-sm crew-photo-submit" data-crew-id="${c.id}" type="button">${c.photo_path ? 'Byt foto' : 'Lägg till foto'}</button>
-                        ${!accepted && c.invitation_token ? `<button class="btn btn-ghost btn-sm copy-link-btn" data-token="${escapeHtml(c.invitation_token)}" type="button">Kopiera länk</button>` : ''}
-                        <button class="btn btn-danger btn-sm remove-crew-btn" data-crew-id="${c.id}" type="button">Ta bort</button>
+                        <button class="btn btn-ghost btn-sm crew-photo-submit" data-crew-id="${c.id}" type="button">${c.photo_path ? t('tripDetail.crew.changePhoto') : t('tripDetail.crew.addPhoto')}</button>
+                        ${!accepted && c.invitation_token ? `<button class="btn btn-ghost btn-sm copy-link-btn" data-token="${escapeHtml(c.invitation_token)}" type="button">${t('tripDetail.crew.copyLink')}</button>` : ''}
+                        <button class="btn btn-danger btn-sm remove-crew-btn" data-crew-id="${c.id}" type="button">${t('common.remove')}</button>
                     </div>
                 </div>`;
         }).join('')}</div>`;
@@ -641,7 +631,7 @@ const TripDetailPage = {
         const photoFile = input.files[0];
 
         if (!photoFile) {
-            showToast('Välj en bild först.', 'error');
+            showToast(t('tripDetail.crew.choosePhotoFirst'), 'error');
             return;
         }
 
@@ -650,11 +640,11 @@ const TripDetailPage = {
         const response = await apiUpload(`/crew/${crewId}/photo`, formData, 'PUT');
 
         if (!response.success) {
-            showToast(response.error || 'Kunde inte spara fotot.', 'error');
+            showToast(response.code ? t.error(response.code) : (response.error || t('tripDetail.crew.photoSaveFailed')), 'error');
             return;
         }
 
-        showToast('Fotot har sparats.', 'success');
+        showToast(t('tripDetail.crew.photoSaved'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
@@ -682,7 +672,7 @@ const TripDetailPage = {
         const link = this.buildInviteLink(token);
         try {
             await navigator.clipboard.writeText(link);
-            showToast('Länk kopierad', 'success');
+            showToast(t('tripDetail.crew.linkCopied'), 'success');
         } catch (err) {
             showToast(link, 'info');
         }
@@ -692,12 +682,12 @@ const TripDetailPage = {
         const response = await apiRequest(`/trips/${this.state.tripId}/activate`, { method: 'POST' });
         if (!response.success) {
             const message = response.code === 'MMSI_ALREADY_ACTIVE'
-                ? 'Resan kan inte aktiveras — ett annat aktivt resa använder redan detta MMSI-nummer.'
-                : response.error;
+                ? t('tripDetail.actions.mmsiConflictError')
+                : (response.code ? t.error(response.code) : response.error);
             document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(message)}</div>`;
             return;
         }
-        showToast('Resan är aktiverad', 'success');
+        showToast(t('tripDetail.actions.activated'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
@@ -707,22 +697,22 @@ const TripDetailPage = {
             body: JSON.stringify({ snooze_minutes: minutes })
         });
         if (!response.success) {
-            document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error)}</div>`;
+            document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.actions.actionFailed')))}</div>`;
             return;
         }
-        showToast(`Ankomsttid framflyttad ${minutes} min`, 'success');
+        showToast(t('tripDetail.actions.snoozed', { minutes }), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
     async handleVerify() {
-        if (!confirm('Bekräfta att fartyget har anlänt säkert?')) return;
+        if (!confirm(t('tripDetail.actions.verifyConfirm'))) return;
 
         const response = await apiRequest(`/trips/${this.state.tripId}/verify`, { method: 'POST' });
         if (!response.success) {
-            document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.error)}</div>`;
+            document.getElementById('trip-detail-alert').innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.actions.actionFailed')))}</div>`;
             return;
         }
-        showToast('Ankomst verifierad - resan är avslutad', 'success');
+        showToast(t('tripDetail.actions.verified'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
@@ -743,14 +733,14 @@ const TripDetailPage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte skicka inbjudan.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.crew.inviteFailed')))}</div>`;
             return;
         }
 
         const link = response.data.invitation_link || this.buildInviteLink(response.data.invitation_token);
         alertBox.innerHTML = `
             <div class="alert alert-success">
-                Inbjudan skapad. E-postutskick är inte inkopplat än - dela länken manuellt:<br>
+                ${t('tripDetail.crew.inviteCreatedNotice')}<br>
                 <code style="word-break: break-all;">${escapeHtml(link)}</code>
             </div>`;
         document.getElementById('invite-email').value = '';
@@ -764,8 +754,8 @@ const TripDetailPage = {
         const btn = document.getElementById('delete-trip-btn');
 
         if (this.state.forceDelete) {
-            if (!confirm('Det finns registrerade personer på resan. Radera resan ändå? Kom ihåg att notifiera dem själv.')) return;
-        } else if (!confirm('Radera den här resan?')) {
+            if (!confirm(t('tripDetail.actions.deleteForceConfirm'))) return;
+        } else if (!confirm(t('tripDetail.actions.deleteConfirm'))) {
             return;
         }
 
@@ -776,29 +766,29 @@ const TripDetailPage = {
         if (!response.success) {
             if (response.code === 'TRIP_HAS_REGISTERED_PERSONS') {
                 this.state.forceDelete = true;
-                btn.textContent = 'Radera ändå';
+                btn.textContent = t('tripDetail.actions.deleteAnywayButton');
                 const crewCount = response.details?.crew_count || 0;
                 const iceCount = response.details?.ice_count || 0;
-                alertBox.innerHTML = `<div class="alert alert-error">Resan har ${crewCount} besättningsmedlem(mar) och ${iceCount} ICE-kontakt(er) registrerade som kan behöva notifieras. Klicka igen för att radera ändå.</div>`;
+                alertBox.innerHTML = `<div class="alert alert-error">${t('tripDetail.actions.deleteHasPersonsWarning', { crewCount, iceCount })}</div>`;
                 return;
             }
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte radera resan.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.actions.deleteFailed')))}</div>`;
             return;
         }
 
-        showToast('Resan har raderats', 'success');
+        showToast(t('tripDetail.actions.deleted'), 'success');
         location.hash = '#/dashboard';
     },
 
     async handleRemoveCrew(crewId) {
-        if (!confirm('Ta bort denna besättningsmedlem från resan?')) return;
+        if (!confirm(t('tripDetail.crew.removeConfirm'))) return;
 
         const response = await apiRequest(`/crew/${crewId}`, { method: 'DELETE' });
         if (!response.success) {
-            showToast(response.error || 'Kunde inte ta bort besättningsmedlemmen', 'error');
+            showToast(response.code ? t.error(response.code) : (response.error || t('tripDetail.crew.removeFailed')), 'error');
             return;
         }
-        showToast('Besättningsmedlem borttagen', 'success');
+        showToast(t('tripDetail.crew.removed'), 'success');
         await this.load(document.getElementById('page-content'));
     }
 };

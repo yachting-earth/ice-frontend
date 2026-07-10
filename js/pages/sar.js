@@ -10,23 +10,22 @@ const SarPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">⚓ Yachting Earth</div>
-                    <div class="auth-card__tagline">Åtkomst för sjöräddning (SAR)</div>
+                    <div class="auth-card__logo">⚓ ${escapeHtml(t('app.brand'))}</div>
+                    <div class="auth-card__tagline">${escapeHtml(t('sar.tagline'))}</div>
                     <p class="text-muted" style="font-size: var(--font-size-sm);">
-                        Ange rese-ID och PIN-kod som ni fått från den nödställdes kontaktperson
-                        för skrivskyddad åtkomst till resans besättningslista, rutter och ändringslogg.
+                        ${escapeHtml(t('sar.instructions'))}
                     </p>
                     <div id="sar-alert"></div>
                     <form id="sar-form" novalidate>
                         <div class="field">
-                            <label for="sar-reference">Rese-ID</label>
-                            <input type="text" id="sar-reference" placeholder="YE-XXXXXX" autocomplete="off" autocapitalize="characters">
+                            <label for="sar-reference">${escapeHtml(t('sar.referenceLabel'))}</label>
+                            <input type="text" id="sar-reference" placeholder="${escapeHtml(t('sar.referencePlaceholder'))}" autocomplete="off" autocapitalize="characters">
                         </div>
                         <div class="field">
-                            <label for="sar-pin">PIN-kod</label>
-                            <input type="text" id="sar-pin" inputmode="numeric" placeholder="6 siffror" autocomplete="off">
+                            <label for="sar-pin">${escapeHtml(t('sar.pinLabel'))}</label>
+                            <input type="text" id="sar-pin" inputmode="numeric" placeholder="${escapeHtml(t('sar.pinPlaceholder'))}" autocomplete="off">
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit" id="sar-submit">Visa resa</button>
+                        <button class="btn btn-primary btn-block" type="submit" id="sar-submit">${escapeHtml(t('sar.submit'))}</button>
                     </form>
                 </div>
             </div>`;
@@ -43,13 +42,13 @@ const SarPage = {
         const pin = document.getElementById('sar-pin').value.trim();
 
         if (!reference || !pin) {
-            alertBox.innerHTML = `<div class="alert alert-error">Ange både rese-ID och PIN-kod.</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('sar.missingFields'))}</div>`;
             return;
         }
 
         const submitBtn = document.getElementById('sar-submit');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Kontrollerar...';
+        submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('sar.checking'))}`;
 
         const response = await apiRequest('/sar/lookup', {
             method: 'POST',
@@ -57,10 +56,10 @@ const SarPage = {
         });
 
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Visa resa';
+        submitBtn.textContent = t('sar.submit');
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">Fel rese-ID eller PIN-kod. Kontrollera uppgifterna och försök igen.</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('sar.invalidCredentials')))}</div>`;
             return;
         }
 

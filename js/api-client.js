@@ -26,7 +26,7 @@ async function apiRequest(endpoint, options = {}) {
     } catch (err) {
         return {
             success: false,
-            error: 'Kunde inte nå servern. Kontrollera din anslutning.',
+            error: 'Could not reach the server. Check your connection.',
             code: 'NETWORK_ERROR',
             status: 0
         };
@@ -47,7 +47,7 @@ async function apiRequest(endpoint, options = {}) {
     } catch (err) {
         return {
             success: false,
-            error: 'Ogiltigt svar från servern.',
+            error: 'Invalid response from the server.',
             code: 'PARSE_ERROR',
             status: response.status
         };
@@ -73,7 +73,7 @@ async function apiUpload(endpoint, formData, method = 'POST') {
     } catch (err) {
         return {
             success: false,
-            error: 'Kunde inte nå servern. Kontrollera din anslutning.',
+            error: 'Could not reach the server. Check your connection.',
             code: 'NETWORK_ERROR',
             status: 0
         };
@@ -84,7 +84,7 @@ async function apiUpload(endpoint, formData, method = 'POST') {
     } catch (err) {
         return {
             success: false,
-            error: 'Ogiltigt svar från servern.',
+            error: 'Invalid response from the server.',
             code: 'PARSE_ERROR',
             status: response.status
         };

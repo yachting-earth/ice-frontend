@@ -1,12 +1,4 @@
 const DashboardPage = {
-    STATUS_LABELS: {
-        draft: 'Utkast',
-        published: 'Publicerad',
-        active: 'Aktiv',
-        completed: 'Avslutad',
-        cancelled: 'Inställd'
-    },
-
     state: {
         statusFilter: null,
         vesselsById: {}
@@ -17,15 +9,15 @@ const DashboardPage = {
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>Mina resor</h1>
-                        <div class="page-header__meta">Överblick över alla dina planerade och pågående resor</div>
+                        <h1>${escapeHtml(t('dashboard.title'))}</h1>
+                        <div class="page-header__meta">${escapeHtml(t('dashboard.subtitle'))}</div>
                     </div>
-                    <a class="btn btn-primary" href="#/trips/new">+ Skapa ny resa</a>
+                    <a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>
                 </div>
                 <div id="email-verify-warning"></div>
                 <div id="ice-contact-warning"></div>
                 <div class="trip-filters" id="trip-filters"></div>
-                <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> Laddar resor...</div></div>
+                <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('dashboard.loadingTrips'))}</div></div>
             </div>`;
 
         this.renderFilters(container);
@@ -54,10 +46,9 @@ const DashboardPage = {
 
         box.innerHTML = `
             <div class="alert alert-warning">
-                Bekräfta din e-postadress (<strong>${escapeHtml(response.data.email || '')}</strong>)
-                för att kunna skapa resor och lägga till båtar. Kontrollera din inkorg efter länken.
+                ${t('dashboard.verifyEmailBanner', { email: escapeHtml(response.data.email || '') })}
                 <button class="btn btn-sm btn-secondary" type="button" id="resend-verify-btn"
-                        style="margin-left: var(--space-2);">Skicka länken igen</button>
+                        style="margin-left: var(--space-2);">${escapeHtml(t('dashboard.resendLink'))}</button>
             </div>`;
 
         document.getElementById('resend-verify-btn').addEventListener('click', () => this.resendVerification());
@@ -66,7 +57,7 @@ const DashboardPage = {
     async resendVerification() {
         const btn = document.getElementById('resend-verify-btn');
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Skickar...';
+        btn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('dashboard.resending'))}`;
 
         const response = await apiRequest('/auth/resend-verification', { method: 'POST' });
 
@@ -74,18 +65,18 @@ const DashboardPage = {
             // Verified elsewhere in the meantime - drop the banner.
             Auth.updateUser({ email_verified: true });
             document.getElementById('email-verify-warning').innerHTML = '';
-            showToast('Din e-postadress är redan bekräftad.', 'success');
+            showToast(t('dashboard.alreadyVerified'), 'success');
             return;
         }
 
         if (response.success && response.data.verification_sent) {
-            showToast('En ny verifieringslänk har skickats.', 'success');
+            showToast(t('dashboard.verificationResent'), 'success');
         } else {
-            showToast('Kunde inte skicka länken just nu. Försök igen senare.', 'error');
+            showToast(t('dashboard.verificationResendFailed'), 'error');
         }
 
         btn.disabled = false;
-        btn.textContent = 'Skicka länken igen';
+        btn.textContent = t('dashboard.resendLink');
     },
 
     async checkIceContacts() {
@@ -96,26 +87,26 @@ const DashboardPage = {
         if (warningBox && (response.data || []).length === 0) {
             warningBox.innerHTML = `
                 <div class="alert alert-warning">
-                    Du har ingen ICE-kontakt än — utan en kan ingen larmas om din resa inte bekräftas i tid.
-                    <a href="#/ice-contacts">Lägg till en ICE-kontakt</a>
+                    ${escapeHtml(t('dashboard.noIceContact'))}
+                    <a href="#/ice-contacts">${escapeHtml(t('dashboard.addIceContact'))}</a>
                 </div>`;
         }
     },
 
     renderFilters(container) {
         const filters = [
-            { value: null, label: 'Alla' },
-            { value: 'draft', label: 'Utkast' },
-            { value: 'published', label: 'Publicerad' },
-            { value: 'active', label: 'Aktiv' },
-            { value: 'completed', label: 'Avslutad' },
-            { value: 'cancelled', label: 'Inställd' }
+            { value: null, label: t('trip.status.all') },
+            { value: 'draft', label: t('trip.status.draft') },
+            { value: 'published', label: t('trip.status.published') },
+            { value: 'active', label: t('trip.status.active') },
+            { value: 'completed', label: t('trip.status.completed') },
+            { value: 'cancelled', label: t('trip.status.cancelled') }
         ];
 
         const filterBar = container.querySelector('#trip-filters');
         filterBar.innerHTML = filters.map((f) => `
             <button class="btn btn-sm ${this.state.statusFilter === f.value ? 'btn-primary' : 'btn-secondary'}"
-                    type="button" data-status="${f.value ?? ''}">${f.label}</button>
+                    type="button" data-status="${f.value ?? ''}">${escapeHtml(f.label)}</button>
         `).join('');
 
         filterBar.querySelectorAll('button').forEach((btn) => {
@@ -129,7 +120,7 @@ const DashboardPage = {
 
     async loadTrips() {
         const listContainer = document.getElementById('trip-list-container');
-        listContainer.innerHTML = '<div class="loading-state"><span class="spinner"></span> Laddar resor...</div>';
+        listContainer.innerHTML = `<div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('dashboard.loadingTrips'))}</div>`;
 
         const params = new URLSearchParams();
         if (this.state.statusFilter) params.append('status', this.state.statusFilter);
@@ -137,7 +128,7 @@ const DashboardPage = {
         const response = await apiRequest(`/trips?${params.toString()}`);
 
         if (!response.success) {
-            listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta resor.')}</div>`;
+            listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('dashboard.loadFailed')))}</div>`;
             return;
         }
 
@@ -145,9 +136,9 @@ const DashboardPage = {
         if (trips.length === 0) {
             listContainer.innerHTML = `
                 <div class="empty-state">
-                    <h3>Inga resor än</h3>
-                    <p>Skapa din första resa för att komma igång.</p>
-                    <a class="btn btn-primary" href="#/trips/new">+ Skapa ny resa</a>
+                    <h3>${escapeHtml(t('dashboard.emptyTitle'))}</h3>
+                    <p>${escapeHtml(t('dashboard.emptyBody'))}</p>
+                    <a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>
                 </div>`;
             return;
         }
@@ -156,26 +147,27 @@ const DashboardPage = {
     },
 
     renderTripCard(trip) {
-        const vesselName = this.state.vesselsById[trip.vessel_id] || `Fartyg #${trip.vessel_id}`;
-        const graceLabel = CONFIG.GRACE_PERIOD_OPTIONS.find((g) => g.seconds === Number(trip.grace_period_seconds))?.label
-            || `${Math.round(trip.grace_period_seconds / 3600)} tim`;
+        const vesselName = this.state.vesselsById[trip.vessel_id] || t('dashboard.vesselFallback', { id: trip.vessel_id });
+        const graceLabel = formatGracePeriod(trip.grace_period_seconds) !== String(trip.grace_period_seconds)
+            ? formatGracePeriod(trip.grace_period_seconds)
+            : t('dashboard.graceHours', { hours: Math.round(trip.grace_period_seconds / 3600) });
 
         return `
             <div class="trip-card">
                 <div class="stack" style="flex:1; gap: 0.35rem;">
                     <div class="trip-card__top">
                         <span class="trip-card__title">${escapeHtml(vesselName)}</span>
-                        <span class="badge badge-${trip.status}">${this.STATUS_LABELS[trip.status] || trip.status}</span>
+                        <span class="badge badge-${trip.status}">${escapeHtml(t('trip.status.' + trip.status) || trip.status)}</span>
                     </div>
                     <div class="trip-card__meta">
-                        <span>Avgång: ${formatDateTime(trip.departure_scheduled)}</span>
-                        <span>Ankomst: ${formatDateTime(trip.arrival_scheduled)}</span>
-                        <span>Marginal: ${graceLabel}</span>
-                        ${trip.ice_notified ? '<span class="text-muted">⚠ ICE-kontakt notifierad</span>' : ''}
+                        <span>${escapeHtml(t('dashboard.departure', { datetime: formatDateTime(trip.departure_scheduled) }))}</span>
+                        <span>${escapeHtml(t('dashboard.arrival', { datetime: formatDateTime(trip.arrival_scheduled) }))}</span>
+                        <span>${escapeHtml(t('dashboard.grace', { label: graceLabel }))}</span>
+                        ${trip.ice_notified ? `<span class="text-muted">${escapeHtml(t('dashboard.iceNotified'))}</span>` : ''}
                     </div>
                 </div>
                 <div class="trip-card__actions">
-                    <a class="btn btn-secondary btn-sm" href="#/trips/${trip.id}">Visa</a>
+                    <a class="btn btn-secondary btn-sm" href="#/trips/${trip.id}">${escapeHtml(t('dashboard.view'))}</a>
                 </div>
             </div>`;
     }

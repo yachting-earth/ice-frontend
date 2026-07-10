@@ -1,8 +1,10 @@
 const IceAccountPage = {
-    CHANNEL_LABELS: {
-        email: 'E-post',
-        telegram: 'Telegram',
-        whatsapp: 'WhatsApp'
+    channelLabels() {
+        return {
+            email: t('iceAccount.channelLabels.email'),
+            telegram: t('iceAccount.channelLabels.telegram'),
+            whatsapp: t('iceAccount.channelLabels.whatsapp')
+        };
     },
 
     state: {
@@ -16,27 +18,26 @@ const IceAccountPage = {
             <div class="page">
                 <div class="page-header">
                     <div>
-                        <h1>Mitt ICE-konto</h1>
-                        <div class="page-header__meta">Skeppare du är nödkontakt (In Case of Emergency) för, och dina egna uppgifter</div>
+                        <h1>${escapeHtml(t('iceAccount.title'))}</h1>
+                        <div class="page-header__meta">${escapeHtml(t('iceAccount.subtitle'))}</div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h2>Radera konto efter resan</h2>
+                        <h2>${escapeHtml(t('iceAccount.deletePolicyHeading'))}</h2>
                     </div>
                     <div id="policy-alert"></div>
                     <div class="checkbox-field">
                         <input type="checkbox" id="delete-after-trip">
-                        <label for="delete-after-trip">Radera mitt konto och mina uppgifter automatiskt när resan/resorna jag är nödkontakt för är avslutade</label>
+                        <label for="delete-after-trip">${escapeHtml(t('iceAccount.deletePolicyLabel'))}</label>
                     </div>
                     <p class="text-muted" style="font-size: var(--font-size-sm);">
-                        Som standard behålls ditt konto permanent. Kryssa i rutan om du istället vill att det
-                        raderas automatiskt en tid efter att du inte längre är nödkontakt för någon aktiv resa.
+                        ${escapeHtml(t('iceAccount.deletePolicyHint'))}
                     </p>
                 </div>
 
-                <div id="contacts-container"><div class="loading-state"><span class="spinner"></span> Laddar...</div></div>
+                <div id="contacts-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('iceAccount.loading'))}</div></div>
             </div>`;
 
         document.getElementById('delete-after-trip').addEventListener('change', (e) => this.handlePolicyChange(e.target.checked));
@@ -62,14 +63,14 @@ const IceAccountPage = {
 
         if (!response.success) {
             document.getElementById('delete-after-trip').checked = !checked;
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara valet.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('iceAccount.policySaveFailed')))}</div>`;
             return;
         }
 
         alertBox.innerHTML = '';
         showToast(checked
-            ? 'Ditt konto raderas nu automatiskt när resan/resorna är avslutade.'
-            : 'Ditt konto behålls permanent.', 'success');
+            ? t('iceAccount.policyEnabled')
+            : t('iceAccount.policyDisabled'), 'success');
     },
 
     async loadContacts() {
@@ -77,7 +78,7 @@ const IceAccountPage = {
         const response = await apiRequest('/ice-contacts/me');
 
         if (!response.success) {
-            listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte hämta dina kopplingar.')}</div>`;
+            listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('iceAccount.loadContactsFailed')))}</div>`;
             return;
         }
 
@@ -86,8 +87,8 @@ const IceAccountPage = {
         if (this.state.contacts.length === 0) {
             listContainer.innerHTML = `
                 <div class="empty-state">
-                    <h3>Inga kopplingar än</h3>
-                    <p>Du är inte bekräftad som nödkontakt hos någon skeppare med det här kontot.</p>
+                    <h3>${escapeHtml(t('iceAccount.emptyTitle'))}</h3>
+                    <p>${escapeHtml(t('iceAccount.emptyBody'))}</p>
                 </div>`;
             return;
         }
@@ -106,7 +107,7 @@ const IceAccountPage = {
             <div class="card" data-contact="${contact.id}">
                 <div class="card-header">
                     <h2>${escapeHtml(contact.skipper_name || '–')}</h2>
-                    ${!editing ? `<button class="btn btn-secondary btn-sm" type="button" data-edit="${contact.id}">Ändra mina uppgifter</button>` : ''}
+                    ${!editing ? `<button class="btn btn-secondary btn-sm" type="button" data-edit="${contact.id}">${escapeHtml(t('iceAccount.editMyDetails'))}</button>` : ''}
                 </div>
                 <div class="trip-card__meta">
                     <span>${escapeHtml(contact.relationship || '')}</span>
@@ -120,7 +121,7 @@ const IceAccountPage = {
         return `
             <div class="trip-card__meta">
                 <span>${escapeHtml(contact.phone || '')}</span>
-                <span>${this.CHANNEL_LABELS[contact.preferred_channel] || escapeHtml(contact.preferred_channel)}</span>
+                <span>${escapeHtml(this.channelLabels()[contact.preferred_channel] || contact.preferred_channel)}</span>
             </div>`;
     },
 
@@ -128,20 +129,20 @@ const IceAccountPage = {
         return `
             <form class="contact-edit-form" data-contact-form="${contact.id}" novalidate>
                 <div class="field">
-                    <label for="my-phone-${contact.id}">Telefon</label>
-                    <input type="tel" id="my-phone-${contact.id}" value="${escapeHtml(contact.phone || '')}" placeholder="+46701234567">
+                    <label for="my-phone-${contact.id}">${escapeHtml(t('common.phone'))}</label>
+                    <input type="tel" id="my-phone-${contact.id}" value="${escapeHtml(contact.phone || '')}" placeholder="${escapeHtml(t('iceAccount.phonePlaceholder'))}">
                 </div>
                 <div class="field">
-                    <label for="my-channel-${contact.id}">Föredragen notifieringskanal</label>
+                    <label for="my-channel-${contact.id}">${escapeHtml(t('iceAccount.channelLabel'))}</label>
                     <select id="my-channel-${contact.id}">
-                        <option value="email" ${contact.preferred_channel === 'email' ? 'selected' : ''}>E-post</option>
-                        <option value="telegram" ${contact.preferred_channel === 'telegram' ? 'selected' : ''}>Telegram</option>
-                        <option value="whatsapp" ${contact.preferred_channel === 'whatsapp' ? 'selected' : ''}>WhatsApp</option>
+                        <option value="email" ${contact.preferred_channel === 'email' ? 'selected' : ''}>${escapeHtml(t('iceAccount.channelLabels.email'))}</option>
+                        <option value="telegram" ${contact.preferred_channel === 'telegram' ? 'selected' : ''}>${escapeHtml(t('iceAccount.channelLabels.telegram'))}</option>
+                        <option value="whatsapp" ${contact.preferred_channel === 'whatsapp' ? 'selected' : ''}>${escapeHtml(t('iceAccount.channelLabels.whatsapp'))}</option>
                     </select>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-primary btn-sm" type="submit">Spara</button>
-                    <button class="btn btn-ghost btn-sm" type="button" data-cancel="${contact.id}">Avbryt</button>
+                    <button class="btn btn-primary btn-sm" type="submit">${escapeHtml(t('common.save'))}</button>
+                    <button class="btn btn-ghost btn-sm" type="button" data-cancel="${contact.id}">${escapeHtml(t('common.cancel'))}</button>
                 </div>
             </form>`;
     },
@@ -198,7 +199,7 @@ const IceAccountPage = {
         });
 
         if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Kunde inte spara ändringarna.')}</div>`;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('iceAccount.saveFailed')))}</div>`;
             return;
         }
 
@@ -206,6 +207,6 @@ const IceAccountPage = {
         this.state.contacts[index] = { ...this.state.contacts[index], ...response.data };
         this.state.editingId = null;
         this.rerenderCard(contactId);
-        showToast('Dina uppgifter har uppdaterats.', 'success');
+        showToast(t('iceAccount.updated'), 'success');
     }
 };

@@ -89,7 +89,7 @@ const Router = {
             console.error('Page render failed:', err);
             container.innerHTML = `
                 <div class="page">
-                    <div class="alert alert-error">Något gick fel när sidan skulle visas. Försök ladda om.</div>
+                    <div class="alert alert-error">${escapeHtml(t('app.renderError'))}</div>
                 </div>`;
         }
     }
@@ -120,18 +120,20 @@ function renderTopbar() {
 
     if (!authed) {
         topbar.innerHTML = `
-            <a class="topbar__brand" href="#/login">⚓ Yachting Earth</a>
+            <a class="topbar__brand" href="#/login">⚓ ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
-                    <a class="topbar__menu-link${activeClass('#/sar')}" href="#/sar">SAR</a>
+                    <a class="topbar__menu-link${activeClass('#/sar')}" href="#/sar">${escapeHtml(t('app.nav.sar'))}</a>
+                    ${renderLangSelector()}
                 </div>
-                <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
                     <span class="topbar__hamburger-line"></span>
                     <span class="topbar__hamburger-line"></span>
                     <span class="topbar__hamburger-line"></span>
                 </button>
             </div>`;
         setupHamburgerMenu();
+        setupLangSelector();
         return;
     }
 
@@ -140,22 +142,23 @@ function renderTopbar() {
     const initial = userLabel.trim().charAt(0).toUpperCase() || '?';
 
     topbar.innerHTML = `
-        <a class="topbar__brand" href="#/dashboard">⚓ Yachting Earth</a>
+        <a class="topbar__brand" href="#/dashboard">⚓ ${escapeHtml(t('app.brand'))}</a>
         <div class="topbar__right">
             <div class="topbar__menu" id="topbar-menu">
-                <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">Mina resor</a>
-                <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">Mina båtar</a>
-                <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">ICE-kontakter</a>
-                ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">Mitt ICE-konto</a>` : ''}
-                ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">Admin</a>` : ''}
-                <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">Logga ut</button>
+                <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
+                <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>
+                <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>
+                ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
+                ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">${escapeHtml(t('app.nav.admin'))}</a>` : ''}
+                ${renderLangSelector()}
+                <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">${escapeHtml(t('app.nav.logout'))}</button>
             </div>
-            <button class="topbar__hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
                 <span class="topbar__hamburger-line"></span>
                 <span class="topbar__hamburger-line"></span>
                 <span class="topbar__hamburger-line"></span>
             </button>
-            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" title="${escapeHtml(userLabel)} - Min sida">${escapeHtml(initial)}</a>
+            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" title="${escapeHtml(t('app.profileBadgeTitle', { name: userLabel }))}">${escapeHtml(initial)}</a>
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {
@@ -164,6 +167,7 @@ function renderTopbar() {
         location.hash = '#/login';
     });
     setupHamburgerMenu();
+    setupLangSelector();
     loadTopbarPhoto(user.id);
 
     if (iceAccountVisible === null) {
@@ -171,6 +175,29 @@ function renderTopbar() {
             if (visible) renderTopbar();
         });
     }
+}
+
+// Language selector shared by both the authed and guest topbars. A plain
+// <select> (no framework, no fancy dropdown) that persists the choice via
+// I18n.setLang - which itself re-renders the current route.
+function renderLangSelector() {
+    const current = I18n._lang || I18n.getLang();
+    const options = I18n.SUPPORTED.map((lang) =>
+        `<option value="${lang}"${lang === current ? ' selected' : ''}>${lang.toUpperCase()}</option>`
+    ).join('');
+    return `<select class="topbar__lang" id="lang-select" aria-label="Language">${options}</select>`;
+}
+
+function setupLangSelector() {
+    const select = document.getElementById('lang-select');
+    if (!select) return;
+    select.addEventListener('change', () => {
+        const lang = select.value;
+        I18n.setLang(lang);
+        if (Auth.isAuthenticated()) {
+            apiRequest('/user/profile', { method: 'PUT', body: JSON.stringify({ locale: lang }) });
+        }
+    });
 }
 
 // The badge photo is auth-protected, so a plain <img src> won't do (no way
@@ -235,4 +262,9 @@ function escapeHtml(value) {
     return div.innerHTML;
 }
 
-document.addEventListener('DOMContentLoaded', () => Router.start());
+document.addEventListener('DOMContentLoaded', async () => {
+    const lang = I18n.getLang();
+    document.documentElement.lang = lang;
+    await I18n.load(lang);
+    Router.start();
+});

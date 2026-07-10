@@ -3,22 +3,22 @@ const LoginPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">⚓ Yachting Earth</div>
-                    <div class="auth-card__tagline">Trygg utflykt, tryggt hemkomst</div>
+                    <div class="auth-card__logo">⚓ ${escapeHtml(t('app.brand'))}</div>
+                    <div class="auth-card__tagline">${escapeHtml(t('login.tagline'))}</div>
                     <div id="login-alert"></div>
                     <form id="login-form" novalidate>
                         <div class="field">
-                            <label for="email">E-post</label>
+                            <label for="email">${escapeHtml(t('login.emailLabel'))}</label>
                             <input type="email" id="email" autocomplete="email" required>
                         </div>
                         <div class="field">
-                            <label for="password">Lösenord</label>
+                            <label for="password">${escapeHtml(t('login.passwordLabel'))}</label>
                             <input type="password" id="password" autocomplete="current-password" required>
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit" id="login-submit">Logga in</button>
+                        <button class="btn btn-primary btn-block" type="submit" id="login-submit">${escapeHtml(t('login.submit'))}</button>
                     </form>
                     <div class="auth-card__footer">
-                        Inget konto? <a href="#/register">Registrera dig</a>
+                        ${escapeHtml(t('login.noAccount'))} <a href="#/register">${escapeHtml(t('login.registerLink'))}</a>
                     </div>
                 </div>
             </div>`;
@@ -43,7 +43,7 @@ const LoginPage = {
         }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="spinner"></span> Loggar in...';
+        submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('login.submitting'))}`;
 
         const response = await apiRequest('/auth/login', {
             method: 'POST',
@@ -60,12 +60,16 @@ const LoginPage = {
                 is_admin: response.data.is_admin,
                 email_verified: response.data.email_verified
             });
+            if (response.data.locale) {
+                localStorage.setItem('ye_lang', response.data.locale);
+                await I18n.load(response.data.locale);
+            }
             location.hash = '#/dashboard';
             return;
         }
 
-        alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.error || 'Inloggningen misslyckades.')}</div>`;
+        alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('login.errorDefault')))}</div>`;
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Logga in';
+        submitBtn.textContent = t('login.submit');
     }
 };
