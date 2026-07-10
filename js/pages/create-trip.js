@@ -371,19 +371,24 @@ const CreateTripPage = {
         }
         mapEl.innerHTML = '';
 
-        // Manual-mode routes already have their own dedicated drawing map
-        // rendered above (see initDrawMap) - only Windy-imported routes go
-        // into this combined overview, otherwise a manually drawn route
-        // would be rendered on two maps at once.
         const routes = this.state.routes
             .map((r, i) => {
-                if (r.mode === 'manual') return null;
-                const coords = parseWindyUrl(r.windyUrl);
+                const coords = r.mode === 'manual' ? r.coordinates : parseWindyUrl(r.windyUrl);
                 return (coords && coords.length > 1) ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null;
             })
             .filter(Boolean);
 
-        if (routes.length === 0) {
+        // With a single manually-drawn route, its own dedicated drawing map
+        // (see initDrawMap) already shows it, so skip the combined overview
+        // to avoid rendering the same route twice. Once there's more than
+        // one route, though, this overview is how the skipper compares
+        // primary vs. alternate routes side by side, so every route belongs
+        // in it regardless of which input method produced it - hiding the
+        // primary here just because an alternate route uses a different
+        // input mode would make it look like the primary route vanished.
+        const isSingleManualRoute = this.state.routes.length === 1 && this.state.routes[0].mode === 'manual';
+
+        if (isSingleManualRoute || routes.length === 0) {
             mapEl.hidden = true;
             return;
         }
