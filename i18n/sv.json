@@ -84,7 +84,8 @@
       "myIceAccount": "Mitt ICE-konto",
       "admin": "Admin",
       "logout": "Logga ut",
-      "sar": "SAR"
+      "sar": "SAR",
+      "blog": "Blogg"
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - Min sida",
@@ -444,6 +445,18 @@
     "missingFields": "Ange både rese-ID och PIN-kod.",
     "checking": "Kontrollerar...",
     "invalidCredentials": "Fel rese-ID eller PIN-kod. Kontrollera uppgifterna och försök igen."
+  },
+  "blog": {
+    "title": "Blogg",
+    "subtitle": "Nyheter och artiklar från Yachting Earth",
+    "loading": "Laddar inlägg…",
+    "loadFailed": "Kunde inte hämta blogginläggen.",
+    "emptyTitle": "Inga inlägg än",
+    "emptyBody": "Kom tillbaka snart för nya artiklar.",
+    "readMore": "Läs mer",
+    "byAuthor": "Skriven av {author}",
+    "backToList": "Tillbaka till bloggen",
+    "notFound": "Inlägget kunde inte hittas."
   },
   "vessels": {
     "title": "Mina båtar",

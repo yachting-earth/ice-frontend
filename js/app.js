@@ -22,7 +22,9 @@ const Router = {
         { pattern: '#/verify-email', page: VerifyEmailPage },
         { pattern: '#/ice-confirm', page: IceConfirmPage },
         { pattern: '#/ice-portal', page: IcePortalPage },
-        { pattern: '#/sar', page: SarPage }
+        { pattern: '#/sar', page: SarPage },
+        { pattern: '#/blog', page: BlogPage },
+        { pattern: '#/blog/:slug', page: BlogPostPage }
     ],
 
     start() {
@@ -123,6 +125,7 @@ function renderTopbar() {
             <a class="topbar__brand" href="#/login">⚓ ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
+                    <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
                     <a class="topbar__menu-link${activeClass('#/sar')}" href="#/sar">${escapeHtml(t('app.nav.sar'))}</a>
                     ${renderLangSelector()}
                 </div>
@@ -149,6 +152,7 @@ function renderTopbar() {
                 <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
+                <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
                 ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">${escapeHtml(t('app.nav.admin'))}</a>` : ''}
                 ${renderLangSelector()}
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">${escapeHtml(t('app.nav.logout'))}</button>

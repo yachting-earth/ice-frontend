@@ -95,7 +95,8 @@ const EN_INLINE = {
       "myIceAccount": "My ICE account",
       "admin": "Admin",
       "logout": "Log out",
-      "sar": "SAR"
+      "sar": "SAR",
+      "blog": "Blog"
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - My page",
@@ -455,6 +456,18 @@ const EN_INLINE = {
     "missingFields": "Enter both the trip ID and PIN code.",
     "checking": "Checking…",
     "invalidCredentials": "Incorrect trip ID or PIN code. Check the details and try again."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "News and articles from Yachting Earth",
+    "loading": "Loading posts…",
+    "loadFailed": "Could not fetch the blog posts.",
+    "emptyTitle": "No posts yet",
+    "emptyBody": "Check back soon for new articles.",
+    "readMore": "Read more",
+    "byAuthor": "Written by {author}",
+    "backToList": "Back to blog",
+    "notFound": "This post could not be found."
   },
   "vessels": {
     "title": "My vessels",
