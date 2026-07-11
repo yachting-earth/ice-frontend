@@ -701,6 +701,129 @@ const EN_INLINE = {
       "deleteFailed": "Could not delete the trip.",
       "deleted": "The trip has been deleted"
     }
+  },
+  "landing": {
+    "meta": {
+      "title": "Yachting Earth — Voyage Preparation & Emergency Information for Sailors",
+      "description": "Yachting Earth is a digital voyage dossier for sailors: register your vessel, routes, crew and emergency contact before departure, so accurate information is already in place if a voyage does not go as planned."
+    },
+    "skipLink": "Skip to main content",
+    "nav": {
+      "prepared": "What's prepared",
+      "howItWorks": "How it works",
+      "different": "Why it's different",
+      "privacy": "Privacy",
+      "login": "Log in",
+      "cta": "Create Free Account"
+    },
+    "hero": {
+      "heading": "Every voyage deserves a plan.<br>Every emergency deserves the right information.",
+      "lead": "Prepare your vessel, routes, crew and emergency contact before departure. If you fail to check in after your planned arrival, your designated emergency contact receives secure access to the information that may help emergency services respond faster.",
+      "ctaPrimary": "Create Free Account",
+      "ctaSecondary": "How It Works",
+      "badges": ["Free to use", "Multiple routes", "GDPR by design", "Secure ICE Portal"]
+    },
+    "notice": {
+      "heading": "Important",
+      "p1": "Yachting Earth ICE is not a distress beacon, EPIRB or real-time tracking system.",
+      "p2": "It is a voyage preparation and emergency information system designed to ensure that the right person has the right information at the right time if something unexpected happens."
+    },
+    "prepared": {
+      "heading": "Everything is prepared before departure",
+      "lead": "A complete voyage dossier, assembled before you even leave the dock.",
+      "cards": [
+        { "icon": "ship", "title": "Vessel", "items": ["Photo", "Registration", "Specifications", "Identification"] },
+        { "icon": "compass", "title": "Voyage", "items": ["Departure", "Destination", "Estimated arrival", "Grace period"] },
+        { "icon": "route", "title": "Routes", "items": ["Multiple routes", "Windy import", "Route alternatives", "Interactive map preview"] },
+        { "icon": "users", "title": "Crew", "items": ["Crew list", "Individual profiles", "Photos", "Personal emergency contacts"] },
+        { "icon": "shield-check", "title": "Emergency Contact", "items": ["Identity confirmed", "Secure portal", "Read-only access", "Automatic notification"] }
+      ]
+    },
+    "howItWorks": {
+      "heading": "How it works",
+      "steps": [
+        "Skipper creates voyage",
+        "Invites crew",
+        "Crew complete their own profiles",
+        "Emergency contact confirms participation",
+        "Activate voyage"
+      ],
+      "fork": {
+        "arriveTitle": "Arrive safely",
+        "arriveText": "Skipper verifies arrival. Nothing further happens.",
+        "graceTitle": "Grace period expires",
+        "graceText": "Skipper has not checked in after ETA plus the configured grace period."
+      },
+      "afterFork": [
+        "Emergency contact notified",
+        "Information ready to be shared if emergency services must be contacted"
+      ]
+    },
+    "compare": {
+      "heading": "Why Yachting Earth is different",
+      "traditionalLabel": "Traditional Float Plan",
+      "yachtingLabel": "Yachting Earth",
+      "rows": [
+        { "traditional": "Paper document", "yachting": "Living voyage information" },
+        { "traditional": "Single route", "yachting": "Multiple routes" },
+        { "traditional": "Static crew list", "yachting": "Crew maintain their own details" },
+        { "traditional": "Rely on manual monitoring", "yachting": "Automatic control" },
+        { "traditional": "Email attachment", "yachting": "Secure portal" }
+      ]
+    },
+    "features": {
+      "heading": "Built for real voyages",
+      "items": [
+        { "icon": "route", "title": "Multiple routes", "description": "A voyage rarely follows a single straight line." },
+        { "icon": "users", "title": "Crew participation", "description": "Every crew member maintains their own information." },
+        { "icon": "shield-check", "title": "Verified emergency contact", "description": "The emergency contact confirms their role before departure." }
+      ]
+    },
+    "privacy": {
+      "heading": "Privacy by design",
+      "lead": "Personal voyage data is automatically removed according to GDPR principles.",
+      "lifecycle": [
+        { "icon": "file-plus", "label": "Trip created" },
+        { "icon": "check-circle", "label": "Trip completed" },
+        { "icon": "clock", "label": "Soft deleted" },
+        { "icon": "timer", "label": "Automatically removed after 30 days" },
+        { "icon": "shield", "label": "Only skipper and vessel remain" }
+      ]
+    },
+    "mapDemo": {
+      "heading": "Routes, mapped",
+      "lead": "A voyage may include several planned routes. Here is an example of three.",
+      "note": "Demonstration data — not a live vessel position.",
+      "ariaLabel": "Example map showing three sample sailing routes along a coastline",
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternative)"]
+    },
+    "worst": {
+      "heading": "If the worst happens",
+      "insteadTitle": "Instead of…",
+      "insteadItems": ["Searching old emails", "Trying to remember who was onboard", "Looking for route screenshots", "Guessing emergency contacts"],
+      "haveTitle": "Your emergency contact already has",
+      "haveItems": ["Vessel", "Routes", "Crew", "Photos", "Emergency contacts", "Voyage details"],
+      "readyTitle": "Ready to provide",
+      "readyItems": ["Coast Guard", "Police", "Rescue Coordination Centre", "Insurance company"],
+      "readyNote": "The emergency contact decides when the information should be shared, and with whom."
+    },
+    "finalCta": {
+      "heading": "Ready for your next voyage?",
+      "lead": "Register your first voyage in less than five minutes.",
+      "cta": "Create Free Account"
+    },
+    "footer": {
+      "disclaimer": "Yachting Earth ICE is a voyage preparation and information tool. It is not a distress beacon, EPIRB or real-time tracking system, and the system itself does not contact rescue services.",
+      "links": {
+        "about": "About",
+        "privacy": "Privacy",
+        "gdpr": "GDPR",
+        "contact": "Contact",
+        "github": "GitHub",
+        "terms": "Terms"
+      },
+      "comingSoon": "{page} page coming soon"
+    }
   }
 };
 

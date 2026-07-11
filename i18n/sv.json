@@ -691,85 +691,127 @@
       "deleted": "Resan har raderats"
     }
   },
-  "landing2": {
+  "landing": {
     "meta": {
-      "title": "Yachting Earth — Rita upp planen. Skydda besättningen.",
-      "description": "Registrera fartyg, rutter och besättning innan ni kastar loss. Missar du incheckningen får din nödkontakt automatiskt säker, skrivskyddad åtkomst till allt de behöver."
+      "title": "Yachting Earth — Reseförberedelser och nödinformation för seglare",
+      "description": "Yachting Earth är en digital reseakt för seglare: registrera ditt fartyg, dina rutter, besättning och nödkontakt innan avfärd, så att korrekt information redan finns på plats om resan inte går som planerat."
     },
+    "skipLink": "Hoppa till huvudinnehållet",
     "nav": {
-      "features": "Funktioner",
-      "pricing": "Priser",
-      "faq": "Vanliga frågor",
+      "prepared": "Vad som förbereds",
+      "howItWorks": "Så fungerar det",
+      "different": "Varför vi är annorlunda",
+      "privacy": "Integritet",
       "login": "Logga in",
-      "cta": "Skapa färdplan"
+      "cta": "Skapa gratis konto"
     },
     "hero": {
-      "eyebrow": "Reseförberedelse & nödinformation",
-      "headline": "Rita upp planen. Skydda besättningen.",
-      "subheadline": "Yachting Earth samlar fartyg, rutt och besättning i en enda reseakt — redo i samma sekund som din nödkontakt behöver den. Förbered allt innan ni kastar loss, och checkar ni inte in i tid får rätt person automatiskt rätt information.",
-      "ctaPrimary": "Skapa färdplan",
-      "ctaSecondary": "Se vad som ingår",
-      "dashboardLabel": "Reseakt i realtid",
-      "dashboardCaption": "Varje rutt, besättningsmedlem och nödkontakt — organiserat i samma stund som resan aktiveras.",
+      "heading": "Varje resa förtjänar en plan.<br>Varje nödsituation förtjänar rätt information.",
+      "lead": "Förbered ditt fartyg, dina rutter, besättning och nödkontakt innan avfärd. Om du inte checkar in efter din planerade ankomst får din utsedda nödkontakt säker åtkomst till den information som kan hjälpa räddningstjänsten agera snabbare.",
+      "ctaPrimary": "Skapa gratis konto",
+      "ctaSecondary": "Så fungerar det",
       "badges": ["Gratis att använda", "Flera rutter", "GDPR från grunden", "Säker ICE-portal"]
     },
-    "socialProof": {
-      "label": "Används vid sidan av de standarder som sjöfarare redan litar på",
-      "partners": ["Nordiska Offshoreförbundet", "Kustsäkerhetsnätverket", "Bluewater Crew-alliansen", "Hamnkaptenernas Råd", "Baltic Cruising-federationen"]
+    "notice": {
+      "heading": "Viktigt",
+      "p1": "Yachting Earth ICE är inte en nödsändare, EPIRB eller ett realtidsspårningssystem.",
+      "p2": "Det är ett system för reseförberedelser och nödinformation, utformat för att säkerställa att rätt person har rätt information vid rätt tidpunkt om något oväntat inträffar."
+    },
+    "prepared": {
+      "heading": "Allt förbereds innan avfärd",
+      "lead": "En komplett reseakt, sammanställd innan du ens lämnar bryggan.",
+      "cards": [
+        { "icon": "ship", "title": "Fartyg", "items": ["Foto", "Registrering", "Specifikationer", "Identifikation"] },
+        { "icon": "compass", "title": "Resa", "items": ["Avgång", "Destination", "Beräknad ankomst", "Marginaltid"] },
+        { "icon": "route", "title": "Rutter", "items": ["Flera rutter", "Import från Windy", "Alternativa rutter", "Interaktiv kartförhandsvisning"] },
+        { "icon": "users", "title": "Besättning", "items": ["Besättningslista", "Individuella profiler", "Foton", "Personliga nödkontakter"] },
+        { "icon": "shield-check", "title": "Nödkontakt", "items": ["Identitet bekräftad", "Säker portal", "Skrivskyddad åtkomst", "Automatisk avisering"] }
+      ]
+    },
+    "howItWorks": {
+      "heading": "Så fungerar det",
+      "steps": [
+        "Skepparen skapar resan",
+        "Bjuder in besättning",
+        "Besättningen fyller i sina egna profiler",
+        "Nödkontakten bekräftar sin medverkan",
+        "Aktivera resan"
+      ],
+      "fork": {
+        "arriveTitle": "Ankommer säkert",
+        "arriveText": "Skepparen bekräftar ankomsten. Inget mer händer.",
+        "graceTitle": "Marginaltiden löper ut",
+        "graceText": "Skepparen har inte checkat in efter beräknad ankomst plus den inställda marginaltiden."
+      },
+      "afterFork": [
+        "Nödkontakten aviseras",
+        "Informationen är redo att delas om räddningstjänsten måste kontaktas"
+      ]
+    },
+    "compare": {
+      "heading": "Varför Yachting Earth är annorlunda",
+      "traditionalLabel": "Traditionell färdplan",
+      "yachtingLabel": "Yachting Earth",
+      "rows": [
+        { "traditional": "Pappersdokument", "yachting": "Levande reseinformation" },
+        { "traditional": "En enda rutt", "yachting": "Flera rutter" },
+        { "traditional": "Statisk besättningslista", "yachting": "Besättningen underhåller sina egna uppgifter" },
+        { "traditional": "Förlitar sig på manuell övervakning", "yachting": "Automatisk kontroll" },
+        { "traditional": "E-postbilaga", "yachting": "Säker portal" }
+      ]
     },
     "features": {
-      "eyebrow": "Byggt för riktiga sjöresor",
-      "heading": "Allt din nödkontakt behöver — organiserat innan du kastar loss",
-      "subheading": "En reseakt som hålls aktuell — inte ett pappersformulär som blir inaktuellt så fort du lämnar hamnen.",
+      "heading": "Byggt för verkliga resor",
       "items": [
-        { "icon": "route", "title": "Flera rutter, en plan", "description": "Importera rutter direkt från Windy eller rita dem för hand, och spara alternativa rutter för när vinden vänder." },
-        { "icon": "users", "title": "Besättning som håller sig uppdaterad", "description": "Varje besättningsmedlem fyller i sin egen profil och nödkontakt — slipp jaga uppgifter via sms." },
-        { "icon": "shield-check", "title": "En verifierad nödkontakt", "description": "Din ICE-kontakt bekräftar sin roll i förväg och får en säker, skrivskyddad portal — inget att gissa sig till i stunden." },
-        { "icon": "clock", "title": "Karenstid på dina villkor", "description": "Ställ in hur lång tid efter beräknad ankomst som ska gå innan någon larmas, så en långsam hamninfart aldrig utlöser falskt alarm." },
-        { "icon": "bell-ring", "title": "Automatisk, ihållande avisering", "description": "Missar du incheckningen aviseras din kontakt via e-post, Telegram eller WhatsApp, med återförsök tills meddelandet når fram." },
-        { "icon": "shield", "title": "Integritet från grunden", "description": "Resa-, rutt- och besättningsdata raderas automatiskt och permanent 30 dagar efter att resan avslutats, i linje med GDPR." }
+        { "icon": "route", "title": "Flera rutter", "description": "En resa följer sällan en enda rak linje." },
+        { "icon": "users", "title": "Besättningens medverkan", "description": "Varje besättningsmedlem underhåller sin egen information." },
+        { "icon": "shield-check", "title": "Verifierad nödkontakt", "description": "Nödkontakten bekräftar sin roll innan avfärd." }
       ]
     },
-    "pricing": {
-      "eyebrow": "Priser",
-      "heading": "Börja gratis. Håll er förberedda.",
-      "subheading": "Yachting Earth är gratis för skeppare som förbereder sina egna resor — inget kreditkort, inga dolda nivåer.",
-      "planName": "Skeppare",
-      "price": "Gratis",
-      "priceSuffix": "för alltid, per skeppare",
-      "features": [
-        "Obegränsat antal resor och rutter",
-        "Fullständig besättningshantering",
-        "En verifierad ICE-kontakt",
-        "Säker ICE-portal och SAR-åtkomst",
-        "GDPR-anpassad datalivscykel",
-        "Aviseringar via e-post, Telegram och WhatsApp"
-      ],
-      "cta": "Skapa färdplan",
-      "note": "Planer för segelklubbar, charterflottor och marinor är på gång — hör av dig om du vill ha tidig tillgång."
-    },
-    "faq": {
-      "eyebrow": "Vanliga frågor",
-      "heading": "Frågor och svar",
-      "items": [
-        { "q": "Är Yachting Earth en nödsändare eller realtidsspårning?", "a": "Nej. Tjänsten spårar inte din position och kan inte larma på egen hand. Det är ett förberedelse- och aviseringsverktyg — skepparen har alltid det fulla säkerhetsansvaret, inklusive att larma en faktisk räddningsinsats vid behov." },
-        { "q": "Vad händer om jag inte checkar in i tid?", "a": "En bakgrundskontroll körs varje minut. När beräknad ankomst plus din valda karenstid har passerat utan incheckning aviseras din ICE-kontakt automatiskt, med återförsök och e-post som reserv." },
-        { "q": "Vem kan se min reseinformation?", "a": "Bara du, besättningens egna uppgifter och den enda nödkontakt du utser — som får en skrivskyddad portal via en privat länk, inte ett delat konto." },
-        { "q": "Hur hanterar Yachting Earth GDPR?", "a": "Resa-, rutt-, besättnings- och fotodata mjukraderas när en resa avslutas eller avbryts, och raderas sedan permanent 30 dagar senare. Ditt konto och dina fartyg behålls så att du kan planera nästa resa." },
-        { "q": "Behöver jag installera något?", "a": "Nej. Yachting Earth körs helt i din webbläsare — registrera din resa från dator eller mobil innan du kastar loss." },
-        { "q": "Är det verkligen gratis?", "a": "Ja. Skeppare-planen är gratis, utan krav på kreditkort. Planer för klubbar, flottor och marinor är på gång." }
+    "privacy": {
+      "heading": "Integritet redan från start",
+      "lead": "Personlig reseinformation tas automatiskt bort enligt GDPR-principerna.",
+      "lifecycle": [
+        { "icon": "file-plus", "label": "Resa skapad" },
+        { "icon": "check-circle", "label": "Resa avslutad" },
+        { "icon": "clock", "label": "Mjukt raderad" },
+        { "icon": "timer", "label": "Automatiskt borttagen efter 30 dagar" },
+        { "icon": "shield", "label": "Endast skeppare och fartyg kvarstår" }
       ]
+    },
+    "mapDemo": {
+      "heading": "Rutter, kartlagda",
+      "lead": "En resa kan innehålla flera planerade rutter. Här är ett exempel med tre.",
+      "note": "Demonstrationsdata — inte fartygets faktiska position.",
+      "ariaLabel": "Exempelkarta som visar tre exempel på segelrutter längs en kust",
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"]
+    },
+    "worst": {
+      "heading": "Om det värsta skulle hända",
+      "insteadTitle": "Istället för att…",
+      "insteadItems": ["Leta i gamla mejl", "Försöka minnas vem som var ombord", "Leta efter ruttskärmdumpar", "Gissa nödkontakter"],
+      "haveTitle": "Din nödkontakt har redan",
+      "haveItems": ["Fartyg", "Rutter", "Besättning", "Foton", "Nödkontakter", "Reseuppgifter"],
+      "readyTitle": "Redo att lämna till",
+      "readyItems": ["Kustbevakningen", "Polisen", "Sjöräddningscentralen", "Försäkringsbolaget"],
+      "readyNote": "Nödkontakten avgör när informationen ska delas, och med vem."
+    },
+    "finalCta": {
+      "heading": "Redo för din nästa resa?",
+      "lead": "Registrera din första resa på mindre än fem minuter.",
+      "cta": "Skapa gratis konto"
     },
     "footer": {
-      "tagline": "Varje resa förtjänar en plan.",
-      "disclaimer": "Yachting Earth ICE är ett verktyg för reseförberedelser och information. Det är ingen nödsändare, EPIRB eller realtidsspårning, och systemet larmar inte självt räddningstjänsten.",
+      "disclaimer": "Yachting Earth ICE är ett verktyg för reseförberedelser och information. Det är ingen nödsändare, EPIRB eller realtidsspårningssystem, och systemet kontaktar inte räddningstjänsten självt.",
       "links": {
         "about": "Om oss",
         "privacy": "Integritet",
         "gdpr": "GDPR",
         "contact": "Kontakt",
+        "github": "GitHub",
         "terms": "Villkor"
-      }
+      },
+      "comingSoon": "Sidan {page} kommer snart"
     }
   }
 }

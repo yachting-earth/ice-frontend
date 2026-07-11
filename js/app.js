@@ -8,6 +8,7 @@
  */
 const Router = {
     routes: [
+        { pattern: '#/', page: LandingPage, guestOnly: true, noTopbar: true },
         { pattern: '#/login', page: LoginPage, guestOnly: true },
         { pattern: '#/register', page: RegisterPage, guestOnly: true },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
@@ -33,7 +34,7 @@ const Router = {
     },
 
     matchRoute() {
-        const hash = location.hash || '#/dashboard';
+        const hash = location.hash || (Auth.isAuthenticated() ? '#/dashboard' : '#/');
         const [pathPart, queryPart] = hash.split('?');
         const pathSegments = pathPart.split('/');
 
@@ -60,10 +61,10 @@ const Router = {
 
     async handleRoute() {
         const matched = this.matchRoute();
-        renderTopbar();
 
         if (!matched) {
-            location.hash = Auth.isAuthenticated() ? '#/dashboard' : '#/login';
+            renderTopbar();
+            location.hash = Auth.isAuthenticated() ? '#/dashboard' : '#/';
             return;
         }
 
@@ -80,6 +81,12 @@ const Router = {
         if (route.adminOnly && !Auth.getUser().isAdmin) {
             location.hash = '#/dashboard';
             return;
+        }
+
+        if (route.noTopbar) {
+            document.getElementById('topbar').innerHTML = '';
+        } else {
+            renderTopbar();
         }
 
         const container = document.getElementById('page-content');
