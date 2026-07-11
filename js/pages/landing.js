@@ -40,6 +40,7 @@ const LandingPage = {
                     <a href="#landing-privacy" data-scroll="true">${escapeHtml(t('landing.nav.privacy'))}</a>
                     <a class="site-nav__cta site-nav__cta--ghost" href="#/login">${escapeHtml(t('landing.nav.login'))}</a>
                     <a class="site-nav__cta" href="#/register">${escapeHtml(t('landing.nav.cta'))}</a>
+                    ${renderLangSelector()}
                   </nav>
                 </div>
               </header>
@@ -233,6 +234,7 @@ const LandingPage = {
         this.setupComingSoonLinks();
         this.setupScrollReveal();
         this.renderMapDemo();
+        setupLangSelector();
     },
 
     setupNavToggle() {
