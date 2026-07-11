@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yachting Earth — Voyage Preparation &amp; Emergency Information for Sailors</title>
+<meta name="description" content="Yachting Earth is a digital voyage dossier for sailors: register your vessel, routes, crew and emergency contact before departure, so accurate information is already in place if a voyage does not go as planned.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yachting.earth/landing/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Yachting Earth — Voyage Preparation &amp; Emergency Information for Sailors">
+<meta property="og:description" content="Prepare your vessel, routes, crew and emergency contact before departure. If you fail to check in after your planned arrival, your designated emergency contact receives secure access to the information that may help emergency services respond faster.">
+<meta property="og:url" content="https://yachting.earth/landing/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yachting Earth — Voyage Preparation &amp; Emergency Information for Sailors">
+<meta name="twitter:description" content="A digital voyage dossier: everything is prepared before departure.">
+
+<meta name="theme-color" content="#0b4f6c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230b4f6c'/%3E%3Cpath d='M16 6l3 10-3 10-3-10z' fill='%23ffffff'/%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="css/landing.css">
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Yachting Earth",
+  "applicationCategory": "SafetyApplication",
+  "operatingSystem": "Web",
+  "description": "A digital voyage dossier for sailors: vessel, routes, crew and emergency contact are registered before departure so accurate information is ready if a voyage does not end as planned.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "url": "https://yachting.earth/"
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-nav" id="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="#main">
+      <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <circle cx="16" cy="16" r="16" fill="var(--color-primary)"></circle>
+        <path d="M16 6l3 10-3 10-3-10z" fill="#fff"></path>
+      </svg>
+      <span>Yachting Earth</span>
+    </a>
+
+    <button class="site-nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+    <nav class="site-nav__links" id="site-nav-links" aria-label="Primary">
+      <a href="#prepared">What's prepared</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#different">Why it's different</a>
+      <a href="#privacy">Privacy</a>
+      <a class="site-nav__cta site-nav__cta--ghost" href="../index.html#/login">Log in</a>
+      <a class="site-nav__cta" href="../index.html#/register">Create Free Account</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero__art" aria-hidden="true">
+      <svg viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid slice" role="presentation" focusable="false">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0d2b3d"></stop>
+            <stop offset="55%" stop-color="#3c5a68"></stop>
+            <stop offset="82%" stop-color="#e8a866"></stop>
+            <stop offset="100%" stop-color="#f4c98a"></stop>
+          </linearGradient>
+          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#caa06a"></stop>
+            <stop offset="12%" stop-color="#3a6a72"></stop>
+            <stop offset="100%" stop-color="#0b2b3d"></stop>
+          </linearGradient>
+          <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fdeccb" stop-opacity="0.95"></stop>
+            <stop offset="60%" stop-color="#f4c98a" stop-opacity="0.35"></stop>
+            <stop offset="100%" stop-color="#f4c98a" stop-opacity="0"></stop>
+          </radialGradient>
+        </defs>
+
+        <rect x="0" y="0" width="1600" height="620" fill="url(#sky)"></rect>
+        <circle cx="1180" cy="560" r="260" fill="url(#sunGlow)"></circle>
+        <circle cx="1180" cy="560" r="46" fill="#fdf1da"></circle>
+        <rect x="0" y="480" width="1600" height="320" fill="url(#sea)"></rect>
+
+        <g stroke="#f6e3bd" stroke-width="2" opacity="0.25" stroke-linecap="round">
+          <path d="M960 560 Q1180 552 1420 560"></path>
+          <path d="M900 600 Q1180 588 1480 600"></path>
+          <path d="M840 645 Q1180 628 1540 645"></path>
+        </g>
+        <g stroke="#dff3f8" stroke-width="1.5" opacity="0.12" stroke-linecap="round">
+          <path d="M0 700 Q400 686 800 700 T1600 700"></path>
+          <path d="M0 750 Q400 738 800 750 T1600 750"></path>
+        </g>
+
+        <!-- Yacht silhouette, calm evening sail -->
+        <g fill="#0d2734">
+          <path d="M700 486 C 706 472, 714 460, 726 452 L 726 486 Z"></path>
+          <path d="M726 452 L 726 486 L 792 486 C 786 470, 760 456, 726 452 Z" fill="#12303f"></path>
+          <path d="M672 500 C 700 486, 760 486, 800 496 C 792 512, 760 520, 726 520 C 700 520, 682 512, 672 500 Z"></path>
+          <rect x="723" y="452" width="3" height="70" fill="#0d2734"></rect>
+        </g>
+      </svg>
+      <div class="hero__scrim" aria-hidden="true"></div>
+    </div>
+
+    <div class="hero__content">
+      <h1 id="hero-heading">Every voyage deserves a plan.<br>Every emergency deserves the right information.</h1>
+      <p class="hero__lead">
+        Prepare your vessel, routes, crew and emergency contact before departure. If you fail to check in after
+        your planned arrival, your designated emergency contact receives secure access to the information that
+        may help emergency services respond faster.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary btn--lg" href="../index.html#/register">Create Free Account</a>
+        <a class="btn btn--ghost btn--lg" href="#how-it-works">How It Works</a>
+      </div>
+      <ul class="hero__badges">
+        <li><i data-lucide="check" aria-hidden="true"></i> Free to use</li>
+        <li><i data-lucide="check" aria-hidden="true"></i> Multiple routes</li>
+        <li><i data-lucide="check" aria-hidden="true"></i> GDPR by design</li>
+        <li><i data-lucide="check" aria-hidden="true"></i> Secure ICE Portal</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ IMPORTANT NOTICE ============ -->
+  <section class="section section--tight" aria-labelledby="notice-heading">
+    <div class="notice reveal">
+      <div class="notice__icon"><i data-lucide="info" aria-hidden="true"></i></div>
+      <div>
+        <h2 id="notice-heading">Important</h2>
+        <p>
+          Yachting Earth ICE is not a distress beacon, EPIRB or real-time tracking system.
+        </p>
+        <p>
+          It is a voyage preparation and emergency information system designed to ensure that the right person
+          has the right information if something unexpected happens.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVERYTHING PREPARED ============ -->
+  <section class="section" id="prepared" aria-labelledby="prepared-heading">
+    <div class="section__head reveal">
+      <h2 id="prepared-heading">Everything is prepared before departure</h2>
+      <p class="section__lead">A complete voyage dossier, assembled before you ever leave the dock.</p>
+    </div>
+
+    <div class="prep-grid">
+      <article class="prep-card reveal">
+        <div class="prep-card__icon"><i data-lucide="ship" aria-hidden="true"></i></div>
+        <h3>Vessel</h3>
+        <ul>
+          <li>Photo</li>
+          <li>Registration</li>
+          <li>Specifications</li>
+          <li>Identification</li>
+        </ul>
+      </article>
+
+      <article class="prep-card reveal">
+        <div class="prep-card__icon"><i data-lucide="compass" aria-hidden="true"></i></div>
+        <h3>Voyage</h3>
+        <ul>
+          <li>Departure</li>
+          <li>Destination</li>
+          <li>Estimated arrival</li>
+          <li>Grace period</li>
+        </ul>
+      </article>
+
+      <article class="prep-card reveal">
+        <div class="prep-card__icon"><i data-lucide="route" aria-hidden="true"></i></div>
+        <h3>Routes</h3>
+        <ul>
+          <li>Multiple routes</li>
+          <li>Windy import</li>
+          <li>Route alternatives</li>
+          <li>Interactive map preview</li>
+        </ul>
+      </article>
+
+      <article class="prep-card reveal">
+        <div class="prep-card__icon"><i data-lucide="users" aria-hidden="true"></i></div>
+        <h3>Crew</h3>
+        <ul>
+          <li>Crew list</li>
+          <li>Individual profiles</li>
+          <li>Photos</li>
+          <li>Personal emergency contacts</li>
+        </ul>
+      </article>
+
+      <article class="prep-card reveal">
+        <div class="prep-card__icon"><i data-lucide="shield-check" aria-hidden="true"></i></div>
+        <h3>Emergency Contact</h3>
+        <ul>
+          <li>Identity confirmed</li>
+          <li>Secure portal</li>
+          <li>Read-only access</li>
+          <li>Automatic notification</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section section--muted" id="how-it-works" aria-labelledby="how-heading">
+    <div class="section__head reveal">
+      <h2 id="how-heading">How it works</h2>
+    </div>
+
+    <ol class="timeline">
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Create voyage</h3></div></li>
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Invite crew</h3></div></li>
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Crew complete their own profiles</h3></div></li>
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Emergency contact confirms participation</h3></div></li>
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Activate voyage</h3></div></li>
+      <li class="timeline__item timeline__item--fork reveal">
+        <span class="timeline__dot timeline__dot--fork"></span>
+        <div>
+          <div class="timeline__fork">
+            <div class="timeline__branch">
+              <h3>Arrive safely</h3>
+              <p>Skipper verifies arrival. Nothing further happens.</p>
+            </div>
+            <div class="timeline__branch">
+              <h3>Grace period expires</h3>
+              <p>Skipper has not checked in after ETA plus the configured grace period.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Emergency contact receives secure access</h3></div></li>
+      <li class="timeline__item reveal"><span class="timeline__dot"></span><div><h3>Information ready if emergency services must be contacted</h3></div></li>
+    </ol>
+  </section>
+
+  <!-- ============ WHY DIFFERENT ============ -->
+  <section class="section" id="different" aria-labelledby="different-heading">
+    <div class="section__head reveal">
+      <h2 id="different-heading">Why Yachting Earth is different</h2>
+    </div>
+
+    <div class="compare reveal" role="table" aria-label="Traditional float plan compared with Yachting Earth">
+      <div class="compare__row compare__row--head" role="row">
+        <div role="columnheader">Traditional Float Plan</div>
+        <div class="compare__vs" role="presentation" aria-hidden="true">vs</div>
+        <div role="columnheader">Yachting Earth</div>
+      </div>
+      <div class="compare__row" role="row">
+        <div role="cell">Paper document</div><div class="compare__vs" aria-hidden="true"></div><div role="cell">Living voyage information</div>
+      </div>
+      <div class="compare__row" role="row">
+        <div role="cell">Single route</div><div class="compare__vs" aria-hidden="true"></div><div role="cell">Multiple routes</div>
+      </div>
+      <div class="compare__row" role="row">
+        <div role="cell">Static crew list</div><div class="compare__vs" aria-hidden="true"></div><div role="cell">Crew maintain their own details</div>
+      </div>
+      <div class="compare__row" role="row">
+        <div role="cell">Manual phone calls</div><div class="compare__vs" aria-hidden="true"></div><div role="cell">Automatic notification</div>
+      </div>
+      <div class="compare__row" role="row">
+        <div role="cell">Email attachment</div><div class="compare__vs" aria-hidden="true"></div><div role="cell">Secure portal</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BUILT FOR REAL VOYAGES ============ -->
+  <section class="section section--muted" aria-labelledby="features-heading">
+    <div class="section__head reveal">
+      <h2 id="features-heading">Built for real voyages</h2>
+    </div>
+
+    <div class="feature-grid">
+      <article class="feature-card reveal">
+        <div class="feature-card__icon"><i data-lucide="route" aria-hidden="true"></i></div>
+        <h3>Multiple routes</h3>
+        <p>A voyage rarely follows a single straight line.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-card__icon"><i data-lucide="users" aria-hidden="true"></i></div>
+        <h3>Crew participation</h3>
+        <p>Every crew member maintains their own information.</p>
+      </article>
+      <article class="feature-card reveal">
+        <div class="feature-card__icon"><i data-lucide="shield-check" aria-hidden="true"></i></div>
+        <h3>Verified emergency contact</h3>
+        <p>The emergency contact confirms their role before departure.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PRIVACY BY DESIGN ============ -->
+  <section class="section" id="privacy" aria-labelledby="privacy-heading">
+    <div class="section__head reveal">
+      <h2 id="privacy-heading">Privacy by design</h2>
+      <p class="section__lead">Personal voyage data is automatically removed according to GDPR principles.</p>
+    </div>
+
+    <ol class="lifecycle reveal">
+      <li><i data-lucide="file-plus" aria-hidden="true"></i><span>Trip created</span></li>
+      <li><i data-lucide="check-circle" aria-hidden="true"></i><span>Trip completed</span></li>
+      <li><i data-lucide="clock" aria-hidden="true"></i><span>Soft deleted</span></li>
+      <li><i data-lucide="timer" aria-hidden="true"></i><span>Automatically removed after 30 days</span></li>
+      <li><i data-lucide="shield" aria-hidden="true"></i><span>Only skipper and vessel remain</span></li>
+    </ol>
+  </section>
+
+  <!-- ============ MAP DEMO ============ -->
+  <section class="section section--muted" aria-labelledby="map-heading">
+    <div class="section__head reveal">
+      <h2 id="map-heading">Routes, mapped</h2>
+      <p class="section__lead">A voyage may include several planned routes. Here is an example of three.</p>
+    </div>
+    <div class="map-demo reveal">
+      <div id="landing-map" class="map-demo__canvas" role="img" aria-label="Example map showing three sample sailing routes along a coastline"></div>
+      <p class="map-demo__note">Demonstration data — not a live vessel position.</p>
+    </div>
+  </section>
+
+  <!-- ============ IF THE WORST HAPPENS ============ -->
+  <section class="section" aria-labelledby="worst-heading">
+    <div class="section__head reveal">
+      <h2 id="worst-heading">If the worst happens</h2>
+    </div>
+
+    <div class="worst-grid">
+      <div class="worst-col reveal">
+        <div class="worst-col__icon"><i data-lucide="search" aria-hidden="true"></i></div>
+        <h3>Instead of…</h3>
+        <ul>
+          <li>Searching old emails</li>
+          <li>Trying to remember who was onboard</li>
+          <li>Looking for route screenshots</li>
+          <li>Guessing emergency contacts</li>
+        </ul>
+      </div>
+
+      <div class="worst-col__arrow reveal" aria-hidden="true"><i data-lucide="arrow-right"></i></div>
+
+      <div class="worst-col reveal">
+        <div class="worst-col__icon"><i data-lucide="folder-check" aria-hidden="true"></i></div>
+        <h3>Your emergency contact already has</h3>
+        <ul>
+          <li>Vessel</li>
+          <li>Routes</li>
+          <li>Crew</li>
+          <li>Photos</li>
+          <li>Emergency contacts</li>
+          <li>Voyage details</li>
+        </ul>
+      </div>
+
+      <div class="worst-col__arrow reveal" aria-hidden="true"><i data-lucide="arrow-right"></i></div>
+
+      <div class="worst-col reveal">
+        <div class="worst-col__icon"><i data-lucide="send" aria-hidden="true"></i></div>
+        <h3>Ready to provide</h3>
+        <ul>
+          <li>Coast Guard</li>
+          <li>Police</li>
+          <li>Rescue Coordination Centre</li>
+          <li>Insurance company</li>
+        </ul>
+        <p class="worst-col__note">The emergency contact decides what information should be shared, and with whom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section final-cta" aria-labelledby="final-cta-heading">
+    <div class="reveal">
+      <h2 id="final-cta-heading">Ready for your next voyage?</h2>
+      <p>Register your first voyage in less than five minutes.</p>
+      <a class="btn btn--primary btn--lg" href="../index.html#/register">Create Free Account</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span class="site-footer__brand">Yachting Earth</span>
+    <nav aria-label="Footer">
+      <a href="#" data-soon="true">About</a>
+      <a href="#" data-soon="true">Privacy</a>
+      <a href="#" data-soon="true">GDPR</a>
+      <a href="#" data-soon="true">Contact</a>
+      <a href="https://github.com/yachting-earth/ice-frontend" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#" data-soon="true">Terms</a>
+    </nav>
+    <p class="site-footer__disclaimer">Yachting Earth ICE is a voyage preparation and information tool. It is not a distress beacon, EPIRB or real-time tracking system, and the system itself does not contact rescue services.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js" defer></script>
+<script src="js/landing.js" defer></script>
+<script src="js/map-demo.js" defer></script>
+</body>
+</html>
