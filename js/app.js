@@ -25,7 +25,8 @@ const Router = {
         { pattern: '#/ice-portal', page: IcePortalPage },
         { pattern: '#/sar', page: SarPage },
         { pattern: '#/blog', page: BlogPage },
-        { pattern: '#/blog/:slug', page: BlogPostPage }
+        { pattern: '#/blog/:slug', page: BlogPostPage },
+        { pattern: '#/privacy', page: PrivacyPage }
     ],
 
     start() {

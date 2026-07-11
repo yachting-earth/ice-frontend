@@ -808,10 +808,89 @@
         "privacy": "Integritet",
         "gdpr": "GDPR",
         "contact": "Kontakt",
-        "github": "GitHub",
         "terms": "Villkor"
       },
       "comingSoon": "Sidan {page} kommer snart"
+    }
+  },
+  "privacy": {
+    "title": "Integritet och GDPR",
+    "lastUpdated": "Senast uppdaterad: 11 juli 2026",
+    "intro": "Den här sidan förklarar vilka personuppgifter Yachting Earth ICE samlar in, varför, hur länge de sparas, och vilka rättigheter du har enligt GDPR.",
+    "sections": [
+      {
+        "heading": "Vem som driver tjänsten",
+        "body": [
+          "Yachting Earth ICE (\"systemet\") drivs av Tony Johansson, under namnet Yachting Earth (yachting.earth). Det är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning - inte en nödsändare, EPIRB eller ett realtidsspårningssystem, och det kontaktar inte räddningstjänsten självt. Skepparen är fortsatt ansvarig för faktiska säkerhetsbeslut; den här sidan förklarar hur systemet hanterar de personuppgifter du ger det för att stödja det."
+        ]
+      },
+      {
+        "heading": "Vilka uppgifter vi samlar in",
+        "body": [
+          "Vi samlar bara in det systemet behöver för att förbereda en resa och, om något går fel, för att få rätt information till rätt person."
+        ],
+        "list": [
+          "Kontouppgifter - e-post, namn, telefon och ett lösenord (sparas endast som en bcrypt-hash, aldrig i klartext)",
+          "Fartygsuppgifter - namn, registrering/anropssignal, specifikationer och ett valfritt foto",
+          "Reseuppgifter - planerade rutter (tolkade från Windy.com), planerad avgångs-/ankomsttid och marginaltid",
+          "Besättningsuppgifter - namn, e-post, telefon och ett valfritt foto, uppladdat med uttryckligt samtycke",
+          "Nödkontaktuppgifter (\"ICE\") - namn, e-post, telefon och relation till skepparen",
+          "Säkerhetsloggar - inloggningsförsök (för att upprätthålla hastighetsbegränsning) och status för avisering"
+        ]
+      },
+      {
+        "heading": "Varför vi behandlar dem",
+        "body": ["Varje kategori av uppgifter behandlas på en av dessa rättsliga grunder:"],
+        "list": [
+          "Avtal - konto-, fartygs- och reseuppgifter, så att systemet kan göra det du registrerade dig för",
+          "Uttryckligt samtycke - uppladdning av besättningsfoton och nödkontaktuppgifter",
+          "Berättigat intresse - säkerhetsloggar och aviseringshistorik, för att hålla systemet pålitligt och skyddat mot missbruk"
+        ]
+      },
+      {
+        "heading": "Hur länge vi sparar dem",
+        "body": [
+          "En avslutad eller avbruten resa mjukraderas omedelbart - den försvinner från skepparens, besättningens och nödkontaktens vy - och raderas sedan permanent, tillsammans med sina rutter, besättningsposter, foton, ändringslogg, aviseringar och åtkomsttoken, av ett dagligt städjobb 30 dagar senare.",
+          "Registrerade användarkonton och fartyg påverkas inte av detta - endast resans egna data. Du kan radera ditt konto och dess data när som helst från din profilsida.",
+          "Nödkontaktkonton sparas också på obestämd tid som standard, eftersom kontakten kan behöva logga in igen inför en framtida resa, men en kontakt kan välja - från \"Mitt ICE-konto\" - att få sitt konto automatiskt raderat när det inte längre är kopplat till någon aktuell eller framtida resa."
+        ]
+      },
+      {
+        "heading": "Dina rättigheter",
+        "body": ["Enligt GDPR kan du:"],
+        "list": [
+          "Få tillgång till de personuppgifter vi har om dig",
+          "Rätta felaktiga uppgifter - de flesta kan du redigera direkt från din profil",
+          "Radera ditt konto och tillhörande data, med alternativet \"Radera konto\" på din profilsida",
+          "Få ut dina uppgifter i ett portabelt, maskinläsbart format",
+          "Återkalla ett samtycke du tidigare gett, till exempel uppladdning av ett besättningsfoto"
+        ]
+      },
+      {
+        "heading": "Kakor och spårning",
+        "body": [
+          "Vi använder inga kakor. Din inloggningssession sparas i webbläsarens lokala lagring, och det finns ingen tredjepartsanalys eller reklamspårning någonstans i systemet."
+        ]
+      },
+      {
+        "heading": "Vilka vi delar uppgifter med",
+        "body": ["Vi säljer eller delar aldrig dina uppgifter med annonsörer. Uppgifter når endast:"],
+        "list": [
+          "Mailgun - för att leverera transaktionell e-post (aviseringar, inbjudningar, larm)",
+          "Telegram och Twilio WhatsApp - för att leverera aviseringar, där aktiverat",
+          "Vår hostingleverantör - för att driva och säkerhetskopiera tjänsten"
+        ]
+      },
+      {
+        "heading": "Hur vi skyddar dem",
+        "body": [
+          "Systemet körs helt över HTTPS. Lösenord hashas med bcrypt. Skeppare autentiseras med en signerad token; nödkontakter och räddningstjänst får engångs, skrivskyddad åtkomst begränsad till en enda resa istället för en inloggning. Besättnings-, fartygs- och profilfoton lagras utanför den publika webbservern och levereras endast via en autentiserad begäran. Upprepade misslyckade inloggningar hastighetsbegränsas."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Frågor?",
+      "body": "För att utöva någon av rättigheterna ovan, eller för andra frågor om denna policy eller dina uppgifter, kontakta oss på privacy@yachting.earth. Vi svarar inom 30 dagar, i enlighet med GDPR artikel 12."
     }
   }
 }

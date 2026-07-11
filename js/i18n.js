@@ -819,10 +819,89 @@ const EN_INLINE = {
         "privacy": "Privacy",
         "gdpr": "GDPR",
         "contact": "Contact",
-        "github": "GitHub",
         "terms": "Terms"
       },
       "comingSoon": "{page} page coming soon"
+    }
+  },
+  "privacy": {
+    "title": "Privacy & GDPR",
+    "lastUpdated": "Last updated: 11 July 2026",
+    "intro": "This page explains what personal data Yachting Earth ICE collects, why, how long it is kept, and the rights you have over it under GDPR.",
+    "sections": [
+      {
+        "heading": "Who operates this service",
+        "body": [
+          "Yachting Earth ICE (\"the system\") is operated by Tony Johansson, trading as Yachting Earth (yachting.earth). It is a voyage-preparation and crew-safety check-in tool - not a distress beacon, EPIRB or real-time tracking system, and it does not contact emergency services itself. The skipper remains responsible for actual safety decisions; this page explains how the system handles the personal data you give it in support of that."
+        ]
+      },
+      {
+        "heading": "What data we collect",
+        "body": [
+          "We only collect what the system needs to prepare a voyage and, if something goes wrong, to get the right information to the right person."
+        ],
+        "list": [
+          "Account data - email, name, phone, and a password (stored only as a bcrypt hash, never in plain text)",
+          "Vessel data - name, registration/call sign, specifications, and an optional photo",
+          "Trip data - planned routes (parsed from Windy.com), scheduled departure/arrival times, and grace period",
+          "Crew data - name, email, phone, and an optional photo, uploaded with explicit consent",
+          "Emergency contact (\"ICE\") data - name, email, phone, and relationship to the skipper",
+          "Security logs - login attempts (to enforce rate limiting) and notification delivery status"
+        ]
+      },
+      {
+        "heading": "Why we process it",
+        "body": ["Each category of data is processed on one of these legal bases:"],
+        "list": [
+          "Contract - account, vessel and trip data, so the system can do what you signed up for",
+          "Explicit consent - crew photo uploads and emergency contact details",
+          "Legitimate interest - security logs and notification delivery records, to keep the system reliable and abuse-resistant"
+        ]
+      },
+      {
+        "heading": "How long we keep it",
+        "body": [
+          "A completed or cancelled trip is soft-deleted immediately - it disappears from the skipper's, crew's and emergency contact's view - and then permanently (hard-)deleted, along with its routes, crew records, photos, audit log, notifications and access tokens, by a daily cleanup job 30 days later.",
+          "Registered user accounts and vessels are not touched by this process - only the trip's own data is. You can delete your account and its data at any time from your profile page.",
+          "Emergency contact accounts are also kept indefinitely by default, since the contact may need to sign back in for a future trip, but a contact can opt in - from \"My ICE account\" - to have their account deleted automatically once it is no longer linked to any current or future trip."
+        ]
+      },
+      {
+        "heading": "Your rights",
+        "body": ["Under GDPR you can:"],
+        "list": [
+          "Access the personal data we hold about you",
+          "Correct inaccurate data - most of it you can edit directly from your profile",
+          "Erase your account and its associated data, using the \"Delete account\" option on your profile page",
+          "Receive your data in a portable, machine-readable format",
+          "Withdraw a consent you previously gave, for example a crew photo upload"
+        ]
+      },
+      {
+        "heading": "Cookies and tracking",
+        "body": [
+          "We don't use cookies. Your login session is kept in your browser's local storage, and there is no third-party analytics or advertising tracking anywhere in the system."
+        ]
+      },
+      {
+        "heading": "Who we share data with",
+        "body": ["We never sell or share your data with advertisers. Data only reaches:"],
+        "list": [
+          "Mailgun - to deliver transactional email (trip notifications, invitations, alerts)",
+          "Telegram and Twilio WhatsApp - to deliver notifications, where enabled",
+          "Our hosting provider - to run and back up the service"
+        ]
+      },
+      {
+        "heading": "How we protect it",
+        "body": [
+          "The system runs entirely over HTTPS. Passwords are hashed with bcrypt. Skippers authenticate with a signed token; emergency contacts and search-and-rescue authorities get single-use, read-only access scoped to a single trip instead of a login. Crew, vessel and profile photos are stored outside the public web server and are only ever served through an authenticated request. Repeated failed logins are rate-limited."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Questions?",
+      "body": "To exercise any of the rights above, or for any other question about this policy or your data, contact us at privacy@yachting.earth. We respond within 30 days, as required by GDPR Article 12."
     }
   }
 };
