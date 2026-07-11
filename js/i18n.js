@@ -903,6 +903,87 @@ const EN_INLINE = {
       "heading": "Questions?",
       "body": "To exercise any of the rights above, or for any other question about this policy or your data, get in touch using the contact form available in your account. We respond within 30 days, as required by GDPR Article 12."
     }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: 11 July 2026",
+    "intro": "These terms govern your use of Yachting Earth ICE. By creating an account or accessing the system, you agree to them.",
+    "sections": [
+      {
+        "heading": "Who you're agreeing with",
+        "body": [
+          "Yachting Earth ICE (\"the system\") is owned and operated by Manjo Consulting AB, a Swedish company (org./VAT no. 5568138464), trading as Yachting Earth (yachting.earth)."
+        ]
+      },
+      {
+        "heading": "What the service is",
+        "body": [
+          "Yachting Earth ICE is a voyage-preparation and crew safety check-in notification tool. It lets a skipper register a trip and vessel, add planned routes, invite crew, and designate an emergency (\"ICE\") contact who is notified if the trip becomes overdue."
+        ],
+        "list": [
+          "It is not a distress beacon, EPIRB, or real-time tracking system",
+          "It does not monitor a vessel's actual position and does not contact rescue services itself",
+          "The skipper remains solely responsible for actual safety decisions, seaworthiness, and compliance with maritime law and local regulations"
+        ]
+      },
+      {
+        "heading": "Your account",
+        "body": [
+          "You must provide accurate information when registering a trip, vessel, crew member, or emergency contact, and keep it up to date - the system's usefulness depends on it being current.",
+          "You are responsible for keeping your login credentials confidential and for all activity under your account. Tell us promptly if you believe your account has been compromised."
+        ]
+      },
+      {
+        "heading": "Acceptable use",
+        "body": ["You agree not to:"],
+        "list": [
+          "Use the system for any unlawful purpose or to harass, impersonate, or deceive another person",
+          "Add a crew member or emergency contact without a reasonable basis for believing they consent to being contacted about the trip",
+          "Attempt to interfere with, disrupt, or gain unauthorized access to the system or other users' data"
+        ]
+      },
+      {
+        "heading": "Emergency contacts and crew",
+        "body": [
+          "Emergency contacts and crew you invite receive their own limited-purpose access (a read-only trip view or an invitation to confirm details) and are bound by these terms for that purpose. You are responsible for having a lawful basis to share their contact details with us."
+        ]
+      },
+      {
+        "heading": "Availability and limitation of liability",
+        "body": [
+          "We aim to keep the system available and notifications timely, but we do not guarantee uninterrupted availability, and delivery of email, Telegram, or WhatsApp notifications depends on third-party services outside our control.",
+          "To the maximum extent permitted by law, Manjo Consulting AB is not liable for any loss or damage arising from reliance on the system for actual safety-critical decisions, from delayed or failed notifications, or from inaccurate information entered by a user. The system is provided \"as is\" as an information-management aid, not a safety guarantee."
+        ]
+      },
+      {
+        "heading": "Third-party services",
+        "body": [
+          "The system relies on third-party services to operate: Mailgun for email delivery, Telegram and Twilio WhatsApp for optional notifications, OpenStreetMap for map tiles, and Windy.com as a source for route planning. Your use of those services is subject to their own terms."
+        ]
+      },
+      {
+        "heading": "Termination",
+        "body": [
+          "You may delete your account at any time from your profile page. We may suspend or terminate access to accounts that violate these terms or that we reasonably believe pose a risk to the system or other users."
+        ]
+      },
+      {
+        "heading": "Changes to these terms",
+        "body": [
+          "We may update these terms from time to time. Material changes will be reflected by updating the \"Last updated\" date above. Continued use of the system after a change constitutes acceptance of the updated terms."
+        ]
+      },
+      {
+        "heading": "Governing law",
+        "body": [
+          "These terms are governed by the laws of Sweden, without regard to conflict-of-law principles. Any dispute arising from these terms or your use of the system falls under the jurisdiction of the Swedish courts."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Questions?",
+      "body": "For any question about these terms, get in touch using the contact form available in your account."
+    }
   }
 };
 

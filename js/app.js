@@ -26,7 +26,8 @@ const Router = {
         { pattern: '#/sar', page: SarPage },
         { pattern: '#/blog', page: BlogPage },
         { pattern: '#/blog/:slug', page: BlogPostPage },
-        { pattern: '#/privacy', page: PrivacyPage }
+        { pattern: '#/privacy', page: PrivacyPage },
+        { pattern: '#/terms', page: TermsPage }
     ],
 
     start() {

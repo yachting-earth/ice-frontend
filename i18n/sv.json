@@ -892,5 +892,86 @@
       "heading": "Frågor?",
       "body": "För att utöva någon av rättigheterna ovan, eller för andra frågor om denna policy eller dina uppgifter, hör av dig via kontaktformuläret i ditt konto. Vi svarar inom 30 dagar, i enlighet med GDPR artikel 12."
     }
+  },
+  "terms": {
+    "title": "Användarvillkor",
+    "lastUpdated": "Senast uppdaterad: 11 juli 2026",
+    "intro": "Dessa villkor reglerar din användning av Yachting Earth ICE. Genom att skapa ett konto eller använda systemet godkänner du dem.",
+    "sections": [
+      {
+        "heading": "Vem du ingår avtal med",
+        "body": [
+          "Yachting Earth ICE (\"systemet\") ägs och drivs av Manjo Consulting AB, ett svenskt företag (org.-/momsnr 5568138464), under namnet Yachting Earth (yachting.earth)."
+        ]
+      },
+      {
+        "heading": "Vad tjänsten är",
+        "body": [
+          "Yachting Earth ICE är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. Det låter en skeppare registrera en resa och ett fartyg, lägga till planerade rutter, bjuda in besättning och utse en nödkontakt (\"ICE\") som meddelas om resan blir försenad."
+        ],
+        "list": [
+          "Det är ingen nödsändare, EPIRB eller realtidsspårningssystem",
+          "Det övervakar inte fartygets faktiska position och kontaktar inte räddningstjänsten självt",
+          "Skepparen är ensam ansvarig för faktiska säkerhetsbeslut, sjövärdighet och efterlevnad av sjörätt och lokala regler"
+        ]
+      },
+      {
+        "heading": "Ditt konto",
+        "body": [
+          "Du måste ange korrekt information när du registrerar en resa, ett fartyg, en besättningsmedlem eller en nödkontakt, och hålla den uppdaterad - systemets nytta är beroende av att den är aktuell.",
+          "Du ansvarar för att hålla dina inloggningsuppgifter konfidentiella och för all aktivitet under ditt konto. Meddela oss omgående om du tror att ditt konto har komprometterats."
+        ]
+      },
+      {
+        "heading": "Tillåten användning",
+        "body": ["Du åtar dig att inte:"],
+        "list": [
+          "Använda systemet för olagliga ändamål eller för att trakassera, utge dig för att vara, eller vilseleda någon annan person",
+          "Lägga till en besättningsmedlem eller nödkontakt utan rimlig grund att tro att de samtycker till att kontaktas om resan",
+          "Försöka störa, avbryta eller skaffa obehörig åtkomst till systemet eller andra användares data"
+        ]
+      },
+      {
+        "heading": "Nödkontakter och besättning",
+        "body": [
+          "Nödkontakter och besättning du bjuder in får egen åtkomst med begränsat syfte (en skrivskyddad resevy eller en inbjudan att bekräfta uppgifter) och är bundna av dessa villkor för det syftet. Du ansvarar för att ha en laglig grund att dela deras kontaktuppgifter med oss."
+        ]
+      },
+      {
+        "heading": "Tillgänglighet och ansvarsbegränsning",
+        "body": [
+          "Vi strävar efter att hålla systemet tillgängligt och aviseringar snabba, men vi garanterar inte oavbruten tillgänglighet, och leverans av e-post-, Telegram- eller WhatsApp-aviseringar beror på tredjepartstjänster utanför vår kontroll.",
+          "I den utsträckning lagen tillåter ansvarar Manjo Consulting AB inte för förlust eller skada som uppstår genom att förlita sig på systemet för faktiska säkerhetskritiska beslut, genom försenade eller misslyckade aviseringar, eller genom felaktig information som en användare angett. Systemet tillhandahålls \"i befintligt skick\" som ett hjälpmedel för informationshantering, inte som en säkerhetsgaranti."
+        ]
+      },
+      {
+        "heading": "Tredjepartstjänster",
+        "body": [
+          "Systemet förlitar sig på tredjepartstjänster för att fungera: Mailgun för e-postleverans, Telegram och Twilio WhatsApp för valfria aviseringar, OpenStreetMap för kartor och Windy.com som källa för ruttplanering. Din användning av dessa tjänster omfattas av deras egna villkor."
+        ]
+      },
+      {
+        "heading": "Uppsägning",
+        "body": [
+          "Du kan radera ditt konto när som helst från din profilsida. Vi kan stänga av eller avsluta åtkomst för konton som bryter mot dessa villkor eller som vi rimligen bedömer utgör en risk för systemet eller andra användare."
+        ]
+      },
+      {
+        "heading": "Ändringar av dessa villkor",
+        "body": [
+          "Vi kan uppdatera dessa villkor från tid till annan. Väsentliga ändringar återspeglas genom att datumet \"Senast uppdaterad\" ovan uppdateras. Fortsatt användning av systemet efter en ändring innebär att du godkänner de uppdaterade villkoren."
+        ]
+      },
+      {
+        "heading": "Tillämplig lag",
+        "body": [
+          "Dessa villkor regleras av svensk lag, utan hänsyn till lagvalsregler. Tvister som uppstår från dessa villkor eller din användning av systemet avgörs av svensk domstol."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Frågor?",
+      "body": "För frågor om dessa villkor, hör av dig via kontaktformuläret i ditt konto."
+    }
   }
 }
