@@ -832,7 +832,7 @@ const EN_INLINE = {
       {
         "heading": "Who operates this service",
         "body": [
-          "Yachting Earth ICE (\"the system\") is operated by Tony Johansson, trading as Yachting Earth (yachting.earth). It is a voyage-preparation and crew-safety check-in tool - not a distress beacon, EPIRB or real-time tracking system, and it does not contact emergency services itself. The skipper remains responsible for actual safety decisions; this page explains how the system handles the personal data you give it in support of that."
+          "Yachting Earth ICE (\"the system\") is owned and operated by Manjo Consulting AB, a Swedish company (org./VAT no. 5568138464), trading as Yachting Earth (yachting.earth). It is a voyage-preparation and crew-safety check-in tool - not a distress beacon, EPIRB or real-time tracking system, and it does not contact emergency services itself. The skipper remains responsible for actual safety decisions; this page explains how the system handles the personal data you give it in support of that."
         ]
       },
       {
@@ -901,7 +901,7 @@ const EN_INLINE = {
     ],
     "contact": {
       "heading": "Questions?",
-      "body": "To exercise any of the rights above, or for any other question about this policy or your data, contact us at privacy@yachting.earth. We respond within 30 days, as required by GDPR Article 12."
+      "body": "To exercise any of the rights above, or for any other question about this policy or your data, get in touch using the contact form available in your account. We respond within 30 days, as required by GDPR Article 12."
     }
   }
 };
