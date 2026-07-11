@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="landing2.meta.title">Yachting Earth — Chart the plan. Protect the crew.</title>
+<meta name="description" data-i18n="landing2.meta.description" content="Register your vessel, routes and crew before you cast off. If you miss check-in, your emergency contact automatically gets secure, read-only access to everything they need.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yachting.earth/landing2/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Yachting Earth — Chart the plan. Protect the crew.">
+<meta property="og:description" content="Register your vessel, routes and crew before you cast off. If you miss check-in, your emergency contact automatically gets secure, read-only access to everything they need.">
+<meta property="og:url" content="https://yachting.earth/landing2/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yachting Earth — Chart the plan. Protect the crew.">
+<meta name="twitter:description" content="A digital voyage dossier: everything is prepared before departure.">
+
+<meta name="theme-color" content="#020617">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230b4f6c'/%3E%3Cpath d='M16 6l3 10-3 10-3-10z' fill='%23ffffff'/%3E%3C/svg%3E">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Tailwind Play CDN - no build step, matching this repo's zero-bundler frontend.
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            deep: '#0b4f6c',
+            dark: '#073649',
+            accent: '#38bdf8'
+          }
+        },
+        fontFamily: {
+          sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<link rel="stylesheet" href="css/landing2.css">
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Yachting Earth",
+  "applicationCategory": "SafetyApplication",
+  "operatingSystem": "Web",
+  "description": "A digital voyage dossier for sailors: vessel, routes, crew and emergency contact are registered before departure so accurate information is ready if a voyage does not end as planned.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "url": "https://yachting.earth/"
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-30 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+    <a href="#main" class="flex items-center gap-2 font-semibold tracking-tight text-white">
+      <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <circle cx="16" cy="16" r="16" fill="#38bdf8"></circle>
+        <path d="M16 6l3 10-3 10-3-10z" fill="#020617"></path>
+      </svg>
+      <span>Yachting Earth</span>
+    </a>
+
+    <button id="nav-toggle" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open menu" class="flex flex-col gap-1.5 rounded-md p-2 text-slate-300 md:hidden">
+      <span class="block h-0.5 w-5 bg-current"></span>
+      <span class="block h-0.5 w-5 bg-current"></span>
+      <span class="block h-0.5 w-5 bg-current"></span>
+    </button>
+
+    <nav id="site-nav-links" aria-label="Primary" class="absolute inset-x-0 top-full hidden flex-col gap-4 border-b border-white/10 bg-slate-950 p-6 md:static md:flex md:flex-row md:items-center md:gap-8 md:border-none md:bg-transparent md:p-0">
+      <a href="#features" data-i18n="landing2.nav.features" class="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white">Features</a>
+      <a href="#pricing" data-i18n="landing2.nav.pricing" class="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white">Pricing</a>
+      <a href="#faq" data-i18n="landing2.nav.faq" class="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white">FAQ</a>
+
+      <div class="flex items-center gap-1 rounded-full border border-white/10 p-0.5 text-xs font-semibold" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="en" class="rounded-full px-2.5 py-1 transition-colors duration-200">EN</button>
+        <button type="button" data-lang-btn="sv" class="rounded-full px-2.5 py-1 transition-colors duration-200">SV</button>
+      </div>
+
+      <a href="../index.html#/login" data-i18n="landing2.nav.login" class="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white">Log in</a>
+      <a href="../index.html#/register" data-i18n="landing2.nav.cta" class="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white px-4 py-2 text-sm font-semibold text-slate-950 shadow-sm shadow-black/20 transition-all duration-200 hover:bg-slate-200 hover:shadow-md">Register Voyage</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="bg-grid relative overflow-hidden px-6 pb-24 pt-24 md:pb-32 md:pt-32">
+    <div class="mx-auto max-w-3xl text-center">
+      <span data-i18n="landing2.hero.eyebrow" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-accent">Voyage Preparation &amp; Emergency Information</span>
+
+      <h1 data-i18n="landing2.hero.headline" class="mt-8 text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl">Chart the plan. Protect the crew.</h1>
+
+      <p data-i18n="landing2.hero.subheadline" class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+        Yachting Earth turns your vessel, route and crew details into a single voyage dossier — ready the instant your emergency contact needs it. Prepare everything before you cast off, and if you don't check in on time, the right person automatically gets the right information.
+      </p>
+
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="../index.html#/register" data-i18n="landing2.hero.ctaPrimary" class="inline-flex w-full items-center justify-center rounded-lg border border-white/10 bg-white px-6 py-3 text-base font-semibold text-slate-950 shadow-lg shadow-black/20 transition-all duration-200 hover:bg-slate-200 hover:shadow-xl sm:w-auto">Register Voyage</a>
+        <a href="#features" data-i18n="landing2.hero.ctaSecondary" class="inline-flex w-full items-center justify-center rounded-lg border border-white/15 px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-white/5 sm:w-auto">See what's included</a>
+      </div>
+
+      <ul class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-400">
+        <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-emerald-400" aria-hidden="true"></i><span data-i18n="landing2.hero.badges.0">Free to use</span></li>
+        <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-emerald-400" aria-hidden="true"></i><span data-i18n="landing2.hero.badges.1">Multiple routes</span></li>
+        <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-emerald-400" aria-hidden="true"></i><span data-i18n="landing2.hero.badges.2">GDPR by design</span></li>
+        <li class="flex items-center gap-2"><i data-lucide="check" class="h-4 w-4 text-emerald-400" aria-hidden="true"></i><span data-i18n="landing2.hero.badges.3">Secure ICE Portal</span></li>
+      </ul>
+    </div>
+
+    <!-- Product dashboard placeholder -->
+    <div class="reveal mx-auto mt-20 max-w-5xl">
+      <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/40">
+        <div class="flex items-center gap-2 border-b border-white/10 bg-slate-900/80 px-5 py-3">
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-700"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-700"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-700"></span>
+          <span data-i18n="landing2.hero.dashboardLabel" class="ml-3 text-xs font-medium text-slate-500">Live voyage dossier</span>
+        </div>
+
+        <div class="grid gap-px bg-white/5 md:grid-cols-5">
+          <div class="bg-slate-900 p-6 md:col-span-3">
+            <div class="mb-4 flex items-center justify-between">
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Route · Alt 1</span>
+              <span class="inline-flex items-center rounded-full bg-brand-accent/10 px-2.5 py-1 text-xs font-medium text-brand-accent">Grace period 24h</span>
+            </div>
+            <svg viewBox="0 0 400 220" class="w-full" role="presentation" aria-hidden="true">
+              <defs>
+                <pattern id="dashGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M20 0H0V20" fill="none" stroke="#1e293b" stroke-width="1"></path>
+                </pattern>
+              </defs>
+              <rect width="400" height="220" fill="url(#dashGrid)"></rect>
+              <path d="M30 180 C 100 150, 140 90, 210 70 S 330 40, 370 30" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6 6"></path>
+              <path d="M30 180 C 90 160, 150 110, 220 95 S 320 60, 370 30" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"></path>
+              <circle cx="30" cy="180" r="6" fill="#020617" stroke="#38bdf8" stroke-width="2"></circle>
+              <circle cx="370" cy="30" r="6" fill="#38bdf8"></circle>
+            </svg>
+          </div>
+
+          <div class="space-y-3 bg-slate-900 p-6 md:col-span-2">
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+              <i data-lucide="ship" class="h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+              <span class="text-sm text-slate-300">Vessel</span>
+              <i data-lucide="check" class="ml-auto h-4 w-4 text-emerald-400" aria-hidden="true"></i>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+              <i data-lucide="route" class="h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+              <span class="text-sm text-slate-300">Routes</span>
+              <i data-lucide="check" class="ml-auto h-4 w-4 text-emerald-400" aria-hidden="true"></i>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+              <i data-lucide="users" class="h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+              <span class="text-sm text-slate-300">Crew</span>
+              <i data-lucide="check" class="ml-auto h-4 w-4 text-emerald-400" aria-hidden="true"></i>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5">
+              <i data-lucide="shield-check" class="h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+              <span class="text-sm text-slate-300">Emergency contact</span>
+              <i data-lucide="check" class="ml-auto h-4 w-4 text-emerald-400" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p data-i18n="landing2.hero.dashboardCaption" class="mt-4 text-center text-sm text-slate-500">Every route, crew member and emergency contact — organised the moment you activate a trip.</p>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL PROOF ============ -->
+  <section class="border-t border-white/5 px-6 py-16">
+    <div class="reveal mx-auto max-w-5xl text-center">
+      <p data-i18n="landing2.socialProof.label" class="text-xs font-medium uppercase tracking-wider text-slate-500">Trusted alongside the standards offshore sailors already rely on</p>
+      <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-5 grayscale">
+        <li data-i18n="landing2.socialProof.partners.0" class="text-sm font-semibold uppercase tracking-wide text-slate-500 opacity-70 transition-opacity duration-200 hover:opacity-100">Nordic Offshore Association</li>
+        <li data-i18n="landing2.socialProof.partners.1" class="text-sm font-semibold uppercase tracking-wide text-slate-500 opacity-70 transition-opacity duration-200 hover:opacity-100">Coastal Safety Network</li>
+        <li data-i18n="landing2.socialProof.partners.2" class="text-sm font-semibold uppercase tracking-wide text-slate-500 opacity-70 transition-opacity duration-200 hover:opacity-100">Bluewater Crew Alliance</li>
+        <li data-i18n="landing2.socialProof.partners.3" class="text-sm font-semibold uppercase tracking-wide text-slate-500 opacity-70 transition-opacity duration-200 hover:opacity-100">Harbour Masters Council</li>
+        <li data-i18n="landing2.socialProof.partners.4" class="text-sm font-semibold uppercase tracking-wide text-slate-500 opacity-70 transition-opacity duration-200 hover:opacity-100">Baltic Cruising Federation</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="border-t border-white/5 px-6 py-24 md:py-32">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p data-i18n="landing2.features.eyebrow" class="text-xs font-semibold uppercase tracking-wider text-brand-accent">Built for real voyages</p>
+      <h2 data-i18n="landing2.features.heading" class="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">Everything your emergency contact needs — organised before you leave the dock</h2>
+      <p data-i18n="landing2.features.subheading" class="mt-4 text-lg text-slate-400">A voyage dossier that stays accurate, not a paper form that goes stale the moment you leave harbour.</p>
+    </div>
+
+    <div class="mx-auto mt-16 grid max-w-6xl gap-6 md:grid-cols-3">
+      <article class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-colors duration-200 hover:bg-white/[0.04]">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+          <i data-lucide="route" class="h-5 w-5" aria-hidden="true"></i>
+        </div>
+        <h3 data-i18n="landing2.features.items.0.title" class="text-base font-semibold text-white">Multiple routes, one plan</h3>
+        <p data-i18n="landing2.features.items.0.description" class="mt-2 text-sm leading-relaxed text-slate-400">Import routes straight from Windy or draw them by hand, and keep alternates on file for when the wind turns.</p>
+      </article>
+
+      <article class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-colors duration-200 hover:bg-white/[0.04]">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+          <i data-lucide="users" class="h-5 w-5" aria-hidden="true"></i>
+        </div>
+        <h3 data-i18n="landing2.features.items.1.title" class="text-base font-semibold text-white">Crew who keep themselves current</h3>
+        <p data-i18n="landing2.features.items.1.description" class="mt-2 text-sm leading-relaxed text-slate-400">Every crew member completes their own profile and emergency contact — no more chasing details by text.</p>
+      </article>
+
+      <article class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-colors duration-200 hover:bg-white/[0.04]">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+          <i data-lucide="shield-check" class="h-5 w-5" aria-hidden="true"></i>
+        </div>
+        <h3 data-i18n="landing2.features.items.2.title" class="text-base font-semibold text-white">A verified emergency contact</h3>
+        <p data-i18n="landing2.features.items.2.description" class="mt-2 text-sm leading-relaxed text-slate-400">Your ICE contact confirms their role in advance and gets a secure, read-only portal — nothing to guess in the moment.</p>
+      </article>
+
+      <article class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-colors duration-200 hover:bg-white/[0.04]">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+          <i data-lucide="clock" class="h-5 w-5" aria-hidden="true"></i>
+        </div>
+        <h3 data-i18n="landing2.features.items.3.title" class="text-base font-semibold text-white">A grace period on your terms</h3>
+        <p data-i18n="landing2.features.items.3.description" class="mt-2 text-sm leading-relaxed text-slate-400">Set how long after your ETA before anyone is alerted, so a slow harbour approach never triggers a false alarm.</p>
+      </article>
+
+      <article class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-colors duration-200 hover:bg-white/[0.04]">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+          <i data-lucide="bell-ring" class="h-5 w-5" aria-hidden="true"></i>
+        </div>
+        <h3 data-i18n="landing2.features.items.4.title" class="text-base font-semibold text-white">Automatic, persistent notification</h3>
+        <p data-i18n="landing2.features.items.4.description" class="mt-2 text-sm leading-relaxed text-slate-400">If you miss check-in, your contact is alerted by email, Telegram or WhatsApp, with retries until it's delivered.</p>
+      </article>
+
+      <article class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-colors duration-200 hover:bg-white/[0.04]">
+        <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-accent/10 text-brand-accent">
+          <i data-lucide="shield" class="h-5 w-5" aria-hidden="true"></i>
+        </div>
+        <h3 data-i18n="landing2.features.items.5.title" class="text-base font-semibold text-white">Privacy by design</h3>
+        <p data-i18n="landing2.features.items.5.description" class="mt-2 text-sm leading-relaxed text-slate-400">Trip, route and crew data is automatically and permanently erased 30 days after your voyage ends, in line with GDPR.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="border-t border-white/5 px-6 py-24 md:py-32">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p data-i18n="landing2.pricing.eyebrow" class="text-xs font-semibold uppercase tracking-wider text-brand-accent">Pricing</p>
+      <h2 data-i18n="landing2.pricing.heading" class="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">Start free. Stay prepared.</h2>
+      <p data-i18n="landing2.pricing.subheading" class="mt-4 text-lg text-slate-400">Yachting Earth is free for skippers preparing their own voyages — no credit card, no hidden tiers.</p>
+    </div>
+
+    <div class="reveal mx-auto mt-14 max-w-md rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-2xl shadow-black/30 md:p-10">
+      <div class="flex items-baseline justify-between">
+        <span data-i18n="landing2.pricing.planName" class="text-sm font-semibold uppercase tracking-wider text-slate-400">Skipper</span>
+      </div>
+      <div class="mt-3 flex items-baseline gap-2">
+        <span data-i18n="landing2.pricing.price" class="text-5xl font-semibold tracking-tight text-white">Free</span>
+        <span data-i18n="landing2.pricing.priceSuffix" class="text-sm text-slate-500">forever, per skipper</span>
+      </div>
+
+      <a href="../index.html#/register" data-i18n="landing2.pricing.cta" class="mt-8 flex w-full items-center justify-center rounded-lg border border-white/10 bg-white px-6 py-3 text-base font-semibold text-slate-950 shadow-lg shadow-black/20 transition-all duration-200 hover:bg-slate-200 hover:shadow-xl">Register Voyage</a>
+
+      <ul class="mt-8 space-y-3 border-t border-white/10 pt-8">
+        <li class="flex items-start gap-3 text-sm text-slate-300">
+          <i data-lucide="check" class="mt-0.5 h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+          <span data-i18n="landing2.pricing.features.0">Unlimited voyages &amp; routes</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate-300">
+          <i data-lucide="check" class="mt-0.5 h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+          <span data-i18n="landing2.pricing.features.1">Full crew management</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate-300">
+          <i data-lucide="check" class="mt-0.5 h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+          <span data-i18n="landing2.pricing.features.2">One verified ICE contact</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate-300">
+          <i data-lucide="check" class="mt-0.5 h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+          <span data-i18n="landing2.pricing.features.3">Secure ICE portal &amp; SAR access</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate-300">
+          <i data-lucide="check" class="mt-0.5 h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+          <span data-i18n="landing2.pricing.features.4">GDPR-compliant data lifecycle</span>
+        </li>
+        <li class="flex items-start gap-3 text-sm text-slate-300">
+          <i data-lucide="check" class="mt-0.5 h-4 w-4 flex-none text-emerald-400" aria-hidden="true"></i>
+          <span data-i18n="landing2.pricing.features.5">Email, Telegram &amp; WhatsApp alerts</span>
+        </li>
+      </ul>
+    </div>
+
+    <p data-i18n="landing2.pricing.note" class="reveal mx-auto mt-8 max-w-md text-center text-sm text-slate-500">Plans for yacht clubs, charter fleets and marinas are on the way — reach out if you'd like early access.</p>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="border-t border-white/5 px-6 py-24 md:py-32">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p data-i18n="landing2.faq.eyebrow" class="text-xs font-semibold uppercase tracking-wider text-brand-accent">FAQ</p>
+      <h2 data-i18n="landing2.faq.heading" class="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">Questions, answered</h2>
+    </div>
+
+    <div class="reveal mx-auto mt-14 max-w-2xl divide-y divide-white/10">
+      <details class="group py-6">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+          <span data-i18n="landing2.faq.items.0.q" class="text-base font-medium text-white">Is Yachting Earth a distress beacon or live tracker?</span>
+          <i data-lucide="chevron-down" class="chevron h-5 w-5 flex-none text-slate-500 transition-transform duration-200" aria-hidden="true"></i>
+        </summary>
+        <p data-i18n="landing2.faq.items.0.a" class="mt-3 text-sm leading-relaxed text-slate-400">No. It doesn't track your position and it can't call for help on its own. It's a preparation and notification tool — the skipper remains responsible for safety at all times, and for triggering an actual rescue if needed.</p>
+      </details>
+
+      <details class="group py-6">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+          <span data-i18n="landing2.faq.items.1.q" class="text-base font-medium text-white">What happens if I don't check in on time?</span>
+          <i data-lucide="chevron-down" class="chevron h-5 w-5 flex-none text-slate-500 transition-transform duration-200" aria-hidden="true"></i>
+        </summary>
+        <p data-i18n="landing2.faq.items.1.a" class="mt-3 text-sm leading-relaxed text-slate-400">A background check runs every minute. Once your planned arrival plus your chosen grace period has passed without a check-in, your ICE contact is automatically notified with retries and an email fallback.</p>
+      </details>
+
+      <details class="group py-6">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+          <span data-i18n="landing2.faq.items.2.q" class="text-base font-medium text-white">Who can see my voyage information?</span>
+          <i data-lucide="chevron-down" class="chevron h-5 w-5 flex-none text-slate-500 transition-transform duration-200" aria-hidden="true"></i>
+        </summary>
+        <p data-i18n="landing2.faq.items.2.a" class="mt-3 text-sm leading-relaxed text-slate-400">Only you, your crew's own entries, and the single emergency contact you designate — who gets a read-only portal via a private link, not a shared account.</p>
+      </details>
+
+      <details class="group py-6">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+          <span data-i18n="landing2.faq.items.3.q" class="text-base font-medium text-white">How does Yachting Earth handle GDPR?</span>
+          <i data-lucide="chevron-down" class="chevron h-5 w-5 flex-none text-slate-500 transition-transform duration-200" aria-hidden="true"></i>
+        </summary>
+        <p data-i18n="landing2.faq.items.3.a" class="mt-3 text-sm leading-relaxed text-slate-400">Trip, route, crew and photo data is soft-deleted when a voyage is completed or cancelled, then permanently erased 30 days later. Your account and vessels are kept so you can plan your next voyage.</p>
+      </details>
+
+      <details class="group py-6">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+          <span data-i18n="landing2.faq.items.4.q" class="text-base font-medium text-white">Do I need to install anything?</span>
+          <i data-lucide="chevron-down" class="chevron h-5 w-5 flex-none text-slate-500 transition-transform duration-200" aria-hidden="true"></i>
+        </summary>
+        <p data-i18n="landing2.faq.items.4.a" class="mt-3 text-sm leading-relaxed text-slate-400">No. Yachting Earth runs entirely in your browser — register your voyage from a laptop or phone before you leave the dock.</p>
+      </details>
+
+      <details class="group py-6">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
+          <span data-i18n="landing2.faq.items.5.q" class="text-base font-medium text-white">Is it really free?</span>
+          <i data-lucide="chevron-down" class="chevron h-5 w-5 flex-none text-slate-500 transition-transform duration-200" aria-hidden="true"></i>
+        </summary>
+        <p data-i18n="landing2.faq.items.5.a" class="mt-3 text-sm leading-relaxed text-slate-400">Yes. The Skipper plan is free, with no credit card required. Plans for clubs, fleets and marinas are on the way.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="bg-grid border-t border-white/5 px-6 py-24 md:py-32">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <h2 data-i18n="landing2.hero.headline" class="text-3xl font-semibold tracking-tight text-white md:text-4xl">Chart the plan. Protect the crew.</h2>
+      <p data-i18n="landing2.pricing.subheading" class="mt-4 text-lg text-slate-400">Yachting Earth is free for skippers preparing their own voyages — no credit card, no hidden tiers.</p>
+      <a href="../index.html#/register" data-i18n="landing2.hero.ctaPrimary" class="mt-8 inline-flex items-center justify-center rounded-lg border border-white/10 bg-white px-6 py-3 text-base font-semibold text-slate-950 shadow-lg shadow-black/20 transition-all duration-200 hover:bg-slate-200 hover:shadow-xl">Register Voyage</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t border-white/5 px-6 py-16">
+  <div class="mx-auto max-w-6xl">
+    <div class="flex flex-col items-center gap-6 text-center">
+      <div>
+        <span class="block font-semibold text-white">Yachting Earth</span>
+        <span data-i18n="landing2.footer.tagline" class="mt-1 block text-sm text-slate-500">Every voyage deserves a plan.</span>
+      </div>
+
+      <nav aria-label="Footer" class="flex flex-wrap justify-center gap-x-8 gap-y-2">
+        <a href="#" data-soon="true" data-i18n="landing2.footer.links.about" class="text-sm text-slate-400 transition-colors duration-200 hover:text-white">About</a>
+        <a href="#" data-soon="true" data-i18n="landing2.footer.links.privacy" class="text-sm text-slate-400 transition-colors duration-200 hover:text-white">Privacy</a>
+        <a href="#" data-soon="true" data-i18n="landing2.footer.links.gdpr" class="text-sm text-slate-400 transition-colors duration-200 hover:text-white">GDPR</a>
+        <a href="#" data-soon="true" data-i18n="landing2.footer.links.contact" class="text-sm text-slate-400 transition-colors duration-200 hover:text-white">Contact</a>
+        <a href="#" data-soon="true" data-i18n="landing2.footer.links.terms" class="text-sm text-slate-400 transition-colors duration-200 hover:text-white">Terms</a>
+      </nav>
+
+      <p data-i18n="landing2.footer.disclaimer" class="max-w-lg text-sm text-slate-600">Yachting Earth ICE is a voyage preparation and information tool. It is not a distress beacon, EPIRB or real-time tracking system, and the system itself does not contact rescue services.</p>
+
+      <p class="text-xs text-slate-600">© <span id="year">2026</span> Yachting Earth</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js" defer></script>
+<script src="js/landing2.js" defer></script>
+</body>
+</html>
