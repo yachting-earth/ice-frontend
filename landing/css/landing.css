@@ -221,7 +221,7 @@ img, svg { max-width: 100%; display: block; }
     position: relative;
     min-height: min(88vh, 720px);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     overflow: hidden;
     color: #fff;
 }
@@ -237,7 +237,7 @@ img, svg { max-width: 100%; display: block; }
 .hero__scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(0deg, rgba(6, 20, 28, 0.72) 0%, rgba(6, 20, 28, 0.35) 45%, rgba(6, 20, 28, 0.1) 75%);
+    background: radial-gradient(ellipse at center, rgba(6, 20, 28, 0.68) 0%, rgba(6, 20, 28, 0.42) 55%, rgba(6, 20, 28, 0.22) 100%);
 }
 
 .hero__content {
@@ -245,6 +245,9 @@ img, svg { max-width: 100%; display: block; }
     z-index: 1;
     padding: var(--space-8) var(--space-4) var(--space-8);
     max-width: 760px;
+}
+.hero__content h1 {
+    color: #fff;
 }
 
 .hero__lead {
