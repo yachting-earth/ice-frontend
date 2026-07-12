@@ -730,6 +730,7 @@
     "iceContact": {
       "heading": "ICE-kontakt",
       "allContacts": "Alla mina ICE-kontakter larmas för den här resan.",
+      "specificContact": "En specifik ICE-kontakt är kopplad till den här resan.",
       "changeLabel": "Byt ICE-kontakt",
       "allOption": "Alla mina ICE-kontakter",
       "changeButton": "Spara",

@@ -100,7 +100,9 @@ const TripDetailPage = {
 
                 <div class="card">
                     <h3>${t('tripDetail.iceContact.heading')}</h3>
-                    <p class="mb-0">${trip.ice_contact_id ? escapeHtml(this.iceContactLabel(trip.ice_contact_id)) : escapeHtml(t('tripDetail.iceContact.allContacts'))}</p>
+                    <p class="mb-0">${isOwner
+                        ? (trip.ice_contact_id ? escapeHtml(this.iceContactLabel(trip.ice_contact_id)) : escapeHtml(t('tripDetail.iceContact.allContacts')))
+                        : (trip.has_specific_ice_contact ? escapeHtml(t('tripDetail.iceContact.specificContact')) : escapeHtml(t('tripDetail.iceContact.allContacts')))}</p>
                     <div id="ice-contact-change-alert"></div>
                     ${isOwner ? (this.state.iceContacts.length > 0 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
