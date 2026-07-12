@@ -53,6 +53,11 @@ const EN_INLINE = {
     "MMSI_ALREADY_ACTIVE": "There is already an active trip for this vessel.",
     "INVALID_ETA": "Invalid arrival time.",
     "NOTIFICATION_FAILED": "Failed to send the notification.",
+    "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
+    "CONTACT_TOO_MANY_FILES": "Too many attachments.",
+    "CONTACT_FILE_TOO_LARGE": "One of your attachments is too large.",
+    "CONTACT_INVALID_FILE_TYPE": "One of your attachments has an unsupported file type.",
+    "CONTACT_ATTACHMENT_NOT_FOUND": "Attachment not found.",
     "SERVER_ERROR": "An unexpected error occurred.",
     "DATABASE_ERROR": "A database error occurred.",
     "RATE_LIMITED": "Too many attempts. Try again later.",
@@ -73,6 +78,10 @@ const EN_INLINE = {
     "phoneInvalid": "Invalid phone number (use international format, e.g. +46701234567)",
     "windyUrlRequired": "Windy link is required",
     "windyUrlInvalid": "Invalid Windy link. Must be from windy.com/route-planner",
+    "messageRequired": "Message is required",
+    "tooManyFiles": "Too many attachments (max {max})",
+    "fileTooLarge": "{name} is too large (max {maxMb}MB)",
+    "invalidFileType": "{name} has an unsupported file type (images and PDF only)",
     "vesselYearInvalid": "Model year must be a whole number between 1900 and {maxYear}",
     "vesselDimensionInvalid": "{label} must be a positive number in metres (max 200)"
   },
@@ -883,18 +892,18 @@ const EN_INLINE = {
     },
     "compare": {
       "heading": "Why Yachting Earth is different",
-      "traditionalLabel": "Traditional Float Plan",
+      "traditionalLabel": "Traditional Plan",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        { "traditional": "Paper document", "yachting": "Living voyage information" },
+        { "traditional": "Static documents", "yachting": "Living voyage information" },
         { "traditional": "Single route", "yachting": "Multiple routes" },
-        { "traditional": "Static crew list", "yachting": "Crew maintain their own details" },
-        { "traditional": "Rely on manual monitoring", "yachting": "Automatic control" },
-        { "traditional": "Email attachment", "yachting": "Secure portal" }
+        { "traditional": "Basic rew list", "yachting": "Crew maintain their own details" },
+        { "traditional": "Rely on manual monitoring", "yachting": "Automatic audited control" },
+        { "traditional": "Limited SAR handover", "yachting": "Secure portal with SAR access" }
       ]
     },
     "features": {
-      "heading": "Built for real voyages",
+      "heading": "Built for sailors by sailors",
       "items": [
         { "icon": "route", "title": "Multiple routes", "description": "A voyage rarely follows a single straight line." },
         { "icon": "users", "title": "Crew participation", "description": "Every crew member maintains their own information." },
@@ -1111,19 +1120,21 @@ const EN_INLINE = {
   },
   "contact": {
     "title": "Contact",
-    "intro": "Have a question about Yachting Earth ICE, need help with your account, or want to know more before you sign up? We usually reply within a few business days.",
-    "general": {
-      "heading": "General inquiries",
-      "body": "For questions about the system, your account, or anything else, email us at:"
+    "subtitle": "Have a question, found a bug, or want to request a feature? Send us a message and we'll get back to you.",
+    "categoryLabel": "What is this about?",
+    "category": {
+      "general": "General inquiries",
+      "privacyGdpr": "Privacy & GDPR requests",
+      "bug": "Bugs and issues",
+      "featureRequest": "Improvements and feature requests"
     },
-    "privacy": {
-      "heading": "Privacy & GDPR requests",
-      "body": "To access, correct, or delete your data, or for any other question about how we handle personal data, email:"
-    },
-    "company": {
-      "heading": "Company details",
-      "body": "Yachting Earth ICE is owned and operated by Manjo Consulting AB, a Swedish company (org./VAT no. 5568138464), trading as Yachting Earth (yachting.earth)."
-    }
+    "messageLabel": "Message",
+    "attachmentsLabel": "Attachments",
+    "attachmentsHint": "Optional. Up to 5 files, 1MB each (images or PDF).",
+    "submit": "Send message",
+    "submitting": "Sending...",
+    "success": "Your message has been sent. We'll get back to you soon.",
+    "submitFailed": "Failed to send your message. Please try again."
   },
   "about": {
     "title": "About us",

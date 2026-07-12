@@ -54,5 +54,26 @@ const Validate = {
             return t('validation.vesselDimensionInvalid', { label });
         }
         return null;
+    },
+
+    contactMessage(value) {
+        if (!value) return t('validation.messageRequired');
+        return null;
+    },
+
+    // Mirrors backend/config/constants.php CONTACT_MAX_FILES/CONTACT_MAX_FILE_SIZE/CONTACT_ALLOWED_TYPES.
+    contactFiles(files) {
+        if (files.length > CONFIG.CONTACT_MAX_FILES) {
+            return t('validation.tooManyFiles', { max: CONFIG.CONTACT_MAX_FILES });
+        }
+        for (const file of files) {
+            if (file.size > CONFIG.CONTACT_MAX_FILE_SIZE) {
+                return t('validation.fileTooLarge', { name: file.name, maxMb: CONFIG.CONTACT_MAX_FILE_SIZE / (1024 * 1024) });
+            }
+            if (!CONFIG.CONTACT_ALLOWED_TYPES.includes(file.type)) {
+                return t('validation.invalidFileType', { name: file.name });
+            }
+        }
+        return null;
     }
 };

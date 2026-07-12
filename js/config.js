@@ -21,6 +21,10 @@ const CONFIG = (() => {
             { seconds: 172800, hours: 48 }
         ],
         MAX_SNOOZE_MINUTES: 72,
-        SNOOZE_PRESETS: [15, 30, 60, 72]
+        SNOOZE_PRESETS: [15, 30, 60, 72],
+        // Mirrors backend/config/constants.php CONTACT_MAX_FILES/CONTACT_MAX_FILE_SIZE/CONTACT_ALLOWED_TYPES.
+        CONTACT_MAX_FILES: 5,
+        CONTACT_MAX_FILE_SIZE: 1 * 1024 * 1024,
+        CONTACT_ALLOWED_TYPES: ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
     };
 })();

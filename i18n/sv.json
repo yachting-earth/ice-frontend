@@ -42,6 +42,11 @@
     "MMSI_ALREADY_ACTIVE": "Det finns redan en aktiv resa för detta fartyg.",
     "INVALID_ETA": "Ogiltig ankomsttid.",
     "NOTIFICATION_FAILED": "Kunde inte skicka aviseringen.",
+    "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
+    "CONTACT_TOO_MANY_FILES": "För många bilagor.",
+    "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
+    "CONTACT_INVALID_FILE_TYPE": "En av dina bilagor har en filtyp som inte stöds.",
+    "CONTACT_ATTACHMENT_NOT_FOUND": "Bilagan hittades inte.",
     "SERVER_ERROR": "Ett oväntat fel inträffade.",
     "DATABASE_ERROR": "Ett databasfel inträffade.",
     "RATE_LIMITED": "För många försök. Försök igen senare.",
@@ -62,6 +67,10 @@
     "phoneInvalid": "Ogiltigt telefonnummer (använd internationellt format, t.ex. +46701234567)",
     "windyUrlRequired": "Windy-länk krävs",
     "windyUrlInvalid": "Ogiltig Windy-länk. Måste vara från windy.com/route-planner",
+    "messageRequired": "Meddelande krävs",
+    "tooManyFiles": "För många bilagor (max {max})",
+    "fileTooLarge": "{name} är för stor (max {maxMb}MB)",
+    "invalidFileType": "{name} har en filtyp som inte stöds (endast bilder och PDF)",
     "vesselYearInvalid": "Årsmodell måste vara ett heltal mellan 1900 och {maxYear}",
     "vesselDimensionInvalid": "{label} måste vara ett positivt tal i meter (max 200)"
   },
@@ -1100,19 +1109,21 @@
   },
   "contact": {
     "title": "Kontakt",
-    "intro": "Har du en fråga om Yachting Earth ICE, behöver du hjälp med ditt konto, eller vill du veta mer innan du registrerar dig? Vi svarar vanligtvis inom några arbetsdagar.",
-    "general": {
-      "heading": "Allmänna frågor",
-      "body": "För frågor om systemet, ditt konto, eller annat, mejla oss på:"
+    "subtitle": "Har du en fråga, hittat en bugg, eller vill föreslå en förbättring? Skicka ett meddelande så hör vi av oss.",
+    "categoryLabel": "Vad gäller det?",
+    "category": {
+      "general": "Allmänna frågor",
+      "privacyGdpr": "Integritets- och GDPR-förfrågningar",
+      "bug": "Buggar och problem",
+      "featureRequest": "Förbättringar och funktionsförslag"
     },
-    "privacy": {
-      "heading": "Integritets- och GDPR-förfrågningar",
-      "body": "För att få tillgång till, rätta eller radera dina uppgifter, eller för andra frågor om hur vi hanterar personuppgifter, mejla:"
-    },
-    "company": {
-      "heading": "Företagsuppgifter",
-      "body": "Yachting Earth ICE ägs och drivs av Manjo Consulting AB, ett svenskt företag (org.-/momsnr 5568138464), under namnet Yachting Earth (yachting.earth)."
-    }
+    "messageLabel": "Meddelande",
+    "attachmentsLabel": "Bilagor",
+    "attachmentsHint": "Valfritt. Max 5 filer, 1MB per fil (bilder eller PDF).",
+    "submit": "Skicka meddelande",
+    "submitting": "Skickar...",
+    "success": "Ditt meddelande har skickats. Vi hör av oss snart.",
+    "submitFailed": "Kunde inte skicka meddelandet. Försök igen."
   },
   "about": {
     "title": "Om oss",
