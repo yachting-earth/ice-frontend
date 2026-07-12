@@ -99,6 +99,21 @@ const IcePortalPage = {
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
                 </div>
 
+                ${trip.ice_contacts ? `
+                <div class="card">
+                    <h3>${escapeHtml(t('icePortal.iceContact.heading'))}</h3>
+                    ${trip.ice_contacts.length === 0
+                        ? `<p class="text-muted">${escapeHtml(t('icePortal.iceContact.empty'))}</p>`
+                        : trip.ice_contacts.map((c) => `
+                            <p class="mb-0">
+                                ${escapeHtml(c.name || '–')}
+                                ${c.relationship ? ` · ${escapeHtml(c.relationship)}` : ''}
+                                ${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
+                                ${c.email ? ` · ${escapeHtml(c.email)}` : ''}
+                            </p>
+                        `).join('')}
+                </div>` : ''}
+
                 <div class="card">
                     <h3>${escapeHtml(t('icePortal.routes.heading'))}</h3>
                     <div id="portal-routes-list"></div>

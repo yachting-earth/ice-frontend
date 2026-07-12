@@ -474,6 +474,10 @@
       "unknownName": "Okänd",
       "ownIceContact": "Egen nödkontakt: {contact}"
     },
+    "iceContact": {
+      "heading": "Skepparens nödkontakt (ICE)",
+      "empty": "Ingen nödkontakt registrerad."
+    },
     "log": {
       "heading": "Ändringslogg",
       "empty": "Inga ändringar loggade."

@@ -485,6 +485,10 @@ const EN_INLINE = {
       "unknownName": "Unknown",
       "ownIceContact": "Own ICE contact: {contact}"
     },
+    "iceContact": {
+      "heading": "Skipper's emergency contact (ICE)",
+      "empty": "No emergency contact registered."
+    },
     "log": {
       "heading": "Change log",
       "empty": "No changes logged."
