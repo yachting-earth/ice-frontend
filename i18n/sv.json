@@ -323,12 +323,10 @@
     "iceContactHint": "Namn och telefonnummer till någon som ska kontaktas om något händer.",
     "sharing": {
       "heading": "Delning",
-      "contactHint": "Din telefon och e-post visas bara för skepparen som standard. Välj vilka andra som ska se dem.",
+      "contactHint": "Din telefon och e-post visas bara för skepparen som standard. Välj om de även ska delas med ICE-kontakten.",
       "shareContactWithIce": "Dela mitt telefonnummer och e-post med ICE-kontakten (nödkontakten)",
-      "shareContactWithCrew": "Dela mitt telefonnummer och e-post med resten av besättningen",
       "emergencyHint": "Din nödkontakt ovan visas bara för skepparen som standard.",
-      "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten",
-      "shareEmergencyWithCrew": "Dela min nödkontakt med resten av besättningen"
+      "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten"
     },
     "photoLabel": "Foto på dig (valfritt men rekommenderat)",
     "photoHint": "Används av sjöräddningen för att identifiera besättningen. JPEG/PNG, max 10 MB.",
@@ -516,11 +514,9 @@
     },
     "sharingSettings": {
       "heading": "Delning",
-      "hint": "Välj vad av dina egna kontaktuppgifter som delas med ICE-kontakten (nödkontakten) och resten av besättningen.",
+      "hint": "Välj vad av dina egna kontaktuppgifter som delas med ICE-kontakten (nödkontakten).",
       "shareContactWithIce": "Dela mitt telefonnummer och e-post med ICE-kontakten",
-      "shareContactWithCrew": "Dela mitt telefonnummer och e-post med resten av besättningen",
       "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten",
-      "shareEmergencyWithCrew": "Dela min nödkontakt med resten av besättningen",
       "saveButton": "Spara",
       "saved": "Dina delningsinställningar har sparats.",
       "saveFailed": "Kunde inte spara dina delningsinställningar."

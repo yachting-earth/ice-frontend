@@ -93,18 +93,10 @@ const CrewInvitePage = {
                             <input type="checkbox" id="share-contact-ice">
                             <label for="share-contact-ice">${t('crewInvite.sharing.shareContactWithIce')}</label>
                         </div>
-                        <div class="checkbox-field">
-                            <input type="checkbox" id="share-contact-crew">
-                            <label for="share-contact-crew">${t('crewInvite.sharing.shareContactWithCrew')}</label>
-                        </div>
                         <small>${t('crewInvite.sharing.emergencyHint')}</small>
                         <div class="checkbox-field">
                             <input type="checkbox" id="share-emergency-ice">
                             <label for="share-emergency-ice">${t('crewInvite.sharing.shareEmergencyWithIce')}</label>
-                        </div>
-                        <div class="checkbox-field">
-                            <input type="checkbox" id="share-emergency-crew">
-                            <label for="share-emergency-crew">${t('crewInvite.sharing.shareEmergencyWithCrew')}</label>
                         </div>
                     </div>
                     <div class="field">
@@ -190,10 +182,8 @@ const CrewInvitePage = {
 
         const shareContact = [];
         if (document.getElementById('share-contact-ice').checked) shareContact.push('ice');
-        if (document.getElementById('share-contact-crew').checked) shareContact.push('crew');
         const shareEmergencyContact = [];
         if (document.getElementById('share-emergency-ice').checked) shareEmergencyContact.push('ice');
-        if (document.getElementById('share-emergency-crew').checked) shareEmergencyContact.push('crew');
 
         const response = await apiRequest(`/crew/invite/${this.state.token}`, {
             method: 'POST',

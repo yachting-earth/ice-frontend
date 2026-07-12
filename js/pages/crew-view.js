@@ -2,7 +2,7 @@
  * Crew-facing view of a trip - the same purpose-limited baseline as the
  * ICE/SAR portal (see TripHandler::detail(), role 'crew'), plus a form for
  * the viewer's own crew row to manage what of their own contact details is
- * shared with the skipper's ICE contact and the rest of the crew.
+ * shared with the skipper's ICE contact.
  *
  * Reached via #/crew-view?trip={tripId}&token={crew_view token} - the link
  * issued at CrewHandler::accept() and mailed via
@@ -126,16 +126,8 @@ const CrewViewPage = {
                         <label for="cvs-contact-ice">${escapeHtml(t('crewView.sharingSettings.shareContactWithIce'))}</label>
                     </div>
                     <div class="checkbox-field">
-                        <input type="checkbox" id="cvs-contact-crew">
-                        <label for="cvs-contact-crew">${escapeHtml(t('crewView.sharingSettings.shareContactWithCrew'))}</label>
-                    </div>
-                    <div class="checkbox-field">
                         <input type="checkbox" id="cvs-emergency-ice">
                         <label for="cvs-emergency-ice">${escapeHtml(t('crewView.sharingSettings.shareEmergencyWithIce'))}</label>
-                    </div>
-                    <div class="checkbox-field">
-                        <input type="checkbox" id="cvs-emergency-crew">
-                        <label for="cvs-emergency-crew">${escapeHtml(t('crewView.sharingSettings.shareEmergencyWithCrew'))}</label>
                     </div>
                     <button class="btn btn-secondary btn-sm" type="button" id="crewview-sharing-submit">${escapeHtml(t('crewView.sharingSettings.saveButton'))}</button>
                 </div>` : ''}
@@ -267,9 +259,7 @@ const CrewViewPage = {
         const emergencyScope = (viewerCrew.share_emergency_contact || '').split(',').filter(Boolean);
 
         document.getElementById('cvs-contact-ice').checked = contactScope.includes('ice');
-        document.getElementById('cvs-contact-crew').checked = contactScope.includes('crew');
         document.getElementById('cvs-emergency-ice').checked = emergencyScope.includes('ice');
-        document.getElementById('cvs-emergency-crew').checked = emergencyScope.includes('crew');
 
         document.getElementById('crewview-sharing-submit').addEventListener('click', () => this.handleSharingSubmit());
     },
@@ -281,10 +271,8 @@ const CrewViewPage = {
 
         const shareContact = [];
         if (document.getElementById('cvs-contact-ice').checked) shareContact.push('ice');
-        if (document.getElementById('cvs-contact-crew').checked) shareContact.push('crew');
         const shareEmergencyContact = [];
         if (document.getElementById('cvs-emergency-ice').checked) shareEmergencyContact.push('ice');
-        if (document.getElementById('cvs-emergency-crew').checked) shareEmergencyContact.push('crew');
 
         const response = await apiRequest(`/crew/${this.state.viewerCrewId}`, {
             method: 'PUT',

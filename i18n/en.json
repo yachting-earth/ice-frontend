@@ -323,12 +323,10 @@
     "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
     "sharing": {
       "heading": "Sharing",
-      "contactHint": "Your phone and email are only shown to the skipper by default. Choose who else should see them.",
+      "contactHint": "Your phone and email are only shown to the skipper by default. Choose whether to share them with the ICE contact too.",
       "shareContactWithIce": "Share my phone and email with the ICE (In Case of Emergency) contact",
-      "shareContactWithCrew": "Share my phone and email with the rest of the crew",
       "emergencyHint": "Your emergency contact above is only shown to the skipper by default.",
-      "shareEmergencyWithIce": "Share my emergency contact with the ICE contact",
-      "shareEmergencyWithCrew": "Share my emergency contact with the rest of the crew"
+      "shareEmergencyWithIce": "Share my emergency contact with the ICE contact"
     },
     "photoLabel": "Photo of you (optional but recommended)",
     "photoHint": "Used by search and rescue to identify the crew. JPEG/PNG, max 10 MB.",
@@ -516,11 +514,9 @@
     },
     "sharingSettings": {
       "heading": "Sharing",
-      "hint": "Choose what of your own contact details is shared with the ICE (In Case of Emergency) contact and the rest of the crew.",
+      "hint": "Choose what of your own contact details is shared with the ICE (In Case of Emergency) contact.",
       "shareContactWithIce": "Share my phone and email with the ICE contact",
-      "shareContactWithCrew": "Share my phone and email with the rest of the crew",
       "shareEmergencyWithIce": "Share my emergency contact with the ICE contact",
-      "shareEmergencyWithCrew": "Share my emergency contact with the rest of the crew",
       "saveButton": "Save",
       "saved": "Your sharing settings have been saved.",
       "saveFailed": "Could not save your sharing settings."
