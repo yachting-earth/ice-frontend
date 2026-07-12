@@ -1054,5 +1054,21 @@
       "heading": "Frågor?",
       "body": "För frågor om dessa villkor, hör av dig via kontaktformuläret i ditt konto."
     }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "intro": "Har du en fråga om Yachting Earth ICE, behöver du hjälp med ditt konto, eller vill du veta mer innan du registrerar dig? Vi svarar vanligtvis inom några arbetsdagar.",
+    "general": {
+      "heading": "Allmänna frågor",
+      "body": "För frågor om systemet, ditt konto, eller annat, mejla oss på:"
+    },
+    "privacy": {
+      "heading": "Integritets- och GDPR-förfrågningar",
+      "body": "För att få tillgång till, rätta eller radera dina uppgifter, eller för andra frågor om hur vi hanterar personuppgifter, mejla:"
+    },
+    "company": {
+      "heading": "Företagsuppgifter",
+      "body": "Yachting Earth ICE ägs och drivs av Manjo Consulting AB, ett svenskt företag (org.-/momsnr 5568138464), under namnet Yachting Earth (yachting.earth)."
+    }
   }
 }

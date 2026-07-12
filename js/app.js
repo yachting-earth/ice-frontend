@@ -28,7 +28,8 @@ const Router = {
         { pattern: '#/blog', page: BlogPage },
         { pattern: '#/blog/:slug', page: BlogPostPage },
         { pattern: '#/privacy', page: PrivacyPage },
-        { pattern: '#/terms', page: TermsPage }
+        { pattern: '#/terms', page: TermsPage },
+        { pattern: '#/contact', page: ContactPage }
     ],
 
     start() {

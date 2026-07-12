@@ -216,7 +216,7 @@ const LandingPage = {
                     <a href="#" data-soon="true">${escapeHtml(t('landing.footer.links.about'))}</a>
                     <a href="#/privacy">${escapeHtml(t('landing.footer.links.privacy'))}</a>
                     <a href="#/privacy">${escapeHtml(t('landing.footer.links.gdpr'))}</a>
-                    <a href="#" data-soon="true">${escapeHtml(t('landing.footer.links.contact'))}</a>
+                    <a href="#/contact">${escapeHtml(t('landing.footer.links.contact'))}</a>
                     <a href="#/terms">${escapeHtml(t('landing.footer.links.terms'))}</a>
                   </nav>
                   <p class="site-footer__disclaimer">${escapeHtml(t('landing.footer.disclaimer'))}</p>

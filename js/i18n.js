@@ -1065,6 +1065,22 @@ const EN_INLINE = {
       "heading": "Questions?",
       "body": "For any question about these terms, get in touch using the contact form available in your account."
     }
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Have a question about Yachting Earth ICE, need help with your account, or want to know more before you sign up? We usually reply within a few business days.",
+    "general": {
+      "heading": "General inquiries",
+      "body": "For questions about the system, your account, or anything else, email us at:"
+    },
+    "privacy": {
+      "heading": "Privacy & GDPR requests",
+      "body": "To access, correct, or delete your data, or for any other question about how we handle personal data, email:"
+    },
+    "company": {
+      "heading": "Company details",
+      "body": "Yachting Earth ICE is owned and operated by Manjo Consulting AB, a Swedish company (org./VAT no. 5568138464), trading as Yachting Earth (yachting.earth)."
+    }
   }
 };
 
