@@ -796,7 +796,8 @@ const EN_INLINE = {
       "photoSaved": "The photo has been saved.",
       "linkCopied": "Link copied",
       "inviteFailed": "Could not send the invitation.",
-      "inviteCreatedNotice": "Invitation created. Email sending isn't set up yet - share the link manually:",
+      "inviteCreatedEmailSent": "Invitation created and emailed to the crew member. You can also share the link manually:",
+      "inviteCreatedNotice": "Invitation created, but the email could not be sent - share the link manually:",
       "removeConfirm": "Remove this crew member from the trip?",
       "removeFailed": "Could not remove the crew member",
       "removed": "Crew member removed"

@@ -806,9 +806,12 @@ const TripDetailPage = {
         }
 
         const link = response.data.invitation_link || this.buildInviteLink(response.data.invitation_token);
+        const notice = response.data.invitation_sent
+            ? t('tripDetail.crew.inviteCreatedEmailSent')
+            : t('tripDetail.crew.inviteCreatedNotice');
         alertBox.innerHTML = `
             <div class="alert alert-success">
-                ${t('tripDetail.crew.inviteCreatedNotice')}<br>
+                ${notice}<br>
                 <code style="word-break: break-all;">${escapeHtml(link)}</code>
             </div>`;
         document.getElementById('invite-email').value = '';

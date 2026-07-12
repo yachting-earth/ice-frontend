@@ -785,7 +785,8 @@
       "photoSaved": "Fotot har sparats.",
       "linkCopied": "Länk kopierad",
       "inviteFailed": "Kunde inte skicka inbjudan.",
-      "inviteCreatedNotice": "Inbjudan skapad. E-postutskick är inte inkopplat än - dela länken manuellt:",
+      "inviteCreatedEmailSent": "Inbjudan skapad och skickad via e-post till besättningsmedlemmen. Du kan även dela länken manuellt:",
+      "inviteCreatedNotice": "Inbjudan skapad, men e-postutskicket misslyckades - dela länken manuellt:",
       "removeConfirm": "Ta bort denna besättningsmedlem från resan?",
       "removeFailed": "Kunde inte ta bort besättningsmedlemmen",
       "removed": "Besättningsmedlem borttagen"
