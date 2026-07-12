@@ -23,6 +23,7 @@ const Router = {
         { pattern: '#/verify-email', page: VerifyEmailPage },
         { pattern: '#/ice-confirm', page: IceConfirmPage },
         { pattern: '#/ice-portal', page: IcePortalPage },
+        { pattern: '#/crew-view', page: CrewViewPage },
         { pattern: '#/sar', page: SarPage },
         { pattern: '#/blog', page: BlogPage },
         { pattern: '#/blog/:slug', page: BlogPostPage },

@@ -177,6 +177,12 @@
     "saveFailed": "Kunde inte spara ändringarna.",
     "emailChangePending": "En bekräftelselänk har skickats till <strong>{email}</strong>. Din e-postadress ändras först när du klickat på länken. Vi har även meddelat din nuvarande adress.",
     "saved": "Dina uppgifter har uppdaterats.",
+    "sharingHeading": "Delning med besättningen",
+    "sharingHint": "Din telefon och e-post syns alltid för din ICE-kontakt (nödkontakt). Aktivera det här om även din besättning ska kunna se dem.",
+    "shareContactWithCrewLabel": "Dela mitt telefonnummer och e-post med min besättning",
+    "sharingEnabled": "Dina kontaktuppgifter delas nu med din besättning.",
+    "sharingDisabled": "Dina kontaktuppgifter delas inte längre med din besättning.",
+    "sharingSaveFailed": "Kunde inte spara delningsinställningen.",
     "deleteHeading": "Ta bort konto",
     "deleteWarning": "Om du tar bort ditt konto raderas dina båtar och ICE-kontakter permanent och dina resor avslutas. Det går inte att ångra.",
     "deleteButton": "Ta bort mitt konto",
@@ -286,6 +292,15 @@
     "iceContactLabel": "Din ICE-kontakt (vid nödsituation)",
     "iceContactPlaceholder": "t.ex. Erik (make) +46701234568",
     "iceContactHint": "Namn och telefonnummer till någon som ska kontaktas om något händer.",
+    "sharing": {
+      "heading": "Delning",
+      "contactHint": "Din telefon och e-post visas bara för skepparen som standard. Välj vilka andra som ska se dem.",
+      "shareContactWithIce": "Dela mitt telefonnummer och e-post med ICE-kontakten (nödkontakten)",
+      "shareContactWithCrew": "Dela mitt telefonnummer och e-post med resten av besättningen",
+      "emergencyHint": "Din nödkontakt ovan visas bara för skepparen som standard.",
+      "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten",
+      "shareEmergencyWithCrew": "Dela min nödkontakt med resten av besättningen"
+    },
     "photoLabel": "Foto på dig (valfritt men rekommenderat)",
     "photoHint": "Används av sjöräddningen för att identifiera besättningen. JPEG/PNG, max 10 MB.",
     "submit": "Acceptera & gå med",
@@ -295,7 +310,11 @@
     "unknownError": "okänt fel",
     "acceptFailed": "Kunde inte gå med i resan.",
     "acceptSuccess": "Du är nu med i besättningen. Ha en trevlig och säker resa!",
-    "toOverview": "Till din översikt"
+    "toOverview": "Till din översikt",
+    "crewViewLinkHint": "Spara den här länken - den låter dig se resan och ändra vad du delar när som helst.",
+    "crewViewLinkOpen": "Öppna resevy",
+    "crewViewLinkCopy": "Kopiera länk",
+    "crewViewLinkCopied": "Länk kopierad"
   },
   "iceConfirm": {
     "noToken": "Ingen bekräftelselänk hittades. Kontrollera att du klickade på hela länken.",
@@ -419,6 +438,68 @@
       "empty": "Ingen bekräftad besättning registrerad.",
       "unknownName": "Okänd",
       "ownIceContact": "Egen nödkontakt: {contact}"
+    },
+    "log": {
+      "heading": "Ändringslogg",
+      "empty": "Inga ändringar loggade.",
+      "actions": {
+        "update": "Resan uppdaterad",
+        "snooze": "Ankomsttid framflyttad",
+        "verify": "Ankomst verifierad",
+        "activate": "Resan aktiverad",
+        "crewPhotoUpdated": "Besättningsfoto uppdaterat"
+      },
+      "snoozeDetail": " (+{minutes} min)",
+      "updateDetail": " - ny ankomst {datetime}"
+    }
+  },
+  "crewView": {
+    "invalidLink": "Ogiltig länk - resa eller åtkomstkod saknas. Använd länken från ditt inbjudningsmejl.",
+    "loadingTrip": "Laddar resa...",
+    "loadFailed": "Kunde inte hämta resan. Länken kan vara ogiltig eller återkallad.",
+    "title": "Reseinformation",
+    "skipper": {
+      "heading": "Skeppare"
+    },
+    "trip": {
+      "heading": "Resa",
+      "plannedDeparture": "Planerad avgång: <strong>{datetime}</strong>",
+      "plannedArrival": "Planerad ankomst: <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Fartyg: {name}",
+      "yearBuilt": "Årsmodell {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Anropssignal {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m"
+    },
+    "routes": {
+      "heading": "Rutter",
+      "empty": "Inga rutter registrerade.",
+      "primary": "Huvudrutt",
+      "alternate": "Alternativ rutt {order}",
+      "mapLabel": "Rutt {order}",
+      "noMap": "Ingen rutt att visa"
+    },
+    "crew": {
+      "heading": "Besättning ombord",
+      "empty": "Ingen bekräftad besättning registrerad.",
+      "unknownName": "Okänd",
+      "you": "du",
+      "ownIceContact": "Egen nödkontakt: {contact}"
+    },
+    "sharingSettings": {
+      "heading": "Delning",
+      "hint": "Välj vad av dina egna kontaktuppgifter som delas med ICE-kontakten (nödkontakten) och resten av besättningen.",
+      "shareContactWithIce": "Dela mitt telefonnummer och e-post med ICE-kontakten",
+      "shareContactWithCrew": "Dela mitt telefonnummer och e-post med resten av besättningen",
+      "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten",
+      "shareEmergencyWithCrew": "Dela min nödkontakt med resten av besättningen",
+      "saveButton": "Spara",
+      "saved": "Dina delningsinställningar har sparats.",
+      "saveFailed": "Kunde inte spara dina delningsinställningar."
     },
     "log": {
       "heading": "Ändringslogg",

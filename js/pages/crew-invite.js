@@ -87,6 +87,27 @@ const CrewInvitePage = {
                         <small>${t('crewInvite.iceContactHint')}</small>
                     </div>
                     <div class="field">
+                        <label>${t('crewInvite.sharing.heading')}</label>
+                        <small>${t('crewInvite.sharing.contactHint')}</small>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="share-contact-ice">
+                            <label for="share-contact-ice">${t('crewInvite.sharing.shareContactWithIce')}</label>
+                        </div>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="share-contact-crew">
+                            <label for="share-contact-crew">${t('crewInvite.sharing.shareContactWithCrew')}</label>
+                        </div>
+                        <small>${t('crewInvite.sharing.emergencyHint')}</small>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="share-emergency-ice">
+                            <label for="share-emergency-ice">${t('crewInvite.sharing.shareEmergencyWithIce')}</label>
+                        </div>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="share-emergency-crew">
+                            <label for="share-emergency-crew">${t('crewInvite.sharing.shareEmergencyWithCrew')}</label>
+                        </div>
+                    </div>
+                    <div class="field">
                         <label for="photo">${t('crewInvite.photoLabel')}</label>
                         <input type="file" id="photo" accept="image/jpeg,image/png">
                         <small>${t('crewInvite.photoHint')}</small>
@@ -167,12 +188,21 @@ const CrewInvitePage = {
             }
         }
 
+        const shareContact = [];
+        if (document.getElementById('share-contact-ice').checked) shareContact.push('ice');
+        if (document.getElementById('share-contact-crew').checked) shareContact.push('crew');
+        const shareEmergencyContact = [];
+        if (document.getElementById('share-emergency-ice').checked) shareEmergencyContact.push('ice');
+        if (document.getElementById('share-emergency-crew').checked) shareEmergencyContact.push('crew');
+
         const response = await apiRequest(`/crew/invite/${this.state.token}`, {
             method: 'POST',
             body: JSON.stringify({
                 name,
                 phone: phone || undefined,
                 ice_contact: iceContact || undefined,
+                share_contact: shareContact,
+                share_emergency_contact: shareEmergencyContact,
                 create_account: createAccount || undefined,
                 password: createAccount ? password : undefined
             })
@@ -194,6 +224,26 @@ const CrewInvitePage = {
             <div class="alert alert-success">
                 ${t('crewInvite.acceptSuccess')}${escapeHtml(photoWarning)}
                 ${response.data.auth_token ? `<br><a href="#/dashboard">${t('crewInvite.toOverview')}</a>` : ''}
-            </div>`;
+            </div>
+            ${response.data.crew_view_link ? `
+            <div class="invite-summary">
+                <p>${t('crewInvite.crewViewLinkHint')}</p>
+                <div class="btn-group">
+                    <a class="btn btn-secondary" href="${escapeHtml(response.data.crew_view_link)}">${t('crewInvite.crewViewLinkOpen')}</a>
+                    <button class="btn btn-ghost" type="button" id="copy-crew-view-link">${t('crewInvite.crewViewLinkCopy')}</button>
+                </div>
+            </div>` : ''}`;
+
+        const copyBtn = document.getElementById('copy-crew-view-link');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(response.data.crew_view_link);
+                    showToast(t('crewInvite.crewViewLinkCopied'), 'success');
+                } catch (err) {
+                    showToast(response.data.crew_view_link, 'info');
+                }
+            });
+        }
     }
 };

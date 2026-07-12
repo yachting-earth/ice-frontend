@@ -177,6 +177,12 @@
     "saveFailed": "Could not save the changes.",
     "emailChangePending": "A confirmation link has been sent to <strong>{email}</strong>. Your email address only changes once you click the link. We've also notified your current address.",
     "saved": "Your details have been updated.",
+    "sharingHeading": "Sharing with crew",
+    "sharingHint": "Your phone and email are always visible to your ICE (In Case of Emergency) contact. Turn this on if your crew should be able to see them too.",
+    "shareContactWithCrewLabel": "Share my phone and email with my crew",
+    "sharingEnabled": "Your contact details are now shared with your crew.",
+    "sharingDisabled": "Your contact details are no longer shared with your crew.",
+    "sharingSaveFailed": "Could not save the sharing setting.",
     "deleteHeading": "Delete account",
     "deleteWarning": "Deleting your account permanently removes your vessels and ICE contacts, and ends your trips. This cannot be undone.",
     "deleteButton": "Delete my account",
@@ -286,6 +292,15 @@
     "iceContactLabel": "Your ICE contact (in case of emergency)",
     "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
     "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
+    "sharing": {
+      "heading": "Sharing",
+      "contactHint": "Your phone and email are only shown to the skipper by default. Choose who else should see them.",
+      "shareContactWithIce": "Share my phone and email with the ICE (In Case of Emergency) contact",
+      "shareContactWithCrew": "Share my phone and email with the rest of the crew",
+      "emergencyHint": "Your emergency contact above is only shown to the skipper by default.",
+      "shareEmergencyWithIce": "Share my emergency contact with the ICE contact",
+      "shareEmergencyWithCrew": "Share my emergency contact with the rest of the crew"
+    },
     "photoLabel": "Photo of you (optional but recommended)",
     "photoHint": "Used by search and rescue to identify the crew. JPEG/PNG, max 10 MB.",
     "submit": "Accept & join",
@@ -295,7 +310,11 @@
     "unknownError": "unknown error",
     "acceptFailed": "Could not join the trip.",
     "acceptSuccess": "You are now part of the crew. Have a pleasant and safe trip!",
-    "toOverview": "To your overview"
+    "toOverview": "To your overview",
+    "crewViewLinkHint": "Save this link - it lets you view the trip and change what you share at any time.",
+    "crewViewLinkOpen": "Open trip view",
+    "crewViewLinkCopy": "Copy link",
+    "crewViewLinkCopied": "Link copied"
   },
   "iceConfirm": {
     "noToken": "No confirmation link found. Check that you clicked the whole link.",
@@ -419,6 +438,68 @@
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
       "ownIceContact": "Own ICE contact: {contact}"
+    },
+    "log": {
+      "heading": "Change log",
+      "empty": "No changes logged.",
+      "actions": {
+        "update": "Trip updated",
+        "snooze": "Arrival time postponed",
+        "verify": "Arrival verified",
+        "activate": "Trip activated",
+        "crewPhotoUpdated": "Crew photo updated"
+      },
+      "snoozeDetail": " (+{minutes} min)",
+      "updateDetail": " - new arrival {datetime}"
+    }
+  },
+  "crewView": {
+    "invalidLink": "Invalid link - trip or access code is missing. Use the link from your crew invitation email.",
+    "loadingTrip": "Loading trip…",
+    "loadFailed": "Could not fetch the trip. The link may be invalid or revoked.",
+    "title": "Trip information",
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "trip": {
+      "heading": "Trip",
+      "plannedDeparture": "Planned departure: <strong>{datetime}</strong>",
+      "plannedArrival": "Planned arrival: <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Vessel: {name}",
+      "yearBuilt": "Model year {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Call sign {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m"
+    },
+    "routes": {
+      "heading": "Routes",
+      "empty": "No routes registered.",
+      "primary": "Primary route",
+      "alternate": "Alternate route {order}",
+      "mapLabel": "Route {order}",
+      "noMap": "No route to display"
+    },
+    "crew": {
+      "heading": "Crew aboard",
+      "empty": "No confirmed crew registered.",
+      "unknownName": "Unknown",
+      "you": "you",
+      "ownIceContact": "Own ICE contact: {contact}"
+    },
+    "sharingSettings": {
+      "heading": "Sharing",
+      "hint": "Choose what of your own contact details is shared with the ICE (In Case of Emergency) contact and the rest of the crew.",
+      "shareContactWithIce": "Share my phone and email with the ICE contact",
+      "shareContactWithCrew": "Share my phone and email with the rest of the crew",
+      "shareEmergencyWithIce": "Share my emergency contact with the ICE contact",
+      "shareEmergencyWithCrew": "Share my emergency contact with the rest of the crew",
+      "saveButton": "Save",
+      "saved": "Your sharing settings have been saved.",
+      "saveFailed": "Could not save your sharing settings."
     },
     "log": {
       "heading": "Change log",

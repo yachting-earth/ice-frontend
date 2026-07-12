@@ -175,6 +175,7 @@ const IcePortalPage = {
                     <span class="crew-row__name">${escapeHtml(c.name || t('icePortal.crew.unknownName'))}</span>
                     <span class="crew-row__detail">
                         ${c.phone ? escapeHtml(c.phone) : ''}
+                        ${c.email ? ` · ${escapeHtml(c.email)}` : ''}
                         ${c.ice_contact ? ` · ${escapeHtml(t('icePortal.crew.ownIceContact', { contact: c.ice_contact }))}` : ''}
                     </span>
                 </div>
