@@ -41,18 +41,6 @@ const ProfilePage = {
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h2>${escapeHtml(t('profile.sharingHeading'))}</h2>
-                    </div>
-                    <p>${escapeHtml(t('profile.sharingHint'))}</p>
-                    <div id="sharing-alert"></div>
-                    <div class="checkbox-field">
-                        <input type="checkbox" id="share-contact-with-crew">
-                        <label for="share-contact-with-crew">${escapeHtml(t('profile.shareContactWithCrewLabel'))}</label>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
                         <h2>${escapeHtml(t('profile.gdprHeading'))}</h2>
                     </div>
                     <p>${escapeHtml(t('profile.gdprHint'))}</p>
@@ -101,37 +89,7 @@ const ProfilePage = {
 
         await this.loadProfile();
         await this.loadOwnPhoto();
-        this.setupSharing();
         await this.loadGdprExportStatus();
-    },
-
-    setupSharing() {
-        const checkbox = document.getElementById('share-contact-with-crew');
-        checkbox.checked = !!Number(this.state.user && this.state.user.share_contact_with_crew);
-        checkbox.addEventListener('change', () => this.handleSharingToggle(checkbox));
-    },
-
-    async handleSharingToggle(checkbox) {
-        const alertBox = document.getElementById('sharing-alert');
-        const desired = checkbox.checked;
-        checkbox.disabled = true;
-
-        const response = await apiRequest('/user/share-contact-with-crew', {
-            method: 'PUT',
-            body: JSON.stringify({ share_contact_with_crew: desired })
-        });
-
-        checkbox.disabled = false;
-
-        if (!response.success) {
-            checkbox.checked = !desired;
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.sharingSaveFailed')))}</div>`;
-            return;
-        }
-
-        this.state.user = response.data;
-        alertBox.innerHTML = '';
-        showToast(desired ? t('profile.sharingEnabled') : t('profile.sharingDisabled'), 'success');
     },
 
     async loadGdprExportStatus() {
