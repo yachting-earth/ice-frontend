@@ -1,11 +1,69 @@
+// Access tokens are short-lived (15 min - see issue #93); a single
+// in-flight refresh is shared across concurrent 401s so a burst of
+// requests doesn't trigger a burst of /auth/refresh calls (which would
+// race the one-time-use refresh token rotation against itself).
+let _refreshPromise = null;
+
+async function _refreshAccessToken() {
+    if (_refreshPromise) {
+        return _refreshPromise;
+    }
+
+    const refreshToken = Auth.getRefreshToken();
+    if (!refreshToken) {
+        return false;
+    }
+
+    _refreshPromise = (async () => {
+        try {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/auth/refresh`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ refresh_token: refreshToken })
+            });
+            const result = await response.json();
+            if (result.success) {
+                Auth.setTokens(result.data.auth_token, result.data.refresh_token);
+                return true;
+            }
+            return false;
+        } catch (err) {
+            return false;
+        }
+    })();
+
+    try {
+        return await _refreshPromise;
+    } finally {
+        _refreshPromise = null;
+    }
+}
+
+// Endpoints where a 401 is a normal part of the flow (bad credentials,
+// invalid/expired opaque token) rather than "the session expired" -
+// these must never trigger a silent-refresh attempt or a forced redirect.
+function _isSessionScoped(endpoint) {
+    return !endpoint.startsWith('/auth/') && !endpoint.startsWith('/sar/')
+        && endpoint !== '/user/delete-account';
+}
+
+function _handleExpiredSession() {
+    Auth.clear();
+    if (!location.hash.startsWith('#/login')) {
+        location.hash = '#/login';
+    }
+}
+
 /**
  * Fetch wrapper for the Yachting Earth API.
  *
  * Always resolves (never throws on API-level errors) - callers check
  * `response.success` and read `response.error` / `response.code`.
- * Network failures are normalized into the same response shape.
+ * Network failures are normalized into the same response shape. A 401 on
+ * a session-scoped endpoint first tries a silent token refresh (once) and
+ * retries the request before giving up and clearing the session.
  */
-async function apiRequest(endpoint, options = {}) {
+async function apiRequest(endpoint, options = {}, _isRetry = false) {
     const token = Auth.getToken();
 
     const headers = {
@@ -32,14 +90,11 @@ async function apiRequest(endpoint, options = {}) {
         };
     }
 
-    // /auth/, /sar/ and delete-account return 401 for bad credentials as
-    // part of their normal flow - only treat 401 as "session expired" elsewhere
-    if (response.status === 401 && !endpoint.startsWith('/auth/') && !endpoint.startsWith('/sar/')
-        && endpoint !== '/user/delete-account') {
-        Auth.clear();
-        if (!location.hash.startsWith('#/login')) {
-            location.hash = '#/login';
+    if (response.status === 401 && _isSessionScoped(endpoint)) {
+        if (!_isRetry && await _refreshAccessToken()) {
+            return apiRequest(endpoint, options, true);
         }
+        _handleExpiredSession();
     }
 
     try {
@@ -59,7 +114,7 @@ async function apiRequest(endpoint, options = {}) {
  * the browser set the Content-Type (with boundary) itself - apiRequest's
  * hardcoded application/json would break multipart parsing server-side.
  */
-async function apiUpload(endpoint, formData, method = 'POST') {
+async function apiUpload(endpoint, formData, method = 'POST', _isRetry = false) {
     const token = Auth.getToken();
     const headers = {};
 
@@ -77,6 +132,13 @@ async function apiUpload(endpoint, formData, method = 'POST') {
             code: 'NETWORK_ERROR',
             status: 0
         };
+    }
+
+    if (response.status === 401 && _isSessionScoped(endpoint)) {
+        if (!_isRetry && await _refreshAccessToken()) {
+            return apiUpload(endpoint, formData, method, true);
+        }
+        _handleExpiredSession();
     }
 
     try {

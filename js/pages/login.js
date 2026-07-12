@@ -53,6 +53,7 @@ const LoginPage = {
         if (response.success) {
             Auth.setSession({
                 auth_token: response.data.auth_token,
+                refresh_token: response.data.refresh_token,
                 user_id: response.data.user_id,
                 name: response.data.name,
                 email: response.data.email,

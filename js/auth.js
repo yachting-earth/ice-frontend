@@ -4,6 +4,7 @@
 const Auth = {
     KEYS: {
         token: 'auth_token',
+        refreshToken: 'refresh_token',
         userId: 'user_id',
         userName: 'user_name',
         userEmail: 'user_email',
@@ -12,8 +13,9 @@ const Auth = {
         userEmailVerified: 'user_email_verified'
     },
 
-    setSession({ auth_token, user_id, name, email, picture, is_admin, email_verified }) {
+    setSession({ auth_token, refresh_token, user_id, name, email, picture, is_admin, email_verified }) {
         localStorage.setItem(this.KEYS.token, auth_token);
+        if (refresh_token) localStorage.setItem(this.KEYS.refreshToken, refresh_token);
         localStorage.setItem(this.KEYS.userId, user_id);
         if (name) localStorage.setItem(this.KEYS.userName, name);
         if (email) localStorage.setItem(this.KEYS.userEmail, email);
@@ -24,8 +26,19 @@ const Auth = {
         localStorage.setItem(this.KEYS.userEmailVerified, email_verified === false ? '0' : '1');
     },
 
+    // Updates just the access/refresh token pair after a silent
+    // POST /auth/refresh, leaving the rest of the session untouched.
+    setTokens(auth_token, refresh_token) {
+        localStorage.setItem(this.KEYS.token, auth_token);
+        if (refresh_token) localStorage.setItem(this.KEYS.refreshToken, refresh_token);
+    },
+
     getToken() {
         return localStorage.getItem(this.KEYS.token);
+    },
+
+    getRefreshToken() {
+        return localStorage.getItem(this.KEYS.refreshToken);
     },
 
     updateUser({ name, email, picture, email_verified } = {}) {

@@ -177,8 +177,17 @@ function renderTopbar() {
 
     document.getElementById('logout-btn').addEventListener('click', () => {
         iceAccountVisible = null;
+        const refreshToken = Auth.getRefreshToken();
         Auth.clear();
         location.hash = '#/login';
+        // Best-effort/fire-and-forget: revoke server-side so the refresh
+        // token can't be used again, but never block navigating away.
+        if (refreshToken) {
+            apiRequest('/auth/logout', {
+                method: 'POST',
+                body: JSON.stringify({ refresh_token: refreshToken })
+            });
+        }
     });
     setupHamburgerMenu();
     setupLangSelector();
