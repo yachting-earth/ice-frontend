@@ -50,6 +50,12 @@ function _isSessionScoped(endpoint) {
 function _handleExpiredSession() {
     Auth.clear();
     if (!location.hash.startsWith('#/login')) {
+        // Surface *why* the user landed back on the login page - this used
+        // to be a silent redirect, which is confusing on its own and was
+        // especially so for pre-#93 sessions with no refresh_token at all
+        // (see issue #99): the first API call after such a deploy fails
+        // with no explanation otherwise.
+        showToast(t.error('AUTH_REQUIRED'), 'info');
         location.hash = '#/login';
     }
 }
