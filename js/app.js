@@ -29,7 +29,8 @@ const Router = {
         { pattern: '#/blog/:slug', page: BlogPostPage },
         { pattern: '#/privacy', page: PrivacyPage },
         { pattern: '#/terms', page: TermsPage },
-        { pattern: '#/contact', page: ContactPage }
+        { pattern: '#/contact', page: ContactPage },
+        { pattern: '#/about', page: AboutPage }
     ],
 
     start() {

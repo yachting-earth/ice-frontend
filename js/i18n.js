@@ -1081,6 +1081,40 @@ const EN_INLINE = {
       "heading": "Company details",
       "body": "Yachting Earth ICE is owned and operated by Manjo Consulting AB, a Swedish company (org./VAT no. 5568138464), trading as Yachting Earth (yachting.earth)."
     }
+  },
+  "about": {
+    "title": "About us",
+    "intro": "Yachting Earth ICE is built and operated by Manjo Consulting AB, a Swedish company (org./VAT no. 5568138464), trading as Yachting Earth (yachting.earth).",
+    "sections": [
+      {
+        "heading": "Why we built this",
+        "body": [
+          "Every skipper knows the routine: tell someone ashore your route and your expected arrival time, then check in when you're safely in port. In practice that plan lives in a text message or a scribbled note, and it's easy for the details - the actual route, the crew on board, who to call and when - to get lost or go stale between trips.",
+          "Yachting Earth ICE turns that routine into a structured, repeatable check-in: register the trip and vessel once, invite your crew, and the system watches the clock so your designated emergency (\"ICE\") contact always has accurate, up-to-date information if you don't check in on time."
+        ]
+      },
+      {
+        "heading": "What we are - and what we're not",
+        "body": [
+          "This is a voyage-preparation and crew-safety information tool, not a distress beacon, EPIRB, or real-time tracking system. It doesn't monitor your vessel's position and it doesn't contact rescue services itself."
+        ],
+        "list": [
+          "You (the skipper) remain responsible for actual safety decisions at sea",
+          "The system's job is to make sure the right information reaches the right person if a trip runs overdue",
+          "Everything the system does - grace periods, snoozing an ETA, notifying an ICE contact - is there to support your own judgement, not replace it"
+        ]
+      },
+      {
+        "heading": "Who's behind it",
+        "body": [
+          "Manjo Consulting AB is a Swedish company that designs and operates Yachting Earth ICE end to end - product, engineering, and support. We're sailors ourselves, and we built the tool we wished existed for our own trips."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Get in touch",
+      "body": "Questions about the company behind Yachting Earth, or about the service itself? Get in touch using the contact form available in your account, or see our Privacy & GDPR and Terms of Service pages for more detail on how the system works."
+    }
   }
 };
 

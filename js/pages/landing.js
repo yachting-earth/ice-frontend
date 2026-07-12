@@ -213,7 +213,7 @@ const LandingPage = {
                 <div class="site-footer__inner">
                   <span class="site-footer__brand">${escapeHtml(t('app.brand'))}</span>
                   <nav aria-label="Footer">
-                    <a href="#" data-soon="true">${escapeHtml(t('landing.footer.links.about'))}</a>
+                    <a href="#/about">${escapeHtml(t('landing.footer.links.about'))}</a>
                     <a href="#/privacy">${escapeHtml(t('landing.footer.links.privacy'))}</a>
                     <a href="#/privacy">${escapeHtml(t('landing.footer.links.gdpr'))}</a>
                     <a href="#/contact">${escapeHtml(t('landing.footer.links.contact'))}</a>

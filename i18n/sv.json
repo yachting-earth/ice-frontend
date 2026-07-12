@@ -1070,5 +1070,39 @@
       "heading": "Företagsuppgifter",
       "body": "Yachting Earth ICE ägs och drivs av Manjo Consulting AB, ett svenskt företag (org.-/momsnr 5568138464), under namnet Yachting Earth (yachting.earth)."
     }
+  },
+  "about": {
+    "title": "Om oss",
+    "intro": "Yachting Earth ICE byggs och drivs av Manjo Consulting AB, ett svenskt företag (org.-/momsnr 5568138464), under namnet Yachting Earth (yachting.earth).",
+    "sections": [
+      {
+        "heading": "Varför vi byggde det här",
+        "body": [
+          "Alla skeppare känner igen rutinen: berätta för någon i land vilken rutt du tar och när du väntas anlända, och checka in när du är säkert i hamn. I praktiken lever den planen i ett sms eller en klottrad lapp, och det är lätt för detaljerna - den faktiska rutten, besättningen ombord, vem som ska kontaktas och när - att försvinna eller bli inaktuella mellan resor.",
+          "Yachting Earth ICE gör den rutinen till en strukturerad, upprepningsbar incheckning: registrera resan och fartyget en gång, bjud in din besättning, så håller systemet koll på klockan så att din utsedda nödkontakt (\"ICE\") alltid har korrekt, uppdaterad information om du inte checkar in i tid."
+        ]
+      },
+      {
+        "heading": "Vad vi är - och vad vi inte är",
+        "body": [
+          "Det här är ett verktyg för reseförberedelser och säkerhetsinformation för besättningen, inte en nödsändare, EPIRB eller realtidsspårningssystem. Det övervakar inte fartygets position och kontaktar inte räddningstjänsten självt."
+        ],
+        "list": [
+          "Du (skepparen) är fortsatt ansvarig för faktiska säkerhetsbeslut till sjöss",
+          "Systemets uppgift är att se till att rätt information når rätt person om en resa blir försenad",
+          "Allt systemet gör - marginaltider, att skjuta upp en ETA, att meddela en nödkontakt - finns där för att stödja ditt eget omdöme, inte ersätta det"
+        ]
+      },
+      {
+        "heading": "Vilka som ligger bakom",
+        "body": [
+          "Manjo Consulting AB är ett svenskt företag som designar och driver Yachting Earth ICE från start till mål - produkt, utveckling och support. Vi är seglare själva, och vi byggde verktyget vi önskade fanns för våra egna resor."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Kontakta oss",
+      "body": "Frågor om företaget bakom Yachting Earth, eller om själva tjänsten? Hör av dig via kontaktformuläret i ditt konto, eller se våra sidor Integritet & GDPR och Användarvillkor för mer information om hur systemet fungerar."
+    }
   }
 }
