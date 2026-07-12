@@ -94,6 +94,7 @@ const Router = {
 
         const container = document.getElementById('page-content');
         container.innerHTML = '';
+        window.scrollTo(0, 0);
 
         try {
             await route.page.render(container, params, query);
