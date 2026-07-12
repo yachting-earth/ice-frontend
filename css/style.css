@@ -312,6 +312,19 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ==================== Forms ==================== */
 
+/* Honeypot: off-screen (not display:none/visibility:hidden, which some
+   bots detect and skip) so it stays invisible and unreachable by tab/
+   screen readers for humans, but simple bots that blindly fill every
+   input still populate it - see login.js/register.js handleSubmit(). */
+.hp-field {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 .field {
     margin-bottom: var(--space-4);
 }

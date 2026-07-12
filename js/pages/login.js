@@ -15,6 +15,10 @@ const LoginPage = {
                             <label for="password">${escapeHtml(t('login.passwordLabel'))}</label>
                             <input type="password" id="password" autocomplete="current-password" required>
                         </div>
+                        <div class="field hp-field" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <button class="btn btn-primary btn-block" type="submit" id="login-submit">${escapeHtml(t('login.submit'))}</button>
                     </form>
                     <div class="auth-card__footer">
@@ -35,6 +39,7 @@ const LoginPage = {
 
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
+        const website = document.getElementById('website').value;
 
         const emailError = Validate.email(email);
         if (emailError) {
@@ -47,7 +52,7 @@ const LoginPage = {
 
         const response = await apiRequest('/auth/login', {
             method: 'POST',
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password, website })
         });
 
         if (response.success) {

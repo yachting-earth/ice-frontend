@@ -28,6 +28,10 @@ const RegisterPage = {
                             <label for="confirm-password">${escapeHtml(t('register.confirmPasswordLabel'))}</label>
                             <input type="password" id="confirm-password" autocomplete="new-password" required>
                         </div>
+                        <div class="field hp-field" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <button class="btn btn-primary btn-block" type="submit" id="register-submit">${escapeHtml(t('register.submit'))}</button>
                     </form>
                     <div class="auth-card__footer">
@@ -51,6 +55,7 @@ const RegisterPage = {
         const phone = document.getElementById('phone').value.trim();
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm-password').value;
+        const website = document.getElementById('website').value;
 
         const error = Validate.name(name) || Validate.email(email)
             || Validate.phone(phone, true) || Validate.password(password)
@@ -66,7 +71,7 @@ const RegisterPage = {
 
         const response = await apiRequest('/auth/register', {
             method: 'POST',
-            body: JSON.stringify({ name, email, password, phone: phone || null })
+            body: JSON.stringify({ name, email, password, phone: phone || null, website })
         });
 
         if (response.success) {
