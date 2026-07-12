@@ -96,7 +96,8 @@ const EN_INLINE = {
       "admin": "Admin",
       "logout": "Log out",
       "sar": "SAR",
-      "blog": "Blog"
+      "blog": "Blog",
+      "faq": "FAQ"
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - My page",
@@ -900,7 +901,8 @@ const EN_INLINE = {
         "privacy": "Privacy",
         "gdpr": "GDPR",
         "contact": "Contact",
-        "terms": "Terms"
+        "terms": "Terms",
+        "faq": "FAQ"
       },
       "comingSoon": "{page} page coming soon"
     }
@@ -1115,6 +1117,79 @@ const EN_INLINE = {
       "heading": "Get in touch",
       "body": "Questions about the company behind Yachting Earth, or about the service itself? Get in touch using the contact form available in your account, or see our Privacy & GDPR and Terms of Service pages for more detail on how the system works."
     }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "lead": "Common questions about how Yachting Earth ICE works. Can't find what you're looking for? Get in touch using the contact form available in your account.",
+    "categories": [
+      {
+        "heading": "Getting started",
+        "items": [
+          {
+            "q": "What is Yachting Earth ICE?",
+            "a": "It's a voyage-preparation and crew safety check-in tool. A skipper registers a trip and vessel, adds one or more planned routes, invites crew, and designates an emergency (\"ICE\") contact who is notified automatically if the trip becomes overdue."
+          },
+          {
+            "q": "Is this a distress beacon or real-time tracking system?",
+            "a": "No. Yachting Earth ICE does not track a vessel's live position and does not contact rescue services itself. It's an information-management tool - the skipper remains responsible for actual safety decisions. In a genuine emergency, always contact your local rescue coordination centre or coast guard directly."
+          },
+          {
+            "q": "How do I add a route to a trip?",
+            "a": "Plan your route on Windy.com's route planner, then paste the resulting URL into the trip form. It's parsed automatically into coordinates and shown on the map. A trip can have more than one planned route."
+          },
+          {
+            "q": "How do I invite crew?",
+            "a": "From the trip detail page, add a crew member by email. They receive an invitation to confirm their details and, optionally, create their own account and upload a photo."
+          }
+        ]
+      },
+      {
+        "heading": "Safety & notifications",
+        "items": [
+          {
+            "q": "What is the grace period?",
+            "a": "It's a buffer added to the trip's scheduled arrival time before it's considered overdue - to allow for normal delays without triggering a false alarm. You choose the grace period when creating the trip."
+          },
+          {
+            "q": "What happens if a trip becomes overdue?",
+            "a": "A background job checks every minute for trips past their scheduled arrival plus grace period. Once a trip is overdue, the ICE contact is notified by email and, if configured, Telegram or WhatsApp."
+          },
+          {
+            "q": "I'm running late - how do I avoid triggering an alert?",
+            "a": "Open your trip and use \"Snooze\" to extend the expected arrival time at any point before the deadline passes."
+          },
+          {
+            "q": "How do I mark a trip as safely completed?",
+            "a": "Open the trip and select \"Verify arrival\". This can be done at any time, including after an alert has already been sent - your ICE contact receives an update either way."
+          },
+          {
+            "q": "How does my emergency contact see the trip details?",
+            "a": "They get a read-only link to a trip portal, protected by a private access token - no account or login required. Search and rescue authorities can alternatively look up a trip using a reference number and PIN."
+          },
+          {
+            "q": "Does my ICE contact need to confirm before they can be notified?",
+            "a": "No. Confirming their email just verifies the address works, but timeout alerts are sent regardless - gating a safety alert on a clicked link would defeat the purpose."
+          }
+        ]
+      },
+      {
+        "heading": "Privacy & data",
+        "items": [
+          {
+            "q": "What happens to my data after a trip ends?",
+            "a": "A completed or cancelled trip is soft-deleted immediately (it disappears from view) and then permanently deleted, along with its routes, crew records, photos and notifications, 30 days later. Your account and vessels are not affected. See the Privacy & GDPR page for full details."
+          },
+          {
+            "q": "Can I delete my account?",
+            "a": "Yes, at any time from your profile page."
+          },
+          {
+            "q": "Is my data shared with anyone?",
+            "a": "Never sold or shared with advertisers. It only reaches the services needed to run the system, such as our email and notification providers. See the Privacy & GDPR page for the full list."
+          }
+        ]
+      }
+    ]
   }
 };
 

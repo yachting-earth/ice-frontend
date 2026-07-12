@@ -30,7 +30,8 @@ const Router = {
         { pattern: '#/privacy', page: PrivacyPage },
         { pattern: '#/terms', page: TermsPage },
         { pattern: '#/contact', page: ContactPage },
-        { pattern: '#/about', page: AboutPage }
+        { pattern: '#/about', page: AboutPage },
+        { pattern: '#/faq', page: FaqPage }
     ],
 
     start() {
@@ -139,6 +140,7 @@ function renderTopbar() {
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
                     <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
+                    <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
                     <a class="topbar__menu-link${activeClass('#/sar')}" href="#/sar">${escapeHtml(t('app.nav.sar'))}</a>
                     ${renderLangSelector()}
                 </div>
@@ -166,6 +168,7 @@ function renderTopbar() {
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
                 <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
+                <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
                 ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">${escapeHtml(t('app.nav.admin'))}</a>` : ''}
                 ${renderLangSelector()}
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">${escapeHtml(t('app.nav.logout'))}</button>

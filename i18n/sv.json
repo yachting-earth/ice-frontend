@@ -85,7 +85,8 @@
       "admin": "Admin",
       "logout": "Logga ut",
       "sar": "SAR",
-      "blog": "Blogg"
+      "blog": "Blogg",
+      "faq": "FAQ"
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - Min sida",
@@ -889,7 +890,8 @@
         "privacy": "Integritet",
         "gdpr": "GDPR",
         "contact": "Kontakt",
-        "terms": "Villkor"
+        "terms": "Villkor",
+        "faq": "FAQ"
       },
       "comingSoon": "Sidan {page} kommer snart"
     }
@@ -1104,5 +1106,78 @@
       "heading": "Kontakta oss",
       "body": "Frågor om företaget bakom Yachting Earth, eller om själva tjänsten? Hör av dig via kontaktformuläret i ditt konto, eller se våra sidor Integritet & GDPR och Användarvillkor för mer information om hur systemet fungerar."
     }
+  },
+  "faq": {
+    "title": "Vanliga frågor",
+    "lead": "Vanliga frågor om hur Yachting Earth ICE fungerar. Hittar du inte det du söker? Hör av dig via kontaktformuläret i ditt konto.",
+    "categories": [
+      {
+        "heading": "Komma igång",
+        "items": [
+          {
+            "q": "Vad är Yachting Earth ICE?",
+            "a": "Det är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. En skeppare registrerar en resa och ett fartyg, lägger till en eller flera planerade rutter, bjuder in besättning och utser en nödkontakt (\"ICE\") som meddelas automatiskt om resan blir försenad."
+          },
+          {
+            "q": "Är det här en nödsändare eller ett realtidsspårningssystem?",
+            "a": "Nej. Yachting Earth ICE spårar inte fartygets faktiska position och kontaktar inte räddningstjänsten självt. Det är ett verktyg för informationshantering - skepparen ansvarar fortfarande för de faktiska säkerhetsbesluten. Vid en verklig nödsituation, kontakta alltid din lokala räddningscentral eller kustbevakning direkt."
+          },
+          {
+            "q": "Hur lägger jag till en rutt för en resa?",
+            "a": "Planera din rutt på Windy.com:s ruttplanerare och klistra sedan in URL:en i reseformuläret. Den tolkas automatiskt till koordinater och visas på kartan. En resa kan ha fler än en planerad rutt."
+          },
+          {
+            "q": "Hur bjuder jag in besättning?",
+            "a": "Från resans detaljsida lägger du till en besättningsmedlem via e-post. De får en inbjudan att bekräfta sina uppgifter och, valfritt, skapa ett eget konto och ladda upp ett foto."
+          }
+        ]
+      },
+      {
+        "heading": "Säkerhet & aviseringar",
+        "items": [
+          {
+            "q": "Vad är marginaltiden (grace period)?",
+            "a": "Det är en buffert som läggs till resans planerade ankomsttid innan den räknas som försenad - för att tillåta normala förseningar utan att utlösa ett falskt larm. Du väljer marginaltiden när du skapar resan."
+          },
+          {
+            "q": "Vad händer om en resa blir försenad?",
+            "a": "En bakgrundsjobb kontrollerar varje minut om resor har passerat planerad ankomsttid plus marginaltid. När en resa räknas som försenad meddelas nödkontakten via e-post och, om det är konfigurerat, Telegram eller WhatsApp."
+          },
+          {
+            "q": "Jag är sen - hur undviker jag att utlösa ett larm?",
+            "a": "Öppna din resa och använd \"Snooza\" för att förlänga den förväntade ankomsttiden när som helst innan tidsfristen passerar."
+          },
+          {
+            "q": "Hur markerar jag en resa som säkert avslutad?",
+            "a": "Öppna resan och välj \"Bekräfta ankomst\". Det går att göra när som helst, även efter att ett larm redan skickats - din nödkontakt får en uppdatering i båda fallen."
+          },
+          {
+            "q": "Hur ser min nödkontakt resans uppgifter?",
+            "a": "De får en skrivskyddad länk till en resportal, skyddad av en privat åtkomsttoken - inget konto eller inloggning krävs. Räddningstjänsten kan alternativt slå upp en resa med ett referensnummer och en PIN-kod."
+          },
+          {
+            "q": "Måste min ICE-kontakt bekräfta innan de kan meddelas?",
+            "a": "Nej. Att bekräfta deras e-post verifierar bara att adressen fungerar, men larm om försening skickas oavsett - att villkora ett säkerhetslarm på en klickad länk skulle motverka syftet."
+          }
+        ]
+      },
+      {
+        "heading": "Integritet & data",
+        "items": [
+          {
+            "q": "Vad händer med mina uppgifter efter att en resa avslutas?",
+            "a": "En avslutad eller avbruten resa mjukraderas omedelbart (den försvinner från vyn) och raderas sedan permanent, tillsammans med dess rutter, besättningsuppgifter, foton och aviseringar, 30 dagar senare. Ditt konto och dina fartyg påverkas inte. Se sidan Integritet & GDPR för fullständig information."
+          },
+          {
+            "q": "Kan jag radera mitt konto?",
+            "a": "Ja, när som helst från din profilsida."
+          },
+          {
+            "q": "Delas mina uppgifter med någon?",
+            "a": "De säljs eller delas aldrig med annonsörer. De når endast de tjänster som krävs för att driva systemet, till exempel våra e-post- och aviseringsleverantörer. Se sidan Integritet & GDPR för hela listan."
+          }
+        ]
+      }
+    ]
   }
 }

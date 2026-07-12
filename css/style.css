@@ -933,6 +933,29 @@ ul { margin: 0; padding: 0; list-style: none; }
     font-size: 0.9em;
 }
 
+.faq-list {
+    margin: 0 0 var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.faq-item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+}
+
+.faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.faq-item p {
+    margin: var(--space-2) 0 0;
+    color: var(--color-text-muted);
+}
+
 /* ==================== Responsive ==================== */
 
 @media (min-width: 768px) {
