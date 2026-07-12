@@ -1,6 +1,7 @@
 const ProfilePage = {
     state: {
-        user: null
+        user: null,
+        gdprExport: null
     },
 
     async render(container) {
@@ -52,6 +53,17 @@ const ProfilePage = {
 
                 <div class="card">
                     <div class="card-header">
+                        <h2>${escapeHtml(t('profile.gdprHeading'))}</h2>
+                    </div>
+                    <p>${escapeHtml(t('profile.gdprHint'))}</p>
+                    <div id="gdpr-alert"></div>
+                    <div id="gdpr-export-container">
+                        <div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('profile.gdprChecking'))}</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
                         <h2>${escapeHtml(t('profile.deleteHeading'))}</h2>
                     </div>
                     <p>${escapeHtml(t('profile.deleteWarning'))}</p>
@@ -90,6 +102,7 @@ const ProfilePage = {
         await this.loadProfile();
         await this.loadOwnPhoto();
         this.setupSharing();
+        await this.loadGdprExportStatus();
     },
 
     setupSharing() {
@@ -119,6 +132,90 @@ const ProfilePage = {
         this.state.user = response.data;
         alertBox.innerHTML = '';
         showToast(desired ? t('profile.sharingEnabled') : t('profile.sharingDisabled'), 'success');
+    },
+
+    async loadGdprExportStatus() {
+        const response = await apiRequest('/user/gdpr-export');
+        this.state.gdprExport = response.success ? response.data : { available: false, expires_at: null };
+        this.renderGdprExport();
+    },
+
+    renderGdprExport() {
+        const container = document.getElementById('gdpr-export-container');
+        const { available, expires_at } = this.state.gdprExport;
+
+        if (available) {
+            container.innerHTML = `
+                <p class="text-muted">${t('profile.gdprAvailableUntil', { date: escapeHtml(formatDateTime(expires_at)) })}</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="button" id="gdpr-download-btn">${escapeHtml(t('profile.gdprDownloadButton'))}</button>
+                    <button class="btn btn-ghost" type="button" id="gdpr-request-btn">${escapeHtml(t('profile.gdprRequestAgainButton'))}</button>
+                </div>`;
+            document.getElementById('gdpr-download-btn').addEventListener('click', () => this.handleDownloadGdprExport());
+            document.getElementById('gdpr-request-btn').addEventListener('click', () => this.handleRequestGdprExport());
+            return;
+        }
+
+        container.innerHTML = `<button class="btn btn-primary" type="button" id="gdpr-request-btn">${escapeHtml(t('profile.gdprRequestButton'))}</button>`;
+        document.getElementById('gdpr-request-btn').addEventListener('click', () => this.handleRequestGdprExport());
+    },
+
+    async handleRequestGdprExport() {
+        const requestBtn = document.getElementById('gdpr-request-btn');
+        const alertBox = document.getElementById('gdpr-alert');
+        requestBtn.disabled = true;
+
+        const response = await apiRequest('/user/gdpr-export', { method: 'POST' });
+
+        requestBtn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.gdprRequestFailed')))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        this.state.gdprExport = response.data;
+        this.renderGdprExport();
+        showToast(t('profile.gdprRequestReady'), 'success');
+    },
+
+    // Auth-protected endpoint, so a plain <a href> won't do (no way to
+    // attach the Authorization header) - fetch as blob and trigger the
+    // browser's save dialog via a temporary object URL.
+    async handleDownloadGdprExport() {
+        const downloadBtn = document.getElementById('gdpr-download-btn');
+        const alertBox = document.getElementById('gdpr-alert');
+        downloadBtn.disabled = true;
+
+        try {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/user/gdpr-export/download`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            });
+
+            if (!response.ok) {
+                throw new Error('download failed');
+            }
+
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `yachting-earth-data-${new Date().toISOString().slice(0, 10)}.json`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+        } catch (err) {
+            downloadBtn.disabled = false;
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('profile.gdprDownloadFailed'))}</div>`;
+            return;
+        }
+
+        // The server deletes the file once it's been streamed
+        this.state.gdprExport = { available: false, expires_at: null };
+        this.renderGdprExport();
+        showToast(t('profile.gdprDownloaded'), 'success');
     },
 
     async loadOwnPhoto() {
