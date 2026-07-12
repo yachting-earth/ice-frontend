@@ -487,16 +487,7 @@ const EN_INLINE = {
     },
     "log": {
       "heading": "Change log",
-      "empty": "No changes logged.",
-      "actions": {
-        "update": "Trip updated",
-        "snooze": "Arrival time postponed",
-        "verify": "Arrival verified",
-        "activate": "Trip activated",
-        "crewPhotoUpdated": "Crew photo updated"
-      },
-      "snoozeDetail": " (+{minutes} min)",
-      "updateDetail": " - new arrival {datetime}"
+      "empty": "No changes logged."
     }
   },
   "crewView": {
@@ -549,16 +540,7 @@ const EN_INLINE = {
     },
     "log": {
       "heading": "Change log",
-      "empty": "No changes logged.",
-      "actions": {
-        "update": "Trip updated",
-        "snooze": "Arrival time postponed",
-        "verify": "Arrival verified",
-        "activate": "Trip activated",
-        "crewPhotoUpdated": "Crew photo updated"
-      },
-      "snoozeDetail": " (+{minutes} min)",
-      "updateDetail": " - new arrival {datetime}"
+      "empty": "No changes logged."
     }
   },
   "sar": {

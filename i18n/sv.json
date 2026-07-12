@@ -476,16 +476,7 @@
     },
     "log": {
       "heading": "Ändringslogg",
-      "empty": "Inga ändringar loggade.",
-      "actions": {
-        "update": "Resan uppdaterad",
-        "snooze": "Ankomsttid framflyttad",
-        "verify": "Ankomst verifierad",
-        "activate": "Resan aktiverad",
-        "crewPhotoUpdated": "Besättningsfoto uppdaterat"
-      },
-      "snoozeDetail": " (+{minutes} min)",
-      "updateDetail": " - ny ankomst {datetime}"
+      "empty": "Inga ändringar loggade."
     }
   },
   "crewView": {
@@ -538,16 +529,7 @@
     },
     "log": {
       "heading": "Ändringslogg",
-      "empty": "Inga ändringar loggade.",
-      "actions": {
-        "update": "Resan uppdaterad",
-        "snooze": "Ankomsttid framflyttad",
-        "verify": "Ankomst verifierad",
-        "activate": "Resan aktiverad",
-        "crewPhotoUpdated": "Besättningsfoto uppdaterat"
-      },
-      "snoozeDetail": " (+{minutes} min)",
-      "updateDetail": " - ny ankomst {datetime}"
+      "empty": "Inga ändringar loggade."
     }
   },
   "sar": {

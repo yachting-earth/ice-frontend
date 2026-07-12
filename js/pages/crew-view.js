@@ -11,14 +11,6 @@
  * accepted crew member's own JWT with no token needed.
  */
 const CrewViewPage = {
-    ACTION_LABEL_KEYS: {
-        UPDATE: 'update',
-        SNOOZE: 'snooze',
-        VERIFY: 'verify',
-        ACTIVATE: 'activate',
-        CREW_PHOTO_UPDATED: 'crewPhotoUpdated'
-    },
-
     state: { tripId: null, token: null, viewerCrewId: null, map: null },
 
     formatVesselDimensions(vessel) {
@@ -43,7 +35,9 @@ const CrewViewPage = {
 
         container.innerHTML = `<div class="page"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('crewView.loadingTrip'))}</div></div>`;
 
-        const endpoint = `/trips/${this.state.tripId}` + (this.state.token ? `?token=${encodeURIComponent(this.state.token)}` : '');
+        const lang = I18n._lang || I18n.getLang();
+        const endpoint = `/trips/${this.state.tripId}`
+            + (this.state.token ? `?token=${encodeURIComponent(this.state.token)}&lang=${encodeURIComponent(lang)}` : `?lang=${encodeURIComponent(lang)}`);
         const response = await apiRequest(endpoint);
 
         if (!response.success) {
@@ -228,25 +222,11 @@ const CrewViewPage = {
             return;
         }
 
-        container.innerHTML = `<div class="change-log">${auditLog.map((entry) => {
-            let text = this.ACTION_LABEL_KEYS[entry.action]
-                ? t('crewView.log.actions.' + this.ACTION_LABEL_KEYS[entry.action])
-                : entry.action;
-            try {
-                const value = JSON.parse(entry.new_value);
-                if (entry.action === 'SNOOZE' && value?.minutes) {
-                    text += t('crewView.log.snoozeDetail', { minutes: value.minutes });
-                } else if (entry.action === 'UPDATE' && value?.arrival_scheduled) {
-                    text += t('crewView.log.updateDetail', { datetime: formatDateTime(value.arrival_scheduled) });
-                }
-            } catch (err) { /* new_value isn't always JSON - show the plain label */ }
-
-            return `
+        container.innerHTML = `<div class="change-log">${auditLog.map((entry) => `
                 <div class="change-log__item">
                     <span class="change-log__time">${formatDateTime(entry.changed_at)}</span>
-                    <span class="change-log__text">${escapeHtml(text)}</span>
-                </div>`;
-        }).join('')}</div>`;
+                    <span class="change-log__text">${escapeHtml(entry.message || entry.action)}</span>
+                </div>`).join('')}</div>`;
     },
 
     loadPhotos(skipper, vessel) {
