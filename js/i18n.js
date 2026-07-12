@@ -909,6 +909,7 @@ const EN_INLINE = {
       "disclaimer": "Yachting Earth ICE is a voyage preparation and information tool. It is not a distress beacon, EPIRB or real-time tracking system, and the system itself does not contact rescue services.",
       "links": {
         "about": "About",
+        "blog": "Blog",
         "privacy": "Privacy",
         "gdpr": "GDPR",
         "contact": "Contact",
