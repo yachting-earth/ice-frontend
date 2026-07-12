@@ -832,18 +832,18 @@
     },
     "compare": {
       "heading": "Why Yachting Earth is different",
-      "traditionalLabel": "Traditional Float Plan",
+      "traditionalLabel": "Traditional Plan",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        { "traditional": "Paper document", "yachting": "Living voyage information" },
+        { "traditional": "Static documents", "yachting": "Living voyage information" },
         { "traditional": "Single route", "yachting": "Multiple routes" },
-        { "traditional": "Static crew list", "yachting": "Crew maintain their own details" },
-        { "traditional": "Rely on manual monitoring", "yachting": "Automatic control" },
-        { "traditional": "Email attachment", "yachting": "Secure portal" }
+        { "traditional": "Basic rew list", "yachting": "Crew maintain their own details" },
+        { "traditional": "Rely on manual monitoring", "yachting": "Automatic audited control" },
+        { "traditional": "Limited SAR handover", "yachting": "Secure portal with SAR access" }
       ]
     },
     "features": {
-      "heading": "Built for real voyages",
+      "heading": "Built for sailors by sailors",
       "items": [
         { "icon": "route", "title": "Multiple routes", "description": "A voyage rarely follows a single straight line." },
         { "icon": "users", "title": "Crew participation", "description": "Every crew member maintains their own information." },
