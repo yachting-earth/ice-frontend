@@ -93,7 +93,6 @@
       "myIceAccount": "Mitt ICE-konto",
       "admin": "Admin",
       "logout": "Logga ut",
-      "sar": "SAR",
       "blog": "Blogg",
       "faq": "FAQ"
     },
@@ -138,7 +137,11 @@
     "submitting": "Loggar in…",
     "noAccount": "Inget konto?",
     "registerLink": "Registrera dig",
-    "errorDefault": "Inloggningen misslyckades."
+    "errorDefault": "Inloggningen misslyckades.",
+    "tabs": {
+      "user": "Logga in",
+      "sar": "SAR-åtkomst"
+    }
   },
   "register": {
     "tagline": "Skapa konto",

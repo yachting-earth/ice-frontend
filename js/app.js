@@ -136,12 +136,11 @@ function renderTopbar() {
 
     if (!authed) {
         topbar.innerHTML = `
-            <a class="topbar__brand" href="#/login">⚓ ${escapeHtml(t('app.brand'))}</a>
+            <a class="topbar__brand" href="#/login">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
                     <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
                     <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
-                    <a class="topbar__menu-link${activeClass('#/sar')}" href="#/sar">${escapeHtml(t('app.nav.sar'))}</a>
                     ${renderLangSelector()}
                 </div>
                 <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
@@ -160,7 +159,7 @@ function renderTopbar() {
     const initial = userLabel.trim().charAt(0).toUpperCase() || '?';
 
     topbar.innerHTML = `
-        <a class="topbar__brand" href="#/dashboard">⚓ ${escapeHtml(t('app.brand'))}</a>
+        <a class="topbar__brand" href="#/dashboard">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
         <div class="topbar__right">
             <div class="topbar__menu" id="topbar-menu">
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
@@ -285,6 +284,12 @@ function showToast(message, type = 'info') {
     el.textContent = message;
     stack.appendChild(el);
     setTimeout(() => el.remove(), 5000);
+}
+
+// Shared brand mark (topbar, auth cards) - mirrors the landing page's
+// site-nav__brand icon so logged-in and public pages read as the same app.
+function brandMark() {
+    return '<img src="img/yachting.png" class="brand-mark" width="22" height="22" alt="" aria-hidden="true">';
 }
 
 function escapeHtml(value) {

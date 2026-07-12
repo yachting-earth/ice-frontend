@@ -104,7 +104,6 @@ const EN_INLINE = {
       "myIceAccount": "My ICE account",
       "admin": "Admin",
       "logout": "Log out",
-      "sar": "SAR",
       "blog": "Blog",
       "faq": "FAQ"
     },
@@ -149,7 +148,11 @@ const EN_INLINE = {
     "submitting": "Logging in…",
     "noAccount": "No account?",
     "registerLink": "Register",
-    "errorDefault": "Login failed."
+    "errorDefault": "Login failed.",
+    "tabs": {
+      "user": "Log in",
+      "sar": "SAR access"
+    }
   },
   "register": {
     "tagline": "Create account",
