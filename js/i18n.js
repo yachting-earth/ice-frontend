@@ -254,6 +254,15 @@ const EN_INLINE = {
       "width": "Width",
       "draft": "Draft"
     },
+    "iceContact": {
+      "heading": "ICE contact",
+      "loading": "Loading ICE contacts…",
+      "selectLabel": "Who should be alerted if this trip isn't confirmed in time?",
+      "allOption": "All my ICE contacts",
+      "selectHint": "Leave this on \"All my ICE contacts\" to alert everyone on your ICE contact list, or pick one contact just for this trip.",
+      "noneRegistered": "You don't have any registered ICE contacts yet.",
+      "addLink": "Add an ICE contact"
+    },
     "schedule": {
       "heading": "Schedule",
       "departureLabel": "Departure (UTC)",
@@ -719,6 +728,15 @@ const EN_INLINE = {
       "changeFailed": "Could not change the vessel.",
       "mmsiConflictNotice": "Note: another trip with the same MMSI number is already scheduled during an overlapping time period.",
       "changed": "The vessel has been changed."
+    },
+    "iceContact": {
+      "heading": "ICE contact",
+      "allContacts": "All my ICE contacts are alerted for this trip.",
+      "changeLabel": "Change ICE contact",
+      "allOption": "All my ICE contacts",
+      "changeButton": "Save",
+      "changeFailed": "Could not change the ICE contact.",
+      "changed": "The ICE contact has been changed."
     },
     "routes": {
       "heading": "Routes",

@@ -3,6 +3,7 @@ const CreateTripPage = {
 
     state: {
         vessels: [],
+        iceContacts: [],
         routes: [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [] }],
         map: null,
         drawMaps: {}
@@ -24,6 +25,11 @@ const CreateTripPage = {
                 <div class="card">
                     <h3>${escapeHtml(t('createTrip.vessel.heading'))}</h3>
                     <div id="vessel-section"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('createTrip.vessel.loading'))}</div></div>
+                </div>
+
+                <div class="card">
+                    <h3>${escapeHtml(t('createTrip.iceContact.heading'))}</h3>
+                    <div id="ice-contact-section"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('createTrip.iceContact.loading'))}</div></div>
                 </div>
 
                 <div class="card">
@@ -69,7 +75,7 @@ const CreateTripPage = {
         document.getElementById('create-trip-submit').addEventListener('click', () => this.handleSubmit());
 
         this.renderRoutes();
-        await this.loadVessels();
+        await Promise.all([this.loadVessels(), this.loadIceContacts()]);
     },
 
     async loadVessels() {
@@ -81,6 +87,40 @@ const CreateTripPage = {
         }
 
         this.renderVesselSection();
+    },
+
+    async loadIceContacts() {
+        const response = await apiRequest('/ice-contacts');
+
+        if (response.success) {
+            this.state.iceContacts = response.data || [];
+        }
+
+        this.renderIceContactSection();
+    },
+
+    renderIceContactSection() {
+        const section = document.getElementById('ice-contact-section');
+        if (!section) return;
+
+        if (this.state.iceContacts.length === 0) {
+            section.innerHTML = `
+                <div class="alert alert-info">
+                    ${escapeHtml(t('createTrip.iceContact.noneRegistered'))}
+                    <a href="#/ice-contacts">${escapeHtml(t('createTrip.iceContact.addLink'))}</a>
+                </div>`;
+            return;
+        }
+
+        section.innerHTML = `
+            <div class="field">
+                <label for="ice-contact-select">${escapeHtml(t('createTrip.iceContact.selectLabel'))}</label>
+                <select id="ice-contact-select">
+                    <option value="">${escapeHtml(t('createTrip.iceContact.allOption'))}</option>
+                    ${this.state.iceContacts.map((c) => `<option value="${c.id}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
+                </select>
+                <small>${escapeHtml(t('createTrip.iceContact.selectHint'))}</small>
+            </div>`;
     },
 
     renderVesselSection() {
@@ -441,6 +481,9 @@ const CreateTripPage = {
                 ? { coordinates: r.coordinates, reason: r.reason.trim() || null }
                 : { windy_url: r.windyUrl.trim(), reason: r.reason.trim() || null });
 
+        const iceContactSelect = document.getElementById('ice-contact-select');
+        const iceContactId = iceContactSelect && iceContactSelect.value ? Number(iceContactSelect.value) : null;
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('createTrip.submitting'))}`;
 
@@ -448,6 +491,7 @@ const CreateTripPage = {
             method: 'POST',
             body: JSON.stringify({
                 vessel_id: vesselId,
+                ice_contact_id: iceContactId,
                 departure_scheduled: toApiDatetime(departure),
                 arrival_scheduled: toApiDatetime(arrival),
                 grace_period_seconds: gracePeriod,

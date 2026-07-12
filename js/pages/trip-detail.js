@@ -2,7 +2,7 @@ const TripDetailPage = {
     ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
 
     state: {
-        tripId: null, data: null, vessels: [], map: null, forceDelete: false,
+        tripId: null, data: null, vessels: [], iceContacts: [], map: null, forceDelete: false,
         editDrawMaps: {}, editRoutes: {},
         newRouteMode: 'windy', newRouteCoordinates: [], newRouteDrawMap: null
     },
@@ -14,9 +14,10 @@ const TripDetailPage = {
     },
 
     async load(container) {
-        const [response, vesselsResponse] = await Promise.all([
+        const [response, vesselsResponse, iceContactsResponse] = await Promise.all([
             apiRequest(`/trips/${this.state.tripId}`),
-            apiRequest('/vessels')
+            apiRequest('/vessels'),
+            apiRequest('/ice-contacts')
         ]);
 
         if (!response.success) {
@@ -30,6 +31,7 @@ const TripDetailPage = {
 
         this.state.data = response.data;
         this.state.vessels = vesselsResponse.data || [];
+        this.state.iceContacts = iceContactsResponse.data || [];
         this.renderPage(container);
     },
 
@@ -93,6 +95,27 @@ const TripDetailPage = {
                 </div>
 
                 <div class="card">
+                    <h3>${t('tripDetail.iceContact.heading')}</h3>
+                    <p class="mb-0">${trip.ice_contact_id ? escapeHtml(this.iceContactLabel(trip.ice_contact_id)) : escapeHtml(t('tripDetail.iceContact.allContacts'))}</p>
+                    <div id="ice-contact-change-alert"></div>
+                    ${this.state.iceContacts.length > 0 ? `
+                    <div class="field-row" style="margin-top: var(--space-3);">
+                        <div class="field">
+                            <label for="ice-contact-select">${t('tripDetail.iceContact.changeLabel')}</label>
+                            <select id="ice-contact-select">
+                                <option value="" ${!trip.ice_contact_id ? 'selected' : ''}>${t('tripDetail.iceContact.allOption')}</option>
+                                ${this.state.iceContacts.map((c) => `<option value="${c.id}" ${String(c.id) === String(trip.ice_contact_id) ? 'selected' : ''}>${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" type="button" id="ice-contact-change-btn" style="align-self:flex-end;">${t('tripDetail.iceContact.changeButton')}</button>
+                    </div>` : `
+                    <div class="alert alert-info" style="margin-top: var(--space-3);">
+                        ${escapeHtml(t('createTrip.iceContact.noneRegistered'))}
+                        <a href="#/ice-contacts">${escapeHtml(t('createTrip.iceContact.addLink'))}</a>
+                    </div>`}
+                </div>
+
+                <div class="card">
                     <h3>${t('tripDetail.routes.heading')}</h3>
                     <div id="routes-alert"></div>
                     <div id="routes-list"></div>
@@ -141,6 +164,7 @@ const TripDetailPage = {
         document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
         document.getElementById('add-route-btn').addEventListener('click', () => this.handleAddRoute());
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
+        document.getElementById('ice-contact-change-btn')?.addEventListener('click', () => this.handleChangeIceContact());
 
         document.getElementById('new-route-mode-windy').addEventListener('click', () => {
             this.state.newRouteMode = 'windy';
@@ -229,6 +253,39 @@ const TripDetailPage = {
         }
 
         showToast(t('tripDetail.vessel.changed'), 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    iceContactLabel(contactId) {
+        const contact = this.state.iceContacts.find((c) => String(c.id) === String(contactId));
+        return contact ? contact.name : '';
+    },
+
+    async handleChangeIceContact() {
+        const alertBox = document.getElementById('ice-contact-change-alert');
+        const select = document.getElementById('ice-contact-select');
+        const iceContactId = select.value ? Number(select.value) : null;
+
+        if (String(iceContactId) === String(this.state.data.trip.ice_contact_id)) {
+            return;
+        }
+
+        const btn = document.getElementById('ice-contact-change-btn');
+        btn.disabled = true;
+
+        const response = await apiRequest(`/trips/${this.state.tripId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ ice_contact_id: iceContactId })
+        });
+
+        btn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.iceContact.changeFailed')))}</div>`;
+            return;
+        }
+
+        showToast(t('tripDetail.iceContact.changed'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
