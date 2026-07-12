@@ -446,6 +446,7 @@ const EN_INLINE = {
     "title": "Trip information",
     "readOnlyNotice": "Read-only view for ICE contact and search and rescue (SAR)",
     "alertTriggered": "<strong>Alert triggered - arrival not confirmed in time</strong>",
+    "printButton": "Print / save as PDF",
     "skipper": {
       "heading": "Skipper"
     },

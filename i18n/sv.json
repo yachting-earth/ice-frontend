@@ -435,6 +435,7 @@
     "title": "Reseinformation",
     "readOnlyNotice": "Skrivskyddad vy för nödkontakt (ICE) och sjöräddning (SAR)",
     "alertTriggered": "<strong>Larm utlöst - ankomst ej bekräftad i tid</strong>",
+    "printButton": "Skriv ut / spara som PDF",
     "skipper": {
       "heading": "Skeppare"
     },

@@ -59,6 +59,7 @@ const IcePortalPage = {
                             ${trip.ice_notified ? ' · ' + t('icePortal.alertTriggered') : ''}
                         </div>
                     </div>
+                    <button type="button" class="btn btn-secondary no-print" id="portal-print-btn">${escapeHtml(t('icePortal.printButton'))}</button>
                 </div>
 
                 <div class="card">
@@ -134,6 +135,8 @@ const IcePortalPage = {
         this.renderRoutes(routes);
         this.renderCrew(crew);
         this.renderLog(audit_log);
+
+        document.getElementById('portal-print-btn').addEventListener('click', () => window.print());
     },
 
     renderRoutes(routes) {

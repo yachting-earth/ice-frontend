@@ -979,6 +979,43 @@ ul { margin: 0; padding: 0; list-style: none; }
     .trip-card__actions { margin-top: 0; }
 }
 
+/* ==================== Print ==================== */
+
+@media print {
+    #topbar, .toast-stack, .no-print {
+        display: none !important;
+    }
+
+    body, .page {
+        background: #fff;
+        color: #000;
+    }
+
+    .page {
+        padding: 0;
+        max-width: none;
+    }
+
+    .card {
+        border: 1px solid #999;
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .map-container {
+        border: 1px solid #999;
+    }
+
+    .map-container .leaflet-control-container {
+        display: none;
+    }
+
+    a[href]::after {
+        content: none;
+    }
+}
+
 @media (min-width: 1200px) {
     .page { padding-top: var(--space-8); }
 }
