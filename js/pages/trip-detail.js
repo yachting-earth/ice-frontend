@@ -45,6 +45,8 @@ const TripDetailPage = {
         this.state.newRouteDrawMap = null;
 
         const { trip, vessel, crew, routes } = this.state.data;
+        const role = this.state.data.role || 'owner';
+        const isOwner = role === 'owner';
         const graceLabel = formatGracePeriod(trip.grace_period_seconds);
 
         container.innerHTML = `
@@ -62,9 +64,11 @@ const TripDetailPage = {
                     <a class="btn btn-ghost btn-sm" href="#/dashboard">← ${t('common.back')}</a>
                 </div>
 
+                ${!isOwner ? `<div class="alert alert-info">${escapeHtml(t('tripDetail.readOnlyBanner.' + role))}</div>` : ''}
+
                 <div id="trip-detail-alert"></div>
 
-                <div class="card" id="actions-card"></div>
+                ${isOwner ? `<div class="card" id="actions-card"></div>` : ''}
 
                 <div class="card">
                     <h3>${t('tripDetail.vessel.heading')}</h3>
@@ -82,7 +86,7 @@ const TripDetailPage = {
                     </div>
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
                     <div id="vessel-change-alert"></div>
-                    ${this.state.vessels.length > 1 ? `
+                    ${isOwner && this.state.vessels.length > 1 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
                         <div class="field">
                             <label for="vessel-select">${t('tripDetail.vessel.changeLabel')}</label>
@@ -98,7 +102,7 @@ const TripDetailPage = {
                     <h3>${t('tripDetail.iceContact.heading')}</h3>
                     <p class="mb-0">${trip.ice_contact_id ? escapeHtml(this.iceContactLabel(trip.ice_contact_id)) : escapeHtml(t('tripDetail.iceContact.allContacts'))}</p>
                     <div id="ice-contact-change-alert"></div>
-                    ${this.state.iceContacts.length > 0 ? `
+                    ${isOwner ? (this.state.iceContacts.length > 0 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
                         <div class="field">
                             <label for="ice-contact-select">${t('tripDetail.iceContact.changeLabel')}</label>
@@ -112,7 +116,7 @@ const TripDetailPage = {
                     <div class="alert alert-info" style="margin-top: var(--space-3);">
                         ${escapeHtml(t('createTrip.iceContact.noneRegistered'))}
                         <a href="#/ice-contacts">${escapeHtml(t('createTrip.iceContact.addLink'))}</a>
-                    </div>`}
+                    </div>`) : ''}
                 </div>
 
                 <div class="card">
@@ -120,6 +124,7 @@ const TripDetailPage = {
                     <div id="routes-alert"></div>
                     <div id="routes-list"></div>
                     <div id="trip-route-map" class="map-container"></div>
+                    ${isOwner ? `
                     <hr class="section-divider">
                     <h3>${t('tripDetail.routes.addAltHeading')}</h3>
                     <div class="route-mode-toggle btn-group">
@@ -131,12 +136,13 @@ const TripDetailPage = {
                         <label for="new-route-reason">${t('tripDetail.routes.reasonOptionalLabel')}</label>
                         <input type="text" id="new-route-reason" placeholder="${t('tripDetail.routes.reasonPlaceholder')}">
                     </div>
-                    <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ ${t('tripDetail.routes.addButton')}</button>
+                    <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ ${t('tripDetail.routes.addButton')}</button>` : ''}
                 </div>
 
                 <div class="card">
                     <h3>${t('tripDetail.crew.heading')}</h3>
                     <div id="crew-list-container"></div>
+                    ${isOwner ? `
                     <hr class="section-divider">
                     <h3>${t('tripDetail.crew.inviteHeading')}</h3>
                     <div id="invite-alert"></div>
@@ -150,31 +156,31 @@ const TripDetailPage = {
                             <input type="text" id="invite-name">
                         </div>
                     </div>
-                    <button class="btn btn-secondary" type="button" id="invite-crew-btn">${t('tripDetail.crew.sendInviteButton')}</button>
+                    <button class="btn btn-secondary" type="button" id="invite-crew-btn">${t('tripDetail.crew.sendInviteButton')}</button>` : ''}
                 </div>
             </div>`;
 
-        this.renderActions(trip);
-        this.renderRoutes(routes);
-        this.renderCrew(crew);
+        if (isOwner) this.renderActions(trip);
+        this.renderRoutes(routes, isOwner);
+        this.renderCrew(crew, isOwner);
         if (vessel?.photo_path) {
             this.loadVesselPhoto(vessel.id);
         }
 
-        document.getElementById('invite-crew-btn').addEventListener('click', () => this.handleInviteCrew());
-        document.getElementById('add-route-btn').addEventListener('click', () => this.handleAddRoute());
+        document.getElementById('invite-crew-btn')?.addEventListener('click', () => this.handleInviteCrew());
+        document.getElementById('add-route-btn')?.addEventListener('click', () => this.handleAddRoute());
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
         document.getElementById('ice-contact-change-btn')?.addEventListener('click', () => this.handleChangeIceContact());
 
-        document.getElementById('new-route-mode-windy').addEventListener('click', () => {
+        document.getElementById('new-route-mode-windy')?.addEventListener('click', () => {
             this.state.newRouteMode = 'windy';
             this.renderNewRouteBody();
         });
-        document.getElementById('new-route-mode-manual').addEventListener('click', () => {
+        document.getElementById('new-route-mode-manual')?.addEventListener('click', () => {
             this.state.newRouteMode = 'manual';
             this.renderNewRouteBody();
         });
-        this.renderNewRouteBody();
+        if (isOwner) this.renderNewRouteBody();
     },
 
     renderNewRouteBody() {
@@ -363,7 +369,7 @@ const TripDetailPage = {
         document.getElementById('delete-trip-btn').addEventListener('click', () => this.handleDeleteTrip());
     },
 
-    renderRoutes(routes) {
+    renderRoutes(routes, isOwner = true) {
         const list = document.getElementById('routes-list');
         routes = routes || [];
 
@@ -375,12 +381,13 @@ const TripDetailPage = {
                     <div class="route-item__title">
                         <span class="route-color-dot" style="background:${this.ROUTE_COLORS[i % this.ROUTE_COLORS.length]};"></span>
                         ${i === 0 ? t('tripDetail.routes.mainRoute') : t('tripDetail.routes.altRoute', { n: i })}
+                        ${isOwner ? `
                         <div class="btn-group" style="margin-left:auto;">
                             <button class="btn btn-ghost btn-sm move-route-up" type="button" data-id="${r.id}" ${i === 0 ? 'disabled' : ''} title="${t('tripDetail.routes.moveUpTitle')}">↑</button>
                             <button class="btn btn-ghost btn-sm move-route-down" type="button" data-id="${r.id}" ${i === routes.length - 1 ? 'disabled' : ''} title="${t('tripDetail.routes.moveDownTitle')}">↓</button>
                             <button class="btn btn-ghost btn-sm edit-route-btn" type="button" data-id="${r.id}">${t('common.edit')}</button>
                             <button class="btn btn-danger btn-sm delete-route-btn" type="button" data-id="${r.id}">${t('common.remove')}</button>
-                        </div>
+                        </div>` : ''}
                     </div>
                     <div class="route-item__view" data-id="${r.id}">
                         ${r.reason ? `<div class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(r.reason)}</div>` : ''}
@@ -635,7 +642,7 @@ const TripDetailPage = {
         await this.load(document.getElementById('page-content'));
     },
 
-    renderCrew(crew) {
+    renderCrew(crew, isOwner = true) {
         const container = document.getElementById('crew-list-container');
 
         if (!crew || crew.length === 0) {
@@ -655,17 +662,19 @@ const TripDetailPage = {
                             ${c.email ? escapeHtml(c.email) : ''}${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
                             ${c.ice_contact ? ` · ${t('tripDetail.crew.iceContactLabel', { contact: escapeHtml(c.ice_contact) })}` : ''}
                         </span>
+                        ${isOwner ? `
                         <label class="text-muted" style="font-size: var(--font-size-sm); display:block; margin-top: var(--space-1);">
                             <input type="file" class="crew-photo-input" data-crew-id="${c.id}" accept="image/jpeg,image/png" style="max-width: 220px;">
-                        </label>
+                        </label>` : ''}
                     </div>
                     <div class="stack" style="flex-direction: row; align-items: center; gap: var(--space-3);">
                         <span class="crew-status ${accepted ? 'crew-status--accepted' : 'crew-status--pending'}">
                             ${accepted ? t('tripDetail.crew.accepted') : t('tripDetail.crew.pending')}
                         </span>
+                        ${isOwner ? `
                         <button class="btn btn-ghost btn-sm crew-photo-submit" data-crew-id="${c.id}" type="button">${c.photo_path ? t('tripDetail.crew.changePhoto') : t('tripDetail.crew.addPhoto')}</button>
                         ${!accepted && c.invitation_token ? `<button class="btn btn-ghost btn-sm copy-link-btn" data-token="${escapeHtml(c.invitation_token)}" type="button">${t('tripDetail.crew.copyLink')}</button>` : ''}
-                        <button class="btn btn-danger btn-sm remove-crew-btn" data-crew-id="${c.id}" type="button">${t('common.remove')}</button>
+                        <button class="btn btn-danger btn-sm remove-crew-btn" data-crew-id="${c.id}" type="button">${t('common.remove')}</button>` : ''}
                     </div>
                 </div>`;
         }).join('')}</div>`;

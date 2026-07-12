@@ -114,7 +114,12 @@
     "grace": "Marginal: {label}",
     "graceHours": "{hours} tim",
     "iceNotified": "⚠ ICE-kontakt notifierad",
-    "view": "Visa"
+    "view": "Visa",
+    "role": {
+      "crew": "Besättning",
+      "ice": "ICE-kontakt"
+    },
+    "readOnly": "Skrivskyddad"
   },
   "login": {
     "tagline": "Trygg utflykt, tryggt hemkomst",
@@ -700,6 +705,10 @@
     "loadFailed": "Kunde inte hämta resan.",
     "backToDashboard": "Tillbaka till mina resor",
     "unknownVessel": "Okänd båt",
+    "readOnlyBanner": {
+      "crew": "Du visar den här resan som inbjuden besättningsmedlem. Den är skrivskyddad för dig.",
+      "ice": "Du visar den här resan som dess ICE-kontakt. Den är skrivskyddad för dig."
+    },
     "header": {
       "meta": "Avgång {departure} · Ankomst {arrival} · Marginal {grace}",
       "iceNotified": "ICE-kontakt notifierad"

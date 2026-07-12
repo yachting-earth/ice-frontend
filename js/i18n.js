@@ -125,7 +125,12 @@ const EN_INLINE = {
     "grace": "Grace period: {label}",
     "graceHours": "{hours} h",
     "iceNotified": "⚠ ICE contact notified",
-    "view": "View"
+    "view": "View",
+    "role": {
+      "crew": "Crew",
+      "ice": "ICE contact"
+    },
+    "readOnly": "Read-only"
   },
   "login": {
     "tagline": "Safe voyage, safe return",
@@ -711,6 +716,10 @@ const EN_INLINE = {
     "loadFailed": "Could not fetch the trip.",
     "backToDashboard": "Back to my trips",
     "unknownVessel": "Unknown vessel",
+    "readOnlyBanner": {
+      "crew": "You're viewing this trip as an invited crew member. It's read-only for you.",
+      "ice": "You're viewing this trip as its ICE contact. It's read-only for you."
+    },
     "header": {
       "meta": "Departure {departure} · Arrival {arrival} · Grace period {grace}",
       "iceNotified": "ICE contact notified"

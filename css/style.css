@@ -506,6 +506,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 .badge-log-info { color: var(--color-info); background: var(--color-info-bg); }
 .badge-log-warning { color: var(--color-warning); background: var(--color-warning-bg); }
 .badge-log-error { color: var(--color-danger); background: var(--color-danger-bg); }
+.badge-role-crew { color: var(--color-info); background: var(--color-info-bg); }
+.badge-role-ice { color: var(--color-warning); background: var(--color-warning-bg); }
 
 /* ==================== Admin dashboard ==================== */
 
@@ -695,6 +697,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .trip-card:hover { box-shadow: var(--shadow-sm); border-color: var(--color-accent); }
 .trip-card > .stack { min-width: 0; }
+
+.trip-card--invited {
+    background: var(--color-info-bg);
+    border-color: var(--color-info);
+    border-style: dashed;
+}
 
 .trip-card__top {
     display: flex;

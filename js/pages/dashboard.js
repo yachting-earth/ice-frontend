@@ -1,7 +1,6 @@
 const DashboardPage = {
     state: {
-        statusFilter: null,
-        vesselsById: {}
+        statusFilter: null
     },
 
     async render(container) {
@@ -21,11 +20,6 @@ const DashboardPage = {
             </div>`;
 
         this.renderFilters(container);
-
-        const vessels = await apiRequest('/vessels');
-        if (vessels.success) {
-            this.state.vesselsById = Object.fromEntries(vessels.data.map((v) => [v.id, v.vessel_name]));
-        }
 
         await this.loadTrips();
         this.checkIceContacts();
@@ -147,17 +141,20 @@ const DashboardPage = {
     },
 
     renderTripCard(trip) {
-        const vesselName = this.state.vesselsById[trip.vessel_id] || t('dashboard.vesselFallback', { id: trip.vessel_id });
+        const vesselName = trip.vessel_name || t('dashboard.vesselFallback', { id: trip.vessel_id });
         const graceLabel = formatGracePeriod(trip.grace_period_seconds) !== String(trip.grace_period_seconds)
             ? formatGracePeriod(trip.grace_period_seconds)
             : t('dashboard.graceHours', { hours: Math.round(trip.grace_period_seconds / 3600) });
+        const isInvited = trip.viewer_role && trip.viewer_role !== 'owner';
 
         return `
-            <div class="trip-card">
+            <div class="trip-card${isInvited ? ' trip-card--invited' : ''}">
                 <div class="stack" style="flex:1; gap: 0.35rem;">
                     <div class="trip-card__top">
                         <span class="trip-card__title">${escapeHtml(vesselName)}</span>
                         <span class="badge badge-${trip.status}">${escapeHtml(t('trip.status.' + trip.status) || trip.status)}</span>
+                        ${isInvited ? `<span class="badge badge-role-${trip.viewer_role}">${escapeHtml(t('dashboard.role.' + trip.viewer_role))}</span>` : ''}
+                        ${isInvited ? `<span class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(t('dashboard.readOnly'))}</span>` : ''}
                     </div>
                     <div class="trip-card__meta">
                         <span>${escapeHtml(t('dashboard.departure', { datetime: formatDateTime(trip.departure_scheduled) }))}</span>
