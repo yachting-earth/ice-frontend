@@ -135,7 +135,12 @@ const IcePortalPage = {
                 </div>` : ''}
 
                 <div class="card">
-                    <h3>${escapeHtml(t('icePortal.routes.heading'))}</h3>
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap: var(--space-3); flex-wrap: wrap;">
+                        <h3 class="mb-0">${escapeHtml(t('icePortal.routes.heading'))}</h3>
+                        ${role === 'sar' && routes && routes.length > 0
+                            ? `<a class="btn btn-secondary no-print" href="${CONFIG.API_BASE_URL}/trips/${encodeURIComponent(this.state.tripId)}/routes/gpx?token=${encodeURIComponent(this.state.token)}" download>${escapeHtml(t('icePortal.routes.downloadGpx'))}</a>`
+                            : ''}
+                    </div>
                     <div id="portal-routes-list"></div>
                     <div id="portal-route-map" class="map-container"></div>
                 </div>

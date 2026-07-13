@@ -480,7 +480,8 @@
       "primary": "Huvudrutt",
       "alternate": "Alternativ rutt {order}",
       "mapLabel": "Rutt {order}",
-      "noMap": "Ingen rutt att visa"
+      "noMap": "Ingen rutt att visa",
+      "downloadGpx": "Ladda ner GPX"
     },
     "crew": {
       "heading": "Besättning ombord",

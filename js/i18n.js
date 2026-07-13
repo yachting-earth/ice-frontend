@@ -491,7 +491,8 @@ const EN_INLINE = {
       "primary": "Primary route",
       "alternate": "Alternate route {order}",
       "mapLabel": "Route {order}",
-      "noMap": "No route to display"
+      "noMap": "No route to display",
+      "downloadGpx": "Download GPX"
     },
     "crew": {
       "heading": "Crew aboard",
