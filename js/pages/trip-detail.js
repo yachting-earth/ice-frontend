@@ -826,8 +826,15 @@ const TripDetailPage = {
             return;
         }
 
+        const currentUserId = Auth.getUser().id;
+
         container.innerHTML = `<div class="crew-list">${crew.map((c) => {
             const accepted = !!c.accepted_at;
+            // Only the crew member who owns this profile (i.e. is logged in
+            // as the registered user it's linked to) may add/change its
+            // photo - the skipper can see and manage the crew list, but
+            // photo management is that individual's own business.
+            const isSelf = c.registered_user_id != null && String(c.registered_user_id) === String(currentUserId);
             return `
                 <div class="crew-row">
                     <img class="crew-photo" data-crew-id="${c.id}" alt=""
@@ -838,7 +845,7 @@ const TripDetailPage = {
                             ${c.email ? escapeHtml(c.email) : ''}${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
                             ${c.ice_contact ? ` · ${t('tripDetail.crew.iceContactLabel', { contact: escapeHtml(c.ice_contact) })}` : ''}
                         </span>
-                        ${isOwner ? `
+                        ${isSelf ? `
                         <label class="text-muted" style="font-size: var(--font-size-sm); display:block; margin-top: var(--space-1);">
                             <input type="file" class="crew-photo-input" data-crew-id="${c.id}" accept="image/jpeg,image/png" style="max-width: 220px;">
                         </label>` : ''}
@@ -847,8 +854,8 @@ const TripDetailPage = {
                         <span class="crew-status ${accepted ? 'crew-status--accepted' : 'crew-status--pending'}">
                             ${accepted ? t('tripDetail.crew.accepted') : t('tripDetail.crew.pending')}
                         </span>
+                        ${isSelf ? `<button class="btn btn-ghost btn-sm crew-photo-submit" data-crew-id="${c.id}" type="button">${c.photo_path ? t('tripDetail.crew.changePhoto') : t('tripDetail.crew.addPhoto')}</button>` : ''}
                         ${isOwner ? `
-                        <button class="btn btn-ghost btn-sm crew-photo-submit" data-crew-id="${c.id}" type="button">${c.photo_path ? t('tripDetail.crew.changePhoto') : t('tripDetail.crew.addPhoto')}</button>
                         ${!accepted && c.invitation_token ? `<button class="btn btn-ghost btn-sm copy-link-btn" data-token="${escapeHtml(c.invitation_token)}" type="button">${t('tripDetail.crew.copyLink')}</button>` : ''}
                         <button class="btn btn-danger btn-sm remove-crew-btn" data-crew-id="${c.id}" type="button">${t('common.remove')}</button>` : ''}
                     </div>
