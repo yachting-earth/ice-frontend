@@ -77,7 +77,7 @@ const Router = {
         const { route, params, query } = matched;
 
         if (route.auth && !Auth.isAuthenticated()) {
-            location.hash = '#/login';
+            location.hash = '#/login?redirect=' + encodeURIComponent(location.hash);
             return;
         }
         if (route.guestOnly && Auth.isAuthenticated()) {

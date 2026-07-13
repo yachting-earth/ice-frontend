@@ -1,5 +1,6 @@
 const LoginPage = {
-    async render(container) {
+    async render(container, params, query) {
+        this.redirectTarget = LoginPage.safeRedirect(query && query.get('redirect'));
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
@@ -58,6 +59,12 @@ const LoginPage = {
             this.handleSarSubmit();
         });
         this.setupTabs();
+    },
+
+    // Only accept an in-app hash destination - guards against an open
+    // redirect via a crafted ?redirect= value.
+    safeRedirect(value) {
+        return value && value.startsWith('#/') && !value.startsWith('#//') ? value : null;
     },
 
     setupTabs() {
@@ -119,7 +126,7 @@ const LoginPage = {
                 localStorage.setItem('ye_lang', response.data.locale);
                 await I18n.load(response.data.locale);
             }
-            location.hash = '#/dashboard';
+            location.hash = this.redirectTarget || '#/dashboard';
             return;
         }
 
