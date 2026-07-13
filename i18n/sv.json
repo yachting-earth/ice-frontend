@@ -389,7 +389,7 @@
       "passwordHint": "Minst 8 tecken, en stor bokstav och en siffra.",
       "confirmPasswordLabel": "Bekräfta lösenord",
       "deleteAfterTripLabel": "Radera mitt konto och mina uppgifter automatiskt när resan/resorna jag är nödkontakt för är avslutade",
-      "retentionNote": "Som standard behåller vi ditt konto permanent så att du kan logga in igen vid framtida resor och uppdatera dina uppgifter. Kryssa i rutan ovan om du istället vill att kontot och dina uppgifter raderas automatiskt en tid efter att resan är över.",
+      "retentionNote": "Som standard behåller vi ditt konto 18 månader så att du kan logga in igen vid framtida resor och uppdatera dina uppgifter. Kryssa i rutan ovan om du istället vill att kontot och dina uppgifter raderas automatiskt 30 dagar efter att resan är över.",
       "haveAccount": "Har du redan ett konto? {loginLink} och öppna länken igen så kopplas bekräftelsen till kontot."
     },
     "loginLink": "Logga in",

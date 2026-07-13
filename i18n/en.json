@@ -445,7 +445,7 @@
     "subtitle": "Skippers you're an ICE (In Case of Emergency) contact for, and your own details",
     "deletePolicyHeading": "Delete account after the trip",
     "deletePolicyLabel": "Automatically delete my account and my details once the trip(s) I'm an ICE contact for have ended",
-    "deletePolicyHint": "By default your account is kept permanently. Check the box if you'd rather have it deleted automatically some time after you're no longer an ICE contact for any active trip.",
+    "deletePolicyHint": "By default your account is kept for 18 month. Check the box if you'd rather have it deleted automatically some time after you're no longer an ICE contact for any active trip.",
     "loading": "Loading...",
     "policySaveFailed": "Could not save the setting.",
     "policyEnabled": "Your account will now be automatically deleted once the trip(s) have ended.",
