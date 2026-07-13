@@ -895,7 +895,8 @@
       "lead": "A voyage may include several planned routes. Here is an example of three.",
       "note": "Demonstration data — not a live vessel position.",
       "ariaLabel": "Example map showing three sample sailing routes along a coastline",
-      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternative)"]
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternative)"],
+      "descriptions": ["Primary route", "If the wind shifts westerly", "If the wind shifts north and picks up above 35 knots"]
     },
     "worst": {
       "heading": "If the worst happens",

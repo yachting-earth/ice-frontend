@@ -895,7 +895,8 @@
       "lead": "En resa kan innehålla flera planerade rutter. Här är ett exempel med tre.",
       "note": "Demonstrationsdata — inte fartygets faktiska position.",
       "ariaLabel": "Exempelkarta som visar tre exempel på segelrutter längs en kust",
-      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"]
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"],
+      "descriptions": ["Huvudrutt", "Om vinden vrider västlig", "Om vinden vrider nordlig och ökar över 35 knop"]
     },
     "worst": {
       "heading": "Om det värsta skulle hända",

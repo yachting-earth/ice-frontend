@@ -518,6 +518,36 @@ html { scroll-behavior: smooth; }
     box-shadow: var(--shadow-sm);
     background: var(--color-primary-light);
 }
+.landing-page .map-demo__legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-5);
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+}
+.landing-page .map-demo__legend-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+.landing-page .map-demo__legend-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    align-self: center;
+}
+.landing-page .map-demo__legend-name {
+    color: var(--color-text);
+    font-weight: 600;
+}
+.landing-page .map-demo__legend-desc {
+    color: var(--color-text-faint);
+}
 .landing-page .map-demo__note {
     margin-top: var(--space-2);
     font-size: var(--font-size-sm);

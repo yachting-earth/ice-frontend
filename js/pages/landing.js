@@ -163,6 +163,7 @@ const LandingPage = {
                   </div>
                   <div class="map-demo reveal">
                     <div id="landing-map" class="map-demo__canvas" role="img" aria-label="${escapeHtml(t('landing.mapDemo.ariaLabel'))}"></div>
+                    <ul class="map-demo__legend" id="landing-map-legend"></ul>
                     <p class="map-demo__note">${escapeHtml(t('landing.mapDemo.note'))}</p>
                   </div>
                 </section>
@@ -304,11 +305,22 @@ const LandingPage = {
         if (!container || typeof L === 'undefined') return;
 
         const labels = t('landing.mapDemo.routes');
+        const descriptions = t('landing.mapDemo.descriptions');
         const SAMPLE_ROUTES = [
             { color: '#1e88a8', coordinates: [[57.669571735, 11.7378363923], [57.8220132722, 10.5518633239], [56.97163103, 2.13324203163], [58.7479720183, -3.04989952648]] },
             { color: '#a06600', coordinates: [[57.6660463167, 11.7070585004], [57.81265086, 10.5101041999], [57.5483343434, 6.78606001414], [58.0119639312, 7.4819591226]] },
             { color: '#b3261e', coordinates: [[57.6657157323, 11.6708460485], [57.8093953172, 10.473891748], [56.5705299445, 3.16116796611], [53.5628662307, 0.186186632942]] }
         ];
+
+        const legend = document.getElementById('landing-map-legend');
+        if (legend) {
+            legend.innerHTML = SAMPLE_ROUTES.map((route, i) => `
+                <li class="map-demo__legend-item">
+                    <span class="map-demo__legend-dot" style="background:${route.color}"></span>
+                    <span class="map-demo__legend-name">${escapeHtml(labels[i] || '')}</span>
+                    <span class="map-demo__legend-desc">${escapeHtml(descriptions[i] || '')}</span>
+                </li>`).join('');
+        }
 
         const map = L.map(container, { scrollWheelZoom: false }).setView([59.2, 18.5], 7);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
