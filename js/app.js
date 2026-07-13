@@ -210,29 +210,117 @@ function renderTopbar() {
     }
 }
 
-// Language selector shared by both the authed and guest topbars. A plain
-// <select> (no framework, no fancy dropdown) that persists the choice via
-// I18n.setLang - which itself reloads the page.
+// Flag icons for the language switcher, drawn as inline SVG (no image
+// assets to fetch/host) - simplified but recognizable constructions rather
+// than exact flag-spec reproductions, since they only ever render at ~22px.
+const LANG_META = {
+    en: {
+        name: 'English',
+        flag: '<svg viewBox="0 0 30 20" class="lang-flag" aria-hidden="true" focusable="false">'
+            + '<rect width="30" height="20" fill="#012169"/>'
+            + '<path d="M0,0 L30,20 M30,0 L0,20" stroke="#fff" stroke-width="4"/>'
+            + '<path d="M0,0 L30,20 M30,0 L0,20" stroke="#C8102E" stroke-width="1.6"/>'
+            + '<path d="M15,0 V20 M0,10 H30" stroke="#fff" stroke-width="7"/>'
+            + '<path d="M15,0 V20 M0,10 H30" stroke="#C8102E" stroke-width="4"/>'
+            + '</svg>'
+    },
+    sv: {
+        name: 'Svenska',
+        flag: '<svg viewBox="0 0 30 20" class="lang-flag" aria-hidden="true" focusable="false">'
+            + '<rect width="30" height="20" fill="#006AA7"/>'
+            + '<rect x="10" width="4" height="20" fill="#FECC00"/>'
+            + '<rect y="8" width="30" height="4" fill="#FECC00"/>'
+            + '</svg>'
+    }
+};
+
+function langFlag(lang) {
+    return (LANG_META[lang] || LANG_META[I18n.DEFAULT]).flag;
+}
+
+function langName(lang) {
+    return (LANG_META[lang] || {}).name || lang.toUpperCase();
+}
+
+// Language selector shared by both the authed and guest topbars. A small
+// custom dropdown (flags can't be put inside native <option> elements)
+// that persists the choice via I18n.setLang - which itself reloads the page.
 function renderLangSelector() {
     const current = I18n._lang || I18n.getLang();
-    const options = I18n.SUPPORTED.map((lang) =>
-        `<option value="${lang}"${lang === current ? ' selected' : ''}>${lang.toUpperCase()}</option>`
-    ).join('');
-    return `<select class="topbar__lang" id="lang-select" aria-label="Language">${options}</select>`;
+    const options = I18n.SUPPORTED.map((lang) => `
+        <li role="none">
+            <button type="button" class="lang-switcher__option${lang === current ? ' lang-switcher__option--active' : ''}" data-lang="${lang}" role="option" aria-selected="${lang === current}">
+                ${langFlag(lang)}<span>${escapeHtml(langName(lang))}</span>
+            </button>
+        </li>`).join('');
+    return `
+        <div class="lang-switcher" id="lang-switcher">
+            <button type="button" class="lang-switcher__toggle" id="lang-switcher-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Language: ${escapeHtml(langName(current))}">
+                ${langFlag(current)}
+            </button>
+            <ul class="lang-switcher__menu" id="lang-switcher-menu" role="listbox" hidden>${options}</ul>
+        </div>`;
 }
 
 function setupLangSelector() {
-    const select = document.getElementById('lang-select');
-    if (!select) return;
-    select.addEventListener('change', async () => {
-        const lang = select.value;
-        if (Auth.isAuthenticated()) {
-            // Await the save before reloading - I18n.setLang() below reloads
-            // the page, which would otherwise cancel this in-flight request.
-            await apiRequest('/user/profile', { method: 'PUT', body: JSON.stringify({ locale: lang }) });
+    const switcher = document.getElementById('lang-switcher');
+    if (!switcher) return;
+    const toggle = document.getElementById('lang-switcher-toggle');
+    const menu = document.getElementById('lang-switcher-menu');
+
+    const closeMenu = () => {
+        menu.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = menu.hidden;
+        // Close any other open switcher (desktop + mobile menu both render one).
+        document.querySelectorAll('.lang-switcher__menu').forEach((m) => { m.hidden = true; });
+        document.querySelectorAll('.lang-switcher__toggle').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+        if (willOpen) {
+            menu.hidden = false;
+            toggle.setAttribute('aria-expanded', 'true');
         }
-        I18n.setLang(lang);
     });
+
+    menu.querySelectorAll('.lang-switcher__option').forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const lang = btn.dataset.lang;
+            closeMenu();
+            if (Auth.isAuthenticated()) {
+                // Await the save before reloading - I18n.setLang() below reloads
+                // the page, which would otherwise cancel this in-flight request.
+                await apiRequest('/user/profile', { method: 'PUT', body: JSON.stringify({ locale: lang }) });
+            }
+            I18n.setLang(lang);
+        });
+    });
+
+    // Bound once globally (not per render) so re-rendering the topbar on
+    // every route change never stacks duplicate document-level listeners.
+    if (!window.__langSwitcherGlobalListenersBound) {
+        window.__langSwitcherGlobalListenersBound = true;
+        const closeAllMenus = () => {
+            document.querySelectorAll('.lang-switcher__menu:not([hidden])').forEach((openMenu) => {
+                openMenu.hidden = true;
+                const parent = openMenu.closest('.lang-switcher');
+                const t = parent && parent.querySelector('.lang-switcher__toggle');
+                if (t) t.setAttribute('aria-expanded', 'false');
+            });
+        };
+        document.addEventListener('click', (e) => {
+            document.querySelectorAll('.lang-switcher__menu:not([hidden])').forEach((openMenu) => {
+                const parent = openMenu.closest('.lang-switcher');
+                if (parent && !parent.contains(e.target)) closeAllMenus();
+            });
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAllMenus();
+        });
+    }
 }
 
 // The badge photo is auth-protected, so a plain <img src> won't do (no way

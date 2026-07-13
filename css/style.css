@@ -233,6 +233,77 @@ ul { margin: 0; padding: 0; list-style: none; }
     box-shadow: 0 0 0 2px var(--color-primary-dark);
 }
 
+/* Language switcher (flag dropdown) */
+.lang-switcher {
+    position: relative;
+    display: inline-flex;
+}
+
+.lang-switcher__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: var(--space-1);
+    cursor: pointer;
+    line-height: 0;
+}
+
+.lang-switcher__toggle:hover,
+.lang-switcher__toggle[aria-expanded="true"] {
+    border-color: var(--color-border);
+    background: var(--color-primary-light);
+}
+
+.lang-flag {
+    width: 22px;
+    height: 15px;
+    border-radius: 2px;
+    display: block;
+    box-shadow: 0 0 0 1px rgba(20, 32, 39, 0.15);
+}
+
+.lang-switcher__menu {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    z-index: 30;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 20px rgba(20, 32, 39, 0.15);
+    padding: var(--space-1);
+    margin: 0;
+    list-style: none;
+    min-width: 140px;
+}
+
+.lang-switcher__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    background: none;
+    border: none;
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.lang-switcher__option:hover {
+    background: var(--color-primary-light);
+}
+
+.lang-switcher__option--active {
+    font-weight: 650;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
     .topbar {
@@ -289,6 +360,16 @@ ul { margin: 0; padding: 0; list-style: none; }
         width: 100%;
         padding: var(--space-3) var(--space-4);
         text-align: left;
+    }
+
+    .topbar__menu .lang-switcher {
+        align-self: flex-start;
+        margin: var(--space-2) var(--space-4);
+    }
+
+    .topbar__menu .lang-switcher__menu {
+        left: 0;
+        right: auto;
     }
 }
 
