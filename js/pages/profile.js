@@ -19,7 +19,7 @@ const ProfilePage = {
                     </div>
                     <div id="photo-alert"></div>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
-                        <img id="profile-photo-preview" alt=""
+                        <img id="profile-photo-preview" class="lightbox-trigger" alt=""
                              style="width:96px;height:96px;border-radius:50%;object-fit:cover;background:var(--color-bg);" hidden>
                         <div class="field" style="flex:1;">
                             <label for="profile-photo">${escapeHtml(t('profile.photoChangeLabel'))}</label>
@@ -83,6 +83,7 @@ const ProfilePage = {
             if (file) {
                 preview.src = URL.createObjectURL(file);
                 preview.hidden = false;
+                bindLightboxImages(document);
             }
         });
         document.getElementById('photo-submit').addEventListener('click', () => this.handlePhotoSubmit());
@@ -185,6 +186,7 @@ const ProfilePage = {
             if (!response.ok) return;
             preview.src = URL.createObjectURL(await response.blob());
             preview.hidden = false;
+            bindLightboxImages(document);
         } catch (err) { /* leave the preview hidden */ }
     },
 

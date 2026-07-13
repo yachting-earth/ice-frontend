@@ -101,6 +101,7 @@
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - Min sida",
+    "lightboxClose": "Stäng helskärmsbild",
     "renderError": "Något gick fel när sidan skulle visas. Försök ladda om."
   },
   "dashboard": {

@@ -391,6 +391,45 @@ function escapeHtml(value) {
     return div.innerHTML;
 }
 
+// Shared full-size image viewer for vessel/crew/skipper photos. Reuses
+// whatever URL is already on the triggering <img> (a blob: URL for the
+// auth-protected fetch-as-blob photos, or a direct token-qualified URL on
+// the ICE portal) rather than re-fetching the image.
+function openLightbox(src, alt = '') {
+    closeLightbox();
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.id = 'lightbox-overlay';
+    overlay.innerHTML = `
+        <button type="button" class="lightbox-overlay__close" aria-label="${escapeHtml(t('app.lightboxClose'))}">&times;</button>
+        <img class="lightbox-overlay__img" src="${src}" alt="${escapeHtml(alt)}">`;
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('lightbox-overlay__close')) closeLightbox();
+    });
+    document.addEventListener('keydown', lightboxKeydown);
+    document.body.appendChild(overlay);
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox-overlay')?.remove();
+    document.removeEventListener('keydown', lightboxKeydown);
+}
+
+function lightboxKeydown(e) {
+    if (e.key === 'Escape') closeLightbox();
+}
+
+// Wires click-to-expand onto every already-rendered `<img class="lightbox-trigger">`
+// under root that currently has a src. Safe to call repeatedly (e.g. once a
+// blob photo finishes loading asynchronously) - each image is bound once.
+function bindLightboxImages(root) {
+    root.querySelectorAll('img.lightbox-trigger').forEach((img) => {
+        if (img.dataset.lightboxBound || !img.src) return;
+        img.dataset.lightboxBound = 'true';
+        img.addEventListener('click', () => openLightbox(img.src, img.alt));
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     const lang = I18n.getLang();
     document.documentElement.lang = lang;

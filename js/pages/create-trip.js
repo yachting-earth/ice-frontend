@@ -182,7 +182,7 @@ const CreateTripPage = {
                     <label for="vessel-photo">${escapeHtml(t('createTrip.vessel.photoLabel'))}</label>
                     <input type="file" id="vessel-photo" accept="image/jpeg,image/png">
                     <small>${escapeHtml(t('createTrip.vessel.photoHint'))}</small>
-                    <img id="vessel-photo-preview" alt="" hidden
+                    <img id="vessel-photo-preview" class="lightbox-trigger" alt="" hidden
                          style="margin-top: var(--space-2); width: 96px; height: 96px; border-radius: var(--radius-md); object-fit: cover;">
                 </div>
                 <button class="btn btn-secondary btn-sm" type="button" id="save-vessel-btn">${escapeHtml(t('createTrip.vessel.saveButton'))}</button>
@@ -202,6 +202,7 @@ const CreateTripPage = {
             if (file) {
                 preview.src = URL.createObjectURL(file);
                 preview.hidden = false;
+                bindLightboxImages(document);
             } else {
                 preview.hidden = true;
             }

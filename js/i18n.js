@@ -112,6 +112,7 @@ const EN_INLINE = {
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - My page",
+    "lightboxClose": "Close full-size image",
     "renderError": "Something went wrong showing this page. Try reloading."
   },
   "dashboard": {

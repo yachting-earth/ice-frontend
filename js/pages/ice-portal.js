@@ -81,8 +81,8 @@ const IcePortalPage = {
                     <h3>${escapeHtml(t('icePortal.skipper.heading'))}</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         ${skipper?.photo_path
-                            ? `<img src="${CONFIG.API_BASE_URL}/users/${skipper.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
-                                    alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">`
+                            ? `<img class="lightbox-trigger" src="${CONFIG.API_BASE_URL}/users/${skipper.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
+                                    alt="${escapeHtml(skipper?.name || '')}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">`
                             : ''}
                         <p class="mb-0">
                             ${escapeHtml(skipper?.name || '–')}
@@ -100,8 +100,8 @@ const IcePortalPage = {
                     </p>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         ${vessel?.photo_path
-                            ? `<img src="${CONFIG.API_BASE_URL}/vessels/${vessel.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
-                                    alt="" style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">`
+                            ? `<img class="lightbox-trigger" src="${CONFIG.API_BASE_URL}/vessels/${vessel.id}/photo?trip=${encodeURIComponent(this.state.tripId)}&token=${encodeURIComponent(this.state.token)}"
+                                    alt="${escapeHtml(vessel?.vessel_name || '')}" style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">`
                             : ''}
                         <p class="mb-0">
                             ${escapeHtml(t('icePortal.vessel.nameLine', { name: vessel?.vessel_name || '–' }))}
@@ -150,6 +150,7 @@ const IcePortalPage = {
         this.renderRoutes(routes);
         this.renderCrew(crew);
         this.renderLog(audit_log);
+        bindLightboxImages(container);
 
         document.getElementById('portal-print-btn').addEventListener('click', () => window.print());
 
@@ -205,7 +206,7 @@ const IcePortalPage = {
         container.innerHTML = `<div class="crew-list">${accepted.map((c) => `
             <div class="crew-row">
                 ${c.photo_path
-                    ? `<img src="${CONFIG.API_BASE_URL}/photos/${c.id}?token=${token}" alt="${escapeHtml(c.name || '')}"
+                    ? `<img class="lightbox-trigger" src="${CONFIG.API_BASE_URL}/photos/${c.id}?token=${token}" alt="${escapeHtml(c.name || '')}"
                           style="width:48px;height:48px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);">`
                     : ''}
                 <div class="crew-row__info">

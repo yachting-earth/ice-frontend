@@ -98,7 +98,7 @@ const TripDetailPage = {
                 <div class="card">
                     <h3>${t('tripDetail.vessel.heading')}</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
-                        <img id="vessel-photo" alt=""
+                        <img id="vessel-photo" class="lightbox-trigger" alt="${escapeHtml(vessel?.vessel_name || '')}"
                             style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;background:var(--color-bg);" hidden>
                         <p class="mb-0">
                             ${escapeHtml(vessel?.vessel_name || '–')}
@@ -455,6 +455,7 @@ const TripDetailPage = {
             if (!response.ok) return;
             img.src = URL.createObjectURL(await response.blob());
             img.hidden = false;
+            bindLightboxImages(document);
         } catch (err) { /* leave the photo hidden */ }
     },
 
@@ -852,7 +853,7 @@ const TripDetailPage = {
             const isSelf = c.registered_user_id != null && String(c.registered_user_id) === String(currentUserId);
             return `
                 <div class="crew-row">
-                    <img class="crew-photo" data-crew-id="${c.id}" alt=""
+                    <img class="crew-photo lightbox-trigger" data-crew-id="${c.id}" alt="${escapeHtml(c.name || '')}"
                         style="width:40px;height:40px;border-radius:50%;object-fit:cover;margin-right:var(--space-3);background:var(--color-bg);" hidden>
                     <div class="crew-row__info">
                         <span class="crew-row__name">${escapeHtml(c.name || c.email || t('tripDetail.crew.unknownName'))}</span>
@@ -924,6 +925,7 @@ const TripDetailPage = {
                 if (!response.ok) return;
                 img.src = URL.createObjectURL(await response.blob());
                 img.hidden = false;
+                bindLightboxImages(container);
             } catch (err) { /* leave the photo hidden */ }
         });
     },
