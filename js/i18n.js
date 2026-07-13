@@ -458,6 +458,8 @@ const EN_INLINE = {
     "readOnlyNotice": "Read-only view for ICE contact and search and rescue (SAR)",
     "alertTriggered": "<strong>Alert triggered - arrival not confirmed in time</strong>",
     "printButton": "Print / save as PDF",
+    "expandImagesButton": "Expand all images",
+    "collapseImagesButton": "Collapse all images",
     "sarAccess": {
       "heading": "Credentials for search and rescue (SAR)",
       "description": "If a SAR authority needs read-only access to this trip, give them this reference and PIN to enter on the SAR lookup page.",

@@ -447,6 +447,8 @@
     "readOnlyNotice": "Skrivskyddad vy för nödkontakt (ICE) och sjöräddning (SAR)",
     "alertTriggered": "<strong>Larm utlöst - ankomst ej bekräftad i tid</strong>",
     "printButton": "Skriv ut / spara som PDF",
+    "expandImagesButton": "Expandera alla bilder",
+    "collapseImagesButton": "Dölj alla bilder",
     "sarAccess": {
       "heading": "Uppgifter för sjöräddning (SAR)",
       "description": "Om en sjöräddningsmyndighet behöver skrivskyddad åtkomst till den här resan, ge dem denna referens och PIN att ange på SAR-uppslagssidan.",

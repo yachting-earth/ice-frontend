@@ -6,7 +6,7 @@
  * No account/login involved; access is granted by the opaque token.
  */
 const IcePortalPage = {
-    state: { tripId: null, token: null, map: null },
+    state: { tripId: null, token: null, map: null, imagesExpanded: false },
 
     formatVesselDimensions(vessel) {
         return [
@@ -45,8 +45,9 @@ const IcePortalPage = {
     },
 
     renderPage(container, data) {
-        const { trip, vessel, crew, routes, skipper, audit_log } = data;
+        const { trip, vessel, crew, routes, skipper, audit_log, role } = data;
         const sarAccess = trip.sar_access;
+        this.state.imagesExpanded = false;
 
         container.innerHTML = `
             <div class="page">
@@ -60,7 +61,10 @@ const IcePortalPage = {
                             ${trip.ice_notified ? ' · ' + t('icePortal.alertTriggered') : ''}
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary no-print" id="portal-print-btn">${escapeHtml(t('icePortal.printButton'))}</button>
+                    <div class="no-print" style="display:flex; gap: var(--space-2); flex-wrap: wrap;">
+                        ${role === 'sar' ? `<button type="button" class="btn btn-secondary" id="portal-expand-images-btn">${escapeHtml(t('icePortal.expandImagesButton'))}</button>` : ''}
+                        <button type="button" class="btn btn-secondary" id="portal-print-btn">${escapeHtml(t('icePortal.printButton'))}</button>
+                    </div>
                 </div>
 
                 ${sarAccess ? `
@@ -153,6 +157,17 @@ const IcePortalPage = {
         bindLightboxImages(container);
 
         document.getElementById('portal-print-btn').addEventListener('click', () => window.print());
+
+        const expandImagesBtn = document.getElementById('portal-expand-images-btn');
+        if (expandImagesBtn) {
+            expandImagesBtn.addEventListener('click', () => {
+                this.state.imagesExpanded = !this.state.imagesExpanded;
+                container.classList.toggle('portal-images-expanded', this.state.imagesExpanded);
+                expandImagesBtn.textContent = this.state.imagesExpanded
+                    ? t('icePortal.collapseImagesButton')
+                    : t('icePortal.expandImagesButton');
+            });
+        }
 
         const pinToggle = document.getElementById('portal-sar-pin-toggle');
         if (pinToggle) {

@@ -838,6 +838,19 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .lightbox-overlay__close:hover { background: rgba(255, 255, 255, 0.28); }
 
+/* ==================== Portal image expand (SAR print) ==================== */
+
+.portal-images-expanded .lightbox-trigger {
+    width: 220px !important;
+    height: 220px !important;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+}
+
+.portal-images-expanded .card > div:has(> img.lightbox-trigger) {
+    flex-wrap: wrap;
+}
+
 /* ==================== Trip list ==================== */
 
 .trip-filters {
@@ -1184,6 +1197,14 @@ ul { margin: 0; padding: 0; list-style: none; }
 
     a[href]::after {
         content: none;
+    }
+
+    .portal-images-expanded .lightbox-trigger {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 350px;
+        object-fit: contain;
+        page-break-inside: avoid;
     }
 }
 
