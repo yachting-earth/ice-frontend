@@ -53,6 +53,8 @@ const EN_INLINE = {
     "MMSI_ALREADY_ACTIVE": "There is already an active trip for this vessel.",
     "INVALID_ETA": "Invalid arrival time.",
     "NOTIFICATION_FAILED": "Failed to send the notification.",
+    "DEPARTURE_EDIT_LOCKED": "The departure time can only be changed before the trip is activated.",
+    "ARRIVAL_EDIT_LOCKED": "The arrival time can only be changed before the trip is confirmed completed.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
     "CONTACT_TOO_MANY_FILES": "Too many attachments.",
     "CONTACT_FILE_TOO_LARGE": "One of your attachments is too large.",

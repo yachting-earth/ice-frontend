@@ -42,6 +42,8 @@
     "MMSI_ALREADY_ACTIVE": "Det finns redan en aktiv resa för detta fartyg.",
     "INVALID_ETA": "Ogiltig ankomsttid.",
     "NOTIFICATION_FAILED": "Kunde inte skicka aviseringen.",
+    "DEPARTURE_EDIT_LOCKED": "Avgångstiden kan bara ändras fram tills resan aktiveras.",
+    "ARRIVAL_EDIT_LOCKED": "Ankomsttiden kan bara ändras fram tills resan bekräftas avslutad.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
     "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
@@ -705,6 +707,16 @@
     "header": {
       "meta": "Avgång {departure} · Ankomst {arrival} · Marginal {grace}",
       "iceNotified": "ICE-kontakt notifierad"
+    },
+    "schedule": {
+      "heading": "Tidsschema",
+      "departureLabel": "Avgång (UTC)",
+      "arrivalLabel": "Ankomst (UTC)",
+      "changeButton": "Spara",
+      "departureLockedHint": "Avgångstiden kan inte längre ändras när resan har aktiverats.",
+      "arrivalLockedHint": "Ankomsttiden kan inte längre ändras när resan har bekräftats avslutad.",
+      "changeFailed": "Kunde inte ändra tidsschemat.",
+      "changed": "Tidsschemat har ändrats."
     },
     "vessel": {
       "heading": "Båt",

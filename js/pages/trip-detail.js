@@ -70,6 +70,24 @@ const TripDetailPage = {
 
                 ${isOwner ? `<div class="card" id="actions-card"></div>` : ''}
 
+                ${isOwner ? `<div class="card">
+                    <h3>${t('tripDetail.schedule.heading')}</h3>
+                    <div id="schedule-alert"></div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="departure-input">${t('tripDetail.schedule.departureLabel')}</label>
+                            ${this.canEditDeparture(trip) ? `<input type="datetime-local" id="departure-input" value="${toInputDatetime(trip.departure_scheduled)}">` : `<p class="mb-0">${escapeHtml(formatDateTime(trip.departure_scheduled))}</p>`}
+                        </div>
+                        <div class="field">
+                            <label for="arrival-input">${t('tripDetail.schedule.arrivalLabel')}</label>
+                            ${this.canEditArrival(trip) ? `<input type="datetime-local" id="arrival-input" value="${toInputDatetime(trip.arrival_scheduled)}">` : `<p class="mb-0">${escapeHtml(formatDateTime(trip.arrival_scheduled))}</p>`}
+                        </div>
+                    </div>
+                    ${this.canEditDeparture(trip) || this.canEditArrival(trip) ? `<button class="btn btn-secondary btn-sm" type="button" id="schedule-change-btn">${t('tripDetail.schedule.changeButton')}</button>` : ''}
+                    ${!this.canEditDeparture(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.departureLockedHint')}</p>` : ''}
+                    ${!this.canEditArrival(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.arrivalLockedHint')}</p>` : ''}
+                </div>` : ''}
+
                 <div class="card">
                     <h3>${t('tripDetail.vessel.heading')}</h3>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
@@ -174,6 +192,7 @@ const TripDetailPage = {
         document.getElementById('add-route-btn')?.addEventListener('click', () => this.handleAddRoute());
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
         document.getElementById('ice-contact-change-btn')?.addEventListener('click', () => this.handleChangeIceContact());
+        document.getElementById('schedule-change-btn')?.addEventListener('click', () => this.handleChangeSchedule());
 
         document.getElementById('new-route-mode-windy')?.addEventListener('click', () => {
             this.state.newRouteMode = 'windy';
@@ -337,6 +356,67 @@ const TripDetailPage = {
         }
 
         showToast(t('tripDetail.iceContact.changed'), 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    // Mirrors the backend's TripHandler::update rules - departure is locked
+    // once the trip leaves draft/published (i.e. is activated), arrival is
+    // locked once the trip reaches a final state (completed/cancelled).
+    canEditDeparture(trip) {
+        return ['draft', 'published'].includes(trip.status);
+    },
+
+    canEditArrival(trip) {
+        return !['completed', 'cancelled'].includes(trip.status);
+    },
+
+    async handleChangeSchedule() {
+        const alertBox = document.getElementById('schedule-alert');
+        const trip = this.state.data.trip;
+        const departureInput = document.getElementById('departure-input');
+        const arrivalInput = document.getElementById('arrival-input');
+
+        const currentDeparture = toApiDatetime(toInputDatetime(trip.departure_scheduled));
+        const currentArrival = toApiDatetime(toInputDatetime(trip.arrival_scheduled));
+        const newDeparture = departureInput ? toApiDatetime(departureInput.value) : currentDeparture;
+        const newArrival = arrivalInput ? toApiDatetime(arrivalInput.value) : currentArrival;
+
+        // Only send fields that actually changed - a no-op PUT on an
+        // already-ICE-notified trip would otherwise trigger a spurious
+        // "schedule updated" alert to the ICE contact.
+        const payload = {};
+        if (departureInput && newDeparture !== currentDeparture) payload.departure_scheduled = newDeparture;
+        if (arrivalInput && newArrival !== currentArrival) payload.arrival_scheduled = newArrival;
+
+        if (Object.keys(payload).length === 0) {
+            return;
+        }
+
+        if (newArrival <= newDeparture) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.arrivalBeforeDeparture'))}</div>`;
+            return;
+        }
+
+        const btn = document.getElementById('schedule-change-btn');
+        btn.disabled = true;
+
+        const response = await apiRequest(`/trips/${this.state.tripId}`, {
+            method: 'PUT',
+            body: JSON.stringify(payload)
+        });
+
+        btn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.schedule.changeFailed')))}</div>`;
+            return;
+        }
+
+        if (response.data.schedule_notice?.conflicting_trip_exists) {
+            showToast(t('tripDetail.vessel.mmsiConflictNotice'), 'info');
+        }
+
+        showToast(t('tripDetail.schedule.changed'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 
