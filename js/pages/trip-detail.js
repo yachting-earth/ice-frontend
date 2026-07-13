@@ -132,6 +132,7 @@ const TripDetailPage = {
                     <div class="route-mode-toggle btn-group">
                         <button type="button" class="btn btn-sm" id="new-route-mode-windy">${t('tripDetail.routes.importWindy')}</button>
                         <button type="button" class="btn btn-sm" id="new-route-mode-manual">${t('tripDetail.routes.drawManual')}</button>
+                        <button type="button" class="btn btn-sm" id="new-route-mode-gpx">${t('tripDetail.routes.importGpx')}</button>
                     </div>
                     <div id="new-route-body"></div>
                     <div class="field">
@@ -182,6 +183,10 @@ const TripDetailPage = {
             this.state.newRouteMode = 'manual';
             this.renderNewRouteBody();
         });
+        document.getElementById('new-route-mode-gpx')?.addEventListener('click', () => {
+            this.state.newRouteMode = 'gpx';
+            this.renderNewRouteBody();
+        });
         if (isOwner) this.renderNewRouteBody();
     },
 
@@ -189,10 +194,12 @@ const TripDetailPage = {
         const container = document.getElementById('new-route-body');
         if (!container) return;
 
-        document.getElementById('new-route-mode-windy').classList.toggle('btn-primary', this.state.newRouteMode !== 'manual');
-        document.getElementById('new-route-mode-windy').classList.toggle('btn-ghost', this.state.newRouteMode === 'manual');
+        document.getElementById('new-route-mode-windy').classList.toggle('btn-primary', this.state.newRouteMode === 'windy');
+        document.getElementById('new-route-mode-windy').classList.toggle('btn-ghost', this.state.newRouteMode !== 'windy');
         document.getElementById('new-route-mode-manual').classList.toggle('btn-primary', this.state.newRouteMode === 'manual');
         document.getElementById('new-route-mode-manual').classList.toggle('btn-ghost', this.state.newRouteMode !== 'manual');
+        document.getElementById('new-route-mode-gpx').classList.toggle('btn-primary', this.state.newRouteMode === 'gpx');
+        document.getElementById('new-route-mode-gpx').classList.toggle('btn-ghost', this.state.newRouteMode !== 'gpx');
 
         if (this.state.newRouteDrawMap) {
             this.state.newRouteDrawMap.destroy();
@@ -224,6 +231,24 @@ const TripDetailPage = {
                 this.state.newRouteDrawMap?.clear();
                 document.getElementById('new-route-draw-count').textContent = '0';
             });
+        } else if (this.state.newRouteMode === 'gpx') {
+            container.innerHTML = `
+                <div class="field">
+                    <label>${t('tripDetail.routes.gpxLabel')}</label>
+                    <small class="text-muted">${t('tripDetail.routes.gpxHint')}</small>
+                    <input type="file" id="new-route-gpx-file" accept=".gpx,application/gpx+xml">
+                    <div class="route-draw-footer">
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="new-route-draw-count">${this.state.newRouteCoordinates.length}</span> ${t('tripDetail.routes.pointsLabel')}</span>
+                        <button class="btn btn-ghost btn-sm" type="button" id="new-route-clear">${t('tripDetail.routes.clearRoute')}</button>
+                    </div>
+                </div>`;
+
+            document.getElementById('new-route-gpx-file').addEventListener('change', (e) => this.handleNewRouteGpxFile(e.target));
+
+            document.getElementById('new-route-clear').addEventListener('click', () => {
+                this.state.newRouteCoordinates = [];
+                document.getElementById('new-route-draw-count').textContent = '0';
+            });
         } else {
             container.innerHTML = `
                 <div class="field">
@@ -231,6 +256,24 @@ const TripDetailPage = {
                     <input type="url" id="new-route-windy-url" placeholder="https://www.windy.com/route-planner/boat/...">
                 </div>`;
         }
+    },
+
+    async handleNewRouteGpxFile(inputEl) {
+        const alertBox = document.getElementById('routes-alert');
+        const file = inputEl.files[0];
+        inputEl.value = ''; // the file is only read in-memory; discard it once we've extracted its coordinates
+        if (!file) return;
+
+        const coords = parseGpxFile(await file.text());
+        if (!coords) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('tripDetail.routes.gpxParseError'))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        this.state.newRouteCoordinates = coords;
+        const countEl = document.getElementById('new-route-draw-count');
+        if (countEl) countEl.textContent = coords.length;
     },
 
     async handleChangeVessel() {
@@ -398,6 +441,7 @@ const TripDetailPage = {
                         <div class="route-mode-toggle btn-group">
                             <button type="button" class="btn btn-sm edit-mode-windy" data-id="${r.id}">${t('tripDetail.routes.importWindy')}</button>
                             <button type="button" class="btn btn-sm edit-mode-manual" data-id="${r.id}">${t('tripDetail.routes.drawManual')}</button>
+                            <button type="button" class="btn btn-sm edit-mode-gpx" data-id="${r.id}">${t('tripDetail.routes.importGpx')}</button>
                         </div>
                         <div class="route-edit-body" data-id="${r.id}"></div>
                         <div class="btn-group">
@@ -434,6 +478,12 @@ const TripDetailPage = {
         list.querySelectorAll('.edit-mode-manual').forEach((btn) => {
             btn.addEventListener('click', () => {
                 this.state.editRoutes[btn.dataset.id].mode = 'manual';
+                this.renderRouteEditBody(btn.dataset.id);
+            });
+        });
+        list.querySelectorAll('.edit-mode-gpx').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                this.state.editRoutes[btn.dataset.id].mode = 'gpx';
                 this.renderRouteEditBody(btn.dataset.id);
             });
         });
@@ -477,10 +527,12 @@ const TripDetailPage = {
         const body = document.querySelector(`.route-edit-body[data-id="${routeId}"]`);
         if (!body || !editState) return;
 
-        document.querySelector(`.edit-mode-windy[data-id="${routeId}"]`)?.classList.toggle('btn-primary', editState.mode !== 'manual');
-        document.querySelector(`.edit-mode-windy[data-id="${routeId}"]`)?.classList.toggle('btn-ghost', editState.mode === 'manual');
+        document.querySelector(`.edit-mode-windy[data-id="${routeId}"]`)?.classList.toggle('btn-primary', editState.mode === 'windy');
+        document.querySelector(`.edit-mode-windy[data-id="${routeId}"]`)?.classList.toggle('btn-ghost', editState.mode !== 'windy');
         document.querySelector(`.edit-mode-manual[data-id="${routeId}"]`)?.classList.toggle('btn-primary', editState.mode === 'manual');
         document.querySelector(`.edit-mode-manual[data-id="${routeId}"]`)?.classList.toggle('btn-ghost', editState.mode !== 'manual');
+        document.querySelector(`.edit-mode-gpx[data-id="${routeId}"]`)?.classList.toggle('btn-primary', editState.mode === 'gpx');
+        document.querySelector(`.edit-mode-gpx[data-id="${routeId}"]`)?.classList.toggle('btn-ghost', editState.mode !== 'gpx');
 
         if (this.state.editDrawMaps[routeId]) {
             this.state.editDrawMaps[routeId].destroy();
@@ -516,6 +568,29 @@ const TripDetailPage = {
                 this.state.editDrawMaps[routeId]?.clear();
                 document.getElementById(`edit-route-draw-count-${routeId}`).textContent = '0';
             });
+        } else if (editState.mode === 'gpx') {
+            body.innerHTML = `
+                <div class="field">
+                    <label>${t('tripDetail.routes.gpxLabel')}</label>
+                    <small class="text-muted">${t('tripDetail.routes.gpxHint')}</small>
+                    <input type="file" class="edit-route-gpx-file" data-id="${routeId}" accept=".gpx,application/gpx+xml">
+                    <div class="route-draw-footer">
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="edit-route-draw-count-${routeId}">${editState.coordinates.length}</span> ${t('tripDetail.routes.pointsLabel')}</span>
+                        <button class="btn btn-ghost btn-sm" type="button" id="edit-route-clear-${routeId}">${t('tripDetail.routes.clearRoute')}</button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>${t('tripDetail.routes.reasonLabel')}</label>
+                    <input type="text" class="edit-route-reason" data-id="${routeId}" value="${escapeHtml(editState.reason || '')}">
+                </div>`;
+
+            document.querySelector(`.edit-route-gpx-file[data-id="${routeId}"]`)
+                .addEventListener('change', (e) => this.handleEditRouteGpxFile(routeId, e.target));
+
+            document.getElementById(`edit-route-clear-${routeId}`).addEventListener('click', () => {
+                editState.coordinates = [];
+                document.getElementById(`edit-route-draw-count-${routeId}`).textContent = '0';
+            });
         } else {
             body.innerHTML = `
                 <div class="field">
@@ -535,12 +610,31 @@ const TripDetailPage = {
             ?.addEventListener('input', (e) => { editState.reason = e.target.value; });
     },
 
+    async handleEditRouteGpxFile(routeId, inputEl) {
+        const alertBox = document.getElementById('routes-alert');
+        const editState = this.state.editRoutes[routeId];
+        const file = inputEl.files[0];
+        inputEl.value = ''; // the file is only read in-memory; discard it once we've extracted its coordinates
+        if (!file) return;
+
+        const coords = parseGpxFile(await file.text());
+        if (!coords) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('tripDetail.routes.gpxParseError'))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        editState.coordinates = coords;
+        const countEl = document.getElementById(`edit-route-draw-count-${routeId}`);
+        if (countEl) countEl.textContent = coords.length;
+    },
+
     async handleAddRoute() {
         const alertBox = document.getElementById('routes-alert');
         const reason = document.getElementById('new-route-reason').value.trim();
 
         let body;
-        if (this.state.newRouteMode === 'manual') {
+        if (this.state.newRouteMode === 'manual' || this.state.newRouteMode === 'gpx') {
             if (this.state.newRouteCoordinates.length < 2) {
                 alertBox.innerHTML = `<div class="alert alert-error">${t('tripDetail.routes.minPointsError')}</div>`;
                 return;
@@ -577,7 +671,7 @@ const TripDetailPage = {
         const reason = (document.querySelector(`.edit-route-reason[data-id="${routeId}"]`)?.value ?? editState.reason ?? '').trim();
 
         let body;
-        if (editState.mode === 'manual') {
+        if (editState.mode === 'manual' || editState.mode === 'gpx') {
             if (editState.coordinates.length < 2) {
                 alertBox.innerHTML = `<div class="alert alert-error">${t('tripDetail.routes.minPointsError')}</div>`;
                 return;

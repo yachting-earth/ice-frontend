@@ -19,6 +19,33 @@ function parseWindyUrl(url) {
     return coords;
 }
 
+/**
+ * Parse a GPX file's contents into [[lat, lon], ...] pairs. Prefers route
+ * points (<rte>/<rtept>) and falls back to track points (<trk>/<trkseg>/
+ * <trkpt>, flattened across all segments). Returns null if no usable route
+ * with at least 2 points is found.
+ */
+function parseGpxFile(xmlText) {
+    let doc;
+    try {
+        doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+    } catch (err) {
+        return null;
+    }
+    if (!doc || doc.getElementsByTagNameNS('*', 'parsererror').length > 0) return null;
+
+    const toCoords = (points) => Array.from(points)
+        .map((pt) => [Number(pt.getAttribute('lat')), Number(pt.getAttribute('lon'))])
+        .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180);
+
+    let coords = toCoords(doc.getElementsByTagNameNS('*', 'rtept'));
+    if (coords.length < 2) {
+        coords = toCoords(doc.getElementsByTagNameNS('*', 'trkpt'));
+    }
+
+    return coords.length >= 2 ? coords : null;
+}
+
 /** Parse a MySQL "LINESTRING(lon lat, lon lat, ...)" WKT string (as returned by the API) into [[lat, lon], ...]. */
 function parseWktLineString(wkt) {
     if (!wkt) return [];

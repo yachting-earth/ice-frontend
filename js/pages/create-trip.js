@@ -293,14 +293,24 @@ const CreateTripPage = {
                     </div>
                 </div>
                 <div class="route-mode-toggle btn-group">
-                    <button type="button" class="btn btn-sm ${route.mode !== 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="windy" data-index="${i}">${escapeHtml(t('createTrip.routes.modeWindy'))}</button>
+                    <button type="button" class="btn btn-sm ${route.mode === 'windy' ? 'btn-primary' : 'btn-ghost'}" data-mode="windy" data-index="${i}">${escapeHtml(t('createTrip.routes.modeWindy'))}</button>
                     <button type="button" class="btn btn-sm ${route.mode === 'manual' ? 'btn-primary' : 'btn-ghost'}" data-mode="manual" data-index="${i}">${escapeHtml(t('createTrip.routes.modeManual'))}</button>
+                    <button type="button" class="btn btn-sm ${route.mode === 'gpx' ? 'btn-primary' : 'btn-ghost'}" data-mode="gpx" data-index="${i}">${escapeHtml(t('createTrip.routes.modeGpx'))}</button>
                 </div>
                 ${route.mode === 'manual' ? `
                 <div class="field">
                     <label>${escapeHtml(t('createTrip.routes.drawLabel'))}</label>
                     <small class="text-muted">${escapeHtml(t('createTrip.routes.drawHint'))}</small>
                     <div id="route-draw-map-${i}" class="map-container route-draw-map"></div>
+                    <div class="route-draw-footer">
+                        <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="route-draw-count-${i}">${route.coordinates.length}</span> ${escapeHtml(t('createTrip.routes.points'))}</span>
+                        <button class="btn btn-ghost btn-sm" type="button" data-clear-route="${i}">${escapeHtml(t('createTrip.routes.clear'))}</button>
+                    </div>
+                </div>` : route.mode === 'gpx' ? `
+                <div class="field">
+                    <label>${escapeHtml(t('createTrip.routes.gpxLabel'))}</label>
+                    <small class="text-muted">${escapeHtml(t('createTrip.routes.gpxHint'))}</small>
+                    <input type="file" class="route-gpx-file" data-index="${i}" accept=".gpx,application/gpx+xml">
                     <div class="route-draw-footer">
                         <span class="text-muted" style="font-size: var(--font-size-sm);"><span id="route-draw-count-${i}">${route.coordinates.length}</span> ${escapeHtml(t('createTrip.routes.points'))}</span>
                         <button class="btn btn-ghost btn-sm" type="button" data-clear-route="${i}">${escapeHtml(t('createTrip.routes.clear'))}</button>
@@ -325,6 +335,9 @@ const CreateTripPage = {
                 this.state.routes[Number(e.target.dataset.index)].windyUrl = e.target.value;
                 this.updateMapPreview();
             });
+        });
+        routesContainer.querySelectorAll('.route-gpx-file').forEach((input) => {
+            input.addEventListener('change', (e) => this.handleGpxFileSelected(Number(e.target.dataset.index), e.target));
         });
         routesContainer.querySelectorAll('.route-reason').forEach((input) => {
             input.addEventListener('input', (e) => {
@@ -392,6 +405,25 @@ const CreateTripPage = {
         });
     },
 
+    async handleGpxFileSelected(i, inputEl) {
+        const alertBox = document.getElementById('create-trip-alert');
+        const file = inputEl.files[0];
+        inputEl.value = ''; // the file is only read in-memory; discard it once we've extracted its coordinates
+        if (!file) return;
+
+        const coords = parseGpxFile(await file.text());
+        if (!coords) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.gpxParseError'))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        this.state.routes[i].coordinates = coords;
+        const countEl = document.getElementById(`route-draw-count-${i}`);
+        if (countEl) countEl.textContent = coords.length;
+        this.updateMapPreview();
+    },
+
     moveRoute(from, to) {
         if (to < 0 || to >= this.state.routes.length) return;
         const routes = this.state.routes;
@@ -414,7 +446,7 @@ const CreateTripPage = {
 
         const routes = this.state.routes
             .map((r, i) => {
-                const coords = r.mode === 'manual' ? r.coordinates : parseWindyUrl(r.windyUrl);
+                const coords = (r.mode === 'manual' || r.mode === 'gpx') ? r.coordinates : parseWindyUrl(r.windyUrl);
                 return (coords && coords.length > 1) ? { coordinates: coords, color: this.ROUTE_COLORS[i % this.ROUTE_COLORS.length] } : null;
             })
             .filter(Boolean);
@@ -462,7 +494,7 @@ const CreateTripPage = {
         }
 
         const primaryRoute = this.state.routes[0];
-        if (primaryRoute.mode === 'manual') {
+        if (primaryRoute.mode === 'manual' || primaryRoute.mode === 'gpx') {
             if (primaryRoute.coordinates.length < 2) {
                 alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.primaryRouteMinPoints'))}</div>`;
                 return;
@@ -476,8 +508,8 @@ const CreateTripPage = {
         }
 
         const routes = this.state.routes
-            .filter((r) => r.mode === 'manual' ? r.coordinates.length >= 2 : r.windyUrl.trim())
-            .map((r) => r.mode === 'manual'
+            .filter((r) => (r.mode === 'manual' || r.mode === 'gpx') ? r.coordinates.length >= 2 : r.windyUrl.trim())
+            .map((r) => (r.mode === 'manual' || r.mode === 'gpx')
                 ? { coordinates: r.coordinates, reason: r.reason.trim() || null }
                 : { windy_url: r.windyUrl.trim(), reason: r.reason.trim() || null });
 
