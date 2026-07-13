@@ -719,6 +719,16 @@ const EN_INLINE = {
       "meta": "Departure {departure} · Arrival {arrival} · Grace period {grace}",
       "iceNotified": "ICE contact notified"
     },
+    "schedule": {
+      "heading": "Schedule",
+      "departureLabel": "Departure (UTC)",
+      "arrivalLabel": "Arrival (UTC)",
+      "changeButton": "Save",
+      "departureLockedHint": "Departure can no longer be changed once the trip is activated.",
+      "arrivalLockedHint": "Arrival can no longer be changed once the trip is confirmed completed.",
+      "changeFailed": "Could not change the schedule.",
+      "changed": "The schedule has been changed."
+    },
     "vessel": {
       "heading": "Vessel",
       "yearBuilt": "Model year {year}",
