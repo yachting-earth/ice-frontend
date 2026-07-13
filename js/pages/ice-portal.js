@@ -46,6 +46,7 @@ const IcePortalPage = {
 
     renderPage(container, data) {
         const { trip, vessel, crew, routes, skipper, audit_log } = data;
+        const sarAccess = trip.sar_access;
 
         container.innerHTML = `
             <div class="page">
@@ -61,6 +62,20 @@ const IcePortalPage = {
                     </div>
                     <button type="button" class="btn btn-secondary no-print" id="portal-print-btn">${escapeHtml(t('icePortal.printButton'))}</button>
                 </div>
+
+                ${sarAccess ? `
+                <div class="card">
+                    <h3>${escapeHtml(t('icePortal.sarAccess.heading'))}</h3>
+                    <p class="text-muted">${escapeHtml(t('icePortal.sarAccess.description'))}</p>
+                    <div style="display:flex; align-items:center; gap: var(--space-4); flex-wrap: wrap;">
+                        <p class="mb-0"><strong>${escapeHtml(t('icePortal.sarAccess.referenceLabel'))}:</strong> ${escapeHtml(sarAccess.reference)}</p>
+                        <p class="mb-0">
+                            <strong>${escapeHtml(t('icePortal.sarAccess.pinLabel'))}:</strong>
+                            <span id="portal-sar-pin" data-pin="${escapeHtml(sarAccess.pin)}" data-revealed="false">••••••</span>
+                            <button type="button" class="btn btn-secondary no-print" id="portal-sar-pin-toggle" style="margin-left: var(--space-2);">${escapeHtml(t('icePortal.sarAccess.showPin'))}</button>
+                        </p>
+                    </div>
+                </div>` : ''}
 
                 <div class="card">
                     <h3>${escapeHtml(t('icePortal.skipper.heading'))}</h3>
@@ -137,6 +152,17 @@ const IcePortalPage = {
         this.renderLog(audit_log);
 
         document.getElementById('portal-print-btn').addEventListener('click', () => window.print());
+
+        const pinToggle = document.getElementById('portal-sar-pin-toggle');
+        if (pinToggle) {
+            pinToggle.addEventListener('click', () => {
+                const pinEl = document.getElementById('portal-sar-pin');
+                const revealed = pinEl.dataset.revealed === 'true';
+                pinEl.textContent = revealed ? '••••••' : pinEl.dataset.pin;
+                pinEl.dataset.revealed = String(!revealed);
+                pinToggle.textContent = revealed ? t('icePortal.sarAccess.showPin') : t('icePortal.sarAccess.hidePin');
+            });
+        }
     },
 
     renderRoutes(routes) {
