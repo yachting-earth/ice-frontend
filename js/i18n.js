@@ -877,7 +877,7 @@ const EN_INLINE = {
       "rows": [
         { "traditional": "Static documents", "yachting": "Living voyage information" },
         { "traditional": "Single route", "yachting": "Multiple routes" },
-        { "traditional": "Basic rew list", "yachting": "Crew maintain their own details" },
+        { "traditional": "Basic crew list", "yachting": "Crew maintain their own details" },
         { "traditional": "Rely on manual monitoring", "yachting": "Automatic audited control" },
         { "traditional": "Limited SAR handover", "yachting": "Secure portal with SAR access" }
       ]
