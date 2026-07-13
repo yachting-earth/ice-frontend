@@ -37,6 +37,8 @@
     "EMAIL_NOT_VERIFIED": "Bekräfta din e-postadress först.",
     "VERIFICATION_INVALID": "Verifieringslänken är ogiltig.",
     "VERIFICATION_EXPIRED": "Verifieringslänken har gått ut.",
+    "PASSWORD_RESET_INVALID": "Denna länk för lösenordsåterställning är ogiltig eller har redan använts.",
+    "PASSWORD_RESET_EXPIRED": "Denna länk för lösenordsåterställning har gått ut.",
     "NOT_FOUND": "Hittades inte.",
     "RESOURCE_CONFLICT": "Detta finns redan.",
     "MMSI_ALREADY_ACTIVE": "Det finns redan en aktiv resa för detta fartyg.",
@@ -142,6 +144,7 @@
     "noAccount": "Inget konto?",
     "registerLink": "Registrera dig",
     "errorDefault": "Inloggningen misslyckades.",
+    "forgotPasswordLink": "Glömt lösenordet?",
     "tabs": {
       "user": "Logga in",
       "sar": "SAR-åtkomst"
@@ -162,6 +165,28 @@
     "loginLink": "Logga in",
     "passwordMismatch": "Lösenorden matchar inte",
     "errorDefault": "Kunde inte skapa kontot."
+  },
+  "forgotPassword": {
+    "tagline": "Återställ ditt lösenord",
+    "emailLabel": "E-post",
+    "submit": "Skicka återställningslänk",
+    "submitting": "Skickar…",
+    "sent": "Om den e-postadressen är registrerad har vi skickat en länk för att återställa lösenordet. Kontrollera din inkorg.",
+    "backToLogin": "Tillbaka till inloggning"
+  },
+  "resetPassword": {
+    "tagline": "Välj ett nytt lösenord",
+    "noToken": "Ingen återställningslänk hittades. Kontrollera att du klickade på hela länken.",
+    "requestNew": "Begär en ny länk",
+    "passwordLabel": "Nytt lösenord",
+    "confirmPasswordLabel": "Bekräfta nytt lösenord",
+    "submit": "Återställ lösenord",
+    "submitting": "Återställer…",
+    "passwordMismatch": "Lösenorden matchar inte",
+    "linkExpired": "Länken har gått ut. Begär en ny.",
+    "errorDefault": "Kunde inte återställa lösenordet.",
+    "successTitle": "Lösenordet återställt",
+    "successBody": "Ditt lösenord har ändrats. Du har loggats ut överallt och kan nu logga in med ditt nya lösenord."
   },
   "verifyEmail": {
     "noToken": "Ingen verifieringslänk hittades. Kontrollera att du klickade på hela länken.",

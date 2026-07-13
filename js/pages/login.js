@@ -21,6 +21,7 @@ const LoginPage = {
                             <div class="field">
                                 <label for="password">${escapeHtml(t('login.passwordLabel'))}</label>
                                 <input type="password" id="password" autocomplete="current-password" required>
+                                <a class="auth-card__forgot-link" href="#/forgot-password">${escapeHtml(t('login.forgotPasswordLink'))}</a>
                             </div>
                             <div class="field hp-field" aria-hidden="true">
                                 <label for="website">Website</label>

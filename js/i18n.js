@@ -48,6 +48,8 @@ const EN_INLINE = {
     "EMAIL_NOT_VERIFIED": "Please verify your email address first.",
     "VERIFICATION_INVALID": "The verification link is invalid.",
     "VERIFICATION_EXPIRED": "The verification link has expired.",
+    "PASSWORD_RESET_INVALID": "This password reset link is invalid or has already been used.",
+    "PASSWORD_RESET_EXPIRED": "This password reset link has expired.",
     "NOT_FOUND": "Not found.",
     "RESOURCE_CONFLICT": "This already exists.",
     "MMSI_ALREADY_ACTIVE": "There is already an active trip for this vessel.",
@@ -153,6 +155,7 @@ const EN_INLINE = {
     "noAccount": "No account?",
     "registerLink": "Register",
     "errorDefault": "Login failed.",
+    "forgotPasswordLink": "Forgot password?",
     "tabs": {
       "user": "Log in",
       "sar": "SAR access"
@@ -173,6 +176,28 @@ const EN_INLINE = {
     "loginLink": "Log in",
     "passwordMismatch": "Passwords don't match",
     "errorDefault": "Could not create the account."
+  },
+  "forgotPassword": {
+    "tagline": "Reset your password",
+    "emailLabel": "Email",
+    "submit": "Send reset link",
+    "submitting": "Sending…",
+    "sent": "If that email address is registered, we've sent a link to reset your password. Check your inbox.",
+    "backToLogin": "Back to login"
+  },
+  "resetPassword": {
+    "tagline": "Choose a new password",
+    "noToken": "No reset link found. Check that you clicked the whole link.",
+    "requestNew": "Request a new link",
+    "passwordLabel": "New password",
+    "confirmPasswordLabel": "Confirm new password",
+    "submit": "Reset password",
+    "submitting": "Resetting…",
+    "passwordMismatch": "Passwords don't match",
+    "linkExpired": "This link has expired. Please request a new one.",
+    "errorDefault": "Could not reset the password.",
+    "successTitle": "Password reset",
+    "successBody": "Your password has been changed. You've been signed out everywhere and can now log in with your new password."
   },
   "verifyEmail": {
     "noToken": "No verification link found. Check that you clicked the whole link.",

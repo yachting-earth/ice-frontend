@@ -406,6 +406,12 @@ ul { margin: 0; padding: 0; list-style: none; }
     color: var(--color-text-muted);
 }
 
+.auth-card__forgot-link {
+    display: inline-block;
+    margin-top: var(--space-1);
+    font-size: var(--font-size-sm);
+}
+
 /* ==================== Auth tabs (login / SAR) ==================== */
 
 .auth-tabs {

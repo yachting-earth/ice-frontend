@@ -11,6 +11,8 @@ const Router = {
         { pattern: '#/', page: LandingPage, guestOnly: true, noTopbar: true },
         { pattern: '#/login', page: LoginPage, guestOnly: true },
         { pattern: '#/register', page: RegisterPage, guestOnly: true },
+        { pattern: '#/forgot-password', page: ForgotPasswordPage, guestOnly: true },
+        { pattern: '#/reset-password', page: ResetPasswordPage },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
         { pattern: '#/vessels', page: VesselsPage, auth: true },
         { pattern: '#/profile', page: ProfilePage, auth: true },
