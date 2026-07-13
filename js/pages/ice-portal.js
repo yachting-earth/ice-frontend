@@ -89,9 +89,9 @@ const IcePortalPage = {
                                     alt="${escapeHtml(skipper?.name || '')}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">`
                             : ''}
                         <p class="mb-0">
-                            ${escapeHtml(skipper?.name || '–')}
-                            ${skipper?.phone ? ` · ${escapeHtml(skipper.phone)}` : ''}
-                            ${skipper?.email ? ` · ${escapeHtml(skipper.email)}` : ''}
+                            <strong>${escapeHtml(t('common.name'))}:</strong> ${escapeHtml(skipper?.name || '–')}
+                            ${skipper?.phone ? ` · <strong>${escapeHtml(t('common.phone'))}:</strong> ${escapeHtml(skipper.phone)}` : ''}
+                            ${skipper?.email ? ` · <strong>${escapeHtml(t('common.email'))}:</strong> ${escapeHtml(skipper.email)}` : ''}
                         </p>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ const IcePortalPage = {
                             : ''}
                         <p class="mb-0">
                             ${escapeHtml(t('icePortal.vessel.nameLine', { name: vessel?.vessel_name || '–' }))}
-                            ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
+                            ${vessel?.model ? ` · ${escapeHtml(t('icePortal.vessel.modelLabel', { value: vessel.model }))}` : ''}
                             ${vessel?.year_built ? ` · ${escapeHtml(t('icePortal.vessel.yearBuilt', { year: String(vessel.year_built) }))}` : ''}
                             ${vessel?.mmsi ? ` · ${escapeHtml(t('icePortal.vessel.mmsi', { value: vessel.mmsi }))}` : ''}
                             ${vessel?.call_sign ? ` · ${escapeHtml(t('icePortal.vessel.callSign', { value: vessel.call_sign }))}` : ''}
@@ -126,10 +126,10 @@ const IcePortalPage = {
                         ? `<p class="text-muted">${escapeHtml(t('icePortal.iceContact.empty'))}</p>`
                         : trip.ice_contacts.map((c) => `
                             <p class="mb-0">
-                                ${escapeHtml(c.name || '–')}
-                                ${c.relationship ? ` · ${escapeHtml(c.relationship)}` : ''}
-                                ${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
-                                ${c.email ? ` · ${escapeHtml(c.email)}` : ''}
+                                <strong>${escapeHtml(t('common.name'))}:</strong> ${escapeHtml(c.name || '–')}
+                                ${c.relationship ? ` · <strong>${escapeHtml(t('icePortal.iceContact.relationshipLabel'))}:</strong> ${escapeHtml(c.relationship)}` : ''}
+                                ${c.phone ? ` · <strong>${escapeHtml(t('common.phone'))}:</strong> ${escapeHtml(c.phone)}` : ''}
+                                ${c.email ? ` · <strong>${escapeHtml(t('common.email'))}:</strong> ${escapeHtml(c.email)}` : ''}
                             </p>
                         `).join('')}
                 </div>` : ''}
@@ -232,8 +232,8 @@ const IcePortalPage = {
                 <div class="crew-row__info">
                     <span class="crew-row__name">${escapeHtml(c.name || t('icePortal.crew.unknownName'))}</span>
                     <span class="crew-row__detail">
-                        ${c.phone ? escapeHtml(c.phone) : ''}
-                        ${c.email ? ` · ${escapeHtml(c.email)}` : ''}
+                        ${c.phone ? `${escapeHtml(t('common.phone'))}: ${escapeHtml(c.phone)}` : ''}
+                        ${c.email ? ` · ${escapeHtml(t('common.email'))}: ${escapeHtml(c.email)}` : ''}
                         ${c.ice_contact ? ` · ${escapeHtml(t('icePortal.crew.ownIceContact', { contact: c.ice_contact }))}` : ''}
                     </span>
                 </div>

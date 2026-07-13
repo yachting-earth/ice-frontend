@@ -79,9 +79,9 @@ const CrewViewPage = {
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         ${skipper?.photo_path ? `<img id="crewview-skipper-photo" alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">` : ''}
                         <p class="mb-0">
-                            ${escapeHtml(skipper?.name || '–')}
-                            ${skipper?.phone ? ` · ${escapeHtml(skipper.phone)}` : ''}
-                            ${skipper?.email ? ` · ${escapeHtml(skipper.email)}` : ''}
+                            <strong>${escapeHtml(t('common.name'))}:</strong> ${escapeHtml(skipper?.name || '–')}
+                            ${skipper?.phone ? ` · <strong>${escapeHtml(t('common.phone'))}:</strong> ${escapeHtml(skipper.phone)}` : ''}
+                            ${skipper?.email ? ` · <strong>${escapeHtml(t('common.email'))}:</strong> ${escapeHtml(skipper.email)}` : ''}
                         </p>
                     </div>
                 </div>
@@ -96,7 +96,7 @@ const CrewViewPage = {
                         ${vessel?.photo_path ? `<img id="crewview-vessel-photo" alt="" style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;">` : ''}
                         <p class="mb-0">
                             ${escapeHtml(t('crewView.vessel.nameLine', { name: vessel?.vessel_name || '–' }))}
-                            ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
+                            ${vessel?.model ? ` · ${escapeHtml(t('crewView.vessel.modelLabel', { value: vessel.model }))}` : ''}
                             ${vessel?.year_built ? ` · ${escapeHtml(t('crewView.vessel.yearBuilt', { year: String(vessel.year_built) }))}` : ''}
                             ${vessel?.mmsi ? ` · ${escapeHtml(t('crewView.vessel.mmsi', { value: vessel.mmsi }))}` : ''}
                             ${vessel?.call_sign ? ` · ${escapeHtml(t('crewView.vessel.callSign', { value: vessel.call_sign }))}` : ''}
@@ -193,8 +193,8 @@ const CrewViewPage = {
                 <div class="crew-row__info">
                     <span class="crew-row__name">${escapeHtml(c.name || t('crewView.crew.unknownName'))}${c.id === this.state.viewerCrewId ? ` (${escapeHtml(t('crewView.crew.you'))})` : ''}</span>
                     <span class="crew-row__detail">
-                        ${c.phone ? escapeHtml(c.phone) : ''}
-                        ${c.email ? ` · ${escapeHtml(c.email)}` : ''}
+                        ${c.phone ? `${escapeHtml(t('common.phone'))}: ${escapeHtml(c.phone)}` : ''}
+                        ${c.email ? ` · ${escapeHtml(t('common.email'))}: ${escapeHtml(c.email)}` : ''}
                         ${c.ice_contact ? ` · ${escapeHtml(t('crewView.crew.ownIceContact', { contact: c.ice_contact }))}` : ''}
                     </span>
                 </div>

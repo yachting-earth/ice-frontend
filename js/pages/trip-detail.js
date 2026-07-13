@@ -102,7 +102,7 @@ const TripDetailPage = {
                             style="width:64px;height:64px;border-radius:var(--radius-md);object-fit:cover;background:var(--color-bg);" hidden>
                         <p class="mb-0">
                             ${escapeHtml(vessel?.vessel_name || '–')}
-                            ${vessel?.model ? ` · ${escapeHtml(vessel.model)}` : ''}
+                            ${vessel?.model ? ` · ${t('tripDetail.vessel.modelLabel', { model: escapeHtml(vessel.model) })}` : ''}
                             ${vessel?.year_built ? ` · ${t('tripDetail.vessel.yearBuilt', { year: escapeHtml(String(vessel.year_built)) })}` : ''}
                             ${vessel?.mmsi ? ` · ${t('tripDetail.vessel.mmsi', { mmsi: escapeHtml(vessel.mmsi) })}` : ''}
                             ${vessel?.call_sign ? ` · ${t('tripDetail.vessel.callSign', { callSign: escapeHtml(vessel.call_sign) })}` : ''}
@@ -858,7 +858,7 @@ const TripDetailPage = {
                     <div class="crew-row__info">
                         <span class="crew-row__name">${escapeHtml(c.name || c.email || t('tripDetail.crew.unknownName'))}</span>
                         <span class="crew-row__detail">
-                            ${c.email ? escapeHtml(c.email) : ''}${c.phone ? ` · ${escapeHtml(c.phone)}` : ''}
+                            ${c.email ? `${t('common.email')}: ${escapeHtml(c.email)}` : ''}${c.phone ? ` · ${t('common.phone')}: ${escapeHtml(c.phone)}` : ''}
                             ${c.ice_contact ? ` · ${t('tripDetail.crew.iceContactLabel', { contact: escapeHtml(c.ice_contact) })}` : ''}
                         </span>
                         ${isSelf ? `

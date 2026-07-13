@@ -467,6 +467,7 @@
     },
     "vessel": {
       "nameLine": "Fartyg: {name}",
+      "modelLabel": "Modell {value}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Anropssignal {value}",
@@ -491,7 +492,8 @@
     },
     "iceContact": {
       "heading": "Skepparens nödkontakt (ICE)",
-      "empty": "Ingen nödkontakt registrerad."
+      "empty": "Ingen nödkontakt registrerad.",
+      "relationshipLabel": "Relation"
     },
     "log": {
       "heading": "Ändringslogg",
@@ -513,6 +515,7 @@
     },
     "vessel": {
       "nameLine": "Fartyg: {name}",
+      "modelLabel": "Modell {value}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Anropssignal {value}",
@@ -735,6 +738,7 @@
     },
     "vessel": {
       "heading": "Båt",
+      "modelLabel": "Modell {model}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Anropssignal {callSign}",

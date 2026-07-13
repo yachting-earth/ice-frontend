@@ -478,6 +478,7 @@ const EN_INLINE = {
     },
     "vessel": {
       "nameLine": "Vessel: {name}",
+      "modelLabel": "Model {value}",
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Call sign {value}",
@@ -502,7 +503,8 @@ const EN_INLINE = {
     },
     "iceContact": {
       "heading": "Skipper's emergency contact (ICE)",
-      "empty": "No emergency contact registered."
+      "empty": "No emergency contact registered.",
+      "relationshipLabel": "Relationship"
     },
     "log": {
       "heading": "Change log",
@@ -524,6 +526,7 @@ const EN_INLINE = {
     },
     "vessel": {
       "nameLine": "Vessel: {name}",
+      "modelLabel": "Model {value}",
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Call sign {value}",
@@ -746,6 +749,7 @@ const EN_INLINE = {
     },
     "vessel": {
       "heading": "Vessel",
+      "modelLabel": "Model {model}",
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Call sign {callSign}",
