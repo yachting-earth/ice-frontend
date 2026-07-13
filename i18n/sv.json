@@ -855,21 +855,21 @@
       "heading": "Allt förbereds innan avfärd",
       "lead": "En komplett reseakt, sammanställd innan du ens lämnar bryggan.",
       "cards": [
-        { "icon": "ship", "title": "Fartyg", "items": ["Foto", "Registrering", "Specifikationer", "Identifikation"] },
+        { "icon": "ship", "title": "Fartyg", "items": ["Foto", "AIS", "Specifikationer", "Identifikation"] },
         { "icon": "compass", "title": "Resa", "items": ["Avgång", "Destination", "Beräknad ankomst", "Marginaltid"] },
-        { "icon": "route", "title": "Rutter", "items": ["Flera rutter", "Import från Windy", "Alternativa rutter", "Interaktiv kartförhandsvisning"] },
+        { "icon": "route", "title": "Rutter", "items": ["Flera rutter", "Import från GPX/Windy/Rita", "Alternativa rutter", "Interaktiv kartförhandsvisning"] },
         { "icon": "users", "title": "Besättning", "items": ["Besättningslista", "Individuella profiler", "Foton", "Personliga nödkontakter"] },
-        { "icon": "shield-check", "title": "Nödkontakt", "items": ["Identitet bekräftad", "Säker portal", "Skrivskyddad åtkomst", "Automatisk avisering"] }
+        { "icon": "shield-check", "title": "Nödkontakt ICE", "items": ["Bekräftad kontaktperson", "Säker portal", "Skrivskyddad åtkomst", "Automatisk avisering"] }
       ]
     },
     "howItWorks": {
       "heading": "Så fungerar det",
       "steps": [
-        "Skepparen skapar resan",
+        "Skepparen planerar resan",
         "Bjuder in besättning",
         "Besättningen fyller i sina egna profiler",
         "Nödkontakten bekräftar sin medverkan",
-        "Aktivera resan"
+        "Resan aktiveras"
       ],
       "fork": {
         "arriveTitle": "Ankommer säkert",
@@ -879,7 +879,7 @@
       },
       "afterFork": [
         "Nödkontakten aviseras",
-        "Informationen är redo att delas om räddningstjänsten måste kontaktas"
+        "Informationen redo att delas med räddningstjänsten om nödvändigt."
       ]
     },
     "compare": {
@@ -888,10 +888,10 @@
       "yachtingLabel": "Yachting Earth",
       "rows": [
         { "traditional": "Pappersdokument", "yachting": "Levande reseinformation" },
-        { "traditional": "En enda rutt", "yachting": "Flera rutter" },
+        { "traditional": "En enda rutt", "yachting": "Multippla rutter" },
         { "traditional": "Statisk besättningslista", "yachting": "Besättningen underhåller sina egna uppgifter" },
         { "traditional": "Förlitar sig på manuell övervakning", "yachting": "Automatisk kontroll" },
-        { "traditional": "E-postbilaga", "yachting": "Säker portal" }
+        { "traditional": "Postit/SMS/samtal", "yachting": "Säker portal" }
       ]
     },
     "features": {
@@ -899,7 +899,7 @@
       "items": [
         { "icon": "route", "title": "Flera rutter", "description": "En resa följer sällan en enda rak linje." },
         { "icon": "users", "title": "Besättningens medverkan", "description": "Varje besättningsmedlem underhåller sin egen information." },
-        { "icon": "shield-check", "title": "Verifierad nödkontakt", "description": "Nödkontakten bekräftar sin roll innan avfärd." }
+        { "icon": "shield-check", "title": "Bekräftad nödkontakt", "description": "Nödkontakten bekräftar sin roll innan avfärd." }
       ]
     },
     "privacy": {
