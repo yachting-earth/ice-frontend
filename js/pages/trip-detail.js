@@ -82,10 +82,17 @@ const TripDetailPage = {
                             <label for="arrival-input">${t('tripDetail.schedule.arrivalLabel')}</label>
                             ${this.canEditArrival(trip) ? `<input type="datetime-local" id="arrival-input" value="${toInputDatetime(trip.arrival_scheduled)}">` : `<p class="mb-0">${escapeHtml(formatDateTime(trip.arrival_scheduled))}</p>`}
                         </div>
+                        <div class="field">
+                            <label for="grace-input">${t('tripDetail.schedule.graceLabel')}</label>
+                            ${this.canEditGrace(trip) ? `<select id="grace-input">
+                                ${CONFIG.GRACE_PERIOD_OPTIONS.map((g) => `<option value="${g.seconds}" ${g.seconds === Number(trip.grace_period_seconds) ? 'selected' : ''}>${escapeHtml(formatGracePeriod(g.seconds))}</option>`).join('')}
+                            </select>` : `<p class="mb-0">${escapeHtml(graceLabel)}</p>`}
+                        </div>
                     </div>
-                    ${this.canEditDeparture(trip) || this.canEditArrival(trip) ? `<button class="btn btn-secondary btn-sm" type="button" id="schedule-change-btn">${t('tripDetail.schedule.changeButton')}</button>` : ''}
+                    ${this.canEditDeparture(trip) || this.canEditArrival(trip) || this.canEditGrace(trip) ? `<button class="btn btn-secondary btn-sm" type="button" id="schedule-change-btn">${t('tripDetail.schedule.changeButton')}</button>` : ''}
                     ${!this.canEditDeparture(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.departureLockedHint')}</p>` : ''}
                     ${!this.canEditArrival(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.arrivalLockedHint')}</p>` : ''}
+                    ${!this.canEditGrace(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.graceLockedHint')}</p>` : ''}
                 </div>` : ''}
 
                 <div class="card">
@@ -360,8 +367,9 @@ const TripDetailPage = {
     },
 
     // Mirrors the backend's TripHandler::update rules - departure is locked
-    // once the trip leaves draft/published (i.e. is activated), arrival is
-    // locked once the trip reaches a final state (completed/cancelled).
+    // once the trip leaves draft/published (i.e. is activated), arrival and
+    // grace period are locked once the trip reaches a final state
+    // (completed/cancelled).
     canEditDeparture(trip) {
         return ['draft', 'published'].includes(trip.status);
     },
@@ -370,16 +378,22 @@ const TripDetailPage = {
         return !['completed', 'cancelled'].includes(trip.status);
     },
 
+    canEditGrace(trip) {
+        return !['completed', 'cancelled'].includes(trip.status);
+    },
+
     async handleChangeSchedule() {
         const alertBox = document.getElementById('schedule-alert');
         const trip = this.state.data.trip;
         const departureInput = document.getElementById('departure-input');
         const arrivalInput = document.getElementById('arrival-input');
+        const graceInput = document.getElementById('grace-input');
 
         const currentDeparture = toApiDatetime(toInputDatetime(trip.departure_scheduled));
         const currentArrival = toApiDatetime(toInputDatetime(trip.arrival_scheduled));
         const newDeparture = departureInput ? toApiDatetime(departureInput.value) : currentDeparture;
         const newArrival = arrivalInput ? toApiDatetime(arrivalInput.value) : currentArrival;
+        const newGrace = graceInput ? Number(graceInput.value) : Number(trip.grace_period_seconds);
 
         // Only send fields that actually changed - a no-op PUT on an
         // already-ICE-notified trip would otherwise trigger a spurious
@@ -387,6 +401,7 @@ const TripDetailPage = {
         const payload = {};
         if (departureInput && newDeparture !== currentDeparture) payload.departure_scheduled = newDeparture;
         if (arrivalInput && newArrival !== currentArrival) payload.arrival_scheduled = newArrival;
+        if (graceInput && newGrace !== Number(trip.grace_period_seconds)) payload.grace_period_seconds = newGrace;
 
         if (Object.keys(payload).length === 0) {
             return;
