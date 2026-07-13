@@ -135,12 +135,17 @@ function renderTopbar() {
     const activeClass = (path) => (currentPath === path ? ' topbar__menu-link--active' : '');
 
     if (!authed) {
+        // The login page's topbar is deliberately minimal (language selector
+        // only) - blog/FAQ links are marketing distractions on a sign-in form.
+        const isLoginPage = currentPath === '#/login';
         topbar.innerHTML = `
             <a class="topbar__brand" href="#/login">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
+                    ${isLoginPage ? '' : `
                     <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
                     <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
+                    `}
                     ${renderLangSelector()}
                 </div>
                 <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
