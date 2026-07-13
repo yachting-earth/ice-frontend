@@ -158,7 +158,7 @@ const IcePortalPage = {
 
         this.renderRoutes(routes);
         this.renderCrew(crew);
-        this.renderLog(audit_log);
+        this.renderLog(audit_log, role);
         bindLightboxImages(container);
 
         document.getElementById('portal-print-btn').addEventListener('click', () => window.print());
@@ -241,7 +241,7 @@ const IcePortalPage = {
         `).join('')}</div>`;
     },
 
-    renderLog(auditLog) {
+    renderLog(auditLog, role) {
         const container = document.getElementById('portal-log-container');
 
         if (!auditLog || auditLog.length === 0) {
@@ -249,10 +249,12 @@ const IcePortalPage = {
             return;
         }
 
+        // SAR-only: the IP trail lets SAR cross-check that ICE/crew access
+        // isn't originating from the same source as a SAR lookup (issue #163).
         container.innerHTML = `<div class="change-log">${auditLog.map((entry) => `
                 <div class="change-log__item">
                     <span class="change-log__time">${formatDateTime(entry.changed_at)}</span>
-                    <span class="change-log__text">${escapeHtml(entry.message || entry.action)}</span>
+                    <span class="change-log__text">${escapeHtml(entry.message || entry.action)}${role === 'sar' && entry.ip ? ` · ${escapeHtml(t('icePortal.log.ip', { ip: entry.ip }))}` : ''}</span>
                 </div>`).join('')}</div>`;
     }
 };

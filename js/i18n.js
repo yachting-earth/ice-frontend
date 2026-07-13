@@ -508,7 +508,8 @@ const EN_INLINE = {
     },
     "log": {
       "heading": "Change log",
-      "empty": "No changes logged."
+      "empty": "No changes logged.",
+      "ip": "IP: {ip}"
     }
   },
   "crewView": {

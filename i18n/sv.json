@@ -497,7 +497,8 @@
     },
     "log": {
       "heading": "Ändringslogg",
-      "empty": "Inga ändringar loggade."
+      "empty": "Inga ändringar loggade.",
+      "ip": "IP: {ip}"
     }
   },
   "crewView": {
