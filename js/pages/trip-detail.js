@@ -44,7 +44,7 @@ const TripDetailPage = {
         this.state.newRouteCoordinates = [];
         this.state.newRouteDrawMap = null;
 
-        const { trip, vessel, crew, routes } = this.state.data;
+        const { trip, vessel, crew, routes, skipper } = this.state.data;
         const role = this.state.data.role || 'owner';
         const isOwner = role === 'owner';
         const graceLabel = formatGracePeriod(trip.grace_period_seconds);
@@ -93,6 +93,19 @@ const TripDetailPage = {
                     ${!this.canEditDeparture(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.departureLockedHint')}</p>` : ''}
                     ${!this.canEditArrival(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.arrivalLockedHint')}</p>` : ''}
                     ${!this.canEditGrace(trip) ? `<p class="text-muted" style="margin-top: var(--space-2);">${t('tripDetail.schedule.graceLockedHint')}</p>` : ''}
+                </div>` : ''}
+
+                ${!isOwner ? `<div class="card">
+                    <h3>${t('tripDetail.skipper.heading')}</h3>
+                    <div style="display:flex; align-items:center; gap: var(--space-3);">
+                        <img id="skipper-photo" class="lightbox-trigger" alt="${escapeHtml(skipper?.name || '')}"
+                            style="width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--color-bg);" hidden>
+                        <p class="mb-0">
+                            <strong>${t('common.name')}:</strong> ${escapeHtml(skipper?.name || '–')}
+                            ${skipper?.phone ? ` · <strong>${t('common.phone')}:</strong> ${escapeHtml(skipper.phone)}` : ''}
+                            ${skipper?.email ? ` · <strong>${t('common.email')}:</strong> ${escapeHtml(skipper.email)}` : ''}
+                        </p>
+                    </div>
                 </div>` : ''}
 
                 <div class="card">
@@ -193,6 +206,9 @@ const TripDetailPage = {
         this.renderCrew(crew, isOwner);
         if (vessel?.photo_path) {
             this.loadVesselPhoto(vessel.id);
+        }
+        if (!isOwner && skipper?.photo_path) {
+            this.loadSkipperPhoto(skipper.id);
         }
 
         document.getElementById('invite-crew-btn')?.addEventListener('click', () => this.handleInviteCrew());
@@ -450,6 +466,24 @@ const TripDetailPage = {
         if (!img) return;
         try {
             const response = await fetch(`${CONFIG.API_BASE_URL}/vessels/${vesselId}/photo`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            });
+            if (!response.ok) return;
+            img.src = URL.createObjectURL(await response.blob());
+            img.hidden = false;
+            bindLightboxImages(document);
+        } catch (err) { /* leave the photo hidden */ }
+    },
+
+    // Photos are auth-protected, so a plain <img src> won't do (no way to
+    // attach the Authorization header) - fetch as blob and swap in. The
+    // trip id is passed as ?trip= so PhotoHandler::getUserPhoto can verify
+    // the requester is this trip's accepted crew or confirmed ICE contact.
+    async loadSkipperPhoto(skipperId) {
+        const img = document.getElementById('skipper-photo');
+        if (!img) return;
+        try {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/users/${skipperId}/photo?trip=${encodeURIComponent(this.state.tripId)}`, {
                 headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
             });
             if (!response.ok) return;

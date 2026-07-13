@@ -761,6 +761,9 @@ const EN_INLINE = {
       "meta": "Departure {departure} · Arrival {arrival} · Grace period {grace}",
       "iceNotified": "ICE contact notified"
     },
+    "skipper": {
+      "heading": "Skipper"
+    },
     "schedule": {
       "heading": "Schedule",
       "departureLabel": "Departure (UTC)",

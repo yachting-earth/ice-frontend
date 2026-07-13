@@ -750,6 +750,9 @@
       "meta": "Avgång {departure} · Ankomst {arrival} · Marginal {grace}",
       "iceNotified": "ICE-kontakt notifierad"
     },
+    "skipper": {
+      "heading": "Skeppare"
+    },
     "schedule": {
       "heading": "Tidsschema",
       "departureLabel": "Avgång (UTC)",
