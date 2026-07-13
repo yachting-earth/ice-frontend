@@ -317,7 +317,6 @@ const LandingPage = {
             legend.innerHTML = SAMPLE_ROUTES.map((route, i) => `
                 <li class="map-demo__legend-item">
                     <span class="map-demo__legend-dot" style="background:${route.color}"></span>
-                    <span class="map-demo__legend-name">${escapeHtml(labels[i] || '')}</span>
                     <span class="map-demo__legend-desc">${escapeHtml(descriptions[i] || '')}</span>
                 </li>`).join('');
         }

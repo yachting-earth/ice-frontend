@@ -541,10 +541,6 @@ html { scroll-behavior: smooth; }
     flex-shrink: 0;
     align-self: center;
 }
-.landing-page .map-demo__legend-name {
-    color: var(--color-text);
-    font-weight: 600;
-}
 .landing-page .map-demo__legend-desc {
     color: var(--color-text-faint);
 }
