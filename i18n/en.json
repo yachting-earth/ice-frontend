@@ -1164,7 +1164,8 @@
           "Correct inaccurate data - most of it you can edit directly from your profile",
           "Erase your account and its associated data, using the \"Delete account\" option on your profile page (contact-form messages you've sent are the one exception - see \"How long we keep it\" above)",
           "Receive your data in a portable, machine-readable format",
-          "Withdraw a consent you previously gave, for example an emergency contact confirmation"
+          "Withdraw a consent you previously gave, for example an emergency contact confirmation",
+          "Lodge a complaint with the supervisory authority responsible for data protection - in Sweden, the Swedish Authority for Privacy Protection (Integritetsskyddsmyndigheten, IMY, imy.se) - under GDPR Article 77"
         ]
       },
       {
@@ -1188,6 +1189,12 @@
           "Our hosting provider - to run and back up the service",
           "Cloudflare (cdnjs) and unpkg - to serve the Leaflet and Lucide code libraries used by the app; these providers see the IP address and browser (User-Agent) of every visitor who loads a page",
           "OpenStreetMap - to serve the map tiles shown on route/trip maps; OpenStreetMap sees the IP address and browser (User-Agent) of anyone who views a map, along with the map area requested"
+        ]
+      },
+      {
+        "heading": "International data transfers",
+        "body": [
+          "Mailgun and Twilio (WhatsApp), listed above, are US-headquartered processors, so notification content - recipient names, emails, phone numbers and trip alert text - may be transferred to and processed in the United States. Where this happens, we rely on those providers' participation in the EU-US Data Privacy Framework and/or Standard Contractual Clauses to ensure your data receives an equivalent level of protection outside the EEA."
         ]
       },
       {

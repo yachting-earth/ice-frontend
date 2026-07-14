@@ -1164,7 +1164,8 @@
           "Rätta felaktiga uppgifter - de flesta kan du redigera direkt från din profil",
           "Radera ditt konto och tillhörande data, med alternativet \"Radera konto\" på din profilsida (meddelanden du skickat via kontaktformuläret är det enda undantaget - se \"Hur länge vi sparar dem\" ovan)",
           "Få ut dina uppgifter i ett portabelt, maskinläsbart format",
-          "Återkalla ett samtycke du tidigare gett, till exempel en bekräftelse av en nödkontakt"
+          "Återkalla ett samtycke du tidigare gett, till exempel en bekräftelse av en nödkontakt",
+          "Lämna in ett klagomål till den tillsynsmyndighet som ansvarar för dataskydd - i Sverige, Integritetsskyddsmyndigheten (IMY, imy.se) - enligt GDPR artikel 77"
         ]
       },
       {
@@ -1188,6 +1189,12 @@
           "Vår hostingleverantör - för att driva och säkerhetskopiera tjänsten",
           "Cloudflare (cdnjs) och unpkg - för att leverera kodbiblioteken Leaflet och Lucide som används av appen; dessa leverantörer ser IP-adressen och webbläsaren (User-Agent) hos varje besökare som laddar en sida",
           "OpenStreetMap - för att leverera karttiles som visas på rutt-/resekartor; OpenStreetMap ser IP-adressen och webbläsaren (User-Agent) hos den som visar en karta, tillsammans med det kartområde som begärts"
+        ]
+      },
+      {
+        "heading": "Internationella dataöverföringar",
+        "body": [
+          "Mailgun och Twilio (WhatsApp), som nämns ovan, är amerikanska leverantörer, vilket innebär att aviseringsinnehåll - mottagares namn, e-postadresser, telefonnummer och larmtext - kan överföras till och behandlas i USA. I dessa fall förlitar vi oss på dessa leverantörers deltagande i EU-US Data Privacy Framework och/eller standardavtalsklausuler för att säkerställa att dina uppgifter får en likvärdig skyddsnivå utanför EES."
         ]
       },
       {
