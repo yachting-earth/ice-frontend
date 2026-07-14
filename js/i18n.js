@@ -839,6 +839,7 @@ const EN_INLINE = {
       "heading": "Crew",
       "inviteHeading": "Invite crew member",
       "nameOptionalLabel": "Name (optional)",
+      "addressBookAriaLabel": "Suggestions from previously invited crew",
       "sendInviteButton": "Send invitation",
       "empty": "No crew invited yet.",
       "unknownName": "Unknown",

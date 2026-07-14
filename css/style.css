@@ -506,6 +506,44 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .field-row .field { flex: 1 1 200px; min-width: 0; }
 
+.address-book-anchor { position: relative; }
+
+.address-book-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    margin: 0;
+    padding: var(--space-1) 0;
+    list-style: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.address-book-suggestions__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+}
+.address-book-suggestions__item:hover {
+    background: var(--color-accent-light);
+}
+.address-book-suggestions__name {
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+.address-book-suggestions__email {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+}
+
 .checkbox-field {
     display: flex;
     align-items: flex-start;

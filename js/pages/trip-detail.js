@@ -187,15 +187,16 @@ const TripDetailPage = {
                     <hr class="section-divider">
                     <h3>${t('tripDetail.crew.inviteHeading')}</h3>
                     <div id="invite-alert"></div>
-                    <div class="field-row">
+                    <div class="field-row address-book-anchor">
                         <div class="field">
                             <label for="invite-email">${t('common.email')}</label>
-                            <input type="email" id="invite-email">
+                            <input type="email" id="invite-email" autocomplete="off">
                         </div>
                         <div class="field">
                             <label for="invite-name">${t('tripDetail.crew.nameOptionalLabel')}</label>
-                            <input type="text" id="invite-name">
+                            <input type="text" id="invite-name" autocomplete="off">
                         </div>
+                        <ul id="crew-address-book-suggestions" class="address-book-suggestions" aria-label="${escapeHtml(t('tripDetail.crew.addressBookAriaLabel'))}" hidden></ul>
                     </div>
                     <button class="btn btn-secondary" type="button" id="invite-crew-btn">${t('tripDetail.crew.sendInviteButton')}</button>` : ''}
                 </div>
@@ -218,6 +219,7 @@ const TripDetailPage = {
         }
 
         document.getElementById('invite-crew-btn')?.addEventListener('click', () => this.handleInviteCrew());
+        this.setupAddressBookAutocomplete();
         document.getElementById('add-route-btn')?.addEventListener('click', () => this.handleAddRoute());
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
         document.getElementById('ice-contact-change-btn')?.addEventListener('click', () => this.handleChangeIceContact());
@@ -1035,6 +1037,69 @@ const TripDetailPage = {
         }
         showToast(t('tripDetail.actions.verified'), 'success');
         await this.load(document.getElementById('page-content'));
+    },
+
+    // Suggests crew from the skipper's own invite history ("address book")
+    // as they type into either the email or name field, matching on both -
+    // picking a suggestion fills in both fields. Backed by GET
+    // /crew/address-book (CrewHandler::addressBook / Crew::searchAddressBook).
+    setupAddressBookAutocomplete() {
+        const emailInput = document.getElementById('invite-email');
+        const nameInput = document.getElementById('invite-name');
+        const box = document.getElementById('crew-address-book-suggestions');
+        if (!emailInput || !nameInput || !box) return;
+
+        [emailInput, nameInput].forEach((input) => {
+            input.addEventListener('input', () => this.handleAddressBookInput(input.value));
+            // Delay hiding on blur so a click/mousedown on a suggestion (below) still lands first.
+            input.addEventListener('blur', () => {
+                setTimeout(() => { box.hidden = true; }, 150);
+            });
+        });
+    },
+
+    async handleAddressBookInput(rawValue) {
+        const box = document.getElementById('crew-address-book-suggestions');
+        if (!box) return;
+
+        const query = rawValue.trim();
+        clearTimeout(this.addressBookDebounce);
+
+        if (query.length < 2) {
+            box.hidden = true;
+            box.innerHTML = '';
+            return;
+        }
+
+        this.addressBookDebounce = setTimeout(async () => {
+            const token = (this.addressBookToken = (this.addressBookToken || 0) + 1);
+            const response = await apiRequest(`/crew/address-book?q=${encodeURIComponent(query)}`);
+            if (token !== this.addressBookToken) return; // a newer query has since started
+
+            const matches = response.success ? (response.data || []) : [];
+            if (matches.length === 0) {
+                box.hidden = true;
+                box.innerHTML = '';
+                return;
+            }
+
+            box.innerHTML = matches.map((person) => `
+                <li class="address-book-suggestions__item" data-name="${escapeHtml(person.name || '')}" data-email="${escapeHtml(person.email)}">
+                    <span class="address-book-suggestions__name">${escapeHtml(person.name || person.email)}</span>
+                    ${person.name ? `<span class="address-book-suggestions__email">${escapeHtml(person.email)}</span>` : ''}
+                </li>`).join('');
+            box.hidden = false;
+
+            box.querySelectorAll('.address-book-suggestions__item').forEach((li) => {
+                li.addEventListener('mousedown', (e) => {
+                    e.preventDefault(); // keeps the input focused so blur doesn't hide the box before this fires
+                    document.getElementById('invite-email').value = li.dataset.email;
+                    document.getElementById('invite-name').value = li.dataset.name;
+                    box.hidden = true;
+                    box.innerHTML = '';
+                });
+            });
+        }, 200);
     },
 
     async handleInviteCrew() {
