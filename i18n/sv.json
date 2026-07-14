@@ -1065,7 +1065,9 @@
         "list": [
           "Mailgun - för att leverera transaktionell e-post (aviseringar, inbjudningar, larm)",
           "Telegram och Twilio WhatsApp - för att leverera aviseringar, där aktiverat",
-          "Vår hostingleverantör - för att driva och säkerhetskopiera tjänsten"
+          "Vår hostingleverantör - för att driva och säkerhetskopiera tjänsten",
+          "Cloudflare (cdnjs) och unpkg - för att leverera kodbiblioteken Leaflet och Lucide som används av appen; dessa leverantörer ser IP-adressen och webbläsaren (User-Agent) hos varje besökare som laddar en sida",
+          "OpenStreetMap - för att leverera karttiles som visas på rutt-/resekartor; OpenStreetMap ser IP-adressen och webbläsaren (User-Agent) hos den som visar en karta, tillsammans med det kartområde som begärts"
         ]
       },
       {

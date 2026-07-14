@@ -1076,7 +1076,9 @@ const EN_INLINE = {
         "list": [
           "Mailgun - to deliver transactional email (trip notifications, invitations, alerts)",
           "Telegram and Twilio WhatsApp - to deliver notifications, where enabled",
-          "Our hosting provider - to run and back up the service"
+          "Our hosting provider - to run and back up the service",
+          "Cloudflare (cdnjs) and unpkg - to serve the Leaflet and Lucide code libraries used by the app; these providers see the IP address and browser (User-Agent) of every visitor who loads a page",
+          "OpenStreetMap - to serve the map tiles shown on route/trip maps; OpenStreetMap sees the IP address and browser (User-Agent) of anyone who views a map, along with the map area requested"
         ]
       },
       {
