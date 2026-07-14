@@ -1020,7 +1020,7 @@
           "Kontouppgifter - e-post, namn, telefon och ett lösenord (sparas endast som en bcrypt-hash, aldrig i klartext)",
           "Fartygsuppgifter - namn, registrering/anropssignal, specifikationer och ett valfritt foto",
           "Reseuppgifter - planerade rutter (tolkade från Windy.com), planerad avgångs-/ankomsttid och marginaltid",
-          "Besättningsuppgifter - namn, e-post, telefon och ett valfritt foto, uppladdat med uttryckligt samtycke",
+          "Besättningsuppgifter - namn, e-post, telefon och ett valfritt foto för identifieringsändamål",
           "Nödkontaktuppgifter (\"ICE\") - namn, e-post, telefon och relation till skepparen",
           "Säkerhetsloggar - inloggningsförsök (för att upprätthålla hastighetsbegränsning) och status för avisering"
         ]
@@ -1030,8 +1030,8 @@
         "body": ["Varje kategori av uppgifter behandlas på en av dessa rättsliga grunder:"],
         "list": [
           "Avtal - konto-, fartygs- och reseuppgifter, så att systemet kan göra det du registrerade dig för",
-          "Uttryckligt samtycke - uppladdning av besättningsfoton och nödkontaktuppgifter",
-          "Berättigat intresse - säkerhetsloggar och aviseringshistorik, för att hålla systemet pålitligt och skyddat mot missbruk"
+          "Uttryckligt samtycke - nödkontaktuppgifter",
+          "Berättigat intresse - uppladdning av besättningsfoton för identifieringsändamål, samt säkerhetsloggar och aviseringshistorik, för att hålla systemet pålitligt och skyddat mot missbruk"
         ]
       },
       {
@@ -1051,7 +1051,7 @@
           "Rätta felaktiga uppgifter - de flesta kan du redigera direkt från din profil",
           "Radera ditt konto och tillhörande data, med alternativet \"Radera konto\" på din profilsida (meddelanden du skickat via kontaktformuläret är det enda undantaget - se \"Hur länge vi sparar dem\" ovan)",
           "Få ut dina uppgifter i ett portabelt, maskinläsbart format",
-          "Återkalla ett samtycke du tidigare gett, till exempel uppladdning av ett besättningsfoto"
+          "Återkalla ett samtycke du tidigare gett, till exempel en bekräftelse av en nödkontakt"
         ]
       },
       {

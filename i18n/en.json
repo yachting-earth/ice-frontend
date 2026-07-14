@@ -1020,7 +1020,7 @@
           "Account data - email, name, phone, and a password (stored only as a bcrypt hash, never in plain text)",
           "Vessel data - name, registration/call sign, specifications, and an optional photo",
           "Trip data - planned routes (parsed from Windy.com), scheduled departure/arrival times, and grace period",
-          "Crew data - name, email, phone, and an optional photo, uploaded with explicit consent",
+          "Crew data - name, email, phone, and an optional photo for identification purposes",
           "Emergency contact (\"ICE\") data - name, email, phone, and relationship to the skipper",
           "Security logs - login attempts (to enforce rate limiting) and notification delivery status"
         ]
@@ -1030,8 +1030,8 @@
         "body": ["Each category of data is processed on one of these legal bases:"],
         "list": [
           "Contract - account, vessel and trip data, so the system can do what you signed up for",
-          "Explicit consent - crew photo uploads and emergency contact details",
-          "Legitimate interest - security logs and notification delivery records, to keep the system reliable and abuse-resistant"
+          "Explicit consent - emergency contact details",
+          "Legitimate interest - crew photo uploads for identification purposes, and security logs and notification delivery records, to keep the system reliable and abuse-resistant"
         ]
       },
       {
@@ -1051,7 +1051,7 @@
           "Correct inaccurate data - most of it you can edit directly from your profile",
           "Erase your account and its associated data, using the \"Delete account\" option on your profile page (contact-form messages you've sent are the one exception - see \"How long we keep it\" above)",
           "Receive your data in a portable, machine-readable format",
-          "Withdraw a consent you previously gave, for example a crew photo upload"
+          "Withdraw a consent you previously gave, for example an emergency contact confirmation"
         ]
       },
       {
