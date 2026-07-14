@@ -198,6 +198,10 @@ const TripDetailPage = {
                         </div>
                         <ul id="crew-address-book-suggestions" class="address-book-suggestions" aria-label="${escapeHtml(t('tripDetail.crew.addressBookAriaLabel'))}" hidden></ul>
                     </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="invite-save-contact">
+                        <label for="invite-save-contact">${t('tripDetail.crew.saveContactLabel')}</label>
+                    </div>
                     <button class="btn btn-secondary" type="button" id="invite-crew-btn">${t('tripDetail.crew.sendInviteButton')}</button>` : ''}
                 </div>
 
@@ -1039,10 +1043,11 @@ const TripDetailPage = {
         await this.load(document.getElementById('page-content'));
     },
 
-    // Suggests crew from the skipper's own invite history ("address book")
-    // as they type into either the email or name field, matching on both -
-    // picking a suggestion fills in both fields. Backed by GET
-    // /crew/address-book (CrewHandler::addressBook / Crew::searchAddressBook).
+    // Suggests contacts the skipper has explicitly saved ("Save contact"
+    // checkbox on the invite form) as they type into either the email or
+    // name field, matching on both - picking a suggestion fills in both
+    // fields. Backed by GET /crew/address-book (CrewHandler::addressBook /
+    // AddressBookEntry::search).
     setupAddressBookAutocomplete() {
         const emailInput = document.getElementById('invite-email');
         const nameInput = document.getElementById('invite-name');
@@ -1106,6 +1111,7 @@ const TripDetailPage = {
         const alertBox = document.getElementById('invite-alert');
         const email = document.getElementById('invite-email').value.trim();
         const name = document.getElementById('invite-name').value.trim();
+        const saveContact = document.getElementById('invite-save-contact').checked;
 
         const emailError = Validate.email(email);
         if (emailError) {
@@ -1115,7 +1121,7 @@ const TripDetailPage = {
 
         const response = await apiRequest(`/trips/${this.state.tripId}/crew`, {
             method: 'POST',
-            body: JSON.stringify({ email, name: name || undefined })
+            body: JSON.stringify({ email, name: name || undefined, save_contact: saveContact })
         });
 
         if (!response.success) {
@@ -1134,6 +1140,7 @@ const TripDetailPage = {
             </div>`;
         document.getElementById('invite-email').value = '';
         document.getElementById('invite-name').value = '';
+        document.getElementById('invite-save-contact').checked = false;
 
         await this.load(document.getElementById('page-content'));
     },
