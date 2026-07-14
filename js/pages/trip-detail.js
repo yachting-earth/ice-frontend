@@ -2,9 +2,10 @@ const TripDetailPage = {
     ROUTE_COLORS: ['#1e88a8', '#a06600', '#b3261e', '#1a7f4e'],
 
     state: {
-        tripId: null, data: null, vessels: [], iceContacts: [], map: null, forceDelete: false,
+        tripId: null, data: null, vessels: [], iceContacts: [], savedRoutes: [], map: null, forceDelete: false,
         editDrawMaps: {}, editRoutes: {},
-        newRouteMode: 'windy', newRouteCoordinates: [], newRouteDrawMap: null
+        newRouteMode: 'windy', newRouteCoordinates: [], newRouteDrawMap: null,
+        newRouteSaveToArchive: false, newRouteSaveName: ''
     },
 
     async render(container, params) {
@@ -14,10 +15,11 @@ const TripDetailPage = {
     },
 
     async load(container) {
-        const [response, vesselsResponse, iceContactsResponse] = await Promise.all([
+        const [response, vesselsResponse, iceContactsResponse, savedRoutesResponse] = await Promise.all([
             apiRequest(`/trips/${this.state.tripId}`),
             apiRequest('/vessels'),
-            apiRequest('/ice-contacts')
+            apiRequest('/ice-contacts'),
+            apiRequest('/saved-routes')
         ]);
 
         if (!response.success) {
@@ -32,6 +34,7 @@ const TripDetailPage = {
         this.state.data = response.data;
         this.state.vessels = vesselsResponse.data || [];
         this.state.iceContacts = iceContactsResponse.data || [];
+        this.state.savedRoutes = savedRoutesResponse.data || [];
         this.renderPage(container);
     },
 
@@ -166,7 +169,10 @@ const TripDetailPage = {
                     <div id="trip-route-map" class="map-container"></div>
                     ${isOwner ? `
                     <hr class="section-divider">
-                    <h3>${t('tripDetail.routes.addAltHeading')}</h3>
+                    <div class="card-header">
+                        <h3>${t('tripDetail.routes.addAltHeading')}</h3>
+                        <div id="new-route-saved-route-picker"></div>
+                    </div>
                     <div class="route-mode-toggle btn-group">
                         <button type="button" class="btn btn-sm" id="new-route-mode-windy">${t('tripDetail.routes.importWindy')}</button>
                         <button type="button" class="btn btn-sm" id="new-route-mode-manual">${t('tripDetail.routes.drawManual')}</button>
@@ -176,6 +182,13 @@ const TripDetailPage = {
                     <div class="field">
                         <label for="new-route-reason">${t('tripDetail.routes.reasonOptionalLabel')}</label>
                         <input type="text" id="new-route-reason" placeholder="${t('tripDetail.routes.reasonPlaceholder')}">
+                    </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="new-route-save-toggle" ${this.state.newRouteSaveToArchive ? 'checked' : ''}>
+                        <label for="new-route-save-toggle">${t('tripDetail.routes.saveToArchive')}</label>
+                    </div>
+                    <div class="field" id="new-route-save-form" ${this.state.newRouteSaveToArchive ? '' : 'hidden'}>
+                        <input type="text" id="new-route-save-name" value="${escapeHtml(this.state.newRouteSaveName)}" placeholder="${escapeHtml(t('tripDetail.routes.saveRouteNamePlaceholder'))}">
                     </div>
                     <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">+ ${t('tripDetail.routes.addButton')}</button>` : ''}
                 </div>
@@ -241,7 +254,57 @@ const TripDetailPage = {
             this.state.newRouteMode = 'gpx';
             this.renderNewRouteBody();
         });
-        if (isOwner) this.renderNewRouteBody();
+        document.getElementById('new-route-save-toggle')?.addEventListener('change', (e) => {
+            this.state.newRouteSaveToArchive = e.target.checked;
+            document.getElementById('new-route-save-form').hidden = !e.target.checked;
+            if (e.target.checked) document.getElementById('new-route-save-name').focus();
+        });
+        document.getElementById('new-route-save-name')?.addEventListener('input', (e) => {
+            this.state.newRouteSaveName = e.target.value;
+        });
+        if (isOwner) {
+            this.renderNewRouteBody();
+            this.renderSavedRoutePicker();
+        }
+    },
+
+    renderSavedRoutePicker() {
+        const picker = document.getElementById('new-route-saved-route-picker');
+        if (!picker) return;
+
+        if (this.state.savedRoutes.length === 0) {
+            picker.innerHTML = '';
+            return;
+        }
+
+        picker.innerHTML = `
+            <select class="btn btn-secondary btn-sm" id="new-route-saved-route-select">
+                <option value="">${escapeHtml(t('tripDetail.routes.addSavedRoute'))}</option>
+                ${this.state.savedRoutes.map((r) => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join('')}
+            </select>`;
+
+        document.getElementById('new-route-saved-route-select').addEventListener('change', (e) => {
+            const savedRouteId = Number(e.target.value);
+            e.target.value = '';
+            if (!savedRouteId) return;
+            this.addSavedRouteToNewRoute(savedRouteId);
+        });
+    },
+
+    addSavedRouteToNewRoute(savedRouteId) {
+        const saved = this.state.savedRoutes.find((r) => r.id === savedRouteId);
+        if (!saved) return;
+
+        if (saved.raw_windy_url) {
+            this.state.newRouteMode = 'windy';
+            this.state.newRouteCoordinates = [];
+            this.renderNewRouteBody();
+            document.getElementById('new-route-windy-url').value = saved.raw_windy_url;
+        } else {
+            this.state.newRouteMode = 'manual';
+            this.state.newRouteCoordinates = parseWktLineString(saved.geometry_wkt);
+            this.renderNewRouteBody();
+        }
     },
 
     renderNewRouteBody() {
@@ -774,14 +837,17 @@ const TripDetailPage = {
     async handleAddRoute() {
         const alertBox = document.getElementById('routes-alert');
         const reason = document.getElementById('new-route-reason').value.trim();
+        const saveName = document.getElementById('new-route-save-name').value.trim();
 
         let body;
+        let archiveBody;
         if (this.state.newRouteMode === 'manual' || this.state.newRouteMode === 'gpx') {
             if (this.state.newRouteCoordinates.length < 2) {
                 alertBox.innerHTML = `<div class="alert alert-error">${t('tripDetail.routes.minPointsError')}</div>`;
                 return;
             }
             body = { coordinates: this.state.newRouteCoordinates, reason: reason || null };
+            archiveBody = { name: saveName, coordinates: this.state.newRouteCoordinates };
         } else {
             const windyUrl = document.getElementById('new-route-windy-url').value.trim();
             const urlError = Validate.windyUrl(windyUrl);
@@ -790,6 +856,12 @@ const TripDetailPage = {
                 return;
             }
             body = { windy_url: windyUrl, reason: reason || null };
+            archiveBody = { name: saveName, windy_url: windyUrl };
+        }
+
+        if (this.state.newRouteSaveToArchive && !saveName) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('tripDetail.routes.saveRouteNameRequired'))}</div>`;
+            return;
         }
 
         const response = await apiRequest(`/trips/${this.state.tripId}/routes`, {
@@ -804,6 +876,14 @@ const TripDetailPage = {
 
         alertBox.innerHTML = '';
         showToast(t('tripDetail.routes.added'), 'success');
+
+        if (this.state.newRouteSaveToArchive) {
+            const archiveResponse = await apiRequest('/saved-routes', { method: 'POST', body: JSON.stringify(archiveBody) });
+            showToast(archiveResponse.success ? t('tripDetail.routes.saveRouteArchiveSuccess') : t('tripDetail.routes.saveRouteArchiveFailed'), archiveResponse.success ? 'success' : 'error');
+        }
+
+        this.state.newRouteSaveToArchive = false;
+        this.state.newRouteSaveName = '';
         await this.load(document.getElementById('page-content'));
     },
 
