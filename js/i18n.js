@@ -879,6 +879,10 @@ const EN_INLINE = {
       "deleteHasPersonsWarning": "The trip has {crewCount} crew member(s) and {iceCount} ICE contact(s) registered who may need to be notified. Click again to delete anyway.",
       "deleteFailed": "Could not delete the trip.",
       "deleted": "The trip has been deleted"
+    },
+    "log": {
+      "heading": "Change log",
+      "empty": "No changes logged."
     }
   },
   "landing": {

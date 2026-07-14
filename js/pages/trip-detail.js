@@ -44,7 +44,7 @@ const TripDetailPage = {
         this.state.newRouteCoordinates = [];
         this.state.newRouteDrawMap = null;
 
-        const { trip, vessel, crew, routes, skipper } = this.state.data;
+        const { trip, vessel, crew, routes, skipper, audit_log } = this.state.data;
         const role = this.state.data.role || 'owner';
         const isOwner = role === 'owner';
         const graceLabel = formatGracePeriod(trip.grace_period_seconds);
@@ -199,11 +199,17 @@ const TripDetailPage = {
                     </div>
                     <button class="btn btn-secondary" type="button" id="invite-crew-btn">${t('tripDetail.crew.sendInviteButton')}</button>` : ''}
                 </div>
+
+                <div class="card">
+                    <h3>${t('tripDetail.log.heading')}</h3>
+                    <div id="trip-log-container"></div>
+                </div>
             </div>`;
 
         if (isOwner) this.renderActions(trip);
         this.renderRoutes(routes, isOwner);
         this.renderCrew(crew, isOwner);
+        this.renderLog(audit_log);
         if (vessel?.photo_path) {
             this.loadVesselPhoto(vessel.id);
         }
@@ -923,6 +929,21 @@ const TripDetailPage = {
         });
 
         this.loadCrewPhotos(container);
+    },
+
+    renderLog(auditLog) {
+        const container = document.getElementById('trip-log-container');
+
+        if (!auditLog || auditLog.length === 0) {
+            container.innerHTML = `<p class="text-muted">${escapeHtml(t('tripDetail.log.empty'))}</p>`;
+            return;
+        }
+
+        container.innerHTML = `<div class="change-log">${auditLog.map((entry) => `
+                <div class="change-log__item">
+                    <span class="change-log__time">${formatDateTime(entry.changed_at)}</span>
+                    <span class="change-log__text">${escapeHtml(entry.message || entry.action)}</span>
+                </div>`).join('')}</div>`;
     },
 
     async handleCrewPhotoSubmit(crewId) {

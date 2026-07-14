@@ -868,6 +868,10 @@
       "deleteHasPersonsWarning": "Resan har {crewCount} besättningsmedlem(mar) och {iceCount} ICE-kontakt(er) registrerade som kan behöva notifieras. Klicka igen för att radera ändå.",
       "deleteFailed": "Kunde inte radera resan.",
       "deleted": "Resan har raderats"
+    },
+    "log": {
+      "heading": "Ändringslogg",
+      "empty": "Inga ändringar loggade."
     }
   },
   "landing": {
