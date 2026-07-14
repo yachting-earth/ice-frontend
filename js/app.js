@@ -18,6 +18,7 @@ const Router = {
         { pattern: '#/saved-routes', page: SavedRoutesPage, auth: true },
         { pattern: '#/profile', page: ProfilePage, auth: true },
         { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
+        { pattern: '#/crew-address-book', page: CrewAddressBookPage, auth: true },
         { pattern: '#/ice-account', page: IceAccountPage, auth: true },
         { pattern: '#/admin', page: AdminPage, auth: true, adminOnly: true },
         { pattern: '#/trips/new', page: CreateTripPage, auth: true },
@@ -174,6 +175,7 @@ function renderTopbar() {
                 <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>
                 <a class="topbar__menu-link${activeClass('#/saved-routes')}" href="#/saved-routes">${escapeHtml(t('app.nav.savedRoutes'))}</a>
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>
+                <a class="topbar__menu-link${activeClass('#/crew-address-book')}" href="#/crew-address-book">${escapeHtml(t('app.nav.crewAddressBook'))}</a>
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
                 <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
                 <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>

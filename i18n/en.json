@@ -96,6 +96,7 @@
       "myVessels": "My vessels",
       "savedRoutes": "Saved routes",
       "iceContacts": "ICE contacts",
+      "crewAddressBook": "Crew address book",
       "myIceAccount": "My ICE account",
       "admin": "Admin",
       "logout": "Log out",
@@ -687,6 +688,23 @@
     "confirmDelete": "Remove the saved route {name}?",
     "deleteFailed": "Could not remove the route.",
     "deleted": "The route has been removed."
+  },
+  "crewAddressBook": {
+    "title": "Crew address book",
+    "subtitle": "Contacts you've explicitly saved when inviting crew, so you can reuse them on future trips",
+    "loading": "Loading saved contacts...",
+    "loadFailed": "Could not fetch saved contacts.",
+    "emptyTitle": "No saved contacts yet",
+    "emptyBody": "Check \"Save contact\" when inviting crew to a trip so they show up here for reuse.",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "Email"
+    },
+    "saveFailed": "Could not save the contact.",
+    "updated": "The contact has been updated.",
+    "confirmDelete": "Remove {name} from your address book?",
+    "deleteFailed": "Could not remove the contact.",
+    "deleted": "The contact has been removed."
   },
   "admin": {
     "title": "Admin",

@@ -96,6 +96,7 @@
       "myVessels": "Mina båtar",
       "savedRoutes": "Sparade rutter",
       "iceContacts": "ICE-kontakter",
+      "crewAddressBook": "Adressbok för besättning",
       "myIceAccount": "Mitt ICE-konto",
       "admin": "Admin",
       "logout": "Logga ut",
@@ -687,6 +688,23 @@
     "confirmDelete": "Ta bort den sparade rutten {name}?",
     "deleteFailed": "Kunde inte ta bort rutten.",
     "deleted": "Rutten borttagen."
+  },
+  "crewAddressBook": {
+    "title": "Adressbok för besättning",
+    "subtitle": "Kontakter du uttryckligen sparat när du bjudit in besättning, så du kan återanvända dem på framtida resor",
+    "loading": "Laddar sparade kontakter...",
+    "loadFailed": "Kunde inte hämta sparade kontakter.",
+    "emptyTitle": "Inga sparade kontakter än",
+    "emptyBody": "Kryssa i \"Spara kontakt\" när du bjuder in besättning till en resa så dyker de upp här för återanvändning.",
+    "form": {
+      "nameLabel": "Namn",
+      "emailLabel": "E-post"
+    },
+    "saveFailed": "Kunde inte spara kontakten.",
+    "updated": "Kontakten har uppdaterats.",
+    "confirmDelete": "Ta bort {name} från din adressbok?",
+    "deleteFailed": "Kunde inte ta bort kontakten.",
+    "deleted": "Kontakten har tagits bort."
   },
   "admin": {
     "title": "Admin",
