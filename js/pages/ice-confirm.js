@@ -50,6 +50,13 @@ const IceConfirmPage = {
                    <input type="checkbox" id="delete-after-trip">
                    <label for="delete-after-trip">${t('iceConfirm.accountSection.deleteAfterTripLabel')}</label>
                </div>
+               <div class="checkbox-field">
+                   <input type="checkbox" id="accept-terms">
+                   <label for="accept-terms">${t('iceConfirm.accountSection.acceptTerms', {
+                       termsLink: `<a href="#/terms" target="_blank" rel="noopener">${escapeHtml(t('iceConfirm.accountSection.termsLink'))}</a>`,
+                       privacyLink: `<a href="#/privacy" target="_blank" rel="noopener">${escapeHtml(t('iceConfirm.accountSection.privacyLink'))}</a>`
+                   })}</label>
+               </div>
                <p class="text-muted" style="font-size: var(--font-size-sm);">
                    ${t('iceConfirm.accountSection.retentionNote')}
                </p>
@@ -95,13 +102,16 @@ const IceConfirmPage = {
 
         let password = null;
         let deleteAfterTrip = false;
+        let acceptTerms = false;
         let error = null;
         if (createAccount) {
             password = document.getElementById('account-password').value;
             const confirm = document.getElementById('account-password-confirm').value;
             deleteAfterTrip = document.getElementById('delete-after-trip').checked;
+            acceptTerms = document.getElementById('accept-terms').checked;
             error = Validate.password(password)
-                || (password !== confirm ? t('iceConfirm.passwordMismatch') : null);
+                || (password !== confirm ? t('iceConfirm.passwordMismatch') : null)
+                || (!acceptTerms ? t('iceConfirm.acceptTermsRequired') : null);
         }
 
         if (error) {
@@ -117,7 +127,8 @@ const IceConfirmPage = {
             body: JSON.stringify({
                 create_account: createAccount || undefined,
                 password: createAccount ? password : undefined,
-                delete_after_trip: createAccount ? deleteAfterTrip : undefined
+                delete_after_trip: createAccount ? deleteAfterTrip : undefined,
+                accept_terms: createAccount ? acceptTerms : undefined
             })
         });
 

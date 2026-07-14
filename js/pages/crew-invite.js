@@ -52,6 +52,13 @@ const CrewInvitePage = {
                        <label for="account-password-confirm">${t('crewInvite.accountSection.confirmPasswordLabel')}</label>
                        <input type="password" id="account-password-confirm" autocomplete="new-password">
                    </div>
+                   <div class="checkbox-field">
+                       <input type="checkbox" id="accept-terms">
+                       <label for="accept-terms">${t('crewInvite.accountSection.acceptTerms', {
+                           termsLink: `<a href="#/terms" target="_blank" rel="noopener">${escapeHtml(t('crewInvite.accountSection.termsLink'))}</a>`,
+                           privacyLink: `<a href="#/privacy" target="_blank" rel="noopener">${escapeHtml(t('crewInvite.accountSection.privacyLink'))}</a>`
+                       })}</label>
+                   </div>
                </div>
                <p class="text-muted" style="font-size: var(--font-size-sm);">
                    ${t('crewInvite.accountSection.haveAccount', { loginLink: `<a href="#/login">${t('crewInvite.loginLink')}</a>` })}
@@ -152,11 +159,14 @@ const CrewInvitePage = {
         let error = Validate.name(name) || Validate.phone(phone, true);
 
         let password = null;
+        let acceptTerms = false;
         if (!error && createAccount) {
             password = document.getElementById('account-password').value;
             const confirm = document.getElementById('account-password-confirm').value;
+            acceptTerms = document.getElementById('accept-terms').checked;
             error = Validate.password(password)
-                || (password !== confirm ? t('crewInvite.passwordMismatch') : null);
+                || (password !== confirm ? t('crewInvite.passwordMismatch') : null)
+                || (!acceptTerms ? t('crewInvite.acceptTermsRequired') : null);
         }
 
         if (error) {
@@ -194,7 +204,8 @@ const CrewInvitePage = {
                 share_contact: shareContact,
                 share_emergency_contact: shareEmergencyContact,
                 create_account: createAccount || undefined,
-                password: createAccount ? password : undefined
+                password: createAccount ? password : undefined,
+                accept_terms: createAccount ? acceptTerms : undefined
             })
         });
 
