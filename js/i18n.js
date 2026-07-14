@@ -63,6 +63,8 @@ const EN_INLINE = {
     "CONTACT_FILE_TOO_LARGE": "One of your attachments is too large.",
     "CONTACT_INVALID_FILE_TYPE": "One of your attachments has an unsupported file type.",
     "CONTACT_ATTACHMENT_NOT_FOUND": "Attachment not found.",
+    "CREW_GDPR_TOKEN_INVALID": "This link is invalid.",
+    "CREW_GDPR_TOKEN_EXPIRED": "This link has expired. Please request a new one.",
     "SERVER_ERROR": "An unexpected error occurred.",
     "DATABASE_ERROR": "A database error occurred.",
     "RATE_LIMITED": "Too many attempts. Try again later.",
@@ -158,6 +160,7 @@ const EN_INLINE = {
     "registerLink": "Register",
     "errorDefault": "Login failed.",
     "forgotPasswordLink": "Forgot password?",
+    "crewGdprLink": "Invited as crew without an account? Manage your data here.",
     "tabs": {
       "user": "Log in",
       "sar": "SAR access"
@@ -204,6 +207,54 @@ const EN_INLINE = {
     "errorDefault": "Could not reset the password.",
     "successTitle": "Password reset",
     "successBody": "Your password has been changed. You've been signed out everywhere and can now log in with your new password."
+  },
+  "crewGdprRequest": {
+    "tagline": "Manage your crew data",
+    "intro": "If you were invited as crew (or added as an ICE contact) without creating an account, enter the email address the invitation was sent to. We'll send you a secure, time-limited link to a portal where you can view, export or delete your data, or send us a message.",
+    "emailLabel": "Email",
+    "submit": "Send access link",
+    "submitting": "Sending…",
+    "sent": "If that email address matches a crew or ICE-contact record, we've sent a secure access link. Check your inbox.",
+    "backToLogin": "Back to login"
+  },
+  "crewGdprPortal": {
+    "noToken": "No access link found. Check that you clicked the whole link.",
+    "requestNew": "Request a new link",
+    "loading": "Loading…",
+    "invalidLink": "This link is invalid.",
+    "linkExpired": "This link has expired. Please request a new one.",
+    "title": "Your crew data",
+    "intro": "Showing data linked to {email}.",
+    "membershipsTitle": "Trips you were invited to",
+    "withSkipper": "with {skipper}",
+    "tripStatus": {
+      "draft": "not yet published",
+      "published": "upcoming",
+      "active": "in progress",
+      "completed": "completed",
+      "cancelled": "cancelled"
+    },
+    "noMemberships": "No crew memberships found for this email address.",
+    "notErasableActive": "This trip hasn't finished yet, so this membership can't be deleted immediately - crew details are still needed for safety purposes while a trip is in progress. It will be deleted automatically 30 days after the trip ends.",
+    "iceContactNote": "This email address is also registered as an emergency (ICE) contact for {count} skipper(s). That data is included in the export below; to have it removed, ask the skipper to delete you from their ICE contacts.",
+    "exportTitle": "Export my data",
+    "exportHint": "Download everything we hold about this email address as a JSON file.",
+    "exportButton": "Download my data",
+    "eraseTitle": "Forget me",
+    "eraseHint": "Immediately delete your crew membership on any trip that has already finished, instead of waiting for the automatic 30-day deletion. Memberships on a trip that hasn't finished yet are kept until it does, for safety reasons.",
+    "eraseButton": "Delete my data now",
+    "eraseConfirm": "This will permanently delete your crew data for every finished trip. This cannot be undone. Continue?",
+    "erasing": "Deleting…",
+    "eraseSuccess": "Deleted {count} crew membership(s).",
+    "eraseKeptActive": "{count} membership(s) on a trip that hasn't finished yet were kept and will be deleted automatically once it has.",
+    "eraseFailed": "Could not delete your data.",
+    "contactTitle": "Send us a message",
+    "contactHint": "Have a question about your data, or something else to tell us? This goes directly to the system owner.",
+    "messageLabel": "Message",
+    "contactSubmit": "Send message",
+    "contactSubmitting": "Sending…",
+    "contactSuccess": "Your message has been sent.",
+    "contactFailed": "Could not send your message."
   },
   "verifyEmail": {
     "noToken": "No verification link found. Check that you clicked the whole link.",
@@ -1245,7 +1296,14 @@ const EN_INLINE = {
           "Correct inaccurate data - most of it you can edit directly from your profile",
           "Erase your account and its associated data, using the \"Delete account\" option on your profile page (contact-form messages you've sent are the one exception - see \"How long we keep it\" above)",
           "Receive your data in a portable, machine-readable format",
-          "Withdraw a consent you previously gave, for example an emergency contact confirmation"
+          "Withdraw a consent you previously gave, for example an emergency contact confirmation",
+          "Lodge a complaint with the supervisory authority responsible for data protection - in Sweden, the Swedish Authority for Privacy Protection (Integritetsskyddsmyndigheten, IMY, imy.se) - under GDPR Article 77"
+        ]
+      },
+      {
+        "heading": "If you don't have an account",
+        "body": [
+          "If you were added as crew for a trip, or as an emergency (\"ICE\") contact, without creating an account, you can still exercise the rights above. Go to the login page and follow the \"Invited as crew without an account? Manage your data here.\" link, enter the email address your invitation was sent to, and we'll email you a secure, time-limited access link. From that portal you can download your data, request immediate deletion of your crew record on a trip that's already finished, or send us a message directly."
         ]
       },
       {
@@ -1265,6 +1323,12 @@ const EN_INLINE = {
           "Our hosting provider - to run and back up the service",
           "Cloudflare (cdnjs) and unpkg - to serve the Leaflet and Lucide code libraries used by the app; these providers see the IP address and browser (User-Agent) of every visitor who loads a page",
           "OpenStreetMap - to serve the map tiles shown on route/trip maps; OpenStreetMap sees the IP address and browser (User-Agent) of anyone who views a map, along with the map area requested"
+        ]
+      },
+      {
+        "heading": "International data transfers",
+        "body": [
+          "Mailgun and Twilio (WhatsApp), listed above, are US-headquartered processors, so notification content - recipient names, emails, phone numbers and trip alert text - may be transferred to and processed in the United States. Where this happens, we rely on those providers' participation in the EU-US Data Privacy Framework and/or Standard Contractual Clauses to ensure your data receives an equivalent level of protection outside the EEA."
         ]
       },
       {
