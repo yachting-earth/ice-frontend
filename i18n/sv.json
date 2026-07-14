@@ -725,6 +725,7 @@
       "allCategories": "Alla kategorier",
       "loadFailed": "Kunde inte hämta loggar.",
       "stackTrace": "Stackspår",
+      "piiData": "Personuppgifter",
       "prevPage": "Föregående",
       "nextPage": "Nästa",
       "pageInfo": "Sida {page} av {totalPages} ({total} loggar)",

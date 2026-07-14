@@ -736,6 +736,7 @@ const EN_INLINE = {
       "allCategories": "All categories",
       "loadFailed": "Could not fetch logs.",
       "stackTrace": "Stack trace",
+      "piiData": "PII data",
       "prevPage": "Previous",
       "nextPage": "Next",
       "pageInfo": "Page {page} of {totalPages} ({total} logs)",

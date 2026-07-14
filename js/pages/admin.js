@@ -444,12 +444,18 @@ const AdminPage = {
             ? `<details class="log-stack-trace"><summary>${escapeHtml(t('admin.logs.stackTrace'))}</summary><pre>${escapeHtml(log.stack_trace)}</pre></details>`
             : '';
 
+        // log.pii is only present at all for admins granted can_view_log_pii
+        // (AdminHandler::listLogs()) - absent, not redacted, for everyone else.
+        const piiData = log.pii
+            ? `<details class="log-stack-trace"><summary>${escapeHtml(t('admin.logs.piiData'))}</summary><pre>${escapeHtml(JSON.stringify(log.pii, null, 2))}</pre></details>`
+            : '';
+
         return `
             <tr>
                 <td>${escapeHtml(formatDateTime(log.created_at))}</td>
                 <td><span class="badge badge-log-${escapeHtml(log.level)}">${escapeHtml(levelLabel)}</span></td>
                 <td>${escapeHtml(categoryLabel)}</td>
-                <td class="log-message-cell">${escapeHtml(log.message)}${stackTrace}</td>
+                <td class="log-message-cell">${escapeHtml(log.message)}${stackTrace}${piiData}</td>
                 <td>${log.user_id ? escapeHtml(log.user_email || String(log.user_id)) : ''}</td>
             </tr>`;
     },
