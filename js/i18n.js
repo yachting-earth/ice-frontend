@@ -1013,7 +1013,7 @@ const EN_INLINE = {
   },
   "privacy": {
     "title": "Privacy & GDPR",
-    "lastUpdated": "Last updated: 11 July 2026",
+    "lastUpdated": "Last updated: 14 July 2026",
     "intro": "This page explains what personal data Yachting Earth ICE collects, why, how long it is kept, and the rights you have over it under GDPR.",
     "sections": [
       {
@@ -1050,7 +1050,8 @@ const EN_INLINE = {
         "body": [
           "A completed or cancelled trip is soft-deleted immediately - it disappears from the skipper's, crew's and emergency contact's view - and then permanently (hard-)deleted, along with its routes, crew records, photos, audit log, notifications and access tokens, by a daily cleanup job 30 days later.",
           "Registered user accounts and vessels are not touched by this process - only the trip's own data is. You can delete your account and its data at any time from your profile page.",
-          "Emergency contact accounts are also kept indefinitely by default, since the contact may need to sign back in for a future trip, but a contact can opt in - from \"My ICE account\" - to have their account deleted automatically once it is no longer linked to any current or future trip."
+          "Emergency contact accounts are also kept indefinitely by default, since the contact may need to sign back in for a future trip, but a contact can opt in - from \"My ICE account\" - to have their account deleted automatically once it is no longer linked to any current or future trip.",
+          "Messages sent through the contact form (your name, email, and message text) are kept for 18 months from when you send them, then permanently deleted. This 18-month period runs on its own and is not shortened by deleting your account - if you delete your account, your past messages are still kept until their own 18-month period ends, unless we delete them sooner. We may delete a message earlier than 18 months, for example once a request is resolved."
         ]
       },
       {
@@ -1059,7 +1060,7 @@ const EN_INLINE = {
         "list": [
           "Access the personal data we hold about you",
           "Correct inaccurate data - most of it you can edit directly from your profile",
-          "Erase your account and its associated data, using the \"Delete account\" option on your profile page",
+          "Erase your account and its associated data, using the \"Delete account\" option on your profile page (contact-form messages you've sent are the one exception - see \"How long we keep it\" above)",
           "Receive your data in a portable, machine-readable format",
           "Withdraw a consent you previously gave, for example a crew photo upload"
         ]
@@ -1187,6 +1188,7 @@ const EN_INLINE = {
     "messageLabel": "Message",
     "attachmentsLabel": "Attachments",
     "attachmentsHint": "Optional. Up to 5 files, 1MB each (images or PDF).",
+    "retentionHint": "We keep messages sent through this form for 18 months, then delete them - this doesn't change if you delete your account in the meantime. See our Privacy Policy for details.",
     "submit": "Send message",
     "submitting": "Sending...",
     "success": "Your message has been sent. We'll get back to you soon.",

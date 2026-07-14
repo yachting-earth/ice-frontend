@@ -1002,7 +1002,7 @@
   },
   "privacy": {
     "title": "Integritet och GDPR",
-    "lastUpdated": "Senast uppdaterad: 11 juli 2026",
+    "lastUpdated": "Senast uppdaterad: 14 juli 2026",
     "intro": "Den här sidan förklarar vilka personuppgifter Yachting Earth ICE samlar in, varför, hur länge de sparas, och vilka rättigheter du har enligt GDPR.",
     "sections": [
       {
@@ -1039,7 +1039,8 @@
         "body": [
           "En avslutad eller avbruten resa mjukraderas omedelbart - den försvinner från skepparens, besättningens och nödkontaktens vy - och raderas sedan permanent, tillsammans med sina rutter, besättningsposter, foton, ändringslogg, aviseringar och åtkomsttoken, av ett dagligt städjobb 30 dagar senare.",
           "Registrerade användarkonton och fartyg påverkas inte av detta - endast resans egna data. Du kan radera ditt konto och dess data när som helst från din profilsida.",
-          "Nödkontaktkonton sparas också på obestämd tid som standard, eftersom kontakten kan behöva logga in igen inför en framtida resa, men en kontakt kan välja - från \"Mitt ICE-konto\" - att få sitt konto automatiskt raderat när det inte längre är kopplat till någon aktuell eller framtida resa."
+          "Nödkontaktkonton sparas också på obestämd tid som standard, eftersom kontakten kan behöva logga in igen inför en framtida resa, men en kontakt kan välja - från \"Mitt ICE-konto\" - att få sitt konto automatiskt raderat när det inte längre är kopplat till någon aktuell eller framtida resa.",
+          "Meddelanden som skickas via kontaktformuläret (ditt namn, e-post och meddelandetext) sparas i 18 månader från att du skickar dem, och raderas sedan permanent. Denna 18-månadersperiod löper på egen hand och förkortas inte av att du raderar ditt konto - om du raderar ditt konto sparas dina tidigare meddelanden ändå tills deras egen 18-månadersperiod löper ut, om vi inte raderar dem tidigare. Vi kan radera ett meddelande innan 18 månader har gått, till exempel när ett ärende är löst."
         ]
       },
       {
@@ -1048,7 +1049,7 @@
         "list": [
           "Få tillgång till de personuppgifter vi har om dig",
           "Rätta felaktiga uppgifter - de flesta kan du redigera direkt från din profil",
-          "Radera ditt konto och tillhörande data, med alternativet \"Radera konto\" på din profilsida",
+          "Radera ditt konto och tillhörande data, med alternativet \"Radera konto\" på din profilsida (meddelanden du skickat via kontaktformuläret är det enda undantaget - se \"Hur länge vi sparar dem\" ovan)",
           "Få ut dina uppgifter i ett portabelt, maskinläsbart format",
           "Återkalla ett samtycke du tidigare gett, till exempel uppladdning av ett besättningsfoto"
         ]
@@ -1176,6 +1177,7 @@
     "messageLabel": "Meddelande",
     "attachmentsLabel": "Bilagor",
     "attachmentsHint": "Valfritt. Max 5 filer, 1MB per fil (bilder eller PDF).",
+    "retentionHint": "Vi sparar meddelanden som skickas via detta formulär i 18 månader och raderar dem sedan - det ändras inte om du raderar ditt konto under tiden. Se vår integritetspolicy för mer information.",
     "submit": "Skicka meddelande",
     "submitting": "Skickar...",
     "success": "Ditt meddelande har skickats. Vi hör av oss snart.",

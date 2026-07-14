@@ -39,6 +39,7 @@ const ContactPage = {
                             <small>${escapeHtml(t('contact.attachmentsHint'))}</small>
                         </div>
                         <ul id="contact-file-list" style="list-style:none; padding:0; margin:0 0 var(--space-3);"></ul>
+                        <p class="text-muted" style="font-size: var(--font-size-sm); margin: 0 0 var(--space-3);">${escapeHtml(t('contact.retentionHint'))}</p>
                         <button class="btn btn-primary" type="submit" id="contact-submit">${escapeHtml(t('contact.submit'))}</button>
                     </form>
                 </div>
