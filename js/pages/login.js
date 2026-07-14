@@ -32,6 +32,9 @@ const LoginPage = {
                         <div class="auth-card__footer">
                             ${escapeHtml(t('login.noAccount'))} <a href="#/register">${escapeHtml(t('login.registerLink'))}</a>
                         </div>
+                        <div class="auth-card__footer">
+                            <a href="#/crew-gdpr">${escapeHtml(t('login.crewGdprLink'))}</a>
+                        </div>
                     </div>
 
                     <div id="panel-sar" role="tabpanel" aria-labelledby="tab-sar" hidden>

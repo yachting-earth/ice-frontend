@@ -52,6 +52,8 @@
     "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
     "CONTACT_INVALID_FILE_TYPE": "En av dina bilagor har en filtyp som inte stöds.",
     "CONTACT_ATTACHMENT_NOT_FOUND": "Bilagan hittades inte.",
+    "CREW_GDPR_TOKEN_INVALID": "Länken är ogiltig.",
+    "CREW_GDPR_TOKEN_EXPIRED": "Länken har gått ut. Begär en ny.",
     "SERVER_ERROR": "Ett oväntat fel inträffade.",
     "DATABASE_ERROR": "Ett databasfel inträffade.",
     "RATE_LIMITED": "För många försök. Försök igen senare.",
@@ -147,6 +149,7 @@
     "registerLink": "Registrera dig",
     "errorDefault": "Inloggningen misslyckades.",
     "forgotPasswordLink": "Glömt lösenordet?",
+    "crewGdprLink": "Inbjuden som besättning utan konto? Hantera dina uppgifter här.",
     "tabs": {
       "user": "Logga in",
       "sar": "SAR-åtkomst"
@@ -193,6 +196,54 @@
     "errorDefault": "Kunde inte återställa lösenordet.",
     "successTitle": "Lösenordet återställt",
     "successBody": "Ditt lösenord har ändrats. Du har loggats ut överallt och kan nu logga in med ditt nya lösenord."
+  },
+  "crewGdprRequest": {
+    "tagline": "Hantera dina besättningsuppgifter",
+    "intro": "Om du blev inbjuden som besättning (eller tillagd som ICE-kontakt) utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera eller radera dina uppgifter, eller skicka oss ett meddelande.",
+    "emailLabel": "E-post",
+    "submit": "Skicka åtkomstlänk",
+    "submitting": "Skickar…",
+    "sent": "Om den e-postadressen matchar en besättnings- eller ICE-kontaktpost har vi skickat en säker åtkomstlänk. Kontrollera din inkorg.",
+    "backToLogin": "Tillbaka till inloggning"
+  },
+  "crewGdprPortal": {
+    "noToken": "Ingen åtkomstlänk hittades. Kontrollera att du klickade på hela länken.",
+    "requestNew": "Begär en ny länk",
+    "loading": "Laddar…",
+    "invalidLink": "Länken är ogiltig.",
+    "linkExpired": "Länken har gått ut. Begär en ny.",
+    "title": "Dina besättningsuppgifter",
+    "intro": "Visar uppgifter kopplade till {email}.",
+    "membershipsTitle": "Resor du blev inbjuden till",
+    "withSkipper": "med {skipper}",
+    "tripStatus": {
+      "draft": "ej publicerad än",
+      "published": "kommande",
+      "active": "pågående",
+      "completed": "avslutad",
+      "cancelled": "avbruten"
+    },
+    "noMemberships": "Inga besättningsposter hittades för den här e-postadressen.",
+    "notErasableActive": "Den här resan är inte avslutad än, så den här posten kan inte raderas direkt - besättningsuppgifter behövs fortfarande av säkerhetsskäl medan en resa pågår. Den raderas automatiskt 30 dagar efter att resan avslutats.",
+    "iceContactNote": "Den här e-postadressen är också registrerad som ICE-kontakt (nödkontakt) för {count} skeppare. Den uppgiften ingår i exporten nedan; för att få den borttagen, be skepparen ta bort dig från sina ICE-kontakter.",
+    "exportTitle": "Exportera mina uppgifter",
+    "exportHint": "Ladda ner allt vi har lagrat om den här e-postadressen som en JSON-fil.",
+    "exportButton": "Ladda ner mina uppgifter",
+    "eraseTitle": "Glöm mig",
+    "eraseHint": "Radera direkt din besättningspost på varje resa som redan avslutats, istället för att vänta på den automatiska raderingen efter 30 dagar. Poster på en resa som inte avslutats än sparas tills den gör det, av säkerhetsskäl.",
+    "eraseButton": "Radera mina uppgifter nu",
+    "eraseConfirm": "Detta raderar permanent dina besättningsuppgifter för varje avslutad resa. Detta kan inte ångras. Fortsätta?",
+    "erasing": "Raderar…",
+    "eraseSuccess": "Raderade {count} besättningspost(er).",
+    "eraseKeptActive": "{count} post(er) på en resa som inte avslutats än sparades och raderas automatiskt när den gör det.",
+    "eraseFailed": "Kunde inte radera dina uppgifter.",
+    "contactTitle": "Skicka ett meddelande",
+    "contactHint": "Har du en fråga om dina uppgifter, eller något annat att berätta? Detta går direkt till systemägaren.",
+    "messageLabel": "Meddelande",
+    "contactSubmit": "Skicka meddelande",
+    "contactSubmitting": "Skickar…",
+    "contactSuccess": "Ditt meddelande har skickats.",
+    "contactFailed": "Kunde inte skicka ditt meddelande."
   },
   "verifyEmail": {
     "noToken": "Ingen verifieringslänk hittades. Kontrollera att du klickade på hela länken.",
@@ -1114,6 +1165,12 @@
           "Radera ditt konto och tillhörande data, med alternativet \"Radera konto\" på din profilsida (meddelanden du skickat via kontaktformuläret är det enda undantaget - se \"Hur länge vi sparar dem\" ovan)",
           "Få ut dina uppgifter i ett portabelt, maskinläsbart format",
           "Återkalla ett samtycke du tidigare gett, till exempel en bekräftelse av en nödkontakt"
+        ]
+      },
+      {
+        "heading": "Om du inte har något konto",
+        "body": [
+          "Om du blev tillagd som besättning på en resa, eller som nödkontakt (\"ICE\"), utan att skapa ett konto, kan du ändå utöva rättigheterna ovan. Gå till inloggningssidan och följ länken \"Inbjuden som besättning utan konto? Hantera dina uppgifter här.\", ange den e-postadress din inbjudan skickades till, så mejlar vi dig en säker, tidsbegränsad åtkomstlänk. Från den portalen kan du ladda ner dina uppgifter, begära omedelbar radering av din besättningspost på en resa som redan avslutats, eller skicka oss ett meddelande direkt."
         ]
       },
       {

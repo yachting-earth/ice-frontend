@@ -13,6 +13,8 @@ const Router = {
         { pattern: '#/register', page: RegisterPage, guestOnly: true },
         { pattern: '#/forgot-password', page: ForgotPasswordPage, guestOnly: true },
         { pattern: '#/reset-password', page: ResetPasswordPage },
+        { pattern: '#/crew-gdpr', page: CrewGdprRequestPage },
+        { pattern: '#/crew-gdpr-portal', page: CrewGdprPortalPage },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
         { pattern: '#/vessels', page: VesselsPage, auth: true },
         { pattern: '#/saved-routes', page: SavedRoutesPage, auth: true },
