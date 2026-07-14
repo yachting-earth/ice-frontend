@@ -1332,11 +1332,25 @@ const I18n = {
   setLang(lang) {
     if (!this.SUPPORTED.includes(lang)) return;
     localStorage.setItem('ye_lang', lang);
+    // Emailed links (ice-confirm, ice-portal, crew-join, ...) bake in a
+    // ?lang= query param that getLang() prioritizes over localStorage. Strip
+    // it so the explicit choice just saved above actually wins on reload,
+    // instead of the stale link language re-asserting itself every time.
+    this._stripLangFromHash();
     // A soft re-render leaves stale strings behind in places that only read
     // a dictionary once (e.g. EN_INLINE-derived state); reload so every
     // page picks up the new language from scratch.
     if (lang === this._lang) return;
     location.reload();
+  },
+
+  _stripLangFromHash() {
+    const [hashPath, hashQuery = ''] = location.hash.split('?');
+    const params = new URLSearchParams(hashQuery);
+    if (!params.has('lang')) return;
+    params.delete('lang');
+    const newQuery = params.toString();
+    location.hash = newQuery ? `${hashPath}?${newQuery}` : hashPath;
   }
 };
 
