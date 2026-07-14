@@ -336,7 +336,7 @@ const EN_INLINE = {
       "gpxHint": "Upload a .gpx file exported from your chartplotter or navigation app. The route is read immediately and the file itself is not kept.",
       "reasonLabel": "Reason",
       "reasonPlaceholder": "e.g. If the wind turns northerly",
-      "saveRoute": "Save route",
+      "saveToArchive": "Save to route archive",
       "saveRouteNamePlaceholder": "Name this route, e.g. Marstrand-Skagen",
       "saveRouteNameRequired": "Enter a name for the route.",
       "saveRouteFailed": "Could not save the route.",

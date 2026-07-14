@@ -325,7 +325,7 @@
       "gpxHint": "Ladda upp en .gpx-fil exporterad från din plotter eller navigationsapp. Rutten läses in direkt och själva filen sparas inte.",
       "reasonLabel": "Anledning",
       "reasonPlaceholder": "t.ex. Om vinden vrider nordlig",
-      "saveRoute": "Spara rutt",
+      "saveToArchive": "Spara i ruttarkiv",
       "saveRouteNamePlaceholder": "Namnge rutten, t.ex. Marstrand-Skagen",
       "saveRouteNameRequired": "Ange ett namn för rutten.",
       "saveRouteFailed": "Kunde inte spara rutten.",

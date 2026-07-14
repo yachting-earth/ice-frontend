@@ -5,13 +5,13 @@ const CreateTripPage = {
         vessels: [],
         iceContacts: [],
         savedRoutes: [],
-        routes: [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [] }],
+        routes: [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [], saveToArchive: false, saveName: '' }],
         map: null,
         drawMaps: {}
     },
 
     async render(container) {
-        this.state.routes = [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [] }];
+        this.state.routes = [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [], saveToArchive: false, saveName: '' }];
         this.state.map = null;
         Object.values(this.state.drawMaps).forEach((m) => m.destroy());
         this.state.drawMaps = {};
@@ -73,7 +73,7 @@ const CreateTripPage = {
             </div>`;
 
         document.getElementById('add-route-btn').addEventListener('click', () => {
-            this.state.routes.push({ mode: 'windy', windyUrl: '', reason: '', coordinates: [] });
+            this.state.routes.push({ mode: 'windy', windyUrl: '', reason: '', coordinates: [], saveToArchive: false, saveName: '' });
             this.renderRoutes();
         });
         document.getElementById('create-trip-submit').addEventListener('click', () => this.handleSubmit());
@@ -118,9 +118,9 @@ const CreateTripPage = {
         if (!saved) return;
 
         if (saved.raw_windy_url) {
-            this.state.routes.push({ mode: 'windy', windyUrl: saved.raw_windy_url, reason: '', coordinates: [] });
+            this.state.routes.push({ mode: 'windy', windyUrl: saved.raw_windy_url, reason: '', coordinates: [], saveToArchive: false, saveName: '' });
         } else {
-            this.state.routes.push({ mode: 'manual', windyUrl: '', reason: '', coordinates: parseWktLineString(saved.geometry_wkt) });
+            this.state.routes.push({ mode: 'manual', windyUrl: '', reason: '', coordinates: parseWktLineString(saved.geometry_wkt), saveToArchive: false, saveName: '' });
         }
 
         this.renderRoutes();
@@ -376,15 +376,12 @@ const CreateTripPage = {
                     <input type="text" class="route-reason" data-index="${i}" value="${escapeHtml(route.reason)}"
                            placeholder="${escapeHtml(t('createTrip.routes.reasonPlaceholder'))}">
                 </div>` : ''}
-                <div class="btn-group">
-                    <button class="btn btn-ghost btn-sm" type="button" data-save-route="${i}">${escapeHtml(t('createTrip.routes.saveRoute'))}</button>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="route-save-toggle-${i}" data-save-toggle="${i}" ${route.saveToArchive ? 'checked' : ''}>
+                    <label for="route-save-toggle-${i}">${escapeHtml(t('createTrip.routes.saveToArchive'))}</label>
                 </div>
-                <div class="field-row" id="route-save-form-${i}" hidden>
-                    <div class="field" style="flex:1;">
-                        <input type="text" id="route-save-name-${i}" placeholder="${escapeHtml(t('createTrip.routes.saveRouteNamePlaceholder'))}">
-                    </div>
-                    <button class="btn btn-primary btn-sm" type="button" data-confirm-save-route="${i}">${escapeHtml(t('common.save'))}</button>
-                    <button class="btn btn-ghost btn-sm" type="button" data-cancel-save-route="${i}">${escapeHtml(t('common.cancel'))}</button>
+                <div class="field" id="route-save-form-${i}" ${route.saveToArchive ? '' : 'hidden'}>
+                    <input type="text" id="route-save-name-${i}" data-index="${i}" value="${escapeHtml(route.saveName)}" placeholder="${escapeHtml(t('createTrip.routes.saveRouteNamePlaceholder'))}">
                 </div>
             </div>
         `).join('');
@@ -430,21 +427,19 @@ const CreateTripPage = {
                 this.renderRoutes();
             });
         });
-        routesContainer.querySelectorAll('[data-save-route]').forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                const i = Number(e.target.dataset.saveRoute);
+        routesContainer.querySelectorAll('[data-save-toggle]').forEach((checkbox) => {
+            checkbox.addEventListener('change', (e) => {
+                const i = Number(e.target.dataset.saveToggle);
+                this.state.routes[i].saveToArchive = e.target.checked;
                 const form = document.getElementById(`route-save-form-${i}`);
-                form.hidden = !form.hidden;
-                if (!form.hidden) document.getElementById(`route-save-name-${i}`).focus();
+                form.hidden = !e.target.checked;
+                if (e.target.checked) document.getElementById(`route-save-name-${i}`).focus();
             });
         });
-        routesContainer.querySelectorAll('[data-cancel-save-route]').forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                document.getElementById(`route-save-form-${e.target.dataset.cancelSaveRoute}`).hidden = true;
+        routesContainer.querySelectorAll('[id^="route-save-name-"]').forEach((input) => {
+            input.addEventListener('input', (e) => {
+                this.state.routes[Number(e.target.dataset.index)].saveName = e.target.value;
             });
-        });
-        routesContainer.querySelectorAll('[data-confirm-save-route]').forEach((btn) => {
-            btn.addEventListener('click', (e) => this.handleSaveRoute(Number(e.target.dataset.confirmSaveRoute)));
         });
         routesContainer.querySelectorAll('[data-clear-route]').forEach((btn) => {
             btn.addEventListener('click', (e) => {
@@ -463,44 +458,13 @@ const CreateTripPage = {
         this.updateMapPreview();
     },
 
-    async handleSaveRoute(i) {
-        const route = this.state.routes[i];
-        const nameInput = document.getElementById(`route-save-name-${i}`);
-        const name = nameInput.value.trim();
-
-        if (!name) {
-            showToast(t('createTrip.routes.saveRouteNameRequired'), 'error');
-            return;
-        }
-
-        let body;
-        if (route.mode === 'manual' || route.mode === 'gpx') {
-            if (route.coordinates.length < 2) {
-                showToast(t('createTrip.errors.primaryRouteMinPoints'), 'error');
-                return;
-            }
-            body = { name, coordinates: route.coordinates };
-        } else {
-            const urlError = Validate.windyUrl(route.windyUrl);
-            if (urlError) {
-                showToast(urlError, 'error');
-                return;
-            }
-            body = { name, windy_url: route.windyUrl.trim() };
-        }
+    async archiveRoute(route) {
+        const body = (route.mode === 'manual' || route.mode === 'gpx')
+            ? { name: route.saveName.trim(), coordinates: route.coordinates }
+            : { name: route.saveName.trim(), windy_url: route.windyUrl.trim() };
 
         const response = await apiRequest('/saved-routes', { method: 'POST', body: JSON.stringify(body) });
-
-        if (!response.success) {
-            showToast(response.code ? t.error(response.code) : (response.error || t('createTrip.routes.saveRouteFailed')), 'error');
-            return;
-        }
-
-        this.state.savedRoutes.unshift(response.data);
-        this.renderSavedRoutePicker();
-        nameInput.value = '';
-        document.getElementById(`route-save-form-${i}`).hidden = true;
-        showToast(t('createTrip.routes.saveRouteSuccess'), 'success');
+        return response.success;
     },
 
     initDrawMap(i) {
@@ -622,6 +586,26 @@ const CreateTripPage = {
             }
         }
 
+        const routesToArchive = this.state.routes.filter((r) => r.saveToArchive);
+        for (const route of routesToArchive) {
+            if (!route.saveName.trim()) {
+                alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.routes.saveRouteNameRequired'))}</div>`;
+                return;
+            }
+            if (route.mode === 'manual' || route.mode === 'gpx') {
+                if (route.coordinates.length < 2) {
+                    alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.primaryRouteMinPoints'))}</div>`;
+                    return;
+                }
+            } else {
+                const urlError = Validate.windyUrl(route.windyUrl);
+                if (urlError) {
+                    alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(urlError)}</div>`;
+                    return;
+                }
+            }
+        }
+
         const routes = this.state.routes
             .filter((r) => (r.mode === 'manual' || r.mode === 'gpx') ? r.coordinates.length >= 2 : r.windyUrl.trim())
             .map((r) => (r.mode === 'manual' || r.mode === 'gpx')
@@ -655,6 +639,13 @@ const CreateTripPage = {
 
         if (response.data.schedule_notice?.conflicting_trip_exists) {
             showToast(t('createTrip.scheduleConflictNotice'), 'info');
+        }
+
+        if (routesToArchive.length > 0) {
+            const results = await Promise.all(routesToArchive.map((route) => this.archiveRoute(route)));
+            const failures = results.filter((ok) => !ok).length;
+            if (failures > 0) showToast(t('createTrip.routes.saveRouteFailed'), 'error');
+            if (failures < routesToArchive.length) showToast(t('createTrip.routes.saveRouteSuccess'), 'success');
         }
 
         showToast(t('createTrip.created'), 'success');
