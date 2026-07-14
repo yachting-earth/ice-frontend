@@ -335,7 +335,10 @@ ul { margin: 0; padding: 0; list-style: none; }
     }
 
     .topbar__menu.active {
-        max-height: 400px;
+        max-height: min(400px, calc(100vh - 64px));
+        max-height: min(400px, calc(100dvh - 64px));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         box-shadow: 0 8px 16px rgba(20, 32, 39, 0.1);
     }
 
