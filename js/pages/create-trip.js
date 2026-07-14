@@ -4,6 +4,7 @@ const CreateTripPage = {
     state: {
         vessels: [],
         iceContacts: [],
+        savedRoutes: [],
         routes: [{ mode: 'windy', windyUrl: '', reason: '', coordinates: [] }],
         map: null,
         drawMaps: {}
@@ -56,7 +57,10 @@ const CreateTripPage = {
                 <div class="card">
                     <div class="card-header">
                         <h3>${escapeHtml(t('createTrip.routes.heading'))}</h3>
-                        <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">${escapeHtml(t('createTrip.routes.addAlternative'))}</button>
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm" type="button" id="add-route-btn">${escapeHtml(t('createTrip.routes.addAlternative'))}</button>
+                            <div id="saved-route-picker"></div>
+                        </div>
                     </div>
                     <div id="routes-container"></div>
                     <div id="route-map" class="map-container"></div>
@@ -75,7 +79,51 @@ const CreateTripPage = {
         document.getElementById('create-trip-submit').addEventListener('click', () => this.handleSubmit());
 
         this.renderRoutes();
-        await Promise.all([this.loadVessels(), this.loadIceContacts()]);
+        await Promise.all([this.loadVessels(), this.loadIceContacts(), this.loadSavedRoutes()]);
+    },
+
+    async loadSavedRoutes() {
+        const response = await apiRequest('/saved-routes');
+        if (response.success) {
+            this.state.savedRoutes = response.data || [];
+        }
+        this.renderSavedRoutePicker();
+    },
+
+    renderSavedRoutePicker() {
+        const picker = document.getElementById('saved-route-picker');
+        if (!picker) return;
+
+        if (this.state.savedRoutes.length === 0) {
+            picker.innerHTML = '';
+            return;
+        }
+
+        picker.innerHTML = `
+            <select class="btn btn-secondary btn-sm" id="add-saved-route-select">
+                <option value="">${escapeHtml(t('createTrip.routes.addSavedRoute'))}</option>
+                ${this.state.savedRoutes.map((r) => `<option value="${r.id}">${escapeHtml(r.name)}</option>`).join('')}
+            </select>`;
+
+        document.getElementById('add-saved-route-select').addEventListener('change', (e) => {
+            const savedRouteId = Number(e.target.value);
+            e.target.value = '';
+            if (!savedRouteId) return;
+            this.addSavedRouteToTrip(savedRouteId);
+        });
+    },
+
+    addSavedRouteToTrip(savedRouteId) {
+        const saved = this.state.savedRoutes.find((r) => r.id === savedRouteId);
+        if (!saved) return;
+
+        if (saved.raw_windy_url) {
+            this.state.routes.push({ mode: 'windy', windyUrl: saved.raw_windy_url, reason: '', coordinates: [] });
+        } else {
+            this.state.routes.push({ mode: 'manual', windyUrl: '', reason: '', coordinates: parseWktLineString(saved.geometry_wkt) });
+        }
+
+        this.renderRoutes();
     },
 
     async loadVessels() {
@@ -328,6 +376,16 @@ const CreateTripPage = {
                     <input type="text" class="route-reason" data-index="${i}" value="${escapeHtml(route.reason)}"
                            placeholder="${escapeHtml(t('createTrip.routes.reasonPlaceholder'))}">
                 </div>` : ''}
+                <div class="btn-group">
+                    <button class="btn btn-ghost btn-sm" type="button" data-save-route="${i}">${escapeHtml(t('createTrip.routes.saveRoute'))}</button>
+                </div>
+                <div class="field-row" id="route-save-form-${i}" hidden>
+                    <div class="field" style="flex:1;">
+                        <input type="text" id="route-save-name-${i}" placeholder="${escapeHtml(t('createTrip.routes.saveRouteNamePlaceholder'))}">
+                    </div>
+                    <button class="btn btn-primary btn-sm" type="button" data-confirm-save-route="${i}">${escapeHtml(t('common.save'))}</button>
+                    <button class="btn btn-ghost btn-sm" type="button" data-cancel-save-route="${i}">${escapeHtml(t('common.cancel'))}</button>
+                </div>
             </div>
         `).join('');
 
@@ -372,6 +430,22 @@ const CreateTripPage = {
                 this.renderRoutes();
             });
         });
+        routesContainer.querySelectorAll('[data-save-route]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const i = Number(e.target.dataset.saveRoute);
+                const form = document.getElementById(`route-save-form-${i}`);
+                form.hidden = !form.hidden;
+                if (!form.hidden) document.getElementById(`route-save-name-${i}`).focus();
+            });
+        });
+        routesContainer.querySelectorAll('[data-cancel-save-route]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                document.getElementById(`route-save-form-${e.target.dataset.cancelSaveRoute}`).hidden = true;
+            });
+        });
+        routesContainer.querySelectorAll('[data-confirm-save-route]').forEach((btn) => {
+            btn.addEventListener('click', (e) => this.handleSaveRoute(Number(e.target.dataset.confirmSaveRoute)));
+        });
         routesContainer.querySelectorAll('[data-clear-route]').forEach((btn) => {
             btn.addEventListener('click', (e) => {
                 const i = Number(e.target.dataset.clearRoute);
@@ -387,6 +461,46 @@ const CreateTripPage = {
         });
 
         this.updateMapPreview();
+    },
+
+    async handleSaveRoute(i) {
+        const route = this.state.routes[i];
+        const nameInput = document.getElementById(`route-save-name-${i}`);
+        const name = nameInput.value.trim();
+
+        if (!name) {
+            showToast(t('createTrip.routes.saveRouteNameRequired'), 'error');
+            return;
+        }
+
+        let body;
+        if (route.mode === 'manual' || route.mode === 'gpx') {
+            if (route.coordinates.length < 2) {
+                showToast(t('createTrip.errors.primaryRouteMinPoints'), 'error');
+                return;
+            }
+            body = { name, coordinates: route.coordinates };
+        } else {
+            const urlError = Validate.windyUrl(route.windyUrl);
+            if (urlError) {
+                showToast(urlError, 'error');
+                return;
+            }
+            body = { name, windy_url: route.windyUrl.trim() };
+        }
+
+        const response = await apiRequest('/saved-routes', { method: 'POST', body: JSON.stringify(body) });
+
+        if (!response.success) {
+            showToast(response.code ? t.error(response.code) : (response.error || t('createTrip.routes.saveRouteFailed')), 'error');
+            return;
+        }
+
+        this.state.savedRoutes.unshift(response.data);
+        this.renderSavedRoutePicker();
+        nameInput.value = '';
+        document.getElementById(`route-save-form-${i}`).hidden = true;
+        showToast(t('createTrip.routes.saveRouteSuccess'), 'success');
     },
 
     initDrawMap(i) {

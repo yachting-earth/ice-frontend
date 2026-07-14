@@ -94,6 +94,7 @@
     "nav": {
       "myTrips": "Mina resor",
       "myVessels": "Mina båtar",
+      "savedRoutes": "Sparade rutter",
       "iceContacts": "ICE-kontakter",
       "myIceAccount": "Mitt ICE-konto",
       "admin": "Admin",
@@ -306,6 +307,7 @@
     "routes": {
       "heading": "Rutter",
       "addAlternative": "+ Lägg till alternativ rutt",
+      "addSavedRoute": "+ Lägg till sparad rutt",
       "primary": "Huvudrutt",
       "alternative": "Alternativ rutt {index}",
       "moveUp": "Flytta upp",
@@ -322,7 +324,12 @@
       "gpxLabel": "GPX-fil",
       "gpxHint": "Ladda upp en .gpx-fil exporterad från din plotter eller navigationsapp. Rutten läses in direkt och själva filen sparas inte.",
       "reasonLabel": "Anledning",
-      "reasonPlaceholder": "t.ex. Om vinden vrider nordlig"
+      "reasonPlaceholder": "t.ex. Om vinden vrider nordlig",
+      "saveRoute": "Spara rutt",
+      "saveRouteNamePlaceholder": "Namnge rutten, t.ex. Marstrand-Skagen",
+      "saveRouteNameRequired": "Ange ett namn för rutten.",
+      "saveRouteFailed": "Kunde inte spara rutten.",
+      "saveRouteSuccess": "Rutten sparad."
     },
     "errors": {
       "vesselRequired": "Välj eller lägg till ett fartyg.",
@@ -663,6 +670,23 @@
     "confirmDelete": "Ta bort båten {name}?",
     "deleteFailed": "Kunde inte ta bort båten.",
     "deleted": "Båten borttagen."
+  },
+  "savedRoutes": {
+    "title": "Sparade rutter",
+    "subtitle": "Rutter du kan återanvända när du skapar en ny resa",
+    "loading": "Laddar sparade rutter...",
+    "loadFailed": "Kunde inte hämta sparade rutter.",
+    "emptyTitle": "Inga sparade rutter än",
+    "emptyBody": "Spara en rutt när du skapar en resa så kan du återanvända den senare.",
+    "form": {
+      "nameLabel": "Namn",
+      "windyUrlLabel": "Windy-länk"
+    },
+    "saveFailed": "Kunde inte spara rutten.",
+    "updated": "Rutten uppdaterad.",
+    "confirmDelete": "Ta bort den sparade rutten {name}?",
+    "deleteFailed": "Kunde inte ta bort rutten.",
+    "deleted": "Rutten borttagen."
   },
   "admin": {
     "title": "Admin",

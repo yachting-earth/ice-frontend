@@ -15,6 +15,7 @@ const Router = {
         { pattern: '#/reset-password', page: ResetPasswordPage },
         { pattern: '#/dashboard', page: DashboardPage, auth: true },
         { pattern: '#/vessels', page: VesselsPage, auth: true },
+        { pattern: '#/saved-routes', page: SavedRoutesPage, auth: true },
         { pattern: '#/profile', page: ProfilePage, auth: true },
         { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
         { pattern: '#/ice-account', page: IceAccountPage, auth: true },
@@ -171,6 +172,7 @@ function renderTopbar() {
             <div class="topbar__menu" id="topbar-menu">
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
                 <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>
+                <a class="topbar__menu-link${activeClass('#/saved-routes')}" href="#/saved-routes">${escapeHtml(t('app.nav.savedRoutes'))}</a>
                 <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
                 <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>

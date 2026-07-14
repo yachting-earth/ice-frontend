@@ -105,6 +105,7 @@ const EN_INLINE = {
     "nav": {
       "myTrips": "My trips",
       "myVessels": "My vessels",
+      "savedRoutes": "Saved routes",
       "iceContacts": "ICE contacts",
       "myIceAccount": "My ICE account",
       "admin": "Admin",
@@ -317,6 +318,7 @@ const EN_INLINE = {
     "routes": {
       "heading": "Routes",
       "addAlternative": "+ Add alternative route",
+      "addSavedRoute": "+ Add saved route",
       "primary": "Primary route",
       "alternative": "Alternative route {index}",
       "moveUp": "Move up",
@@ -333,7 +335,12 @@ const EN_INLINE = {
       "gpxLabel": "GPX file",
       "gpxHint": "Upload a .gpx file exported from your chartplotter or navigation app. The route is read immediately and the file itself is not kept.",
       "reasonLabel": "Reason",
-      "reasonPlaceholder": "e.g. If the wind turns northerly"
+      "reasonPlaceholder": "e.g. If the wind turns northerly",
+      "saveRoute": "Save route",
+      "saveRouteNamePlaceholder": "Name this route, e.g. Marstrand-Skagen",
+      "saveRouteNameRequired": "Enter a name for the route.",
+      "saveRouteFailed": "Could not save the route.",
+      "saveRouteSuccess": "Route saved."
     },
     "errors": {
       "vesselRequired": "Select or add a vessel.",
@@ -674,6 +681,23 @@ const EN_INLINE = {
     "confirmDelete": "Remove the vessel {name}?",
     "deleteFailed": "Could not remove the vessel.",
     "deleted": "The vessel has been removed."
+  },
+  "savedRoutes": {
+    "title": "Saved routes",
+    "subtitle": "Routes you can reuse when creating a new trip",
+    "loading": "Loading saved routes...",
+    "loadFailed": "Could not fetch saved routes.",
+    "emptyTitle": "No saved routes yet",
+    "emptyBody": "Save a route while creating a trip so you can reuse it later.",
+    "form": {
+      "nameLabel": "Name",
+      "windyUrlLabel": "Windy link"
+    },
+    "saveFailed": "Could not save the route.",
+    "updated": "The route has been updated.",
+    "confirmDelete": "Remove the saved route {name}?",
+    "deleteFailed": "Could not remove the route.",
+    "deleted": "The route has been removed."
   },
   "admin": {
     "title": "Admin",
