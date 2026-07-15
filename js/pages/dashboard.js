@@ -132,7 +132,6 @@ const DashboardPage = {
                 <div class="empty-state">
                     <h3>${escapeHtml(t('dashboard.emptyTitle'))}</h3>
                     <p>${escapeHtml(t('dashboard.emptyBody'))}</p>
-                    <a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>
                 </div>`;
             return;
         }
