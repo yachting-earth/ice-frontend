@@ -123,7 +123,7 @@ const IceContactsPage = {
                         <span>${escapeHtml(contact.phone)}</span>
                     </div>
                 </div>
-                <div class="trip-card__actions">
+                <div class="trip-card__actions trip-card__actions--top">
                     ${!confirmed && contact.confirmation_token ? `<button class="btn btn-ghost btn-sm" type="button" data-copy-confirm="${escapeHtml(contact.confirmation_token)}">${escapeHtml(t('iceContacts.copyConfirmLink'))}</button>` : ''}
                     <button class="btn btn-secondary btn-sm" type="button" data-edit="${contact.id}">${escapeHtml(t('iceContacts.editButton'))}</button>
                     <button class="btn btn-ghost btn-sm" type="button" data-delete="${contact.id}">${escapeHtml(t('common.remove'))}</button>

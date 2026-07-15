@@ -966,6 +966,13 @@ ul { margin: 0; padding: 0; list-style: none; }
     margin-top: var(--space-1);
 }
 
+/* Aligns actions with the top line (title/badge/status) instead of centering
+   against the full two-line card body, for cards whose action count varies
+   between rows (e.g. ICE contacts' "copy confirmation link" button). */
+.trip-card__actions--top {
+    align-self: flex-start;
+}
+
 .empty-state {
     text-align: center;
     padding: var(--space-8) var(--space-4);
