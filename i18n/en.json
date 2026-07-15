@@ -291,7 +291,7 @@
     "emailChangePending": "A confirmation link has been sent to <strong>{email}</strong>. Your email address only changes once you click the link. We've also notified your current address.",
     "saved": "Your details have been updated.",
     "gdprHeading": "Download my data",
-    "gdprHint": "Request a summary of everything we've stored about you - account, vessels, ICE contacts and trips. The file is available for download for 7 days, or until you download it.",
+    "gdprHint": "Request a summary of everything we've stored about you - account, vessels, ICE contacts and trips. The file is delivered immediately in machine-readable JSON format and is available for download for 7 days.",
     "gdprChecking": "Checking status…",
     "gdprRequestButton": "Request my data",
     "gdprAvailableUntil": "Your summary is ready and can be downloaded until {date}.",
