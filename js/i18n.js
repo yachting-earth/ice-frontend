@@ -58,6 +58,7 @@ const EN_INLINE = {
     "DEPARTURE_EDIT_LOCKED": "The departure time can only be changed before the trip is activated.",
     "ARRIVAL_EDIT_LOCKED": "The arrival time can only be changed before the trip is confirmed completed.",
     "GRACE_PERIOD_EDIT_LOCKED": "The grace period can only be changed before the trip is confirmed completed.",
+    "ICE_CONTACT_REQUIRED": "An ICE contact must be assigned to this trip before it can be activated.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
     "CONTACT_TOO_MANY_FILES": "Too many attachments.",
     "CONTACT_FILE_TOO_LARGE": "One of your attachments is too large.",
@@ -359,7 +360,7 @@ const EN_INLINE = {
       "heading": "ICE contact",
       "loading": "Loading ICE contacts…",
       "selectLabel": "Who should be alerted if this trip isn't confirmed in time?",
-      "selectHint": "Pick the single ICE contact to alert for this trip.",
+      "selectHint": "Pick the single ICE contact to alert for this trip. You can skip this for now, but the trip can't be activated until one is set.",
       "required": "Please choose an ICE contact for this trip.",
       "noneRegistered": "You don't have any registered ICE contacts yet.",
       "addLink": "Add an ICE contact"

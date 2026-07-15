@@ -47,6 +47,7 @@
     "DEPARTURE_EDIT_LOCKED": "Avgångstiden kan bara ändras fram tills resan aktiveras.",
     "ARRIVAL_EDIT_LOCKED": "Ankomsttiden kan bara ändras fram tills resan bekräftas avslutad.",
     "GRACE_PERIOD_EDIT_LOCKED": "Marginaltiden kan bara ändras fram tills resan bekräftas avslutad.",
+    "ICE_CONTACT_REQUIRED": "En ICE-kontakt måste kopplas till resan innan den kan aktiveras.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
     "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
@@ -348,7 +349,7 @@
       "heading": "ICE-kontakt",
       "loading": "Laddar ICE-kontakter...",
       "selectLabel": "Vem ska larmas om resan inte bekräftas i tid?",
-      "selectHint": "Välj den ICE-kontakt som ska larmas för den här resan.",
+      "selectHint": "Välj den ICE-kontakt som ska larmas för den här resan. Du kan hoppa över detta nu, men resan kan inte aktiveras förrän en kontakt är vald.",
       "required": "Välj en ICE-kontakt för den här resan.",
       "noneRegistered": "Du har inga registrerade ICE-kontakter än.",
       "addLink": "Lägg till en ICE-kontakt"
