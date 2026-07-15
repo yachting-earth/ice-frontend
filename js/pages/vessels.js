@@ -267,6 +267,8 @@ const VesselsPage = {
 
         const vessel = response.data;
 
+        if (!this.state.editingId) invalidateNavVisibility('myVessels');
+
         if (vessel.mmsi_notice?.already_registered_elsewhere) {
             showToast(t('vessels.mmsiAlreadyRegistered'), 'info');
         }

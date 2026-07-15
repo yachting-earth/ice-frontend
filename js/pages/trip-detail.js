@@ -883,6 +883,7 @@ const TripDetailPage = {
 
         if (this.state.newRouteSaveToArchive) {
             const archiveResponse = await apiRequest('/saved-routes', { method: 'POST', body: JSON.stringify(archiveBody) });
+            if (archiveResponse.success) invalidateNavVisibility('savedRoutes');
             showToast(archiveResponse.success ? t('tripDetail.routes.saveRouteArchiveSuccess') : t('tripDetail.routes.saveRouteArchiveFailed'), archiveResponse.success ? 'success' : 'error');
         }
 
@@ -1212,6 +1213,8 @@ const TripDetailPage = {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.crew.inviteFailed')))}</div>`;
             return;
         }
+
+        if (saveContact) invalidateNavVisibility('crewAddressBook');
 
         const link = response.data.invitation_link || this.buildInviteLink(response.data.invitation_token);
         const notice = response.data.invitation_sent

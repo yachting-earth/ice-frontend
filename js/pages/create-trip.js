@@ -301,6 +301,8 @@ const CreateTripPage = {
 
         let vessel = response.data;
 
+        invalidateNavVisibility('myVessels');
+
         if (vessel.mmsi_notice?.already_registered_elsewhere) {
             showToast(t('createTrip.vessel.mmsiAlreadyRegistered'), 'info');
         }
@@ -463,6 +465,7 @@ const CreateTripPage = {
             : { name: route.saveName.trim(), windy_url: route.windyUrl.trim() };
 
         const response = await apiRequest('/saved-routes', { method: 'POST', body: JSON.stringify(body) });
+        if (response.success) invalidateNavVisibility('savedRoutes');
         return response.success;
     },
 

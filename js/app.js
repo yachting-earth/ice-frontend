@@ -156,6 +156,23 @@ async function checkNavVisibility(key) {
     return navVisibility[key];
 }
 
+// Called by pages right after they save something that could newly qualify
+// a nav item for display (e.g. a skipper's first vessel/contact/route), so
+// the menu item appears immediately instead of only after the next
+// login (when the caches below would otherwise still hold their stale,
+// pre-save answer). Also covers the ICE-account link since it's cached the
+// same way. Safe to call even if the topbar isn't currently rendered.
+function invalidateNavVisibility(keys) {
+    (Array.isArray(keys) ? keys : [keys]).forEach((key) => {
+        if (key === 'iceAccount') {
+            iceAccountVisible = null;
+        } else {
+            navVisibility[key] = null;
+        }
+    });
+    if (document.getElementById('topbar')) renderTopbar();
+}
+
 function renderTopbar() {
     const topbar = document.getElementById('topbar');
     const authed = Auth.isAuthenticated();

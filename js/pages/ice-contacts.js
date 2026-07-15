@@ -212,6 +212,7 @@ const IceContactsPage = {
         }
 
         if (!this.state.editingId) {
+            invalidateNavVisibility('iceContacts');
             const link = response.data.confirmation_link || this.buildConfirmLink(response.data.confirmation_token);
             const alertBox = document.getElementById('contact-alert');
             alertBox.innerHTML = `
