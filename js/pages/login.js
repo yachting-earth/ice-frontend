@@ -4,7 +4,7 @@ const LoginPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">${brandMark()} ${escapeHtml(t('app.brand'))}</div>
+                    <div class="auth-card__logo">${escapeHtml(t('app.brand'))}</div>
                     <div class="auth-card__tagline">${escapeHtml(t('login.tagline'))}</div>
                     <div class="auth-tabs" role="tablist">
                         <button type="button" class="auth-tabs__tab auth-tabs__tab--active" id="tab-user" role="tab" aria-selected="true" aria-controls="panel-user">${escapeHtml(t('login.tabs.user'))}</button>
