@@ -328,6 +328,14 @@ const EN_INLINE = {
     "submitting": "Creating trip…",
     "scheduleConflictNotice": "Note: another trip with the same MMSI number is already scheduled during an overlapping time period.",
     "created": "Trip created",
+    "crewInvited": "Invited {count} people to the trip.",
+    "crewInvitePartial": "Invited {success} of {total} people to the trip.",
+    "crewInviteFailed": "Could not automatically invite the selected crew. Add them manually from the trip page.",
+    "pendingCrew": {
+      "heading": "Crew to invite",
+      "hint": "These people from your address book will be invited automatically once the trip is created.",
+      "removeAria": "Remove {name} from the invite list"
+    },
     "vessel": {
       "heading": "Vessel",
       "loading": "Loading vessels…",
@@ -793,7 +801,17 @@ const EN_INLINE = {
     "updated": "The contact has been updated.",
     "confirmDelete": "Remove {name} from your address book?",
     "deleteFailed": "Could not remove the contact.",
-    "deleted": "The contact has been removed."
+    "deleted": "The contact has been removed.",
+    "bulk": {
+      "selectAllLabel": "Select all",
+      "selectedCount": "{count} selected",
+      "inviteToNewTrip": "Invite to trip",
+      "addToTripPlaceholder": "Add to trip…",
+      "addToTripNoneEligible": "No trips available to add crew to",
+      "addSuccess": "Added {count} people to the trip.",
+      "addPartial": "Added {success} of {total} people to the trip.",
+      "addFailed": "Could not add the selected people to the trip."
+    }
   },
   "admin": {
     "title": "Admin",

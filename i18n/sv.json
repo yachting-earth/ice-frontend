@@ -317,6 +317,14 @@
     "submitting": "Skapar resa...",
     "scheduleConflictNotice": "Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.",
     "created": "Resa skapad",
+    "crewInvited": "Bjöd in {count} personer till resan.",
+    "crewInvitePartial": "Bjöd in {success} av {total} personer till resan.",
+    "crewInviteFailed": "Kunde inte bjuda in den valda besättningen automatiskt. Lägg till dem manuellt från resesidan.",
+    "pendingCrew": {
+      "heading": "Besättning att bjuda in",
+      "hint": "De här personerna från din adressbok bjuds in automatiskt när resan har skapats.",
+      "removeAria": "Ta bort {name} från inbjudningslistan"
+    },
     "vessel": {
       "heading": "Båtar",
       "loading": "Laddar båtar...",
@@ -782,7 +790,17 @@
     "updated": "Kontakten har uppdaterats.",
     "confirmDelete": "Ta bort {name} från din adressbok?",
     "deleteFailed": "Kunde inte ta bort kontakten.",
-    "deleted": "Kontakten har tagits bort."
+    "deleted": "Kontakten har tagits bort.",
+    "bulk": {
+      "selectAllLabel": "Markera alla",
+      "selectedCount": "{count} markerade",
+      "inviteToNewTrip": "Bjud in till resa",
+      "addToTripPlaceholder": "Lägg till i resa…",
+      "addToTripNoneEligible": "Inga resor tillgängliga att lägga till besättning i",
+      "addSuccess": "La till {count} personer i resan.",
+      "addPartial": "La till {success} av {total} personer i resan.",
+      "addFailed": "Kunde inte lägga till de valda personerna i resan."
+    }
   },
   "admin": {
     "title": "Admin",

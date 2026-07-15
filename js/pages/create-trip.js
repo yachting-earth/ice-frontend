@@ -23,6 +23,8 @@ const CreateTripPage = {
                 </div>
                 <div id="create-trip-alert"></div>
 
+                <div id="pending-crew-card"></div>
+
                 <div class="card">
                     <h3>${escapeHtml(t('createTrip.vessel.heading'))}</h3>
                     <div id="vessel-section"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('createTrip.vessel.loading'))}</div></div>
@@ -78,8 +80,45 @@ const CreateTripPage = {
         });
         document.getElementById('create-trip-submit').addEventListener('click', () => this.handleSubmit());
 
+        this.renderPendingCrewCard();
         this.renderRoutes();
         await Promise.all([this.loadVessels(), this.loadIceContacts(), this.loadSavedRoutes()]);
+    },
+
+    // Shows the address book selection carried over from the "Invite to
+    // trip" bulk action (crew-address-book.js) - these people are invited
+    // automatically once this trip is created (see handleSubmit).
+    renderPendingCrewCard() {
+        const card = document.getElementById('pending-crew-card');
+        const pending = PendingCrewInvites.get();
+
+        if (pending.length === 0) {
+            card.innerHTML = '';
+            return;
+        }
+
+        card.innerHTML = `
+            <div class="card">
+                <h3>${escapeHtml(t('createTrip.pendingCrew.heading'))}</h3>
+                <p class="text-muted" style="margin-top:0;">${escapeHtml(t('createTrip.pendingCrew.hint'))}</p>
+                <div class="crew-list">
+                    ${pending.map((entry) => `
+                        <div class="crew-row">
+                            <div class="crew-row__info">
+                                <span class="crew-row__name">${escapeHtml(entry.name || entry.email)}</span>
+                                ${entry.name ? `<span class="crew-row__detail">${escapeHtml(entry.email)}</span>` : ''}
+                            </div>
+                            <button class="btn btn-ghost btn-sm" type="button" data-remove-pending-crew="${escapeHtml(entry.email)}" aria-label="${escapeHtml(t('createTrip.pendingCrew.removeAria', { name: entry.name || entry.email }))}">${escapeHtml(t('common.remove'))}</button>
+                        </div>`).join('')}
+                </div>
+            </div>`;
+
+        card.querySelectorAll('[data-remove-pending-crew]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                PendingCrewInvites.remove(btn.dataset.removePendingCrew);
+                this.renderPendingCrewCard();
+            });
+        });
     },
 
     async loadSavedRoutes() {
@@ -650,7 +689,35 @@ const CreateTripPage = {
             if (failures < routesToArchive.length) showToast(t('createTrip.routes.saveRouteSuccess'), 'success');
         }
 
+        await this.invitePendingCrew(response.data.trip_id);
+
         showToast(t('createTrip.created'), 'success');
         location.hash = `#/trips/${response.data.trip_id}`;
+    },
+
+    // Invites everyone carried over via the address book's "Invite to trip"
+    // bulk action (see PendingCrewInvites / renderPendingCrewCard above) now
+    // that the trip they were staged for actually exists.
+    async invitePendingCrew(tripId) {
+        const pending = PendingCrewInvites.get();
+        if (pending.length === 0) return;
+
+        PendingCrewInvites.clear();
+
+        const results = await Promise.all(pending.map((entry) =>
+            apiRequest(`/trips/${tripId}/crew`, {
+                method: 'POST',
+                body: JSON.stringify({ email: entry.email, name: entry.name || undefined })
+            })));
+
+        const succeeded = results.filter((r) => r.success).length;
+
+        if (succeeded === 0) {
+            showToast(t('createTrip.crewInviteFailed'), 'error');
+        } else if (succeeded < pending.length) {
+            showToast(t('createTrip.crewInvitePartial', { success: succeeded, total: pending.length }), 'info');
+        } else {
+            showToast(t('createTrip.crewInvited', { count: succeeded }), 'success');
+        }
     }
 };
