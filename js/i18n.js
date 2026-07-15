@@ -614,7 +614,9 @@ const EN_INLINE = {
     "log": {
       "heading": "Change log",
       "empty": "No changes logged.",
-      "ip": "IP: {ip}"
+      "ip": "IP: {ip}",
+      "showMore": "Show more",
+      "showLess": "Show less"
     }
   },
   "crewView": {
@@ -676,7 +678,9 @@ const EN_INLINE = {
     },
     "log": {
       "heading": "Change log",
-      "empty": "No changes logged."
+      "empty": "No changes logged.",
+      "showMore": "Show more",
+      "showLess": "Show less"
     }
   },
   "sar": {
@@ -1014,7 +1018,9 @@ const EN_INLINE = {
     },
     "log": {
       "heading": "Change log",
-      "empty": "No changes logged."
+      "empty": "No changes logged.",
+      "showMore": "Show more",
+      "showLess": "Show less"
     }
   },
   "landing": {

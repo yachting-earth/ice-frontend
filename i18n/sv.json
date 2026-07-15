@@ -603,7 +603,9 @@
     "log": {
       "heading": "Ändringslogg",
       "empty": "Inga ändringar loggade.",
-      "ip": "IP: {ip}"
+      "ip": "IP: {ip}",
+      "showMore": "Visa mer",
+      "showLess": "Visa mindre"
     }
   },
   "crewView": {
@@ -665,7 +667,9 @@
     },
     "log": {
       "heading": "Ändringslogg",
-      "empty": "Inga ändringar loggade."
+      "empty": "Inga ändringar loggade.",
+      "showMore": "Visa mer",
+      "showLess": "Visa mindre"
     }
   },
   "sar": {
@@ -1003,7 +1007,9 @@
     },
     "log": {
       "heading": "Ändringslogg",
-      "empty": "Inga ändringar loggade."
+      "empty": "Inga ändringar loggade.",
+      "showMore": "Visa mer",
+      "showLess": "Visa mindre"
     }
   },
   "landing": {

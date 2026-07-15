@@ -1030,11 +1030,32 @@ const TripDetailPage = {
             return;
         }
 
-        container.innerHTML = `<div class="change-log">${auditLog.map((entry) => `
+        const showLimit = 5;
+        const allItems = auditLog;
+        const isExpanded = container.dataset.expanded === 'true';
+        const itemsToShow = isExpanded ? allItems : allItems.slice(0, showLimit);
+
+        let html = `<div class="change-log">${itemsToShow.map((entry) => `
                 <div class="change-log__item">
                     <span class="change-log__time">${formatDateTime(entry.changed_at)}</span>
                     <span class="change-log__text">${escapeHtml(entry.message || entry.action)}</span>
                 </div>`).join('')}</div>`;
+
+        if (allItems.length > showLimit) {
+            html += `<button class="btn btn-ghost btn-sm" type="button" id="toggle-log-btn" style="margin-top: var(--space-2);">
+                ${isExpanded ? t('tripDetail.log.showLess') : t('tripDetail.log.showMore')}
+            </button>`;
+        }
+
+        container.innerHTML = html;
+
+        if (allItems.length > showLimit) {
+            const btn = document.getElementById('toggle-log-btn');
+            btn.addEventListener('click', () => {
+                container.dataset.expanded = container.dataset.expanded === 'true' ? 'false' : 'true';
+                this.renderLog(auditLog);
+            });
+        }
     },
 
     async handleCrewPhotoSubmit(crewId) {
