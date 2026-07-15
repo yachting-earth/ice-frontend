@@ -452,7 +452,7 @@ const AdminPage = {
 
         return `
             <tr>
-                <td>${escapeHtml(formatDateTime(log.created_at))}</td>
+                <td>${escapeHtml(formatDateTime(log.created_at, { withSeconds: true }))}</td>
                 <td><span class="badge badge-log-${escapeHtml(log.level)}">${escapeHtml(levelLabel)}</span></td>
                 <td>${escapeHtml(categoryLabel)}</td>
                 <td class="log-message-cell">${escapeHtml(log.message)}${stackTrace}${piiData}</td>
