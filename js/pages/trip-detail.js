@@ -150,7 +150,6 @@ const TripDetailPage = {
                         <div class="field">
                             <label for="ice-contact-select">${t('tripDetail.iceContact.changeLabel')}</label>
                             <select id="ice-contact-select">
-                                <option value="" ${!trip.ice_contact_id ? 'selected' : ''}>${t('tripDetail.iceContact.allOption')}</option>
                                 ${this.state.iceContacts.map((c) => `<option value="${c.id}" ${String(c.id) === String(trip.ice_contact_id) ? 'selected' : ''}>${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
                             </select>
                         </div>
@@ -433,6 +432,11 @@ const TripDetailPage = {
         const alertBox = document.getElementById('ice-contact-change-alert');
         const select = document.getElementById('ice-contact-select');
         const iceContactId = select.value ? Number(select.value) : null;
+
+        if (!iceContactId) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.iceContact.required'))}</div>`;
+            return;
+        }
 
         if (String(iceContactId) === String(this.state.data.trip.ice_contact_id)) {
             return;

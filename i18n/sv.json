@@ -344,8 +344,8 @@
       "heading": "ICE-kontakt",
       "loading": "Laddar ICE-kontakter...",
       "selectLabel": "Vem ska larmas om resan inte bekräftas i tid?",
-      "allOption": "Alla mina ICE-kontakter",
-      "selectHint": "Lämna kvar \"Alla mina ICE-kontakter\" för att larma alla på din lista, eller välj en enskild kontakt bara för den här resan.",
+      "selectHint": "Välj den enda ICE-kontakt som ska larmas för den här resan.",
+      "required": "Välj en ICE-kontakt för den här resan.",
       "noneRegistered": "Du har inga registrerade ICE-kontakter än.",
       "addLink": "Lägg till en ICE-kontakt"
     },
@@ -905,7 +905,6 @@
       "allContacts": "Alla mina ICE-kontakter larmas för den här resan.",
       "specificContact": "En specifik ICE-kontakt är kopplad till den här resan.",
       "changeLabel": "Byt ICE-kontakt",
-      "allOption": "Alla mina ICE-kontakter",
       "changeButton": "Spara",
       "changeFailed": "Kunde inte byta ICE-kontakt.",
       "changed": "ICE-kontakten har bytts."

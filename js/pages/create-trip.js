@@ -164,7 +164,6 @@ const CreateTripPage = {
             <div class="field">
                 <label for="ice-contact-select">${escapeHtml(t('createTrip.iceContact.selectLabel'))}</label>
                 <select id="ice-contact-select">
-                    <option value="">${escapeHtml(t('createTrip.iceContact.allOption'))}</option>
                     ${this.state.iceContacts.map((c) => `<option value="${c.id}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
                 </select>
                 <small>${escapeHtml(t('createTrip.iceContact.selectHint'))}</small>
@@ -614,6 +613,10 @@ const CreateTripPage = {
 
         const iceContactSelect = document.getElementById('ice-contact-select');
         const iceContactId = iceContactSelect && iceContactSelect.value ? Number(iceContactSelect.value) : null;
+        if (!iceContactId) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.iceContact.required'))}</div>`;
+            return;
+        }
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('createTrip.submitting'))}`;
