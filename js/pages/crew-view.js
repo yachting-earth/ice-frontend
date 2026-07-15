@@ -132,6 +132,24 @@ const CrewViewPage = {
                     <button class="btn btn-secondary btn-sm" type="button" id="crewview-sharing-submit">${escapeHtml(t('crewView.sharingSettings.saveButton'))}</button>
                 </div>` : ''}
 
+                ${viewerCrew ? `
+                <div class="card">
+                    <h3>${escapeHtml(t('crewView.medical.heading'))}</h3>
+                    <p>${escapeHtml(t('crewView.medical.hint'))}</p>
+                    ${canEditSharing ? `
+                    <div id="crewview-medical-alert"></div>
+                    <div class="field">
+                        <textarea id="crewview-medical-info" rows="4" maxlength="2000" placeholder="${escapeHtml(t('crewView.medical.placeholder'))}"></textarea>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" type="button" id="crewview-medical-submit">${escapeHtml(t('crewView.medical.saveButton'))}</button>
+                    ` : `
+                    ${viewerCrew.medical_info
+                        ? `<p style="white-space: pre-wrap;">${escapeHtml(viewerCrew.medical_info)}</p>`
+                        : `<p class="text-muted">${escapeHtml(t('crewView.medical.empty'))}</p>`}
+                    <p class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(t('crewView.medical.readOnlyNote'))}</p>
+                    `}
+                </div>` : ''}
+
                 <div class="card">
                     <h3>${escapeHtml(t('crewView.log.heading'))}</h3>
                     <div id="crewview-log-container"></div>
@@ -145,6 +163,7 @@ const CrewViewPage = {
 
         if (canEditSharing) {
             this.setupSharingForm(viewerCrew);
+            this.setupMedicalForm(viewerCrew);
         }
     },
 
@@ -288,5 +307,39 @@ const CrewViewPage = {
 
         alertBox.innerHTML = '';
         showToast(t('crewView.sharingSettings.saved'), 'success');
+    },
+
+    // The medical field is only ever returned to the crew member's own row
+    // (and to SAR) - see TripHandler::detail() - so viewerCrew.medical_info
+    // is safe to prefill here.
+    setupMedicalForm(viewerCrew) {
+        const field = document.getElementById('crewview-medical-info');
+        if (!field) return;
+
+        field.value = viewerCrew.medical_info || '';
+        document.getElementById('crewview-medical-submit').addEventListener('click', () => this.handleMedicalSubmit());
+    },
+
+    async handleMedicalSubmit() {
+        const alertBox = document.getElementById('crewview-medical-alert');
+        const btn = document.getElementById('crewview-medical-submit');
+        btn.disabled = true;
+
+        const medicalInfo = document.getElementById('crewview-medical-info').value.trim();
+
+        const response = await apiRequest(`/crew/${this.state.viewerCrewId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ medical_info: medicalInfo })
+        });
+
+        btn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('crewView.medical.saveFailed')))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        showToast(t('crewView.medical.saved'), 'success');
     }
 };

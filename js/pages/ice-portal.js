@@ -236,6 +236,7 @@ const IcePortalPage = {
                         ${c.email ? ` · ${escapeHtml(t('common.email'))}: ${escapeHtml(c.email)}` : ''}
                         ${c.ice_contact ? ` · ${escapeHtml(t('icePortal.crew.ownIceContact', { contact: c.ice_contact }))}` : ''}
                     </span>
+                    ${c.medical_info ? `<span class="crew-row__detail" style="margin-top: var(--space-1); white-space: pre-wrap;"><strong>${escapeHtml(t('icePortal.crew.medicalLabel'))}:</strong> ${escapeHtml(c.medical_info)}</span>` : ''}
                 </div>
             </div>
         `).join('')}</div>`;

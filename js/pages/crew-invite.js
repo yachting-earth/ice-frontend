@@ -94,6 +94,11 @@ const CrewInvitePage = {
                         <small>${t('crewInvite.iceContactHint')}</small>
                     </div>
                     <div class="field">
+                        <label for="medical-info">${t('crewInvite.medicalLabel')}</label>
+                        <textarea id="medical-info" rows="3" maxlength="2000" placeholder="${t('crewInvite.medicalPlaceholder')}"></textarea>
+                        <small>${t('crewInvite.medicalHint')}</small>
+                    </div>
+                    <div class="field">
                         <label>${t('crewInvite.sharing.heading')}</label>
                         <small>${t('crewInvite.sharing.contactHint')}</small>
                         <div class="checkbox-field">
@@ -151,6 +156,7 @@ const CrewInvitePage = {
         const name = document.getElementById('name').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const iceContact = document.getElementById('ice-contact').value.trim();
+        const medicalInfo = document.getElementById('medical-info').value.trim();
         const photoFile = document.getElementById('photo').files[0] || null;
 
         const createAccountBox = document.getElementById('create-account');
@@ -201,6 +207,7 @@ const CrewInvitePage = {
                 name,
                 phone: phone || undefined,
                 ice_contact: iceContact || undefined,
+                medical_info: medicalInfo || undefined,
                 share_contact: shareContact,
                 share_emergency_contact: shareEmergencyContact,
                 create_account: createAccount || undefined,

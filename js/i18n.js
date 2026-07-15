@@ -434,6 +434,9 @@ const EN_INLINE = {
     "iceContactLabel": "Your ICE contact (in case of emergency)",
     "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
     "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
+    "medicalLabel": "Medical information for search and rescue (optional)",
+    "medicalPlaceholder": "e.g. allergies, medications, blood type, medical conditions",
+    "medicalHint": "Only shown to search and rescue authorities in an emergency - never to the skipper or the ICE contact.",
     "sharing": {
       "heading": "Sharing",
       "contactHint": "Your phone and email are only shown to the skipper by default. Choose whether to share them with the ICE contact too.",
@@ -595,7 +598,8 @@ const EN_INLINE = {
       "heading": "Crew aboard",
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
-      "ownIceContact": "Own ICE contact: {contact}"
+      "ownIceContact": "Own ICE contact: {contact}",
+      "medicalLabel": "Medical info"
     },
     "iceContact": {
       "heading": "Skipper's emergency contact (ICE)",
@@ -654,6 +658,16 @@ const EN_INLINE = {
       "saveButton": "Save",
       "saved": "Your sharing settings have been saved.",
       "saveFailed": "Could not save your sharing settings."
+    },
+    "medical": {
+      "heading": "Your information for search and rescue",
+      "hint": "Medical information that may be useful in an emergency - illnesses, allergies, blood type, medications. Only shown to search and rescue authorities, never to the skipper or the ICE contact.",
+      "placeholder": "e.g. allergies, medications, blood type, medical conditions",
+      "empty": "You haven't added any information.",
+      "readOnlyNote": "Log in with an account to change this.",
+      "saveButton": "Save",
+      "saved": "Your information has been saved.",
+      "saveFailed": "Could not save your information."
     },
     "log": {
       "heading": "Change log",
