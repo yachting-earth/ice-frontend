@@ -767,7 +767,10 @@
     "emptyBody": "Spara en rutt när du skapar en resa så kan du återanvända den senare.",
     "form": {
       "nameLabel": "Namn",
-      "windyUrlLabel": "Windy-länk"
+      "namePlaceholder": "t.ex. Marstrand-Skagen",
+      "windyUrlLabel": "Windy-länk",
+      "addTitle": "Skapa rutt",
+      "submit": "Spara rutt"
     },
     "saveFailed": "Kunde inte spara rutten.",
     "updated": "Rutten uppdaterad.",

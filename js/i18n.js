@@ -778,7 +778,10 @@ const EN_INLINE = {
     "emptyBody": "Save a route while creating a trip so you can reuse it later.",
     "form": {
       "nameLabel": "Name",
-      "windyUrlLabel": "Windy link"
+      "namePlaceholder": "e.g. Marstrand-Skagen",
+      "windyUrlLabel": "Windy link",
+      "addTitle": "Create route",
+      "submit": "Save route"
     },
     "saveFailed": "Could not save the route.",
     "updated": "The route has been updated.",
