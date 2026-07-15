@@ -16,9 +16,9 @@ const VesselsPage = {
                         <h1>${escapeHtml(t('vessels.title'))}</h1>
                         <div class="page-header__meta">${escapeHtml(t('vessels.subtitle'))}</div>
                     </div>
+                    <button class="btn btn-primary" type="button" id="vessel-add-toggle">${escapeHtml(t('vessels.form.addTitle'))}</button>
                 </div>
-                <div id="vessel-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('vessels.loadingVessels'))}</div></div>
-                <div class="card">
+                <div class="card" id="vessel-form-card" hidden>
                     <div class="card-header">
                         <h2 id="vessel-form-title">${escapeHtml(t('vessels.form.addTitle'))}</h2>
                         <button class="btn btn-ghost btn-sm" type="button" id="vessel-cancel" hidden>${escapeHtml(t('vessels.form.cancelEdit'))}</button>
@@ -77,6 +77,7 @@ const VesselsPage = {
                         <button class="btn btn-primary" type="submit" id="vessel-submit">${escapeHtml(t('vessels.form.submit'))}</button>
                     </form>
                 </div>
+                <div id="vessel-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('vessels.loadingVessels'))}</div></div>
             </div>`;
 
         document.getElementById('vessel-form').addEventListener('submit', (e) => {
@@ -84,6 +85,13 @@ const VesselsPage = {
             this.handleSubmit();
         });
         document.getElementById('vessel-cancel').addEventListener('click', () => this.resetForm());
+        document.getElementById('vessel-add-toggle').addEventListener('click', () => {
+            if (document.getElementById('vessel-form-card').hidden) {
+                this.openForm();
+            } else {
+                this.resetForm();
+            }
+        });
 
         const photoInput = document.getElementById('vessel-photo');
         photoInput.addEventListener('change', () => {
@@ -179,12 +187,20 @@ const VesselsPage = {
         } catch (err) { /* leave the photo hidden */ }
     },
 
+    openForm() {
+        document.getElementById('vessel-form-card').hidden = false;
+        document.getElementById('vessel-add-toggle').textContent = t('common.close');
+        document.getElementById('vessel-name').focus();
+    },
+
     startEdit(vesselId) {
         const vessel = this.state.vessels.find((v) => v.id === vesselId);
         if (!vessel) return;
 
         this.state.editingId = vesselId;
         this.state.photoFile = null;
+        document.getElementById('vessel-form-card').hidden = false;
+        document.getElementById('vessel-add-toggle').textContent = t('common.close');
         document.getElementById('vessel-form-title').textContent = t('vessels.form.editTitle', { name: vessel.vessel_name });
         document.getElementById('vessel-name').value = vessel.vessel_name || '';
         document.getElementById('vessel-mmsi').value = vessel.mmsi || '';
@@ -213,6 +229,8 @@ const VesselsPage = {
         document.getElementById('vessel-form-title').textContent = t('vessels.form.addTitle');
         document.getElementById('vessel-submit').textContent = t('vessels.form.submit');
         document.getElementById('vessel-cancel').hidden = true;
+        document.getElementById('vessel-form-card').hidden = true;
+        document.getElementById('vessel-add-toggle').textContent = t('vessels.form.addTitle');
         if (!keepAlert) {
             document.getElementById('vessel-alert').innerHTML = '';
         }

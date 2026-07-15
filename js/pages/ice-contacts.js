@@ -20,8 +20,9 @@ const IceContactsPage = {
                         <h1>${escapeHtml(t('iceContacts.title'))}</h1>
                         <div class="page-header__meta">${escapeHtml(t('iceContacts.subtitle'))}</div>
                     </div>
+                    <button class="btn btn-primary" type="button" id="contact-add-toggle">${escapeHtml(t('iceContacts.addTitle'))}</button>
                 </div>
-                <div class="card">
+                <div class="card" id="contact-form-card" hidden>
                     <div class="card-header">
                         <h2 id="contact-form-title">${escapeHtml(t('iceContacts.addTitle'))}</h2>
                         <button class="btn btn-ghost btn-sm" type="button" id="contact-cancel" hidden>${escapeHtml(t('iceContacts.cancelEdit'))}</button>
@@ -68,8 +69,21 @@ const IceContactsPage = {
             this.handleSubmit();
         });
         document.getElementById('contact-cancel').addEventListener('click', () => this.resetForm());
+        document.getElementById('contact-add-toggle').addEventListener('click', () => {
+            if (document.getElementById('contact-form-card').hidden) {
+                this.openForm();
+            } else {
+                this.resetForm();
+            }
+        });
 
         await this.loadContacts();
+    },
+
+    openForm() {
+        document.getElementById('contact-form-card').hidden = false;
+        document.getElementById('contact-add-toggle').textContent = t('common.close');
+        document.getElementById('contact-name').focus();
     },
 
     async loadContacts() {
@@ -150,6 +164,8 @@ const IceContactsPage = {
         if (!contact) return;
 
         this.state.editingId = contactId;
+        document.getElementById('contact-form-card').hidden = false;
+        document.getElementById('contact-add-toggle').textContent = t('common.close');
         document.getElementById('contact-form-title').textContent = t('iceContacts.editTitle', { name: contact.name });
         document.getElementById('contact-name').value = contact.name || '';
         document.getElementById('contact-relationship').value = contact.relationship || '';
@@ -162,12 +178,16 @@ const IceContactsPage = {
         document.getElementById('contact-name').focus();
     },
 
-    resetForm(keepAlert = false) {
+    resetForm(keepAlert = false, keepOpen = false) {
         this.state.editingId = null;
         document.getElementById('contact-form').reset();
         document.getElementById('contact-form-title').textContent = t('iceContacts.addTitle');
         document.getElementById('contact-submit').textContent = t('iceContacts.submitAdd');
         document.getElementById('contact-cancel').hidden = true;
+        if (!keepOpen) {
+            document.getElementById('contact-form-card').hidden = true;
+            document.getElementById('contact-add-toggle').textContent = t('iceContacts.addTitle');
+        }
         if (!keepAlert) {
             document.getElementById('contact-alert').innerHTML = '';
         }
@@ -220,11 +240,12 @@ const IceContactsPage = {
                     ${escapeHtml(response.data.confirmation_sent ? t('iceContacts.addedEmailSent') : t('iceContacts.addedEmailFailed'))}
                     ${!response.data.confirmation_sent ? `<br><code style="word-break: break-all;">${escapeHtml(link)}</code>` : ''}
                 </div>`;
+            this.resetForm(true, true);
         } else {
             showToast(t('iceContacts.updated'), 'success');
+            this.resetForm();
         }
 
-        this.resetForm(true);
         await this.loadContacts();
     },
 
