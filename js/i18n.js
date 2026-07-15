@@ -299,7 +299,7 @@ const EN_INLINE = {
     "gdprAvailableUntil": "Your summary is ready and can be downloaded until {date}.",
     "gdprDownloadButton": "Download my data",
     "gdprRequestAgainButton": "Request again",
-    "gdprRequestFailed": "Could not put together your data.",
+    "gdprRequestFailed": "Could not compile your data.",
     "gdprRequestReady": "Your data is ready to download.",
     "gdprDownloadFailed": "Could not download your data.",
     "gdprDownloaded": "Your data has been downloaded.",
@@ -338,7 +338,7 @@ const EN_INLINE = {
       "widthLabel": "Width, metres (optional)",
       "draftLabel": "Draft, metres (optional)",
       "notesLabel": "Notes (optional)",
-      "notesPlaceholder": "Other information about the boat",
+      "notesPlaceholder": "Other information about the vessel",
       "photoLabel": "Vessel photo (optional)",
       "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
       "saveButton": "Save vessel",
@@ -431,7 +431,7 @@ const EN_INLINE = {
     "nameLabel": "Your name",
     "phoneLabel": "Phone number (optional)",
     "phonePlaceholder": "+46701234567",
-    "iceContactLabel": "Your ICE contact (in case of emergency)",
+    "iceContactLabel": "Your emergency contact",
     "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
     "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
     "medicalLabel": "Medical information for search and rescue (optional)",
@@ -598,7 +598,7 @@ const EN_INLINE = {
       "heading": "Crew aboard",
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
-      "ownIceContact": "Own ICE contact: {contact}",
+      "ownIceContact": "Own emergency contact: {contact}",
       "medicalLabel": "Medical info"
     },
     "iceContact": {
@@ -648,7 +648,7 @@ const EN_INLINE = {
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
       "you": "you",
-      "ownIceContact": "Own ICE contact: {contact}"
+      "ownIceContact": "Own emergency contact: {contact}"
     },
     "sharingSettings": {
       "heading": "Sharing",
@@ -676,15 +676,15 @@ const EN_INLINE = {
   },
   "sar": {
     "tagline": "Search and rescue (SAR) access",
-    "instructions": "Enter the trip ID and PIN code you received from the person in distress's contact for read-only access to the trip's crew list, routes and change log.",
-    "referenceLabel": "Trip ID",
+    "instructions": "Enter the reference and PIN code you received from the person in distress's contact for read-only access to the trip's crew list, routes and change log.",
+    "referenceLabel": "Reference",
     "referencePlaceholder": "YE-XXXXXX",
     "pinLabel": "PIN code",
     "pinPlaceholder": "6 digits",
     "submit": "Show trip",
-    "missingFields": "Enter both the trip ID and PIN code.",
+    "missingFields": "Enter both the reference and PIN code.",
     "checking": "Checking…",
-    "invalidCredentials": "Incorrect trip ID or PIN code. Check the details and try again."
+    "invalidCredentials": "Incorrect reference or PIN code. Check the details and try again."
   },
   "blog": {
     "title": "Blog",
@@ -969,7 +969,7 @@ const EN_INLINE = {
       "sendInviteButton": "Send invitation",
       "empty": "No crew invited yet.",
       "unknownName": "Unknown",
-      "iceContactLabel": "ICE: {contact}",
+      "iceContactLabel": "Emergency contact: {contact}",
       "accepted": "✓ Accepted",
       "pending": "⏳ Pending",
       "changePhoto": "Change photo",
@@ -988,7 +988,7 @@ const EN_INLINE = {
     },
     "actions": {
       "heading": "Actions",
-      "notActiveHint": "The trip isn't active yet. Activate it manually, or it will activate automatically once the first crew member accepts their invitation.",
+      "notActiveHint": "The trip isn't active yet. Activate it manually, or it will activate automatically at its scheduled departure time.",
       "activateButton": "Activate trip",
       "snoozeLabel": "Snooze arrival time",
       "verifyButton": "✓ Verify arrival",
@@ -1041,7 +1041,7 @@ const EN_INLINE = {
     "notice": {
       "heading": "Important",
       "p1": "Yachting Earth ICE is not a distress beacon, EPIRB or real-time tracking system.",
-      "p2": "It is a voyage preparation and emergency information system designed to ensure that the right person has the right information at the right time if something unexpected happens."
+      "p2": "It is a voyage preparation and emergency information system designed to ensure that the right person has the right information at the right time if something unexpected happens, the whole way from the dock to a completed rescue operation."
     },
     "prepared": {
       "heading": "Everything is prepared before departure",
@@ -1072,7 +1072,7 @@ const EN_INLINE = {
           "title": "Routes",
           "items": [
             "Multiple routes",
-            "Windy import",
+            "Import from GPX/Windy/draw",
             "Route alternatives",
             "Interactive map preview"
           ]
@@ -1141,13 +1141,13 @@ const EN_INLINE = {
           "yachting": "Automatic audited control"
         },
         {
-          "traditional": "Limited SAR handover",
-          "yachting": "Secure portal with SAR access"
+          "traditional": "Sticky notes, texts and calls",
+          "yachting": "Secure portal"
         }
       ]
     },
     "features": {
-      "heading": "Built for sailors by sailors",
+      "heading": "Built for real voyages",
       "items": [
         {
           "icon": "route",
@@ -1172,11 +1172,11 @@ const EN_INLINE = {
       "lifecycle": [
         {
           "icon": "file-plus",
-          "label": "Trip created"
+          "label": "Voyage created"
         },
         {
           "icon": "check-circle",
-          "label": "Trip completed"
+          "label": "Voyage completed"
         },
         {
           "icon": "clock",

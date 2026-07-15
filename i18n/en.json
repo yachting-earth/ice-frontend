@@ -288,7 +288,7 @@
     "gdprAvailableUntil": "Your summary is ready and can be downloaded until {date}.",
     "gdprDownloadButton": "Download my data",
     "gdprRequestAgainButton": "Request again",
-    "gdprRequestFailed": "Could not put together your data.",
+    "gdprRequestFailed": "Could not compile your data.",
     "gdprRequestReady": "Your data is ready to download.",
     "gdprDownloadFailed": "Could not download your data.",
     "gdprDownloaded": "Your data has been downloaded.",
@@ -327,7 +327,7 @@
       "widthLabel": "Width, metres (optional)",
       "draftLabel": "Draft, metres (optional)",
       "notesLabel": "Notes (optional)",
-      "notesPlaceholder": "Other information about the boat",
+      "notesPlaceholder": "Other information about the vessel",
       "photoLabel": "Vessel photo (optional)",
       "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
       "saveButton": "Save vessel",
@@ -420,7 +420,7 @@
     "nameLabel": "Your name",
     "phoneLabel": "Phone number (optional)",
     "phonePlaceholder": "+46701234567",
-    "iceContactLabel": "Your ICE contact (in case of emergency)",
+    "iceContactLabel": "Your emergency contact",
     "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
     "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
     "medicalLabel": "Medical information for search and rescue (optional)",
@@ -587,7 +587,7 @@
       "heading": "Crew aboard",
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
-      "ownIceContact": "Own ICE contact: {contact}",
+      "ownIceContact": "Own emergency contact: {contact}",
       "medicalLabel": "Medical info"
     },
     "iceContact": {
@@ -637,7 +637,7 @@
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
       "you": "you",
-      "ownIceContact": "Own ICE contact: {contact}"
+      "ownIceContact": "Own emergency contact: {contact}"
     },
     "sharingSettings": {
       "heading": "Sharing",
@@ -665,15 +665,15 @@
   },
   "sar": {
     "tagline": "Search and rescue (SAR) access",
-    "instructions": "Enter the trip ID and PIN code you received from the person in distress's contact for read-only access to the trip's crew list, routes and change log.",
-    "referenceLabel": "Trip ID",
+    "instructions": "Enter the reference and PIN code you received from the person in distress's contact for read-only access to the trip's crew list, routes and change log.",
+    "referenceLabel": "Reference",
     "referencePlaceholder": "YE-XXXXXX",
     "pinLabel": "PIN code",
     "pinPlaceholder": "6 digits",
     "submit": "Show trip",
-    "missingFields": "Enter both the trip ID and PIN code.",
+    "missingFields": "Enter both the reference and PIN code.",
     "checking": "Checking…",
-    "invalidCredentials": "Incorrect trip ID or PIN code. Check the details and try again."
+    "invalidCredentials": "Incorrect reference or PIN code. Check the details and try again."
   },
   "blog": {
     "title": "Blog",
@@ -958,7 +958,7 @@
       "sendInviteButton": "Send invitation",
       "empty": "No crew invited yet.",
       "unknownName": "Unknown",
-      "iceContactLabel": "ICE: {contact}",
+      "iceContactLabel": "Emergency contact: {contact}",
       "accepted": "✓ Accepted",
       "pending": "⏳ Pending",
       "changePhoto": "Change photo",
@@ -977,7 +977,7 @@
     },
     "actions": {
       "heading": "Actions",
-      "notActiveHint": "The trip isn't active yet. Activate it manually, or it will activate automatically once the first crew member accepts their invitation.",
+      "notActiveHint": "The trip isn't active yet. Activate it manually, or it will activate automatically at its scheduled departure time.",
       "activateButton": "Activate trip",
       "snoozeLabel": "Snooze arrival time",
       "verifyButton": "✓ Verify arrival",
@@ -1025,7 +1025,7 @@
     "notice": {
       "heading": "Important",
       "p1": "Yachting Earth ICE is not a distress beacon, EPIRB or real-time tracking system.",
-      "p2": "It is a voyage preparation and emergency information system designed to ensure that the right person has the right information at the right time if something unexpected happens."
+      "p2": "It is a voyage preparation and emergency information system designed to ensure that the right person has the right information at the right time if something unexpected happens, the whole way from the dock to a completed rescue operation."
     },
     "prepared": {
       "heading": "Everything is prepared before departure",
@@ -1033,7 +1033,7 @@
       "cards": [
         { "icon": "ship", "title": "Vessel", "items": ["Photo", "Registration", "Specifications", "Identification"] },
         { "icon": "compass", "title": "Voyage", "items": ["Departure", "Destination", "Estimated arrival", "Grace period"] },
-        { "icon": "route", "title": "Routes", "items": ["Multiple routes", "Windy import", "Route alternatives", "Interactive map preview"] },
+        { "icon": "route", "title": "Routes", "items": ["Multiple routes", "Import from GPX/Windy/draw", "Route alternatives", "Interactive map preview"] },
         { "icon": "users", "title": "Crew", "items": ["Crew list", "Individual profiles", "Photos", "Personal emergency contacts"] },
         { "icon": "shield-check", "title": "Emergency Contact", "items": ["Identity confirmed", "Secure portal", "Read-only access", "Automatic notification"] }
       ]
@@ -1067,11 +1067,11 @@
         { "traditional": "Single route", "yachting": "Multiple routes" },
         { "traditional": "Basic crew list", "yachting": "Crew maintain their own details" },
         { "traditional": "Rely on manual monitoring", "yachting": "Automatic audited control" },
-        { "traditional": "Limited SAR handover", "yachting": "Secure portal with SAR access" }
+        { "traditional": "Sticky notes, texts and calls", "yachting": "Secure portal" }
       ]
     },
     "features": {
-      "heading": "Built for sailors by sailors",
+      "heading": "Built for real voyages",
       "items": [
         { "icon": "route", "title": "Multiple routes", "description": "A voyage rarely follows a single straight line." },
         { "icon": "users", "title": "Crew participation", "description": "Every crew member maintains their own information." },
@@ -1082,8 +1082,8 @@
       "heading": "Privacy by design",
       "lead": "Personal voyage data is automatically removed according to GDPR principles.",
       "lifecycle": [
-        { "icon": "file-plus", "label": "Trip created" },
-        { "icon": "check-circle", "label": "Trip completed" },
+        { "icon": "file-plus", "label": "Voyage created" },
+        { "icon": "check-circle", "label": "Voyage completed" },
         { "icon": "clock", "label": "Soft deleted" },
         { "icon": "timer", "label": "Automatically removed after 30 days" },
         { "icon": "shield", "label": "Only skipper and vessel remain" }

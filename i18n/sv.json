@@ -46,7 +46,7 @@
     "NOTIFICATION_FAILED": "Kunde inte skicka aviseringen.",
     "DEPARTURE_EDIT_LOCKED": "Avgångstiden kan bara ändras fram tills resan aktiveras.",
     "ARRIVAL_EDIT_LOCKED": "Ankomsttiden kan bara ändras fram tills resan bekräftas avslutad.",
-    "GRACE_PERIOD_EDIT_LOCKED": "Marginalen kan bara ändras fram tills resan bekräftas avslutad.",
+    "GRACE_PERIOD_EDIT_LOCKED": "Marginaltiden kan bara ändras fram tills resan bekräftas avslutad.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
     "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
@@ -129,7 +129,7 @@
     "vesselFallback": "Båt #{id}",
     "departure": "Avgång: {datetime}",
     "arrival": "Ankomst: {datetime}",
-    "grace": "Marginal: {label}",
+    "grace": "Marginaltid: {label}",
     "graceHours": "{hours} tim",
     "iceNotified": "⚠ ICE-kontakt notifierad",
     "view": "Visa",
@@ -199,7 +199,7 @@
   },
   "crewGdprRequest": {
     "tagline": "Hantera dina besättningsuppgifter",
-    "intro": "Om du blev inbjuden som besättning utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera, radera dina uppgifter eller kontakta oss via säkert formulär.",
+    "intro": "Om du blev inbjuden som besättning (eller tillagd som ICE-kontakt) utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera eller radera dina uppgifter, eller skicka oss ett meddelande.",
     "emailLabel": "E-post",
     "submit": "Skicka åtkomstlänk",
     "submitting": "Skickar…",
@@ -313,9 +313,9 @@
       "loading": "Laddar båtar...",
       "selectLabel": "Välj båt",
       "mmsiSuffix": " (MMSI {mmsi})",
-      "noneRegistered": "Du har inga båt registrerade ännu. Lägg till en nedan.",
+      "noneRegistered": "Du har inga båtar registrerade ännu. Lägg till en nedan.",
       "addNew": "+ Lägg till ny båt",
-      "nameLabel": "Båtsnamn",
+      "nameLabel": "Båtnamn",
       "namePlaceholder": "t.ex. Freya",
       "mmsiLabel": "MMSI (valfritt)",
       "callSignLabel": "Anropssignal (valfritt)",
@@ -353,7 +353,7 @@
       "heading": "Tidsplan",
       "departureLabel": "Avgång (UTC)",
       "arrivalLabel": "Planerad ankomst (UTC)",
-      "gracePeriodLabel": "Marginal innan ICE-kontakt varnas",
+      "gracePeriodLabel": "Marginaltid innan ICE-kontakt varnas",
       "gracePeriodHint": "Tid efter planerad ankomst innan ICE-kontakten notifieras om du inte har verifierat ankomst."
     },
     "routes": {
@@ -420,12 +420,12 @@
     "nameLabel": "Ditt namn",
     "phoneLabel": "Telefonnummer (valfritt)",
     "phonePlaceholder": "+46701234567",
-    "iceContactLabel": "Din ICE-kontakt (vid nödsituation)",
+    "iceContactLabel": "Din nödkontakt",
     "iceContactPlaceholder": "t.ex. Erik (make) +46701234568",
     "iceContactHint": "Namn och telefonnummer till någon som ska kontaktas om något händer.",
     "medicalLabel": "Medicinsk information för sjöräddningen (valfritt)",
     "medicalPlaceholder": "t.ex. allergier, mediciner, blodgrupp, sjukdomar",
-    "medicalHint": "Visas endast för sjö- och räddningstjänsten vid en nödsituation - aldrig för skepparen eller ICE-kontakten.",
+    "medicalHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller ICE-kontakten.",
     "sharing": {
       "heading": "Delning",
       "contactHint": "Din telefon och e-post visas bara för skepparen som standard. Välj om de även ska delas med ICE-kontakten.",
@@ -650,7 +650,7 @@
     },
     "medical": {
       "heading": "Din information för sjöräddningen",
-      "hint": "Medicinsk information som kan vara till nytta vid en nödsituation - sjukdomar, allergier, blodgrupp, mediciner. Visas endast för sjö- och räddningstjänsten, aldrig för skepparen eller ICE-kontakten.",
+      "hint": "Medicinsk information som kan vara till nytta vid en nödsituation - sjukdomar, allergier, blodgrupp, mediciner. Visas endast för sjöräddningen, aldrig för skepparen eller ICE-kontakten.",
       "placeholder": "t.ex. allergier, mediciner, blodgrupp, sjukdomar",
       "empty": "Du har inte lagt till någon information.",
       "readOnlyNote": "Logga in med ett konto för att ändra detta.",
@@ -665,15 +665,15 @@
   },
   "sar": {
     "tagline": "Åtkomst för sjöräddning (SAR)",
-    "instructions": "Ange rese-ID och PIN-kod som ni fått från den nödställdes kontaktperson för skrivskyddad åtkomst till resans besättningslista, rutter och ändringslogg.",
-    "referenceLabel": "Rese-ID",
+    "instructions": "Ange referens och PIN-kod som ni fått från den nödställdes kontaktperson för skrivskyddad åtkomst till resans besättningslista, rutter och ändringslogg.",
+    "referenceLabel": "Referens",
     "referencePlaceholder": "YE-XXXXXX",
     "pinLabel": "PIN-kod",
     "pinPlaceholder": "6 siffror",
     "submit": "Visa resa",
-    "missingFields": "Ange både rese-ID och PIN-kod.",
+    "missingFields": "Ange både referens och PIN-kod.",
     "checking": "Kontrollerar...",
-    "invalidCredentials": "Fel rese-ID eller PIN-kod. Kontrollera uppgifterna och försök igen."
+    "invalidCredentials": "Fel referens eller PIN-kod. Kontrollera uppgifterna och försök igen."
   },
   "blog": {
     "title": "Blogg",
@@ -867,7 +867,7 @@
       "ice": "Du visar den här resan som dess ICE-kontakt. Den är skrivskyddad för dig."
     },
     "header": {
-      "meta": "Avgång {departure} · Ankomst {arrival} · Marginal {grace}",
+      "meta": "Avgång {departure} · Ankomst {arrival} · Marginaltid {grace}",
       "iceNotified": "ICE-kontakt notifierad"
     },
     "skipper": {
@@ -877,11 +877,11 @@
       "heading": "Tidsschema",
       "departureLabel": "Avgång (UTC)",
       "arrivalLabel": "Ankomst (UTC)",
-      "graceLabel": "Marginal",
+      "graceLabel": "Marginaltid",
       "changeButton": "Spara",
       "departureLockedHint": "Avgångstiden kan inte längre ändras när resan har aktiverats.",
       "arrivalLockedHint": "Ankomsttiden kan inte längre ändras när resan har bekräftats avslutad.",
-      "graceLockedHint": "Marginalen kan inte längre ändras när resan har bekräftats avslutad.",
+      "graceLockedHint": "Marginaltiden kan inte längre ändras när resan har bekräftats avslutad.",
       "changeFailed": "Kunde inte ändra tidsschemat.",
       "changed": "Tidsschemat har ändrats."
     },
@@ -958,7 +958,7 @@
       "sendInviteButton": "Skicka inbjudan",
       "empty": "Ingen besättning inbjuden än.",
       "unknownName": "Okänd",
-      "iceContactLabel": "ICE: {contact}",
+      "iceContactLabel": "Nödkontakt: {contact}",
       "accepted": "✓ Accepterad",
       "pending": "⏳ Väntar",
       "changePhoto": "Byt foto",
@@ -983,7 +983,7 @@
       "verifyButton": "✓ Verifiera ankomst",
       "inactiveHint": "Resan är {status} - inga fler åtgärder tillgängliga.",
       "deleteButton": "Radera resa",
-      "mmsiConflictError": "Resan kan inte aktiveras — ett annat aktivt resa använder redan detta MMSI-nummer.",
+      "mmsiConflictError": "Resan kan inte aktiveras — en annan aktiv resa använder redan detta MMSI-nummer.",
       "activated": "Resan är aktiverad",
       "actionFailed": "Åtgärden misslyckades.",
       "snoozed": "Ankomsttid framflyttad {minutes} min",
@@ -1020,7 +1020,7 @@
       "lead": "Förbered din båt, dina rutter, besättning och nödkontakt innan avfärd. Om du inte checkar in efter din planerade ankomst larmas din utsedda nödkontakt och får säker åtkomst till information som kan hjälpa räddningstjänsten agera snabbare.",
       "ctaPrimary": "Skapa gratis konto",
       "ctaSecondary": "Så fungerar det",
-      "badges": ["Gratis att använda", "Flera rutter", "GDPR från grunden", "Säker SAR-portal"]
+      "badges": ["Gratis att använda", "Flera rutter", "GDPR från grunden", "Säker ICE-portal"]
     },
     "notice": {
       "heading": "Viktigt",
@@ -1029,9 +1029,9 @@
     },
     "prepared": {
       "heading": "Allt förbereds innan avfärd",
-      "lead": "En komplett ruttplan, sammanställd innan du ens lämnar bryggan.",
+      "lead": "En komplett reseakt, sammanställd innan du ens lämnar bryggan.",
       "cards": [
-        { "icon": "ship", "title": "Båt", "items": ["Foto", "AIS", "Specifikationer", "Identifikation"] },
+        { "icon": "ship", "title": "Båt", "items": ["Foto", "Registrering", "Specifikationer", "Identifikation"] },
         { "icon": "compass", "title": "Resa", "items": ["Avgång", "Destination", "Beräknad ankomst", "Marginaltid"] },
         { "icon": "route", "title": "Rutter", "items": ["Flera rutter", "Import från GPX/Windy/Rita", "Alternativa rutter", "Interaktiv kartförhandsvisning"] },
         { "icon": "users", "title": "Besättning", "items": ["Besättningslista", "Individuella profiler", "Foton", "Personliga nödkontakter"] },
@@ -1064,7 +1064,7 @@
       "yachtingLabel": "Yachting Earth",
       "rows": [
         { "traditional": "Pappersdokument", "yachting": "Levande reseinformation" },
-        { "traditional": "En enda rutt", "yachting": "Multippla rutter" },
+        { "traditional": "En enda rutt", "yachting": "Flera rutter" },
         { "traditional": "Statisk besättningslista", "yachting": "Besättningen underhåller sina egna uppgifter" },
         { "traditional": "Förlitar sig på manuell övervakning", "yachting": "Automatisk kontroll" },
         { "traditional": "Postit/SMS/samtal", "yachting": "Säker portal" }
@@ -1236,7 +1236,7 @@
       {
         "heading": "Vad tjänsten är",
         "body": [
-          "Yachting Earth ICE är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. Det låter en skeppare registrera en resa och ett båtar, lägga till planerade rutter, bjuda in besättning och utse en nödkontakt (\"ICE\") som meddelas om resan blir försenad."
+          "Yachting Earth ICE är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. Det låter en skeppare registrera en resa och en båt, lägga till planerade rutter, bjuda in besättning och utse en nödkontakt (\"ICE\") som meddelas om resan blir försenad."
         ],
         "list": [
           "Det är ingen nödsändare, EPIRB eller realtidsspårningssystem",
