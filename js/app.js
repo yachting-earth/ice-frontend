@@ -184,7 +184,7 @@ function renderTopbar() {
         // only) - blog/FAQ links are marketing distractions on a sign-in form.
         const isLoginPage = currentPath === '#/login';
         topbar.innerHTML = `
-            <a class="topbar__brand" href="#/login">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
+            <a class="topbar__brand" href="https://yachting.earth">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
                     ${isLoginPage ? '' : `
@@ -209,7 +209,7 @@ function renderTopbar() {
     const initial = userLabel.trim().charAt(0).toUpperCase() || '?';
 
     topbar.innerHTML = `
-        <a class="topbar__brand" href="#/dashboard">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
+        <a class="topbar__brand" href="https://yachting.earth">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
         <div class="topbar__right">
             <div class="topbar__menu" id="topbar-menu">
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
