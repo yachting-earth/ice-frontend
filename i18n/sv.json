@@ -916,7 +916,7 @@
     "iceContact": {
       "heading": "ICE-kontakt",
       "allContacts": "Alla mina ICE-kontakter larmas för den här resan.",
-      "specificContact": "En specifik ICE-kontakt är kopplad till den här resan.",
+      "specificContact": "En specifik ICE-kontakt har tilldelats denna resa av skepparen.",
       "changeLabel": "Byt ICE-kontakt",
       "changeButton": "Spara",
       "changeFailed": "Kunde inte byta ICE-kontakt.",

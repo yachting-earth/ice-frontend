@@ -927,7 +927,7 @@ const EN_INLINE = {
     "iceContact": {
       "heading": "ICE contact",
       "allContacts": "All my ICE contacts are alerted for this trip.",
-      "specificContact": "A specific ICE contact has been assigned for this trip.",
+      "specificContact": "A specific ICE contact has been assigned for this trip by the skipper.",
       "changeLabel": "Change ICE contact",
       "changeButton": "Save",
       "changeFailed": "Could not change the ICE contact.",
