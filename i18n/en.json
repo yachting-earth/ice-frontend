@@ -480,7 +480,7 @@
     "accountConflict": "You already have an account with this email address. Log in and open the link again to confirm.",
     "confirmFailed": "Could not confirm.",
     "policyNoteDelete": "Your account and your data will be automatically deleted once the trip(s) you're an ICE contact for have ended.",
-    "policyNoteKeep": "Your account is kept permanently so you can log in again for future trips and update your details.",
+    "policyNoteKeep": "Your account has now been created.",
     "confirmSuccess": "Thank you! You are now confirmed as an ICE contact.",
     "toOverview": "To your overview"
   },

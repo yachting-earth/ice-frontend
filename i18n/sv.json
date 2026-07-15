@@ -480,7 +480,7 @@
     "accountConflict": "Du har redan ett konto med den här e-postadressen. Logga in och öppna länken igen för att bekräfta.",
     "confirmFailed": "Kunde inte bekräfta.",
     "policyNoteDelete": "Ditt konto och dina uppgifter raderas automatiskt när resan/resorna du är nödkontakt för är avslutade.",
-    "policyNoteKeep": "Ditt konto behålls permanent så att du kan logga in igen vid framtida resor och uppdatera dina uppgifter.",
+    "policyNoteKeep": "Ditt konto har nu skapats.",
     "confirmSuccess": "Tack! Du är nu bekräftad som nödkontakt.",
     "toOverview": "Till din översikt"
   },
