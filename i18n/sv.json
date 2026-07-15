@@ -41,7 +41,7 @@
     "PASSWORD_RESET_EXPIRED": "Denna länk för lösenordsåterställning har gått ut.",
     "NOT_FOUND": "Hittades inte.",
     "RESOURCE_CONFLICT": "Detta finns redan.",
-    "MMSI_ALREADY_ACTIVE": "Det finns redan en aktiv resa för detta fartyg.",
+    "MMSI_ALREADY_ACTIVE": "Det finns redan en aktiv resa för båten.",
     "INVALID_ETA": "Ogiltig ankomsttid.",
     "NOTIFICATION_FAILED": "Kunde inte skicka aviseringen.",
     "DEPARTURE_EDIT_LOCKED": "Avgångstiden kan bara ändras fram tills resan aktiveras.",
@@ -112,7 +112,7 @@
   },
   "dashboard": {
     "title": "Mina resor",
-    "subtitle": "Överblick över alla dina planerade och pågående resor",
+    "subtitle": "Överblick över dina planerade och pågående resor",
     "newTrip": "+ Skapa ny resa",
     "loadingTrips": "Laddar resor…",
     "loadFailed": "Kunde inte hämta resor.",
@@ -126,7 +126,7 @@
     "verificationResendFailed": "Kunde inte skicka länken just nu. Försök igen senare.",
     "noIceContact": "Du har ingen ICE-kontakt än — utan en kan ingen larmas om din resa inte bekräftas i tid.",
     "addIceContact": "Lägg till en ICE-kontakt",
-    "vesselFallback": "Fartyg #{id}",
+    "vesselFallback": "Båt #{id}",
     "departure": "Avgång: {datetime}",
     "arrival": "Ankomst: {datetime}",
     "grace": "Marginal: {label}",
@@ -140,7 +140,7 @@
     "readOnly": "Skrivskyddad"
   },
   "login": {
-    "tagline": "Trygg utflykt, tryggt hemkomst",
+    "tagline": "Trygg resa, trygg ankomst",
     "emailLabel": "E-post",
     "passwordLabel": "Lösenord",
     "submit": "Logga in",
@@ -199,7 +199,7 @@
   },
   "crewGdprRequest": {
     "tagline": "Hantera dina besättningsuppgifter",
-    "intro": "Om du blev inbjuden som besättning (eller tillagd som ICE-kontakt) utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera eller radera dina uppgifter, eller skicka oss ett meddelande.",
+    "intro": "Om du blev inbjuden som besättning utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera, radera dina uppgifter eller kontakta oss via säkert formulär.",
     "emailLabel": "E-post",
     "submit": "Skicka åtkomstlänk",
     "submitting": "Skickar…",
@@ -309,33 +309,33 @@
     "scheduleConflictNotice": "Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.",
     "created": "Resa skapad",
     "vessel": {
-      "heading": "Fartyg",
-      "loading": "Laddar fartyg...",
-      "selectLabel": "Välj fartyg",
+      "heading": "Båtar",
+      "loading": "Laddar båtar...",
+      "selectLabel": "Välj båt",
       "mmsiSuffix": " (MMSI {mmsi})",
-      "noneRegistered": "Du har inga fartyg registrerade än. Lägg till ett nedan.",
-      "addNew": "+ Lägg till nytt fartyg",
-      "nameLabel": "Fartygsnamn",
-      "namePlaceholder": "t.ex. Thrym",
+      "noneRegistered": "Du har inga båt registrerade ännu. Lägg till en nedan.",
+      "addNew": "+ Lägg till ny båt",
+      "nameLabel": "Båtsnamn",
+      "namePlaceholder": "t.ex. Freya",
       "mmsiLabel": "MMSI (valfritt)",
       "callSignLabel": "Anropssignal (valfritt)",
       "modelLabel": "Modell (valfritt)",
-      "modelPlaceholder": "t.ex. Bavaria 34",
+      "modelPlaceholder": "t.ex. Malö 116",
       "yearLabel": "Årsmodell (valfritt)",
-      "yearPlaceholder": "t.ex. 2011",
+      "yearPlaceholder": "t.ex. 1984",
       "lengthLabel": "Längd, meter (valfritt)",
       "widthLabel": "Bredd, meter (valfritt)",
       "draftLabel": "Djup, meter (valfritt)",
       "notesLabel": "Övrigt (valfritt)",
       "notesPlaceholder": "Övrig information om båten",
-      "photoLabel": "Fartygsfoto (valfritt)",
-      "photoHint": "Används av sjöräddningen för att identifiera fartyget. JPEG/PNG, max 10 MB.",
-      "saveButton": "Spara fartyg",
-      "saveFailed": "Kunde inte spara fartyget.",
+      "photoLabel": "Båtfoto (valfritt)",
+      "photoHint": "Används av sjöräddningen för att lättare identifiera båten. JPEG/PNG, max 10 MB.",
+      "saveButton": "Spara båt",
+      "saveFailed": "Kunde inte spara båten.",
       "mmsiAlreadyRegistered": "Detta MMSI-nummer finns redan registrerat i systemet.",
-      "photoUploadFailed": "Fartyget sparades, men fotot kunde inte laddas upp ({error})",
+      "photoUploadFailed": "Båten sparades, men fotot kunde inte laddas upp ({error})",
       "unknownError": "okänt fel",
-      "added": "Fartyg tillagt",
+      "added": "Båt registrerad",
       "length": "Längd",
       "width": "Bredd",
       "draft": "Djup"
@@ -344,7 +344,7 @@
       "heading": "ICE-kontakt",
       "loading": "Laddar ICE-kontakter...",
       "selectLabel": "Vem ska larmas om resan inte bekräftas i tid?",
-      "selectHint": "Välj den enda ICE-kontakt som ska larmas för den här resan.",
+      "selectHint": "Välj den ICE-kontakt som ska larmas för den här resan.",
       "required": "Välj en ICE-kontakt för den här resan.",
       "noneRegistered": "Du har inga registrerade ICE-kontakter än.",
       "addLink": "Lägg till en ICE-kontakt"
@@ -384,7 +384,7 @@
       "saveRouteSuccess": "Rutten sparad."
     },
     "errors": {
-      "vesselRequired": "Välj eller lägg till ett fartyg.",
+      "vesselRequired": "Välj eller lägg till en båt.",
       "datesRequired": "Ange både avgångs- och ankomsttid.",
       "arrivalBeforeDeparture": "Ankomsttiden måste vara efter avgångstiden.",
       "primaryRouteMinPoints": "Rita minst två punkter för huvudrutten.",
@@ -411,7 +411,7 @@
     "title": "Du är inbjuden på en resa!",
     "summary": {
       "skipper": "Skeppare",
-      "vessel": "Fartyg",
+      "vessel": "Båt",
       "departure": "Avgång",
       "arrival": "Ankomst",
       "crewCount": "Besättning hittills",
@@ -565,7 +565,7 @@
       "plannedArrival": "Planerad ankomst: <strong>{datetime}</strong>"
     },
     "vessel": {
-      "nameLine": "Fartyg: {name}",
+      "nameLine": "Båt: {name}",
       "modelLabel": "Modell {value}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {value}",
@@ -615,7 +615,7 @@
       "plannedArrival": "Planerad ankomst: <strong>{datetime}</strong>"
     },
     "vessel": {
-      "nameLine": "Fartyg: {name}",
+      "nameLine": "Båt: {name}",
       "modelLabel": "Modell {value}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {value}",
@@ -689,27 +689,27 @@
   },
   "vessels": {
     "title": "Mina båtar",
-    "subtitle": "Fartyg du kan välja när du skapar en ny resa",
+    "subtitle": "Båtar du kan välja när du skapar en ny resa",
     "loadingVessels": "Laddar båtar...",
     "form": {
       "addTitle": "Lägg till båt",
       "editTitle": "Ändra: {name}",
       "cancelEdit": "Avbryt ändring",
-      "nameLabel": "Fartygsnamn",
-      "namePlaceholder": "t.ex. Thrym",
+      "nameLabel": "Båtnamn",
+      "namePlaceholder": "t.ex. Freya",
       "mmsiLabel": "MMSI (valfritt)",
       "callSignLabel": "Anropssignal (valfritt)",
       "modelLabel": "Modell (valfritt)",
-      "modelPlaceholder": "t.ex. Bavaria 34",
+      "modelPlaceholder": "t.ex. Malö 116",
       "yearLabel": "Årsmodell (valfritt)",
-      "yearPlaceholder": "t.ex. 2011",
+      "yearPlaceholder": "t.ex. 1984",
       "lengthLabel": "Längd, meter (valfritt)",
       "widthLabel": "Bredd, meter (valfritt)",
       "draftLabel": "Djup, meter (valfritt)",
       "notesLabel": "Övrigt (valfritt)",
       "notesPlaceholder": "Övrig information om båten",
-      "photoLabel": "Fartygsfoto (valfritt)",
-      "photoHint": "Används av sjöräddningen för att identifiera fartyget. JPEG/PNG, max 10 MB.",
+      "photoLabel": "Båtfoto (valfritt)",
+      "photoHint": "Används av sjöräddningen för att lättare identifiera båten. JPEG/PNG, max 10 MB.",
       "submit": "Spara båt",
       "submitEdit": "Spara ändringar"
     },
@@ -977,7 +977,7 @@
     },
     "actions": {
       "heading": "Åtgärder",
-      "notActiveHint": "Resan är inte aktiv än. Aktivera den manuellt, eller så aktiveras den automatiskt när första besättningsmedlemmen accepterar sin inbjudan.",
+      "notActiveHint": "Resan är inte aktiv än. Aktivera den manuellt, eller så aktiveras den automatiskt vid tiden för registrerad avfärd.",
       "activateButton": "Aktivera resa",
       "snoozeLabel": "Snooza ankomsttid",
       "verifyButton": "✓ Verifiera ankomst",
@@ -987,7 +987,7 @@
       "activated": "Resan är aktiverad",
       "actionFailed": "Åtgärden misslyckades.",
       "snoozed": "Ankomsttid framflyttad {minutes} min",
-      "verifyConfirm": "Bekräfta att fartyget har anlänt säkert?",
+      "verifyConfirm": "Bekräfta att ni har anlänt säkert?",
       "verified": "Ankomst verifierad - resan är avslutad",
       "deleteForceConfirm": "Det finns registrerade personer på resan. Radera resan ändå? Kom ihåg att notifiera dem själv.",
       "deleteConfirm": "Radera den här resan?",
@@ -1004,11 +1004,11 @@
   "landing": {
     "meta": {
       "title": "Yachting Earth — Reseförberedelser och nödinformation för seglare",
-      "description": "Yachting Earth är en digital reseakt för seglare: registrera ditt fartyg, dina rutter, besättning och nödkontakt innan avfärd, så att korrekt information redan finns på plats om resan inte går som planerat."
+      "description": "Yachting Earth är en digital reseakt för seglare: registrera din båt, dina rutter, besättning och nödkontakt innan avfärd, så att korrekt information redan finns på plats om resan inte går som planerat."
     },
     "skipLink": "Hoppa till huvudinnehållet",
     "nav": {
-      "prepared": "Vad som förbereds",
+      "prepared": "Vad som registreras",
       "howItWorks": "Så fungerar det",
       "different": "Varför vi är annorlunda",
       "privacy": "Integritet",
@@ -1017,21 +1017,21 @@
     },
     "hero": {
       "heading": "Varje resa förtjänar en plan.<br>Varje nödsituation förtjänar rätt information.",
-      "lead": "Förbered ditt fartyg, dina rutter, besättning och nödkontakt innan avfärd. Om du inte checkar in efter din planerade ankomst får din utsedda nödkontakt säker åtkomst till den information som kan hjälpa räddningstjänsten agera snabbare.",
+      "lead": "Förbered din båt, dina rutter, besättning och nödkontakt innan avfärd. Om du inte checkar in efter din planerade ankomst larmas din utsedda nödkontakt och får säker åtkomst till information som kan hjälpa räddningstjänsten agera snabbare.",
       "ctaPrimary": "Skapa gratis konto",
       "ctaSecondary": "Så fungerar det",
-      "badges": ["Gratis att använda", "Flera rutter", "GDPR från grunden", "Säker ICE-portal"]
+      "badges": ["Gratis att använda", "Flera rutter", "GDPR från grunden", "Säker SAR-portal"]
     },
     "notice": {
       "heading": "Viktigt",
       "p1": "Yachting Earth ICE är inte en nödsändare, EPIRB eller ett realtidsspårningssystem.",
-      "p2": "Det är ett system för reseförberedelser och nödinformation, utformat för att säkerställa att rätt person har rätt information vid rätt tidpunkt om något oväntat inträffar."
+      "p2": "Det är ett system för reseförberedelser och nödinformation, utformat för att säkerställa att rätt person har rätt information vid rätt tidpunkt om något oväntat inträffar hela vägen från bryggan till avslutad räddningsoperation."
     },
     "prepared": {
       "heading": "Allt förbereds innan avfärd",
-      "lead": "En komplett reseakt, sammanställd innan du ens lämnar bryggan.",
+      "lead": "En komplett ruttplan, sammanställd innan du ens lämnar bryggan.",
       "cards": [
-        { "icon": "ship", "title": "Fartyg", "items": ["Foto", "AIS", "Specifikationer", "Identifikation"] },
+        { "icon": "ship", "title": "Båt", "items": ["Foto", "AIS", "Specifikationer", "Identifikation"] },
         { "icon": "compass", "title": "Resa", "items": ["Avgång", "Destination", "Beräknad ankomst", "Marginaltid"] },
         { "icon": "route", "title": "Rutter", "items": ["Flera rutter", "Import från GPX/Windy/Rita", "Alternativa rutter", "Interaktiv kartförhandsvisning"] },
         { "icon": "users", "title": "Besättning", "items": ["Besättningslista", "Individuella profiler", "Foton", "Personliga nödkontakter"] },
@@ -1045,7 +1045,7 @@
         "Bjuder in besättning",
         "Besättningen fyller i sina egna profiler",
         "Nödkontakten bekräftar sin medverkan",
-        "Resan aktiveras"
+        "Resan börjar"
       ],
       "fork": {
         "arriveTitle": "Ankommer säkert",
@@ -1086,13 +1086,13 @@
         { "icon": "check-circle", "label": "Resa avslutad" },
         { "icon": "clock", "label": "Mjukt raderad" },
         { "icon": "timer", "label": "Automatiskt borttagen efter 30 dagar" },
-        { "icon": "shield", "label": "Endast skeppare och fartyg kvarstår" }
+        { "icon": "shield", "label": "Endast skeppare och båt kvarstår" }
       ]
     },
     "mapDemo": {
       "heading": "Rutter, kartlagda",
       "lead": "En resa kan innehålla flera planerade rutter. Här är ett exempel med tre.",
-      "note": "Demonstrationsdata — inte fartygets faktiska position.",
+      "note": "Demonstrationsdata — inte båtens faktiska position.",
       "ariaLabel": "Exempelkarta som visar tre exempel på segelrutter längs en kust",
       "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"],
       "descriptions": ["Huvudrutt", "Om vinden vrider västlig", "Om vinden vrider nordlig och ökar över 35 knop"]
@@ -1102,7 +1102,7 @@
       "insteadTitle": "Istället för att…",
       "insteadItems": ["Leta i gamla mejl", "Försöka minnas vem som var ombord", "Leta efter ruttskärmdumpar", "Gissa nödkontakter"],
       "haveTitle": "Din nödkontakt har redan",
-      "haveItems": ["Fartyg", "Rutter", "Besättning", "Foton", "Nödkontakter", "Reseuppgifter"],
+      "haveItems": ["Båt", "Rutter", "Besättning", "Foton", "Nödkontakter", "Reseuppgifter"],
       "readyTitle": "Redo att lämna till",
       "readyItems": ["Kustbevakningen", "Polisen", "Sjöräddningscentralen", "Försäkringsbolaget"],
       "readyNote": "Nödkontakten avgör när informationen ska delas, och med vem."
@@ -1144,7 +1144,7 @@
         ],
         "list": [
           "Kontouppgifter - e-post, namn, telefon och ett lösenord (sparas endast som en bcrypt-hash, aldrig i klartext)",
-          "Fartygsuppgifter - namn, registrering/anropssignal, specifikationer och ett valfritt foto",
+          "Båtuppgifter - namn, registrering/anropssignal, specifikationer och ett valfritt foto",
           "Reseuppgifter - planerade rutter (tolkade från Windy.com), planerad avgångs-/ankomsttid och marginaltid",
           "Besättningsuppgifter - namn, e-post, telefon och ett valfritt foto för identifieringsändamål",
           "Nödkontaktuppgifter (\"ICE\") - namn, e-post, telefon och relation till skepparen",
@@ -1155,7 +1155,7 @@
         "heading": "Varför vi behandlar dem",
         "body": ["Varje kategori av uppgifter behandlas på en av dessa rättsliga grunder:"],
         "list": [
-          "Avtal - konto-, fartygs- och reseuppgifter, så att systemet kan göra det du registrerade dig för",
+          "Avtal - konto-, båt- och reseuppgifter, så att systemet kan göra det du registrerade dig för",
           "Uttryckligt samtycke - nödkontaktuppgifter",
           "Berättigat intresse - uppladdning av besättningsfoton för identifieringsändamål, samt säkerhetsloggar och aviseringshistorik, för att hålla systemet pålitligt och skyddat mot missbruk"
         ]
@@ -1164,7 +1164,7 @@
         "heading": "Hur länge vi sparar dem",
         "body": [
           "En avslutad eller avbruten resa mjukraderas omedelbart - den försvinner från skepparens, besättningens och nödkontaktens vy - och raderas sedan permanent, tillsammans med sina rutter, besättningsposter, foton, ändringslogg, aviseringar och åtkomsttoken, av ett dagligt städjobb 30 dagar senare.",
-          "Registrerade användarkonton och fartyg påverkas inte av detta - endast resans egna data. Du kan radera ditt konto och dess data när som helst från din profilsida.",
+          "Registrerade användarkonton och båtar påverkas inte av detta - endast resans egna data. Du kan radera ditt konto och dess data när som helst från din profilsida.",
           "Nödkontaktkonton sparas också på obestämd tid som standard, eftersom kontakten kan behöva logga in igen inför en framtida resa, men en kontakt kan välja - från \"Mitt ICE-konto\" - att få sitt konto automatiskt raderat när det inte längre är kopplat till någon aktuell eller framtida resa.",
           "Meddelanden som skickas via kontaktformuläret (ditt namn, e-post och meddelandetext) sparas i 18 månader från att du skickar dem, och raderas sedan permanent. Denna 18-månadersperiod löper på egen hand och förkortas inte av att du raderar ditt konto - om du raderar ditt konto sparas dina tidigare meddelanden ändå tills deras egen 18-månadersperiod löper ut, om vi inte raderar dem tidigare. Vi kan radera ett meddelande innan 18 månader har gått, till exempel när ett ärende är löst."
         ]
@@ -1213,7 +1213,7 @@
       {
         "heading": "Hur vi skyddar dem",
         "body": [
-          "Systemet körs helt över HTTPS. Lösenord hashas med bcrypt. Skeppare autentiseras med en signerad token; nödkontakter och räddningstjänst får engångs, skrivskyddad åtkomst begränsad till en enda resa istället för en inloggning. Besättnings-, fartygs- och profilfoton lagras utanför den publika webbservern och levereras endast via en autentiserad begäran. Upprepade misslyckade inloggningar hastighetsbegränsas."
+          "Systemet körs helt över HTTPS. Lösenord hashas med bcrypt. Skeppare autentiseras med en signerad token; nödkontakter och räddningstjänst får engångs, skrivskyddad åtkomst begränsad till en enda resa istället för en inloggning. Besättnings-, båt- och profilfoton lagras utanför den publika webbservern och levereras endast via en autentiserad begäran. Upprepade misslyckade inloggningar hastighetsbegränsas."
         ]
       }
     ],
@@ -1236,18 +1236,18 @@
       {
         "heading": "Vad tjänsten är",
         "body": [
-          "Yachting Earth ICE är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. Det låter en skeppare registrera en resa och ett fartyg, lägga till planerade rutter, bjuda in besättning och utse en nödkontakt (\"ICE\") som meddelas om resan blir försenad."
+          "Yachting Earth ICE är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. Det låter en skeppare registrera en resa och ett båtar, lägga till planerade rutter, bjuda in besättning och utse en nödkontakt (\"ICE\") som meddelas om resan blir försenad."
         ],
         "list": [
           "Det är ingen nödsändare, EPIRB eller realtidsspårningssystem",
-          "Det övervakar inte fartygets faktiska position och kontaktar inte räddningstjänsten självt",
+          "Det övervakar inte båtens faktiska position och kontaktar inte räddningstjänsten självt",
           "Skepparen är ensam ansvarig för faktiska säkerhetsbeslut, sjövärdighet och efterlevnad av sjörätt och lokala regler"
         ]
       },
       {
         "heading": "Ditt konto",
         "body": [
-          "Du måste ange korrekt information när du registrerar en resa, ett fartyg, en besättningsmedlem eller en nödkontakt, och hålla den uppdaterad - systemets nytta är beroende av att den är aktuell.",
+          "Du måste ange korrekt information när du registrerar en resa, en båt, en besättningsmedlem eller en nödkontakt, och hålla den uppdaterad - systemets nytta är beroende av att den är aktuell.",
           "Du ansvarar för att hålla dina inloggningsuppgifter konfidentiella och för all aktivitet under ditt konto. Meddela oss omgående om du tror att ditt konto har komprometterats."
         ]
       },
@@ -1330,13 +1330,13 @@
         "heading": "Varför vi byggde det här",
         "body": [
           "Alla skeppare känner igen rutinen: berätta för någon i land vilken rutt du tar och när du väntas anlända, och checka in när du är säkert i hamn. I praktiken lever den planen i ett sms eller en klottrad lapp, och det är lätt för detaljerna - den faktiska rutten, besättningen ombord, vem som ska kontaktas och när - att försvinna eller bli inaktuella mellan resor.",
-          "Yachting Earth ICE gör den rutinen till en strukturerad, upprepningsbar incheckning: registrera resan och fartyget en gång, bjud in din besättning, så håller systemet koll på klockan så att din utsedda nödkontakt (\"ICE\") alltid har korrekt, uppdaterad information om du inte checkar in i tid."
+          "Yachting Earth ICE gör den rutinen till en strukturerad, upprepningsbar incheckning: registrera resan och båten en gång, bjud in din besättning, så håller systemet koll på klockan så att din utsedda nödkontakt (\"ICE\") alltid har korrekt, uppdaterad information om du inte checkar in i tid."
         ]
       },
       {
         "heading": "Vad vi är - och vad vi inte är",
         "body": [
-          "Det här är ett verktyg för reseförberedelser och säkerhetsinformation för besättningen, inte en nödsändare, EPIRB eller realtidsspårningssystem. Det övervakar inte fartygets position och kontaktar inte räddningstjänsten självt."
+          "Det här är ett verktyg för reseförberedelser och säkerhetsinformation för besättningen, inte en nödsändare, EPIRB eller realtidsspårningssystem. Det övervakar inte båtens position och kontaktar inte räddningstjänsten självt."
         ],
         "list": [
           "Du (skepparen) är fortsatt ansvarig för faktiska säkerhetsbeslut till sjöss",
@@ -1365,11 +1365,11 @@
         "items": [
           {
             "q": "Vad är Yachting Earth ICE?",
-            "a": "Det är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. En skeppare registrerar en resa och ett fartyg, lägger till en eller flera planerade rutter, bjuder in besättning och utser en nödkontakt (\"ICE\") som meddelas automatiskt om resan blir försenad."
+            "a": "Det är ett verktyg för reseförberedelser och besättningens säkerhetsincheckning. En skeppare registrerar en resa och en båt, lägger till en eller flera planerade rutter, bjuder in besättning och utser en nödkontakt (\"ICE\") som meddelas automatiskt om resan blir försenad."
           },
           {
             "q": "Är det här en nödsändare eller ett realtidsspårningssystem?",
-            "a": "Nej. Yachting Earth ICE spårar inte fartygets faktiska position och kontaktar inte räddningstjänsten självt. Det är ett verktyg för informationshantering - skepparen ansvarar fortfarande för de faktiska säkerhetsbesluten. Vid en verklig nödsituation, kontakta alltid din lokala räddningscentral eller kustbevakning direkt."
+            "a": "Nej. Yachting Earth ICE spårar inte båtens faktiska position och kontaktar inte räddningstjänsten självt. Det är ett verktyg för informationshantering - skepparen ansvarar fortfarande för de faktiska säkerhetsbesluten. Vid en verklig nödsituation, kontakta alltid din lokala räddningscentral eller kustbevakning direkt."
           },
           {
             "q": "Hur lägger jag till en rutt för en resa?",
@@ -1415,7 +1415,7 @@
         "items": [
           {
             "q": "Vad händer med mina uppgifter efter att en resa avslutas?",
-            "a": "En avslutad eller avbruten resa mjukraderas omedelbart (den försvinner från vyn) och raderas sedan permanent, tillsammans med dess rutter, besättningsuppgifter, foton och aviseringar, 30 dagar senare. Ditt konto och dina fartyg påverkas inte. Se sidan Integritet & GDPR för fullständig information."
+            "a": "En avslutad eller avbruten resa mjukraderas omedelbart (den försvinner från vyn) och raderas sedan permanent, tillsammans med dess rutter, besättningsuppgifter, foton och aviseringar, 30 dagar senare. Ditt konto och dina båtar påverkas inte. Se sidan Integritet & GDPR för fullständig information."
           },
           {
             "q": "Kan jag radera mitt konto?",
