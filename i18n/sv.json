@@ -1471,6 +1471,18 @@
     "intro": "Vad som har ändrats i Yachting Earth ICE, version för version. Varje post motsvarar en version som satts i produktion.",
     "entries": [
       {
+        "version": "v1.1.0",
+        "date": "2026-07-15",
+        "items": [
+          "Nödlås: så snart en resas ICE-kontakt har larmats efter en tidsöverskridning låses resan och dess besättning, rutter och ICE-kontakt för vidare ändringar, av säkerhets- och spårbarhetsskäl.",
+          "Privat fält för medicinsk information om besättningen, som endast delas med sjöräddningen i en nödsituation - aldrig med skepparen eller ICE-kontakten.",
+          "Varje resa har nu exakt en ICE-kontakt. En resa kan sparas utan en, men behöver en tilldelad innan den kan aktiveras.",
+          "Översikten markerar nu försenade resor med tydliga varnings- och larmlägen.",
+          "Ny adressbok för besättning, sparade rutter och sparade båtar för snabbare reseplanering och enkel återanvändning mellan resor.",
+          "Denna ändringslogg, en versionsindikator i sidfoten, förbättrad engelsk och svensk text samt ett enhetligt utseende på de publika sidorna."
+        ]
+      },
+      {
         "version": "v1.0.0",
         "date": "2026-07-14",
         "items": [

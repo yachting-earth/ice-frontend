@@ -1471,6 +1471,18 @@
     "intro": "What's changed in Yachting Earth ICE, release by release. Each entry corresponds to a version promoted to production.",
     "entries": [
       {
+        "version": "v1.1.0",
+        "date": "2026-07-15",
+        "items": [
+          "Emergency Lock: once a trip's ICE contact has been alerted after a timeout, the trip and its crew, routes and ICE contact are locked from further changes for safety and traceability.",
+          "Private medical information field for crew, shared only with search-and-rescue authorities in an emergency - never with the skipper or the ICE contact.",
+          "Each trip now has exactly one ICE contact. A trip can be saved without one, but needs one assigned before it can be activated.",
+          "The dashboard now highlights overdue trips with clear warning and alert states.",
+          "New crew address book, saved routes and saved vessels for faster trip setup and easy reuse across trips.",
+          "This changelog, a version indicator in the footer, refined English and Swedish wording, and a consistent look across the public pages."
+        ]
+      },
+      {
         "version": "v1.0.0",
         "date": "2026-07-14",
         "items": [
