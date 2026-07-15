@@ -31,13 +31,13 @@ const Router = {
         { pattern: '#/ice-portal', page: IcePortalPage },
         { pattern: '#/crew-view', page: CrewViewPage },
         { pattern: '#/sar', page: SarPage },
-        { pattern: '#/blog', page: BlogPage },
-        { pattern: '#/blog/:slug', page: BlogPostPage },
-        { pattern: '#/privacy', page: PrivacyPage },
-        { pattern: '#/terms', page: TermsPage },
+        { pattern: '#/blog', page: BlogPage, noTopbar: true },
+        { pattern: '#/blog/:slug', page: BlogPostPage, noTopbar: true },
+        { pattern: '#/privacy', page: PrivacyPage, noTopbar: true },
+        { pattern: '#/terms', page: TermsPage, noTopbar: true },
         { pattern: '#/contact', page: ContactPage, auth: true },
-        { pattern: '#/about', page: AboutPage },
-        { pattern: '#/faq', page: FaqPage }
+        { pattern: '#/about', page: AboutPage, noTopbar: true },
+        { pattern: '#/faq', page: FaqPage, noTopbar: true }
     ],
 
     start() {
@@ -391,6 +391,74 @@ function showToast(message, type = 'info') {
 // site-nav__brand icon so logged-in and public pages read as the same app.
 function brandMark() {
     return '<img src="img/yachting.png" class="brand-mark" width="22" height="22" alt="" aria-hidden="true">';
+}
+
+// Header/footer chrome shared by the public content pages (about, terms,
+// faq, privacy, blog/blog-post) - the same site-nav/site-footer markup as
+// the landing page (#/), minus the landing page's in-page section anchors
+// (those pages have no such sections to scroll to). Reuses landing.css's
+// `.landing-page`-scoped styles by wrapping just the header/footer, not the
+// page content, so the landing page's h1/p/a/ul overrides don't leak into
+// the content in between.
+function renderPublicHeader() {
+    return `
+        <div class="landing-page">
+          <header class="site-nav" id="site-nav">
+            <div class="site-nav__inner">
+              <a class="site-nav__brand" href="#/">
+                <img src="img/yachting.png" width="22" height="22" alt="" aria-hidden="true">
+                <span>${escapeHtml(t('app.brand'))}</span>
+              </a>
+
+              <button class="site-nav__toggle" id="public-nav-toggle" aria-expanded="false" aria-controls="public-nav-links" aria-label="${escapeHtml(t('app.toggleNav'))}">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </button>
+
+              <nav class="site-nav__links" id="public-nav-links" aria-label="Primary">
+                <a class="site-nav__cta site-nav__cta--ghost" href="#/login">${escapeHtml(t('landing.nav.login'))}</a>
+                <a class="site-nav__cta" href="#/register">${escapeHtml(t('landing.nav.cta'))}</a>
+                ${renderLangSelector()}
+              </nav>
+            </div>
+          </header>
+        </div>`;
+}
+
+function renderPublicFooter() {
+    return `
+        <div class="landing-page">
+          <footer class="site-footer">
+            <div class="site-footer__inner">
+              <span class="site-footer__brand">${escapeHtml(t('app.brand'))}</span>
+              <nav aria-label="Footer">
+                <a href="#/about">${escapeHtml(t('landing.footer.links.about'))}</a>
+                <a href="#/blog">${escapeHtml(t('landing.footer.links.blog'))}</a>
+                <a href="#/privacy">${escapeHtml(t('landing.footer.links.privacy'))}</a>
+                <a href="#/privacy">${escapeHtml(t('landing.footer.links.gdpr'))}</a>
+                <a href="#/contact">${escapeHtml(t('landing.footer.links.contact'))}</a>
+                <a href="#/terms">${escapeHtml(t('landing.footer.links.terms'))}</a>
+                <a href="#/faq">${escapeHtml(t('landing.footer.links.faq'))}</a>
+              </nav>
+              <p class="site-footer__disclaimer">${escapeHtml(t('landing.footer.disclaimer'))}</p>
+            </div>
+          </footer>
+        </div>`;
+}
+
+// Wires the mobile nav toggle + language switcher for renderPublicHeader().
+// Call once after the header markup has been inserted into the DOM.
+function setupPublicHeader() {
+    const toggle = document.getElementById('public-nav-toggle');
+    const links = document.getElementById('public-nav-links');
+    if (toggle && links) {
+        toggle.addEventListener('click', () => {
+            const isOpen = links.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', String(isOpen));
+        });
+    }
+    setupLangSelector();
 }
 
 function escapeHtml(value) {

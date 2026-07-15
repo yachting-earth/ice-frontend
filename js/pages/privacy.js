@@ -7,6 +7,7 @@ const PrivacyPage = {
         const sections = t('privacy.sections');
 
         container.innerHTML = `
+            ${renderPublicHeader()}
             <div class="page">
                 <article class="blog-article">
                     <h1>${escapeHtml(t('privacy.title'))}</h1>
@@ -22,6 +23,9 @@ const PrivacyPage = {
                         <p>${escapeHtml(t('privacy.contact.body'))}</p>
                     </div>
                 </article>
-            </div>`;
+            </div>
+            ${renderPublicFooter()}`;
+
+        setupPublicHeader();
     }
 };

@@ -7,6 +7,7 @@ const TermsPage = {
         const sections = t('terms.sections');
 
         container.innerHTML = `
+            ${renderPublicHeader()}
             <div class="page">
                 <article class="blog-article">
                     <h1>${escapeHtml(t('terms.title'))}</h1>
@@ -22,6 +23,9 @@ const TermsPage = {
                         <p>${escapeHtml(t('terms.contact.body'))}</p>
                     </div>
                 </article>
-            </div>`;
+            </div>
+            ${renderPublicFooter()}`;
+
+        setupPublicHeader();
     }
 };

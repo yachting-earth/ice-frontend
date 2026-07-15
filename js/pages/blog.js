@@ -8,6 +8,7 @@
 const BlogPage = {
     async render(container) {
         container.innerHTML = `
+            ${renderPublicHeader()}
             <div class="page">
                 <div class="page-header">
                     <div>
@@ -16,8 +17,10 @@ const BlogPage = {
                     </div>
                 </div>
                 <div id="blog-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('blog.loading'))}</div></div>
-            </div>`;
+            </div>
+            ${renderPublicFooter()}`;
 
+        setupPublicHeader();
         await this.loadPosts(container);
     },
 

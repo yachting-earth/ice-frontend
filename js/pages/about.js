@@ -7,6 +7,7 @@ const AboutPage = {
         const sections = t('about.sections');
 
         container.innerHTML = `
+            ${renderPublicHeader()}
             <div class="page">
                 <article class="blog-article">
                     <h1>${escapeHtml(t('about.title'))}</h1>
@@ -21,6 +22,9 @@ const AboutPage = {
                         <p>${escapeHtml(t('about.contact.body'))}</p>
                     </div>
                 </article>
-            </div>`;
+            </div>
+            ${renderPublicFooter()}`;
+
+        setupPublicHeader();
     }
 };

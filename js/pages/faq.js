@@ -8,6 +8,7 @@ const FaqPage = {
         const categories = t('faq.categories');
 
         container.innerHTML = `
+            ${renderPublicHeader()}
             <div class="page">
                 <article class="blog-article">
                     <h1>${escapeHtml(t('faq.title'))}</h1>
@@ -25,6 +26,9 @@ const FaqPage = {
                         `).join('')}
                     </div>
                 </article>
-            </div>`;
+            </div>
+            ${renderPublicFooter()}`;
+
+        setupPublicHeader();
     }
 };

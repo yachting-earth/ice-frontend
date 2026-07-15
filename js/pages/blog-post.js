@@ -8,11 +8,14 @@
 const BlogPostPage = {
     async render(container, params) {
         container.innerHTML = `
+            ${renderPublicHeader()}
             <div class="page">
                 <a class="btn btn-secondary btn-sm" href="#/blog">${escapeHtml(t('blog.backToList'))}</a>
                 <div id="blog-post-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('blog.loading'))}</div></div>
-            </div>`;
+            </div>
+            ${renderPublicFooter()}`;
 
+        setupPublicHeader();
         await this.loadPost(container, params.slug);
     },
 
