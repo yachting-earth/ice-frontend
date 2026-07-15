@@ -161,6 +161,10 @@ const EN_INLINE = {
     "errorDefault": "Login failed.",
     "forgotPasswordLink": "Forgot password?",
     "crewGdprLink": "Invited as crew without an account? Manage your data here.",
+    "redirectNotice": {
+      "default": "Please log in to continue.",
+      "contact": "Please log in to use the contact form."
+    },
     "tabs": {
       "user": "Log in",
       "sar": "SAR access"

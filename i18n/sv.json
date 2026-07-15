@@ -150,6 +150,10 @@
     "errorDefault": "Inloggningen misslyckades.",
     "forgotPasswordLink": "Glömt lösenordet?",
     "crewGdprLink": "Inbjuden som besättning utan konto? Hantera dina uppgifter här.",
+    "redirectNotice": {
+      "default": "Logga in för att fortsätta.",
+      "contact": "Logga in för att använda kontaktformuläret."
+    },
     "tabs": {
       "user": "Logga in",
       "sar": "SAR-åtkomst"

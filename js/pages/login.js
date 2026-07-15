@@ -12,6 +12,7 @@ const LoginPage = {
                     </div>
 
                     <div id="panel-user" role="tabpanel" aria-labelledby="tab-user">
+                        ${this.redirectTarget ? `<div class="alert alert-info">${escapeHtml(this.redirectNoticeText())}</div>` : ''}
                         <div id="login-alert"></div>
                         <form id="login-form" novalidate>
                             <div class="field">
@@ -69,6 +70,16 @@ const LoginPage = {
     // redirect via a crafted ?redirect= value.
     safeRedirect(value) {
         return value && value.startsWith('#/') && !value.startsWith('#//') ? value : null;
+    },
+
+    // Explains *why* the user landed here when Router bounced them off an
+    // auth-required page (app.js) - most users clicking e.g. the footer's
+    // "Contact us" link have no idea an account is required.
+    redirectNoticeText() {
+        if (this.redirectTarget.startsWith('#/contact')) {
+            return t('login.redirectNotice.contact');
+        }
+        return t('login.redirectNotice.default');
     },
 
     setupTabs() {
