@@ -291,7 +291,7 @@
     "emailChangePending": "En bekräftelselänk har skickats till <strong>{email}</strong>. Din e-postadress ändras först när du klickat på länken. Vi har även meddelat din nuvarande adress.",
     "saved": "Dina uppgifter har uppdaterats.",
     "gdprHeading": "Ladda ner mina uppgifter",
-    "gdprHint": "Begär en sammanställning av all information vi har lagrat om dig - konto, båtar, ICE-kontakter och resor. Filen är tillgänglig för nedladdning i 7 dagar, eller tills du laddat ner den.",
+    "gdprHint": "Begär en sammanställning av all information vi har lagrat om dig - konto, båtar, ICE-kontakter och resor. Filen levereras omedelbart i ett maskinläsbart JSON-format och är tillgänglig för nedladdning i 7 dagar.",
     "gdprChecking": "Kontrollerar status…",
     "gdprRequestButton": "Begär mina uppgifter",
     "gdprAvailableUntil": "Din sammanställning är klar och kan laddas ner till och med {date}.",
