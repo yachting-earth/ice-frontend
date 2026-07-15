@@ -37,7 +37,8 @@ const Router = {
         { pattern: '#/terms', page: TermsPage, noTopbar: true },
         { pattern: '#/contact', page: ContactPage, auth: true },
         { pattern: '#/about', page: AboutPage, noTopbar: true },
-        { pattern: '#/faq', page: FaqPage, noTopbar: true }
+        { pattern: '#/faq', page: FaqPage, noTopbar: true },
+        { pattern: '#/changelog', page: ChangelogPage, noTopbar: true }
     ],
 
     start() {
@@ -490,6 +491,7 @@ function renderPublicFooter() {
                 <a href="#/faq">${escapeHtml(t('landing.footer.links.faq'))}</a>
               </nav>
               <p class="site-footer__disclaimer">${escapeHtml(t('landing.footer.disclaimer'))}</p>
+              <a class="site-footer__version" href="#/changelog">${escapeHtml(t('app.version', { version: CONFIG.APP_VERSION }))}</a>
             </div>
           </footer>
         </div>`;

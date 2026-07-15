@@ -120,7 +120,8 @@ const EN_INLINE = {
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - My page",
     "lightboxClose": "Close full-size image",
-    "renderError": "Something went wrong showing this page. Try reloading."
+    "renderError": "Something went wrong showing this page. Try reloading.",
+    "version": "Version {version}"
   },
   "dashboard": {
     "title": "My trips",
@@ -1260,7 +1261,8 @@ const EN_INLINE = {
         "gdpr": "GDPR",
         "contact": "Contact",
         "terms": "Terms",
-        "faq": "FAQ"
+        "faq": "FAQ",
+        "changelog": "Changelog"
       },
       "comingSoon": "{page} page coming soon"
     }
@@ -1572,6 +1574,21 @@ const EN_INLINE = {
             "q": "Is my data shared with anyone?",
             "a": "Never sold or shared with advertisers. It only reaches the services needed to run the system, such as our email and notification providers. See the Privacy & GDPR page for the full list."
           }
+        ]
+      }
+    ]
+  },
+  "changelog": {
+    "title": "Changelog",
+    "intro": "What's changed in Yachting Earth ICE, release by release. Each entry corresponds to a version promoted to production.",
+    "entries": [
+      {
+        "version": "v1.0.0",
+        "date": "2026-07-14",
+        "items": [
+          "First tagged production release.",
+          "Trip registration, route planning, crew invitations and ICE contact notifications.",
+          "Skipper and ICE/SAR portals, GDPR data lifecycle, English and Swedish language support."
         ]
       }
     ]

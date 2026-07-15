@@ -659,6 +659,14 @@ html { scroll-behavior: smooth; }
     font-size: var(--font-size-sm);
     color: var(--color-text-faint);
 }
+.landing-page .site-footer__version {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-faint);
+    text-decoration: none;
+}
+.landing-page .site-footer__version:hover { color: var(--color-primary); }
 
 /* ==================== Scroll reveal ==================== */
 .landing-page .reveal {

@@ -109,7 +109,8 @@
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - Min sida",
     "lightboxClose": "Stäng helskärmsbild",
-    "renderError": "Något gick fel när sidan skulle visas. Försök ladda om."
+    "renderError": "Något gick fel när sidan skulle visas. Försök ladda om.",
+    "version": "Version {version}"
   },
   "dashboard": {
     "title": "Mina resor",
@@ -1132,7 +1133,8 @@
         "gdpr": "GDPR",
         "contact": "Kontakt",
         "terms": "Villkor",
-        "faq": "FAQ"
+        "faq": "FAQ",
+        "changelog": "Ändringslogg"
       },
       "comingSoon": "Sidan {page} kommer snart"
     }
@@ -1436,6 +1438,21 @@
             "q": "Delas mina uppgifter med någon?",
             "a": "De säljs eller delas aldrig med annonsörer. De når endast de tjänster som krävs för att driva systemet, till exempel våra e-post- och aviseringsleverantörer. Se sidan Integritet & GDPR för hela listan."
           }
+        ]
+      }
+    ]
+  },
+  "changelog": {
+    "title": "Ändringslogg",
+    "intro": "Vad som har ändrats i Yachting Earth ICE, version för version. Varje post motsvarar en version som satts i produktion.",
+    "entries": [
+      {
+        "version": "v1.0.0",
+        "date": "2026-07-14",
+        "items": [
+          "Första taggade produktionsversionen.",
+          "Reseregistrering, ruttplanering, besättningsinbjudningar och aviseringar till ICE-kontakter.",
+          "Portaler för skeppare och ICE/SAR, GDPR-datalivscykel, stöd för engelska och svenska."
         ]
       }
     ]

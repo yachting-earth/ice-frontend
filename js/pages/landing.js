@@ -223,6 +223,7 @@ const LandingPage = {
                     <a href="#/faq">${escapeHtml(t('landing.footer.links.faq'))}</a>
                   </nav>
                   <p class="site-footer__disclaimer">${escapeHtml(t('landing.footer.disclaimer'))}</p>
+                  <a class="site-footer__version" href="#/changelog">${escapeHtml(t('app.version', { version: CONFIG.APP_VERSION }))}</a>
                 </div>
               </footer>
             </div>`;
