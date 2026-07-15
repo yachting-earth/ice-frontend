@@ -934,6 +934,10 @@ ul { margin: 0; padding: 0; list-style: none; }
     border-style: dashed;
 }
 
+.trip-card--overdue-notified {
+    background: var(--color-danger-bg);
+}
+
 .trip-card__top {
     display: flex;
     align-items: center;

@@ -140,15 +140,29 @@ const DashboardPage = {
         listContainer.innerHTML = `<div class="trip-list">${trips.map((t) => this.renderTripCard(t)).join('')}</div>`;
     },
 
+    isOverdueAndNotified(trip) {
+        if (!trip.ice_notified || !trip.arrival_scheduled || !trip.grace_period_seconds) {
+            return false;
+        }
+        // Calculate deadline: arrival_scheduled + grace_period_seconds
+        const normalized = trip.arrival_scheduled.includes('T') ? trip.arrival_scheduled : trip.arrival_scheduled.replace(' ', 'T');
+        const withZone = /Z|[+-]\d\d:\d\d$/.test(normalized) ? normalized : `${normalized}Z`;
+        const arrival = new Date(withZone);
+        const deadlineMs = arrival.getTime() + (trip.grace_period_seconds * 1000);
+
+        return Date.now() > deadlineMs;
+    },
+
     renderTripCard(trip) {
         const vesselName = trip.vessel_name || t('dashboard.vesselFallback', { id: trip.vessel_id });
         const graceLabel = formatGracePeriod(trip.grace_period_seconds) !== String(trip.grace_period_seconds)
             ? formatGracePeriod(trip.grace_period_seconds)
             : t('dashboard.graceHours', { hours: Math.round(trip.grace_period_seconds / 3600) });
         const isInvited = trip.viewer_role && trip.viewer_role !== 'owner';
+        const isOverdueNotified = this.isOverdueAndNotified(trip);
 
         return `
-            <div class="trip-card${isInvited ? ' trip-card--invited' : ''}">
+            <div class="trip-card${isInvited ? ' trip-card--invited' : ''}${isOverdueNotified ? ' trip-card--overdue-notified' : ''}">
                 <div class="stack" style="flex:1; gap: 0.35rem;">
                     <div class="trip-card__top">
                         <span class="trip-card__title">${escapeHtml(vesselName)}</span>
