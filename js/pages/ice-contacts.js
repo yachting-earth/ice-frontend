@@ -242,6 +242,7 @@ const IceContactsPage = {
 
         if (this.state.editingId === contactId) this.resetForm();
         showToast(t('iceContacts.deleted'), 'success');
+        invalidateNavVisibility('iceContacts');
         await this.loadContacts();
     }
 };

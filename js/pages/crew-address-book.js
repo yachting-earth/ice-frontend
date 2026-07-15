@@ -133,6 +133,7 @@ const CrewAddressBookPage = {
         }
 
         showToast(t('crewAddressBook.deleted'), 'success');
+        invalidateNavVisibility('crewAddressBook');
         await this.loadEntries();
     }
 };

@@ -157,6 +157,7 @@ const SavedRoutesPage = {
         }
 
         showToast(t('savedRoutes.deleted'), 'success');
+        invalidateNavVisibility('savedRoutes');
         await this.loadSavedRoutes();
     }
 };

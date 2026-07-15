@@ -303,6 +303,7 @@ const VesselsPage = {
 
         if (this.state.editingId === vesselId) this.resetForm();
         showToast(t('vessels.deleted'), 'success');
+        invalidateNavVisibility('myVessels');
         await this.loadVessels();
     }
 };
