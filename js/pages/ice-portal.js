@@ -254,7 +254,7 @@ const IcePortalPage = {
         // isn't originating from the same source as a SAR lookup (issue #163).
         container.innerHTML = `<div class="change-log">${auditLog.map((entry) => `
                 <div class="change-log__item">
-                    <span class="change-log__time">${formatDateTime(entry.changed_at)}</span>
+                    <span class="change-log__time">${formatDateTime(entry.changed_at, { withSeconds: role === 'sar' })}</span>
                     <span class="change-log__text">${escapeHtml(entry.message || entry.action)}${role === 'sar' && entry.ip ? ` · ${escapeHtml(t('icePortal.log.ip', { ip: entry.ip }))}` : ''}</span>
                 </div>`).join('')}</div>`;
     }

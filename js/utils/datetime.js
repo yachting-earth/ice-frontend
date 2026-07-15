@@ -8,7 +8,7 @@
  * converted from the browser's local timezone.
  */
 
-function formatDateTime(isoString) {
+function formatDateTime(isoString, { withSeconds = false } = {}) {
     if (!isoString) return '–';
     const normalized = isoString.includes('T') ? isoString : isoString.replace(' ', 'T');
     const withZone = /Z|[+-]\d\d:\d\d$/.test(normalized) ? normalized : `${normalized}Z`;
@@ -17,7 +17,8 @@ function formatDateTime(isoString) {
 
     const pad = (n) => String(n).padStart(2, '0');
     return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())} `
-        + `${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())} UTC`;
+        + `${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}`
+        + `${withSeconds ? ':' + pad(date.getUTCSeconds()) : ''} UTC`;
 }
 
 /** Convert a <input type="datetime-local"> value ("YYYY-MM-DDTHH:MM") to the API's strict ISO format. */
