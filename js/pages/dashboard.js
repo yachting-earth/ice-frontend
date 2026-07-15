@@ -140,17 +140,35 @@ const DashboardPage = {
         listContainer.innerHTML = `<div class="trip-list">${trips.map((t) => this.renderTripCard(t)).join('')}</div>`;
     },
 
-    isOverdueAndNotified(trip) {
-        if (!trip.ice_notified || !trip.arrival_scheduled || !trip.grace_period_seconds) {
-            return false;
+    getOverdueState(trip) {
+        if (!trip.arrival_scheduled) {
+            return null;
         }
-        // Calculate deadline: arrival_scheduled + grace_period_seconds
+        // Normalize arrival_scheduled datetime
         const normalized = trip.arrival_scheduled.includes('T') ? trip.arrival_scheduled : trip.arrival_scheduled.replace(' ', 'T');
         const withZone = /Z|[+-]\d\d:\d\d$/.test(normalized) ? normalized : `${normalized}Z`;
         const arrival = new Date(withZone);
-        const deadlineMs = arrival.getTime() + (trip.grace_period_seconds * 1000);
+        const now = Date.now();
 
-        return Date.now() > deadlineMs;
+        // If not yet overdue, return null
+        if (now <= arrival.getTime()) {
+            return null;
+        }
+
+        // Overdue but grace period hasn't been checked yet, or grace period still active
+        if (!trip.ice_notified) {
+            return 'warning'; // orange
+        }
+
+        // Overdue and ICE has been notified
+        if (trip.grace_period_seconds) {
+            const deadlineMs = arrival.getTime() + (trip.grace_period_seconds * 1000);
+            if (now > deadlineMs) {
+                return 'alert'; // red
+            }
+        }
+
+        return null;
     },
 
     renderTripCard(trip) {
@@ -159,10 +177,11 @@ const DashboardPage = {
             ? formatGracePeriod(trip.grace_period_seconds)
             : t('dashboard.graceHours', { hours: Math.round(trip.grace_period_seconds / 3600) });
         const isInvited = trip.viewer_role && trip.viewer_role !== 'owner';
-        const isOverdueNotified = this.isOverdueAndNotified(trip);
+        const overdueState = this.getOverdueState(trip);
+        const stateClass = overdueState ? ` trip-card--${overdueState}` : '';
 
         return `
-            <div class="trip-card${isInvited ? ' trip-card--invited' : ''}${isOverdueNotified ? ' trip-card--overdue-notified' : ''}">
+            <div class="trip-card${isInvited ? ' trip-card--invited' : ''}${stateClass}">
                 <div class="stack" style="flex:1; gap: 0.35rem;">
                     <div class="trip-card__top">
                         <span class="trip-card__title">${escapeHtml(vesselName)}</span>
