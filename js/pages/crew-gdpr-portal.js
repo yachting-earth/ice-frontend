@@ -52,7 +52,7 @@ const CrewGdprPortalPage = {
                         ${escapeHtml(formatDateTime(m.departure_scheduled))} &rarr; ${escapeHtml(formatDateTime(m.arrival_scheduled))}
                         &middot; ${escapeHtml(t('crewGdprPortal.tripStatus.' + m.trip_status))}
                     </span>
-                    ${!m.erasable ? `<div class="alert alert-info" style="margin-top: var(--space-2);">${escapeHtml(t('crewGdprPortal.notErasableActive'))}</div>` : ''}
+                    ${m.locked ? `<div class="alert alert-info" style="margin-top: var(--space-2);">${escapeHtml(t('crewGdprPortal.notErasableLocked'))}</div>` : (!m.erasable ? `<div class="alert alert-info" style="margin-top: var(--space-2);">${escapeHtml(t('crewGdprPortal.notErasableActive'))}</div>` : '')}
                 </li>`).join('')
             : `<p class="text-muted">${escapeHtml(t('crewGdprPortal.noMemberships'))}</p>`;
 
@@ -120,10 +120,13 @@ const CrewGdprPortalPage = {
             return;
         }
 
-        const { erased, kept_active: keptActive } = response.data;
+        const { erased, kept_active: keptActive, kept_locked: keptLocked } = response.data;
         let message = t('crewGdprPortal.eraseSuccess', { count: erased });
         if (keptActive.length) {
             message += ' ' + t('crewGdprPortal.eraseKeptActive', { count: keptActive.length });
+        }
+        if (keptLocked && keptLocked.length) {
+            message += ' ' + t('crewGdprPortal.eraseKeptLocked', { count: keptLocked.length });
         }
         alertBox.innerHTML = `<div class="alert alert-success">${escapeHtml(message)}</div>`;
         btn.remove();
