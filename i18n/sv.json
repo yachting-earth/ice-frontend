@@ -98,7 +98,7 @@
       "myVessels": "Mina båtar",
       "savedRoutes": "Sparade rutter",
       "iceContacts": "ICE-kontakter",
-      "crewAddressBook": "Adressbok för besättning",
+      "crewAddressBook": "Adressbok",
       "myIceAccount": "Mitt ICE-konto",
       "admin": "Admin",
       "logout": "Logga ut",
@@ -755,7 +755,7 @@
     "deleted": "Rutten borttagen."
   },
   "crewAddressBook": {
-    "title": "Adressbok för besättning",
+    "title": "Adressbok",
     "subtitle": "Kontakter du uttryckligen sparat när du bjudit in besättning, så du kan återanvända dem på framtida resor",
     "loading": "Laddar sparade kontakter...",
     "loadFailed": "Kunde inte hämta sparade kontakter.",

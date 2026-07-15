@@ -134,6 +134,28 @@ async function checkIceAccountVisibility() {
     return iceAccountVisible;
 }
 
+// Same idea as iceAccountVisible above, but for the nav items that should
+// only show once the skipper actually has something saved of that kind.
+// Keyed by nav item, each null until its list endpoint has been checked.
+const NAV_VISIBILITY_ENDPOINTS = {
+    myVessels: '/vessels',
+    savedRoutes: '/saved-routes',
+    iceContacts: '/ice-contacts',
+    crewAddressBook: '/crew/address-book/all'
+};
+let navVisibility = { myVessels: null, savedRoutes: null, iceContacts: null, crewAddressBook: null };
+
+async function checkNavVisibility(key) {
+    if (navVisibility[key] !== null) return navVisibility[key];
+    try {
+        const response = await apiRequest(NAV_VISIBILITY_ENDPOINTS[key]);
+        navVisibility[key] = !!(response.success && Array.isArray(response.data) && response.data.length > 0);
+    } catch (err) {
+        navVisibility[key] = false;
+    }
+    return navVisibility[key];
+}
+
 function renderTopbar() {
     const topbar = document.getElementById('topbar');
     const authed = Auth.isAuthenticated();
@@ -174,10 +196,10 @@ function renderTopbar() {
         <div class="topbar__right">
             <div class="topbar__menu" id="topbar-menu">
                 <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
-                <a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>
-                <a class="topbar__menu-link${activeClass('#/saved-routes')}" href="#/saved-routes">${escapeHtml(t('app.nav.savedRoutes'))}</a>
-                <a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>
-                <a class="topbar__menu-link${activeClass('#/crew-address-book')}" href="#/crew-address-book">${escapeHtml(t('app.nav.crewAddressBook'))}</a>
+                ${navVisibility.myVessels ? `<a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>` : ''}
+                ${navVisibility.savedRoutes ? `<a class="topbar__menu-link${activeClass('#/saved-routes')}" href="#/saved-routes">${escapeHtml(t('app.nav.savedRoutes'))}</a>` : ''}
+                ${navVisibility.iceContacts ? `<a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>` : ''}
+                ${navVisibility.crewAddressBook ? `<a class="topbar__menu-link${activeClass('#/crew-address-book')}" href="#/crew-address-book">${escapeHtml(t('app.nav.crewAddressBook'))}</a>` : ''}
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
                 <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
                 <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
@@ -195,6 +217,7 @@ function renderTopbar() {
 
     document.getElementById('logout-btn').addEventListener('click', () => {
         iceAccountVisible = null;
+        navVisibility = { myVessels: null, savedRoutes: null, iceContacts: null, crewAddressBook: null };
         const refreshToken = Auth.getRefreshToken();
         Auth.clear();
         location.hash = '#/login';
@@ -216,6 +239,14 @@ function renderTopbar() {
             if (visible) renderTopbar();
         });
     }
+
+    Object.keys(NAV_VISIBILITY_ENDPOINTS).forEach((key) => {
+        if (navVisibility[key] === null) {
+            checkNavVisibility(key).then((visible) => {
+                if (visible) renderTopbar();
+            });
+        }
+    });
 }
 
 // Flag icons for the language switcher, drawn as inline SVG (no image

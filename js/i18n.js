@@ -109,7 +109,7 @@ const EN_INLINE = {
       "myVessels": "My vessels",
       "savedRoutes": "Saved routes",
       "iceContacts": "ICE contacts",
-      "crewAddressBook": "Crew address book",
+      "crewAddressBook": "Address book",
       "myIceAccount": "My ICE account",
       "admin": "Admin",
       "logout": "Log out",
@@ -766,7 +766,7 @@ const EN_INLINE = {
     "deleted": "The route has been removed."
   },
   "crewAddressBook": {
-    "title": "Crew address book",
+    "title": "Address book",
     "subtitle": "Contacts you've explicitly saved when inviting crew, so you can reuse them on future trips",
     "loading": "Loading saved contacts...",
     "loadFailed": "Could not fetch saved contacts.",
