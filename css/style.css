@@ -1204,7 +1204,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
     .trip-card {
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
     }
     .trip-card__actions { margin-top: 0; }
