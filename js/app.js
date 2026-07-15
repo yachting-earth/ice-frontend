@@ -450,6 +450,15 @@ function brandMark() {
 // page content, so the landing page's h1/p/a/ul overrides don't leak into
 // the content in between.
 function renderPublicHeader() {
+    const authed = Auth.isAuthenticated();
+
+    if (authed) {
+        // Render logged-in topbar for authenticated users on public pages
+        return `
+            <div id="topbar" class="topbar"></div>
+        `;
+    }
+
     return `
         <div class="landing-page">
           <header class="site-nav" id="site-nav">
@@ -500,6 +509,17 @@ function renderPublicFooter() {
 // Wires the mobile nav toggle + language switcher for renderPublicHeader().
 // Call once after the header markup has been inserted into the DOM.
 function setupPublicHeader() {
+    const authed = Auth.isAuthenticated();
+
+    if (authed) {
+        // For authenticated users, render the full topbar
+        const topbar = document.getElementById('topbar');
+        if (topbar !== null) {
+            renderTopbar();
+        }
+        return;
+    }
+
     const toggle = document.getElementById('public-nav-toggle');
     const links = document.getElementById('public-nav-links');
     if (toggle && links) {
