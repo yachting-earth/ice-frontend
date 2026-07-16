@@ -102,6 +102,12 @@ const Router = {
             renderTopbar();
         }
 
+        // Authenticated pages get the same site footer as the public content
+        // pages (about/terms/faq/privacy/blog) - noTopbar pages render their
+        // own copy inline as part of their page content, so leave this empty
+        // for those (and for the guestOnly auth pages, which don't have one).
+        document.getElementById('site-footer').innerHTML = route.auth ? renderPublicFooter() : '';
+
         const container = document.getElementById('page-content');
         container.innerHTML = '';
         window.scrollTo(0, 0);
@@ -181,17 +187,10 @@ function renderTopbar() {
     const activeClass = (path) => (currentPath === path ? ' topbar__menu-link--active' : '');
 
     if (!authed) {
-        // The login page's topbar is deliberately minimal (language selector
-        // only) - blog/FAQ links are marketing distractions on a sign-in form.
-        const isLoginPage = currentPath === '#/login';
         topbar.innerHTML = `
             <a class="topbar__brand" href="https://yachting.earth">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 <div class="topbar__menu" id="topbar-menu">
-                    ${isLoginPage ? '' : `
-                    <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
-                    <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
-                    `}
                     ${renderLangSelector()}
                 </div>
                 <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
@@ -219,8 +218,6 @@ function renderTopbar() {
                 ${navVisibility.iceContacts ? `<a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>` : ''}
                 ${navVisibility.crewAddressBook ? `<a class="topbar__menu-link${activeClass('#/crew-address-book')}" href="#/crew-address-book">${escapeHtml(t('app.nav.crewAddressBook'))}</a>` : ''}
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
-                <a class="topbar__menu-link${activeClass('#/blog')}" href="#/blog">${escapeHtml(t('app.nav.blog'))}</a>
-                <a class="topbar__menu-link${activeClass('#/faq')}" href="#/faq">${escapeHtml(t('app.nav.faq'))}</a>
                 ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">${escapeHtml(t('app.nav.admin'))}</a>` : ''}
                 ${renderLangSelector()}
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">${escapeHtml(t('app.nav.logout'))}</button>
@@ -287,6 +284,29 @@ const LANG_META = {
             + '<rect width="30" height="20" fill="#006AA7"/>'
             + '<rect x="10" width="4" height="20" fill="#FECC00"/>'
             + '<rect y="8" width="30" height="4" fill="#FECC00"/>'
+            + '</svg>'
+    },
+    fr: {
+        name: 'Français',
+        flag: '<svg viewBox="0 0 30 20" class="lang-flag" aria-hidden="true" focusable="false">'
+            + '<rect width="10" height="20" fill="#002395"/>'
+            + '<rect x="10" width="10" height="20" fill="#fff"/>'
+            + '<rect x="20" width="10" height="20" fill="#ED2939"/>'
+            + '</svg>'
+    },
+    it: {
+        name: 'Italiano',
+        flag: '<svg viewBox="0 0 30 20" class="lang-flag" aria-hidden="true" focusable="false">'
+            + '<rect width="10" height="20" fill="#009246"/>'
+            + '<rect x="10" width="10" height="20" fill="#fff"/>'
+            + '<rect x="20" width="10" height="20" fill="#CE2B37"/>'
+            + '</svg>'
+    },
+    es: {
+        name: 'Español',
+        flag: '<svg viewBox="0 0 30 20" class="lang-flag" aria-hidden="true" focusable="false">'
+            + '<rect width="30" height="20" fill="#AA151B"/>'
+            + '<rect y="5" width="30" height="10" fill="#F1BF00"/>'
             + '</svg>'
     }
 };

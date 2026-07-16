@@ -103,9 +103,7 @@
       "crewAddressBook": "Address book",
       "myIceAccount": "My ICE account",
       "admin": "Admin",
-      "logout": "Log out",
-      "blog": "Blog",
-      "faq": "FAQ"
+      "logout": "Log out"
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - My page",
@@ -1467,29 +1465,52 @@
     ]
   },
   "changelog": {
-    "title": "Changelog",
-    "intro": "What's changed in Yachting Earth ICE, release by release. Each entry corresponds to a version promoted to production.",
+    "title": "What's new",
+    "intro": "See what's new in Yachting Earth ICE, one release at a time.",
+    "sectionNew": "New",
+    "sectionImproved": "Improved",
+    "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.2.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE is now available in five languages - English, Swedish, French, Italian and Spanish - so you and your crew can use it in whichever language feels most natural."
+          ],
+          "improved": [
+            "Once your emergency contact has been alerted, crew photos are now locked along with the rest of the trip, so nothing about it can be changed while help may be on the way.",
+            "The site footer, with its quick links and version number, now appears on every page, whether or not you're signed in.",
+            "We've tidied up the top menu: Blog and FAQ now live in the footer, keeping the main navigation focused on your trips."
+          ]
+        }
+      },
       {
         "version": "v1.1.0",
         "date": "2026-07-15",
-        "items": [
-          "Emergency Lock: once a trip's ICE contact has been alerted after a timeout, the trip and its crew, routes and ICE contact are locked from further changes for safety and traceability.",
-          "Private medical information field for crew, shared only with search-and-rescue authorities in an emergency - never with the skipper or the ICE contact.",
-          "Each trip now has exactly one ICE contact. A trip can be saved without one, but needs one assigned before it can be activated.",
-          "The dashboard now highlights overdue trips with clear warning and alert states.",
-          "New crew address book, saved routes and saved vessels for faster trip setup and easy reuse across trips.",
-          "This changelog, a version indicator in the footer, refined English and Swedish wording, and a consistent look across the public pages."
-        ]
+        "sections": {
+          "new": [
+            "Your trip now locks automatically once your emergency contact has been alerted, so nothing important can be changed by accident while help may be on the way.",
+            "You can add private medical information for each crew member - visible only to search-and-rescue teams in a real emergency, never to you or your emergency contact.",
+            "Every trip now has exactly one clearly assigned emergency contact, so it's always obvious who gets notified if something goes wrong.",
+            "Overdue trips are now highlighted on your dashboard, so you can see at a glance if a trip needs attention.",
+            "Save your regular crew, vessels and routes once and reuse them next time you plan a trip - no need to type the same details again.",
+            "This \"What's new\" page, and a version number in the footer so you can always see which version you're using."
+          ]
+        }
       },
       {
         "version": "v1.0.0",
         "date": "2026-07-14",
-        "items": [
-          "First tagged production release.",
-          "Trip registration, route planning, crew invitations and ICE contact notifications.",
-          "Skipper and ICE/SAR portals, GDPR data lifecycle, English and Swedish language support."
-        ]
+        "sections": {
+          "new": [
+            "Yachting Earth ICE launches: register your trip and vessel, plan your route, and invite your crew.",
+            "Add an emergency contact who is notified automatically if you don't check in on time.",
+            "Your emergency contact and rescue services can view a simple, read-only summary of your trip if it's ever needed.",
+            "Your trip information is automatically and permanently deleted a set time after your trip ends, to protect your privacy.",
+            "Available in both English and Swedish."
+          ]
+        }
       }
     ]
   }

@@ -103,9 +103,7 @@
       "crewAddressBook": "Adressbok",
       "myIceAccount": "Mitt ICE-konto",
       "admin": "Admin",
-      "logout": "Logga ut",
-      "blog": "Blogg",
-      "faq": "FAQ"
+      "logout": "Logga ut"
     },
     "toggleNav": "Toggle navigation menu",
     "profileBadgeTitle": "{name} - Min sida",
@@ -1467,29 +1465,52 @@
     ]
   },
   "changelog": {
-    "title": "Ändringslogg",
-    "intro": "Vad som har ändrats i Yachting Earth ICE, version för version. Varje post motsvarar en version som satts i produktion.",
+    "title": "Nyheter",
+    "intro": "Se vad som är nytt i Yachting Earth ICE, version för version.",
+    "sectionNew": "Nytt",
+    "sectionImproved": "Förbättrat",
+    "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.2.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE finns nu på fem språk - engelska, svenska, franska, italienska och spanska - så att du och din besättning kan använda tjänsten på det språk som känns mest naturligt."
+          ],
+          "improved": [
+            "Så snart din nödkontakt har larmats låses nu även besättningens foton tillsammans med resten av resan, så att inget kan ändras medan hjälp eventuellt är på väg.",
+            "Sidfoten, med sina snabblänkar och versionsnummer, visas nu på varje sida, oavsett om du är inloggad eller inte.",
+            "Vi har städat upp i toppmenyn: Blogg och FAQ finns nu i sidfoten, så att huvudmenyn håller fokus på dina resor."
+          ]
+        }
+      },
       {
         "version": "v1.1.0",
         "date": "2026-07-15",
-        "items": [
-          "Nödlås: så snart en resas ICE-kontakt har larmats efter en tidsöverskridning låses resan och dess besättning, rutter och ICE-kontakt för vidare ändringar, av säkerhets- och spårbarhetsskäl.",
-          "Privat fält för medicinsk information om besättningen, som endast delas med sjöräddningen i en nödsituation - aldrig med skepparen eller ICE-kontakten.",
-          "Varje resa har nu exakt en ICE-kontakt. En resa kan sparas utan en, men behöver en tilldelad innan den kan aktiveras.",
-          "Översikten markerar nu försenade resor med tydliga varnings- och larmlägen.",
-          "Ny adressbok för besättning, sparade rutter och sparade båtar för snabbare reseplanering och enkel återanvändning mellan resor.",
-          "Denna ändringslogg, en versionsindikator i sidfoten, förbättrad engelsk och svensk text samt ett enhetligt utseende på de publika sidorna."
-        ]
+        "sections": {
+          "new": [
+            "Resan låses nu automatiskt så snart din nödkontakt har larmats, så att inget viktigt kan ändras av misstag medan hjälp eventuellt är på väg.",
+            "Du kan lägga till privat medicinsk information för varje besättningsmedlem - den syns bara för sjöräddningen vid en verklig nödsituation, aldrig för dig eller din nödkontakt.",
+            "Varje resa har nu exakt en tydligt utsedd nödkontakt, så det alltid är klart vem som meddelas om något går fel.",
+            "Försenade resor markeras nu i din översikt, så du snabbt ser om en resa behöver din uppmärksamhet.",
+            "Spara din vanliga besättning, dina båtar och rutter en gång och återanvänd dem nästa gång du planerar en resa - slipp skriva in samma uppgifter igen.",
+            "Den här nyhetssidan, samt ett versionsnummer i sidfoten så att du alltid kan se vilken version du använder."
+          ]
+        }
       },
       {
         "version": "v1.0.0",
         "date": "2026-07-14",
-        "items": [
-          "Första taggade produktionsversionen.",
-          "Reseregistrering, ruttplanering, besättningsinbjudningar och aviseringar till ICE-kontakter.",
-          "Portaler för skeppare och ICE/SAR, GDPR-datalivscykel, stöd för engelska och svenska."
-        ]
+        "sections": {
+          "new": [
+            "Yachting Earth ICE lanseras: registrera din resa och båt, planera din rutt och bjud in din besättning.",
+            "Lägg till en nödkontakt som meddelas automatiskt om du inte checkar in i tid.",
+            "Din nödkontakt och räddningstjänsten kan se en enkel, skrivskyddad sammanfattning av din resa om det någonsin behövs.",
+            "Dina reseuppgifter raderas automatiskt och permanent en viss tid efter att resan avslutats, för att skydda din integritet.",
+            "Finns på både engelska och svenska."
+          ]
+        }
       }
     ]
   }

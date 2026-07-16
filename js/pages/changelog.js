@@ -4,6 +4,12 @@
  * ("changelog.entries") alongside each dev -> main release promotion - see
  * "Versioning & releases" in CLAUDE.md.
  */
+const CHANGELOG_SECTION_KEYS = [
+    { key: 'new', labelKey: 'changelog.sectionNew' },
+    { key: 'improved', labelKey: 'changelog.sectionImproved' },
+    { key: 'fixed', labelKey: 'changelog.sectionFixed' }
+];
+
 const ChangelogPage = {
     async render(container) {
         const entries = t('changelog.entries');
@@ -17,7 +23,14 @@ const ChangelogPage = {
                         <p>${escapeHtml(t('changelog.intro'))}</p>
                         ${entries.map((entry) => `
                             <h2>${escapeHtml(entry.version)} <small>${escapeHtml(entry.date)}</small></h2>
-                            <ul>${entry.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+                            ${CHANGELOG_SECTION_KEYS.map(({ key, labelKey }) => {
+                                const items = entry.sections[key];
+                                if (!items || !items.length) return '';
+                                return `
+                                    <h3>${escapeHtml(t(labelKey))}</h3>
+                                    <ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+                                `;
+                            }).join('')}
                         `).join('')}
                     </div>
                 </article>

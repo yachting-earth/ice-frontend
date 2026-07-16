@@ -1,0 +1,1515 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "saveChanges": "Enregistrer les modifications",
+    "saving": "Enregistrement…",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "back": "Retour",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "remove": "Retirer",
+    "loading": "Chargement…",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "optional": "(facultatif)",
+    "gracePeriod": {
+      "h1": "1 heure",
+      "h4": "4 heures",
+      "h12": "12 heures",
+      "h24": "24 heures",
+      "h48": "48 heures"
+    }
+  },
+  "errors": {
+    "AUTH_REQUIRED": "Vous devez vous reconnecter.",
+    "AUTH_INVALID": "E-mail ou mot de passe incorrect.",
+    "ACCESS_DENIED": "Vous n'avez pas accès à cette ressource.",
+    "VALIDATION_ERROR": "Vérifiez les champs signalés.",
+    "INVALID_EMAIL": "Adresse e-mail invalide.",
+    "INVALID_PHONE": "Numéro de téléphone invalide.",
+    "ACCOUNT_REQUIRED": "Un compte est nécessaire pour cela.",
+    "PASSWORD_WEAK": "Le mot de passe est trop faible.",
+    "EMAIL_NOT_VERIFIED": "Veuillez d'abord confirmer votre adresse e-mail.",
+    "VERIFICATION_INVALID": "Le lien de confirmation est invalide.",
+    "VERIFICATION_EXPIRED": "Le lien de confirmation a expiré.",
+    "PASSWORD_RESET_INVALID": "Ce lien de réinitialisation du mot de passe est invalide ou a déjà été utilisé.",
+    "PASSWORD_RESET_EXPIRED": "Ce lien de réinitialisation du mot de passe a expiré.",
+    "NOT_FOUND": "Introuvable.",
+    "RESOURCE_CONFLICT": "Cet élément existe déjà.",
+    "MMSI_ALREADY_ACTIVE": "Une sortie est déjà active pour ce navire.",
+    "INVALID_ETA": "Heure d'arrivée invalide.",
+    "NOTIFICATION_FAILED": "Échec de l'envoi de la notification.",
+    "DEPARTURE_EDIT_LOCKED": "L'heure de départ ne peut être modifiée qu'avant l'activation de la sortie.",
+    "ARRIVAL_EDIT_LOCKED": "L'heure d'arrivée ne peut être modifiée qu'avant la confirmation de fin de sortie.",
+    "GRACE_PERIOD_EDIT_LOCKED": "Le délai de grâce ne peut être modifié qu'avant la confirmation de fin de sortie.",
+    "ICE_CONTACT_REQUIRED": "Un contact ICE doit être associé à cette sortie avant qu'elle puisse être activée.",
+    "TRIP_LOCKED": "Cette sortie est verrouillée pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence, et ne peut plus être modifiée.",
+    "CONTACT_RATE_LIMITED": "Vous avez atteint la limite quotidienne d'envois via le formulaire de contact. Merci de réessayer demain.",
+    "CONTACT_TOO_MANY_FILES": "Trop de pièces jointes.",
+    "CONTACT_FILE_TOO_LARGE": "L'une de vos pièces jointes est trop volumineuse.",
+    "CONTACT_INVALID_FILE_TYPE": "L'une de vos pièces jointes a un format non pris en charge.",
+    "CONTACT_ATTACHMENT_NOT_FOUND": "Pièce jointe introuvable.",
+    "CREW_GDPR_TOKEN_INVALID": "Ce lien est invalide.",
+    "CREW_GDPR_TOKEN_EXPIRED": "Ce lien a expiré. Merci d'en demander un nouveau.",
+    "SERVER_ERROR": "Une erreur inattendue s'est produite.",
+    "DATABASE_ERROR": "Une erreur de base de données s'est produite.",
+    "RATE_LIMITED": "Trop de tentatives. Réessayez plus tard.",
+    "NETWORK_ERROR": "Impossible de joindre le serveur. Vérifiez votre connexion.",
+    "PARSE_ERROR": "Réponse invalide du serveur.",
+    "UNKNOWN": "Une erreur inattendue s'est produite."
+  },
+  "validation": {
+    "emailRequired": "L'e-mail est requis",
+    "emailInvalid": "Adresse e-mail invalide",
+    "passwordRequired": "Le mot de passe est requis",
+    "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+    "passwordNeedsUppercase": "Le mot de passe doit contenir au moins une majuscule",
+    "passwordNeedsNumber": "Le mot de passe doit contenir au moins un chiffre",
+    "nameRequired": "Le nom est requis",
+    "nameTooShort": "Le nom doit contenir au moins 2 caractères",
+    "phoneRequired": "Le numéro de téléphone est requis",
+    "phoneInvalid": "Numéro de téléphone invalide (utilisez le format international, ex. +46701234567)",
+    "windyUrlRequired": "Le lien Windy est requis",
+    "windyUrlInvalid": "Lien Windy invalide. Il doit provenir de windy.com/route-planner",
+    "messageRequired": "Le message est requis",
+    "tooManyFiles": "Trop de pièces jointes (max {max})",
+    "fileTooLarge": "{name} est trop volumineux (max {maxMb} Mo)",
+    "invalidFileType": "{name} a un format non pris en charge (images et PDF uniquement)",
+    "vesselYearInvalid": "L'année du modèle doit être un nombre entier compris entre 1900 et {maxYear}",
+    "vesselDimensionInvalid": "{label} doit être un nombre positif en mètres (max 200)"
+  },
+  "trip": {
+    "status": {
+      "all": "Toutes",
+      "draft": "Brouillon",
+      "published": "Publiée",
+      "active": "En cours",
+      "completed": "Terminée",
+      "cancelled": "Annulée"
+    }
+  },
+  "app": {
+    "brand": "Yachting Earth",
+    "nav": {
+      "myTrips": "Mes sorties",
+      "myVessels": "Mes navires",
+      "savedRoutes": "Itinéraires enregistrés",
+      "iceContacts": "Contacts ICE",
+      "crewAddressBook": "Carnet d'adresses",
+      "myIceAccount": "Mon compte ICE",
+      "admin": "Admin",
+      "logout": "Déconnexion"
+    },
+    "toggleNav": "Afficher/masquer le menu de navigation",
+    "profileBadgeTitle": "{name} - Ma page",
+    "lightboxClose": "Fermer l'image en taille réelle",
+    "renderError": "Une erreur est survenue lors de l'affichage de cette page. Essayez de recharger.",
+    "version": "Version {version}"
+  },
+  "dashboard": {
+    "title": "Mes sorties",
+    "subtitle": "Aperçu de toutes vos sorties prévues et en cours",
+    "newTrip": "+ Nouvelle sortie",
+    "loadingTrips": "Chargement des sorties…",
+    "loadFailed": "Impossible de récupérer les sorties.",
+    "emptyTitle": "Aucune sortie pour le moment",
+    "emptyBody": "Créez votre première sortie pour commencer.",
+    "verifyEmailBanner": "Confirmez votre adresse e-mail (<strong>{email}</strong>) pour pouvoir créer des sorties et ajouter des navires. Consultez votre boîte de réception pour le lien.",
+    "resendLink": "Renvoyer le lien",
+    "resending": "Envoi…",
+    "alreadyVerified": "Votre adresse e-mail est déjà confirmée.",
+    "verificationResent": "Un nouveau lien de confirmation a été envoyé.",
+    "verificationResendFailed": "Impossible d'envoyer le lien pour le moment. Réessayez plus tard.",
+    "noIceContact": "Vous n'avez pas encore de contact ICE — sans cela, personne ne pourra être alerté si votre sortie n'est pas confirmée à temps.",
+    "addIceContact": "Ajouter un contact ICE",
+    "vesselFallback": "Navire n° {id}",
+    "departure": "Départ : {datetime}",
+    "arrival": "Arrivée : {datetime}",
+    "grace": "Délai de grâce : {label}",
+    "graceHours": "{hours} h",
+    "iceNotified": "⚠ Contact ICE notifié",
+    "view": "Voir",
+    "role": {
+      "crew": "Équipage",
+      "ice": "Contact ICE"
+    },
+    "readOnly": "Lecture seule"
+  },
+  "login": {
+    "tagline": "Bon vent, retour en toute sécurité",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion…",
+    "noAccount": "Pas de compte ?",
+    "registerLink": "S'inscrire",
+    "errorDefault": "Échec de la connexion.",
+    "forgotPasswordLink": "Mot de passe oublié ?",
+    "crewGdprLink": "Invité comme équipier sans compte ? Gérez vos données ici.",
+    "redirectNotice": {
+      "default": "Veuillez vous connecter pour continuer.",
+      "contact": "Veuillez vous connecter pour utiliser le formulaire de contact."
+    },
+    "tabs": {
+      "user": "Connexion",
+      "sar": "Accès SAR"
+    }
+  },
+  "register": {
+    "tagline": "Créer un compte",
+    "nameLabel": "Nom",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Téléphone (facultatif)",
+    "phonePlaceholder": "+46701234567",
+    "passwordLabel": "Mot de passe",
+    "passwordHint": "Au moins 8 caractères, une majuscule et un chiffre.",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "submit": "Créer le compte",
+    "submitting": "Création du compte…",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "loginLink": "Se connecter",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "acceptTerms": "J'accepte les {termsLink} et la {privacyLink}",
+    "termsLink": "Conditions d'utilisation",
+    "privacyLink": "Politique de confidentialité",
+    "acceptTermsRequired": "Vous devez accepter les Conditions d'utilisation et la Politique de confidentialité",
+    "errorDefault": "Impossible de créer le compte."
+  },
+  "forgotPassword": {
+    "tagline": "Réinitialiser votre mot de passe",
+    "emailLabel": "E-mail",
+    "submit": "Envoyer le lien de réinitialisation",
+    "submitting": "Envoi…",
+    "sent": "Si cette adresse e-mail est enregistrée, nous avons envoyé un lien pour réinitialiser votre mot de passe. Consultez votre boîte de réception.",
+    "backToLogin": "Retour à la connexion"
+  },
+  "resetPassword": {
+    "tagline": "Choisissez un nouveau mot de passe",
+    "noToken": "Aucun lien de réinitialisation trouvé. Vérifiez que vous avez bien cliqué sur le lien complet.",
+    "requestNew": "Demander un nouveau lien",
+    "passwordLabel": "Nouveau mot de passe",
+    "confirmPasswordLabel": "Confirmer le nouveau mot de passe",
+    "submit": "Réinitialiser le mot de passe",
+    "submitting": "Réinitialisation…",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "linkExpired": "Ce lien a expiré. Merci d'en demander un nouveau.",
+    "errorDefault": "Impossible de réinitialiser le mot de passe.",
+    "successTitle": "Mot de passe réinitialisé",
+    "successBody": "Votre mot de passe a été modifié. Vous avez été déconnecté(e) de tous les appareils et pouvez désormais vous connecter avec votre nouveau mot de passe."
+  },
+  "crewGdprRequest": {
+    "tagline": "Gérer vos données d'équipage",
+    "intro": "Si vous avez été invité(e) comme équipier (ou ajouté(e) comme contact ICE) sans créer de compte, indiquez l'adresse e-mail à laquelle l'invitation a été envoyée. Nous vous enverrons un lien sécurisé et à durée limitée vers un portail où vous pourrez consulter, exporter ou supprimer vos données, ou nous envoyer un message.",
+    "emailLabel": "E-mail",
+    "submit": "Envoyer le lien d'accès",
+    "submitting": "Envoi…",
+    "sent": "Si cette adresse e-mail correspond à un enregistrement d'équipier ou de contact ICE, nous avons envoyé un lien d'accès sécurisé. Consultez votre boîte de réception.",
+    "backToLogin": "Retour à la connexion"
+  },
+  "crewGdprPortal": {
+    "noToken": "Aucun lien d'accès trouvé. Vérifiez que vous avez bien cliqué sur le lien complet.",
+    "requestNew": "Demander un nouveau lien",
+    "loading": "Chargement…",
+    "invalidLink": "Ce lien est invalide.",
+    "linkExpired": "Ce lien a expiré. Merci d'en demander un nouveau.",
+    "title": "Vos données d'équipage",
+    "intro": "Affichage des données liées à {email}.",
+    "membershipsTitle": "Sorties auxquelles vous avez été invité(e)",
+    "withSkipper": "avec {skipper}",
+    "tripStatus": {
+      "draft": "pas encore publiée",
+      "published": "à venir",
+      "active": "en cours",
+      "completed": "terminée",
+      "cancelled": "annulée"
+    },
+    "noMemberships": "Aucune participation d'équipage trouvée pour cette adresse e-mail.",
+    "notErasableActive": "Cette sortie n'est pas encore terminée, cette participation ne peut donc pas être supprimée immédiatement - les informations d'équipage restent nécessaires pour la sécurité tant que la sortie est en cours. Elles seront supprimées automatiquement 30 jours après la fin de la sortie.",
+    "notErasableLocked": "Vos données sont verrouillées pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence. Elles seront purgées automatiquement 30 jours après la résolution de la sortie.",
+    "iceContactNote": "Cette adresse e-mail est également enregistrée comme contact d'urgence (ICE) pour {count} skipper(s). Cette donnée est incluse dans l'export ci-dessous ; pour la faire supprimer, demandez au skipper de vous retirer de ses contacts ICE.",
+    "exportTitle": "Exporter mes données",
+    "exportHint": "Téléchargez tout ce que nous détenons sur cette adresse e-mail au format JSON.",
+    "exportButton": "Télécharger mes données",
+    "eraseTitle": "M'oublier",
+    "eraseHint": "Supprimez immédiatement votre participation d'équipage sur toute sortie déjà terminée, au lieu d'attendre la suppression automatique après 30 jours. Les participations sur une sortie non encore terminée sont conservées jusqu'à sa fin, pour des raisons de sécurité.",
+    "eraseButton": "Supprimer mes données maintenant",
+    "eraseConfirm": "Cela supprimera définitivement vos données d'équipage pour chaque sortie terminée. Cette action est irréversible. Continuer ?",
+    "erasing": "Suppression…",
+    "eraseSuccess": "{count} participation(s) d'équipage supprimée(s).",
+    "eraseKeptActive": "{count} participation(s) sur une sortie non encore terminée ont été conservées et seront supprimées automatiquement une fois celle-ci terminée.",
+    "eraseKeptLocked": "{count} participation(s) sur une sortie ayant fait l'objet d'un incident d'urgence ont été conservées pour des raisons de sécurité maritime et de traçabilité, et seront purgées automatiquement 30 jours après la résolution de la sortie.",
+    "eraseFailed": "Impossible de supprimer vos données.",
+    "contactTitle": "Envoyez-nous un message",
+    "contactHint": "Une question sur vos données, ou autre chose à nous dire ? Ce message est envoyé directement au responsable du système.",
+    "messageLabel": "Message",
+    "contactSubmit": "Envoyer le message",
+    "contactSubmitting": "Envoi…",
+    "contactSuccess": "Votre message a été envoyé.",
+    "contactFailed": "Impossible d'envoyer votre message."
+  },
+  "verifyEmail": {
+    "noToken": "Aucun lien de confirmation trouvé. Vérifiez que vous avez bien cliqué sur le lien complet.",
+    "backToStart": "Retour à l'accueil",
+    "confirming": "Confirmation de votre adresse e-mail…",
+    "failedTitle": "Échec de la confirmation",
+    "emailTaken": "La nouvelle adresse e-mail est déjà utilisée par un autre compte.",
+    "linkInvalid": "Le lien est invalide ou a expiré.",
+    "toOverview": "Vers votre aperçu",
+    "toLogin": "Vers la connexion",
+    "changedTitle": "Adresse e-mail mise à jour",
+    "confirmedTitle": "Adresse e-mail confirmée",
+    "changedBody": "Votre adresse e-mail a été changée en <strong>{email}</strong>.",
+    "confirmedBody": "Merci ! Votre compte est désormais confirmé et vous avez un accès complet à Yachting Earth."
+  },
+  "profile": {
+    "title": "Ma page",
+    "subtitle": "Consultez et gérez les informations de votre compte",
+    "photoHeading": "Photo",
+    "photoChangeLabel": "Changer la photo (facultatif)",
+    "photoHint": "Utilisée par les secours pour vous identifier en tant que skipper. JPEG/PNG, 10 Mo max.",
+    "photoSubmit": "Enregistrer la photo",
+    "photoSaving": "Enregistrement…",
+    "photoChooseFirst": "Choisissez d'abord une image.",
+    "photoSaveFailed": "Impossible d'enregistrer la photo.",
+    "photoSaved": "La photo a été enregistrée.",
+    "detailsHeading": "Mes informations",
+    "loadingDetails": "Chargement de vos informations…",
+    "loadFailed": "Impossible de récupérer vos informations.",
+    "nameLabel": "Nom",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "E-mail",
+    "languageLabel": "Langue",
+    "submit": "Enregistrer les modifications",
+    "saveFailed": "Impossible d'enregistrer les modifications.",
+    "emailChangePending": "Un lien de confirmation a été envoyé à <strong>{email}</strong>. Votre adresse e-mail ne changera qu'une fois le lien cliqué. Nous avons également informé votre adresse actuelle.",
+    "saved": "Vos informations ont été mises à jour.",
+    "gdprHeading": "Télécharger mes données",
+    "gdprHint": "Demandez un récapitulatif de tout ce que nous avons enregistré vous concernant - compte, navires, contacts ICE et sorties. Le fichier est fourni immédiatement au format JSON lisible par machine et reste disponible au téléchargement pendant 7 jours.",
+    "gdprChecking": "Vérification du statut…",
+    "gdprRequestButton": "Demander mes données",
+    "gdprAvailableUntil": "Votre récapitulatif est prêt et peut être téléchargé jusqu'au {date}.",
+    "gdprDownloadButton": "Télécharger mes données",
+    "gdprRequestAgainButton": "Redemander",
+    "gdprRequestFailed": "Impossible de compiler vos données.",
+    "gdprRequestReady": "Vos données sont prêtes à être téléchargées.",
+    "gdprDownloadFailed": "Impossible de télécharger vos données.",
+    "gdprDownloaded": "Vos données ont été téléchargées.",
+    "deleteHeading": "Supprimer le compte",
+    "deleteWarning": "La suppression de votre compte retire définitivement vos navires et vos contacts ICE, et met fin à vos sorties. Cette action est irréversible.",
+    "deleteButton": "Supprimer mon compte",
+    "deletePasswordLabel": "Confirmez avec votre mot de passe",
+    "deleteConfirmButton": "Supprimer définitivement",
+    "deleteCancelButton": "Annuler",
+    "passwordRequired": "Saisissez votre mot de passe pour confirmer.",
+    "deleteFailed": "Impossible de supprimer le compte.",
+    "deleted": "Votre compte a été supprimé."
+  },
+  "createTrip": {
+    "title": "Créer une nouvelle sortie",
+    "submit": "Créer la sortie",
+    "submitting": "Création de la sortie…",
+    "scheduleConflictNotice": "Remarque : une autre sortie avec le même numéro MMSI est déjà programmée sur une période qui se chevauche.",
+    "created": "Sortie créée",
+    "crewInvited": "{count} personne(s) invitée(s) à la sortie.",
+    "crewInvitePartial": "{success} personne(s) sur {total} invitée(s) à la sortie.",
+    "crewInviteFailed": "Impossible d'inviter automatiquement l'équipage sélectionné. Ajoutez-les manuellement depuis la page de la sortie.",
+    "pendingCrew": {
+      "heading": "Équipage à inviter",
+      "hint": "Ces personnes de votre carnet d'adresses seront invitées automatiquement une fois la sortie créée.",
+      "removeAria": "Retirer {name} de la liste d'invitations"
+    },
+    "vessel": {
+      "heading": "Navire",
+      "loading": "Chargement des navires…",
+      "selectLabel": "Sélectionner un navire",
+      "mmsiSuffix": " (MMSI {mmsi})",
+      "noneRegistered": "Vous n'avez encore aucun navire enregistré. Ajoutez-en un ci-dessous.",
+      "addNew": "+ Ajouter un nouveau navire",
+      "nameLabel": "Nom du navire",
+      "namePlaceholder": "ex. Thrym",
+      "mmsiLabel": "MMSI (facultatif)",
+      "callSignLabel": "Indicatif d'appel (facultatif)",
+      "modelLabel": "Modèle (facultatif)",
+      "modelPlaceholder": "ex. Bavaria 34",
+      "yearLabel": "Année du modèle (facultatif)",
+      "yearPlaceholder": "ex. 2011",
+      "lengthLabel": "Longueur, en mètres (facultatif)",
+      "widthLabel": "Largeur, en mètres (facultatif)",
+      "draftLabel": "Tirant d'eau, en mètres (facultatif)",
+      "notesLabel": "Notes (facultatif)",
+      "notesPlaceholder": "Autres informations sur le navire",
+      "photoLabel": "Photo du navire (facultatif)",
+      "photoHint": "Utilisée par les secours pour identifier le navire. JPEG/PNG, 10 Mo max.",
+      "saveButton": "Enregistrer le navire",
+      "saveFailed": "Impossible d'enregistrer le navire.",
+      "mmsiAlreadyRegistered": "Ce numéro MMSI est déjà enregistré dans le système.",
+      "photoUploadFailed": "Le navire a été enregistré, mais la photo n'a pas pu être envoyée ({error})",
+      "unknownError": "erreur inconnue",
+      "added": "Navire ajouté",
+      "length": "Longueur",
+      "width": "Largeur",
+      "draft": "Tirant d'eau"
+    },
+    "iceContact": {
+      "heading": "Contact ICE",
+      "loading": "Chargement des contacts ICE…",
+      "selectLabel": "Qui doit être alerté si cette sortie n'est pas confirmée à temps ?",
+      "selectHint": "Choisissez l'unique contact ICE à alerter pour cette sortie. Vous pouvez passer cette étape pour l'instant, mais la sortie ne pourra pas être activée tant qu'un contact n'est pas défini.",
+      "required": "Veuillez choisir un contact ICE pour cette sortie.",
+      "noneRegistered": "Vous n'avez encore aucun contact ICE enregistré.",
+      "addLink": "Ajouter un contact ICE"
+    },
+    "schedule": {
+      "heading": "Horaire",
+      "departureLabel": "Départ (UTC)",
+      "arrivalLabel": "Arrivée prévue (UTC)",
+      "gracePeriodLabel": "Délai de grâce avant l'alerte du contact ICE",
+      "gracePeriodHint": "Durée après l'arrivée prévue avant que le contact ICE ne soit averti si vous n'avez pas confirmé votre arrivée."
+    },
+    "routes": {
+      "heading": "Itinéraires",
+      "addAlternative": "+ Ajouter un itinéraire alternatif",
+      "addSavedRoute": "+ Ajouter un itinéraire enregistré",
+      "primary": "Itinéraire principal",
+      "alternative": "Itinéraire alternatif {index}",
+      "moveUp": "Monter",
+      "moveDown": "Descendre",
+      "modeWindy": "Importer depuis Windy",
+      "modeManual": "Tracer manuellement",
+      "modeGpx": "Importer un fichier GPX",
+      "drawLabel": "Tracez l'itinéraire sur la carte",
+      "drawHint": "Cliquez sur la carte pour ajouter des points. Faites glisser un point pour le déplacer, cliquez sur un point et choisissez « Supprimer le point » pour le retirer.",
+      "points": "points",
+      "clear": "Effacer l'itinéraire",
+      "windyUrlLabel": "Lien Windy",
+      "windyUrlPlaceholder": "https://www.windy.com/route-planner/boat/...",
+      "gpxLabel": "Fichier GPX",
+      "gpxHint": "Importez un fichier .gpx exporté depuis votre traceur de cartes ou votre application de navigation. L'itinéraire est lu immédiatement et le fichier lui-même n'est pas conservé.",
+      "reasonLabel": "Raison",
+      "reasonPlaceholder": "ex. Si le vent passe au nord",
+      "saveToArchive": "Enregistrer dans les itinéraires archivés",
+      "saveRouteNamePlaceholder": "Nommez cet itinéraire, ex. Marstrand-Skagen",
+      "saveRouteNameRequired": "Indiquez un nom pour l'itinéraire.",
+      "saveRouteFailed": "Impossible d'enregistrer l'itinéraire.",
+      "saveRouteSuccess": "Itinéraire enregistré."
+    },
+    "errors": {
+      "vesselRequired": "Sélectionnez ou ajoutez un navire.",
+      "datesRequired": "Indiquez les heures de départ et d'arrivée.",
+      "arrivalBeforeDeparture": "L'heure d'arrivée doit être postérieure à l'heure de départ.",
+      "primaryRouteMinPoints": "Tracez au moins deux points pour l'itinéraire principal.",
+      "gpxParseError": "Impossible de lire un itinéraire depuis ce fichier GPX. Vérifiez qu'il contient un itinéraire ou une trace d'au moins deux points.",
+      "createFailed": "Impossible de créer la sortie."
+    }
+  },
+  "crewInvite": {
+    "noToken": "Aucun lien d'invitation trouvé. Vérifiez que vous avez bien cliqué sur le lien complet.",
+    "loading": "Chargement de l'invitation...",
+    "invalidInvite": "L'invitation est invalide ou a expiré.",
+    "backToStart": "Retour à l'accueil",
+    "accountSection": {
+      "loggedIn": "Vous êtes connecté(e) en tant que <strong>{name}</strong> - l'invitation sera liée à votre compte.",
+      "saveAccountLabel": "Enregistrer mon compte pour pouvoir me reconnecter plus tard{emailSuffix}",
+      "passwordHint": "Au moins 8 caractères, une majuscule et un chiffre.",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "acceptTerms": "J'accepte les {termsLink} et la {privacyLink}",
+      "termsLink": "Conditions d'utilisation",
+      "privacyLink": "Politique de confidentialité",
+      "haveAccount": "Vous avez déjà un compte ? {loginLink} et rouvrez le lien pour que l'invitation soit liée à votre compte."
+    },
+    "loginLink": "Se connecter",
+    "title": "Vous êtes invité(e) à une sortie !",
+    "summary": {
+      "skipper": "Skipper",
+      "vessel": "Navire",
+      "departure": "Départ",
+      "arrival": "Arrivée",
+      "crewCount": "Équipage à ce jour",
+      "crewCountValue": "{count} personnes"
+    },
+    "nameLabel": "Votre nom",
+    "phoneLabel": "Numéro de téléphone (facultatif)",
+    "phonePlaceholder": "+46701234567",
+    "iceContactLabel": "Votre contact d'urgence",
+    "iceContactPlaceholder": "ex. Erik (mari) +46701234568",
+    "iceContactHint": "Nom et numéro de téléphone d'une personne à contacter en cas d'incident.",
+    "medicalLabel": "Informations médicales pour les secours (facultatif)",
+    "medicalPlaceholder": "ex. allergies, médicaments, groupe sanguin, pathologies",
+    "medicalHint": "Uniquement communiquées aux autorités de secours en cas d'urgence - jamais au skipper ni au contact ICE.",
+    "sharing": {
+      "heading": "Partage",
+      "contactHint": "Votre téléphone et votre e-mail ne sont visibles que par le skipper par défaut. Choisissez si vous souhaitez aussi les partager avec le contact ICE.",
+      "shareContactWithIce": "Partager mon téléphone et mon e-mail avec le contact ICE (à prévenir en cas d'urgence)",
+      "emergencyHint": "Votre contact d'urgence ci-dessus n'est visible que par le skipper par défaut.",
+      "shareEmergencyWithIce": "Partager mon contact d'urgence avec le contact ICE"
+    },
+    "photoLabel": "Votre photo (facultatif mais recommandé)",
+    "photoHint": "Utilisée par les secours pour identifier l'équipage. JPEG/PNG, 10 Mo max.",
+    "submit": "Accepter et rejoindre",
+    "submitting": "Inscription...",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "acceptTermsRequired": "Vous devez accepter les Conditions d'utilisation et la Politique de confidentialité",
+    "photoUploadFailed": "Cependant, la photo n'a pas pu être envoyée ({reason}).",
+    "unknownError": "erreur inconnue",
+    "acceptFailed": "Impossible de rejoindre la sortie.",
+    "acceptSuccess": "Vous faites maintenant partie de l'équipage. Bonne route et bon vent !",
+    "toOverview": "Vers votre aperçu",
+    "crewViewLinkHint": "Conservez ce lien - il vous permet de consulter la sortie et de modifier ce que vous partagez à tout moment.",
+    "crewViewLinkOpen": "Ouvrir la vue de la sortie",
+    "crewViewLinkCopy": "Copier le lien",
+    "crewViewLinkCopied": "Lien copié"
+  },
+  "iceConfirm": {
+    "noToken": "Aucun lien de confirmation trouvé. Vérifiez que vous avez bien cliqué sur le lien complet.",
+    "loading": "Chargement...",
+    "invalidLink": "Le lien est invalide ou a déjà été utilisé.",
+    "backToStart": "Retour à l'accueil",
+    "accountSection": {
+      "loggedIn": "Vous êtes connecté(e) en tant que <strong>{name}</strong> - la confirmation sera liée à votre compte.",
+      "passwordHint": "Au moins 8 caractères, une majuscule et un chiffre.",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "deleteAfterTripLabel": "Supprimer automatiquement mon compte et mes données une fois terminée(s) la ou les sorties pour lesquelles je suis contact ICE",
+      "retentionNote": "Par défaut, nous conservons votre compte indéfiniment afin que vous puissiez vous reconnecter pour de futures sorties et mettre à jour vos informations. Cochez la case ci-dessus si vous préférez que le compte et vos données soient supprimés automatiquement quelque temps après la fin de la sortie.",
+      "acceptTerms": "J'accepte les {termsLink} et la {privacyLink}",
+      "termsLink": "Conditions d'utilisation",
+      "privacyLink": "Politique de confidentialité",
+      "haveAccount": "Vous avez déjà un compte ? {loginLink} et rouvrez le lien pour que la confirmation soit liée à votre compte."
+    },
+    "loginLink": "Se connecter",
+    "title": "Confirmer en tant que contact ICE",
+    "intro": "{skipper} vous a désigné(e) comme contact ICE (à prévenir en cas d'urgence){relationshipSuffix}. Cela signifie que vous pourriez être contacté(e) si cette personne ne confirme pas son arrivée à temps lors d'une sortie.",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "acceptTermsRequired": "Vous devez accepter les Conditions d'utilisation et la Politique de confidentialité",
+    "confirming": "Confirmation...",
+    "accountConflict": "Un compte existe déjà avec cette adresse e-mail. Connectez-vous et rouvrez le lien pour confirmer.",
+    "confirmFailed": "Impossible de confirmer.",
+    "policyNoteDelete": "Votre compte et vos données seront automatiquement supprimés une fois terminée(s) la ou les sorties pour lesquelles vous êtes contact ICE.",
+    "policyNoteKeep": "Votre compte a maintenant été créé.",
+    "confirmSuccess": "Merci ! Vous êtes désormais confirmé(e) comme contact ICE.",
+    "toOverview": "Vers votre aperçu"
+  },
+  "iceContacts": {
+    "title": "Contacts ICE",
+    "subtitle": "Vos contacts ICE (à prévenir en cas d'urgence), alertés si une sortie n'est pas confirmée à temps",
+    "addTitle": "Ajouter un contact",
+    "cancelEdit": "Annuler la modification",
+    "relationshipLabel": "Lien de parenté",
+    "relationshipPlaceholder": "ex. conjoint(e), frère, ami(e)",
+    "phonePlaceholder": "+46701234567",
+    "channelLabel": "Canal de notification préféré",
+    "channelLabels": {
+      "email": "E-mail",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp"
+    },
+    "channelHint": "Les alertes sont envoyées au contact via ce canal lorsqu'une sortie n'est pas confirmée à temps.",
+    "submitAdd": "Enregistrer le contact",
+    "loadingContacts": "Chargement des contacts...",
+    "loadFailed": "Impossible de récupérer les contacts.",
+    "emptyTitle": "Aucun contact ICE pour le moment",
+    "emptyBody": "Sans contact ICE, le système ne peut alerter personne si votre sortie n'est pas confirmée à temps. Ajoutez au moins un contact ci-dessus.",
+    "confirmed": "✓ Confirmé",
+    "pending": "⏳ En attente de confirmation",
+    "copyConfirmLink": "Copier le lien de confirmation",
+    "editButton": "Modifier",
+    "linkCopied": "Lien copié",
+    "editTitle": "Modifier : {name}",
+    "relationshipRequired": "Le lien de parenté est requis",
+    "relationshipTooLong": "Lien de parenté : 50 caractères maximum",
+    "saveFailed": "Impossible d'enregistrer le contact.",
+    "addedEmailSent": "Contact ajouté. Un e-mail de confirmation a été envoyé.",
+    "addedEmailFailed": "Contact ajouté. L'envoi de l'e-mail a échoué - partagez le lien manuellement :",
+    "updated": "Contact mis à jour.",
+    "deleteConfirm": "Retirer le contact ICE {name} ?",
+    "deleteFailed": "Impossible de retirer le contact.",
+    "deleted": "Contact retiré."
+  },
+  "iceAccount": {
+    "title": "Mon compte ICE",
+    "subtitle": "Skippers pour lesquels vous êtes contact ICE (à prévenir en cas d'urgence), et vos propres informations",
+    "deletePolicyHeading": "Supprimer le compte après la sortie",
+    "deletePolicyLabel": "Supprimer automatiquement mon compte et mes informations une fois terminée(s) la ou les sorties pour lesquelles je suis contact ICE",
+    "deletePolicyHint": "Par défaut, votre compte est conservé indéfiniment. Cochez la case si vous préférez qu'il soit supprimé automatiquement quelque temps après que vous ne soyez plus contact ICE pour aucune sortie active.",
+    "loading": "Chargement...",
+    "policySaveFailed": "Impossible d'enregistrer le paramètre.",
+    "policyEnabled": "Votre compte sera désormais supprimé automatiquement une fois la ou les sorties terminées.",
+    "policyDisabled": "Votre compte sera conservé indéfiniment.",
+    "loadContactsFailed": "Impossible de récupérer vos connexions.",
+    "emptyTitle": "Aucune connexion pour le moment",
+    "emptyBody": "Vous n'êtes confirmé(e) comme contact ICE pour aucun skipper avec ce compte.",
+    "editMyDetails": "Modifier mes informations",
+    "phonePlaceholder": "+46701234567",
+    "channelLabel": "Canal de notification préféré",
+    "channelLabels": {
+      "email": "E-mail",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp"
+    },
+    "saveFailed": "Impossible d'enregistrer les modifications.",
+    "updated": "Vos informations ont été mises à jour."
+  },
+  "icePortal": {
+    "invalidLink": "Lien invalide - la sortie ou le code d'accès est manquant. Utilisez le lien fourni dans le message de notification.",
+    "loadingTrip": "Chargement de la sortie…",
+    "loadFailed": "Impossible de récupérer la sortie. Le lien est peut-être invalide ou révoqué.",
+    "title": "Informations sur la sortie",
+    "readOnlyNotice": "Vue en lecture seule pour le contact ICE et les secours (SAR)",
+    "alertTriggered": "<strong>Alerte déclenchée - arrivée non confirmée à temps</strong>",
+    "printButton": "Imprimer / enregistrer en PDF",
+    "expandImagesButton": "Développer toutes les images",
+    "collapseImagesButton": "Réduire toutes les images",
+    "sarAccess": {
+      "heading": "Identifiants pour les secours (SAR)",
+      "description": "Si une autorité SAR a besoin d'un accès en lecture seule à cette sortie, communiquez-lui cette référence et ce code PIN à saisir sur la page de recherche SAR.",
+      "referenceLabel": "Référence",
+      "pinLabel": "PIN",
+      "showPin": "Afficher le PIN",
+      "hidePin": "Masquer le PIN"
+    },
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "trip": {
+      "heading": "Sortie",
+      "plannedDeparture": "Départ prévu : <strong>{datetime}</strong>",
+      "plannedArrival": "Arrivée prévue : <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Navire : {name}",
+      "modelLabel": "Modèle {value}",
+      "yearBuilt": "Année du modèle {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Indicatif d'appel {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m"
+    },
+    "routes": {
+      "heading": "Itinéraires",
+      "empty": "Aucun itinéraire enregistré.",
+      "primary": "Itinéraire principal",
+      "alternate": "Itinéraire alternatif {order}",
+      "mapLabel": "Itinéraire {order}",
+      "noMap": "Aucun itinéraire à afficher",
+      "downloadGpx": "Télécharger le GPX"
+    },
+    "crew": {
+      "heading": "Équipage à bord",
+      "empty": "Aucun équipier confirmé enregistré.",
+      "unknownName": "Inconnu",
+      "ownIceContact": "Contact d'urgence personnel : {contact}",
+      "medicalLabel": "Informations médicales"
+    },
+    "iceContact": {
+      "heading": "Contact d'urgence du skipper (ICE)",
+      "empty": "Aucun contact d'urgence enregistré.",
+      "relationshipLabel": "Lien de parenté"
+    },
+    "log": {
+      "heading": "Journal des modifications",
+      "empty": "Aucune modification enregistrée.",
+      "ip": "IP : {ip}",
+      "showMore": "Afficher plus",
+      "showLess": "Afficher moins"
+    }
+  },
+  "crewView": {
+    "invalidLink": "Lien invalide - la sortie ou le code d'accès est manquant. Utilisez le lien de votre e-mail d'invitation d'équipage.",
+    "loadingTrip": "Chargement de la sortie…",
+    "loadFailed": "Impossible de récupérer la sortie. Le lien est peut-être invalide ou révoqué.",
+    "title": "Informations sur la sortie",
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "trip": {
+      "heading": "Sortie",
+      "plannedDeparture": "Départ prévu : <strong>{datetime}</strong>",
+      "plannedArrival": "Arrivée prévue : <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Navire : {name}",
+      "modelLabel": "Modèle {value}",
+      "yearBuilt": "Année du modèle {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Indicatif d'appel {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m"
+    },
+    "routes": {
+      "heading": "Itinéraires",
+      "empty": "Aucun itinéraire enregistré.",
+      "primary": "Itinéraire principal",
+      "alternate": "Itinéraire alternatif {order}",
+      "mapLabel": "Itinéraire {order}",
+      "noMap": "Aucun itinéraire à afficher"
+    },
+    "crew": {
+      "heading": "Équipage à bord",
+      "empty": "Aucun équipier confirmé enregistré.",
+      "unknownName": "Inconnu",
+      "you": "vous",
+      "ownIceContact": "Contact d'urgence personnel : {contact}"
+    },
+    "sharingSettings": {
+      "heading": "Partage",
+      "hint": "Choisissez les informations de contact partagées avec le contact ICE (à prévenir en cas d'urgence).",
+      "shareContactWithIce": "Partager mon téléphone et mon e-mail avec le contact ICE",
+      "shareEmergencyWithIce": "Partager mon contact d'urgence avec le contact ICE",
+      "saveButton": "Enregistrer",
+      "saved": "Vos préférences de partage ont été enregistrées.",
+      "saveFailed": "Impossible d'enregistrer vos préférences de partage."
+    },
+    "medical": {
+      "heading": "Vos informations pour les secours",
+      "hint": "Informations médicales utiles en cas d'urgence - pathologies, allergies, groupe sanguin, médicaments. Uniquement communiquées aux autorités de secours, jamais au skipper ni au contact ICE.",
+      "placeholder": "ex. allergies, médicaments, groupe sanguin, pathologies",
+      "empty": "Vous n'avez ajouté aucune information.",
+      "readOnlyNote": "Connectez-vous avec un compte pour modifier ceci.",
+      "saveButton": "Enregistrer",
+      "saved": "Vos informations ont été enregistrées.",
+      "saveFailed": "Impossible d'enregistrer vos informations."
+    },
+    "log": {
+      "heading": "Journal des modifications",
+      "empty": "Aucune modification enregistrée.",
+      "showMore": "Afficher plus",
+      "showLess": "Afficher moins"
+    }
+  },
+  "sar": {
+    "tagline": "Accès recherche et sauvetage (SAR)",
+    "instructions": "Saisissez la référence et le code PIN transmis par le contact de la personne en détresse pour un accès en lecture seule à la liste d'équipage, aux itinéraires et au journal des modifications de la sortie.",
+    "referenceLabel": "Référence",
+    "referencePlaceholder": "YE-XXXXXX",
+    "pinLabel": "Code PIN",
+    "pinPlaceholder": "6 chiffres",
+    "submit": "Afficher la sortie",
+    "missingFields": "Saisissez la référence et le code PIN.",
+    "checking": "Vérification…",
+    "invalidCredentials": "Référence ou code PIN incorrect. Vérifiez les informations et réessayez."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Actualités et articles de Yachting Earth",
+    "loading": "Chargement des articles…",
+    "loadFailed": "Impossible de récupérer les articles du blog.",
+    "emptyTitle": "Aucun article pour le moment",
+    "emptyBody": "Revenez bientôt pour de nouveaux articles.",
+    "readMore": "Lire la suite",
+    "byAuthor": "Écrit par {author}",
+    "backToList": "Retour au blog",
+    "notFound": "Cet article est introuvable."
+  },
+  "vessels": {
+    "title": "Mes navires",
+    "subtitle": "Navires que vous pouvez sélectionner lors de la création d'une nouvelle sortie",
+    "loadingVessels": "Chargement des navires...",
+    "form": {
+      "addTitle": "Ajouter un navire",
+      "editTitle": "Modifier : {name}",
+      "cancelEdit": "Annuler la modification",
+      "nameLabel": "Nom du navire",
+      "namePlaceholder": "ex. Thrym",
+      "mmsiLabel": "MMSI (facultatif)",
+      "callSignLabel": "Indicatif d'appel (facultatif)",
+      "modelLabel": "Modèle (facultatif)",
+      "modelPlaceholder": "ex. Bavaria 34",
+      "yearLabel": "Année du modèle (facultatif)",
+      "yearPlaceholder": "ex. 2011",
+      "lengthLabel": "Longueur, en mètres (facultatif)",
+      "widthLabel": "Largeur, en mètres (facultatif)",
+      "draftLabel": "Tirant d'eau, en mètres (facultatif)",
+      "notesLabel": "Notes (facultatif)",
+      "notesPlaceholder": "Autres informations sur le navire",
+      "photoLabel": "Photo du navire (facultatif)",
+      "photoHint": "Utilisée par les secours pour identifier le navire. JPEG/PNG, 10 Mo max.",
+      "submit": "Enregistrer le navire",
+      "submitEdit": "Enregistrer les modifications"
+    },
+    "dimensions": {
+      "length": "Longueur",
+      "width": "Largeur",
+      "draft": "Tirant d'eau"
+    },
+    "loadFailed": "Impossible de récupérer les navires.",
+    "emptyTitle": "Aucun navire pour le moment",
+    "emptyBody": "Ajoutez un navire ci-dessus pour pouvoir le sélectionner lors de la création d'une sortie.",
+    "card": {
+      "yearBuilt": "Année du modèle {year}",
+      "mmsi": "MMSI {mmsi}",
+      "callSign": "Indicatif d'appel {callSign}",
+      "editButton": "Modifier"
+    },
+    "saveFailed": "Impossible d'enregistrer le navire.",
+    "mmsiAlreadyRegistered": "Ce numéro MMSI est déjà enregistré dans le système.",
+    "photoUploadFailed": "Le navire a été enregistré, mais la photo n'a pas pu être envoyée ({error})",
+    "unknownError": "erreur inconnue",
+    "updated": "Le navire a été mis à jour.",
+    "added": "Le navire a été ajouté.",
+    "confirmDelete": "Retirer le navire {name} ?",
+    "deleteFailed": "Impossible de retirer le navire.",
+    "deleted": "Le navire a été retiré."
+  },
+  "savedRoutes": {
+    "title": "Itinéraires enregistrés",
+    "subtitle": "Itinéraires que vous pouvez réutiliser lors de la création d'une nouvelle sortie",
+    "loading": "Chargement des itinéraires enregistrés...",
+    "loadFailed": "Impossible de récupérer les itinéraires enregistrés.",
+    "emptyTitle": "Aucun itinéraire enregistré pour le moment",
+    "emptyBody": "Enregistrez un itinéraire lors de la création d'une sortie afin de pouvoir le réutiliser plus tard.",
+    "form": {
+      "nameLabel": "Nom",
+      "namePlaceholder": "ex. Marstrand-Skagen",
+      "windyUrlLabel": "Lien Windy",
+      "addTitle": "Créer un itinéraire",
+      "submit": "Enregistrer l'itinéraire"
+    },
+    "saveFailed": "Impossible d'enregistrer l'itinéraire.",
+    "updated": "L'itinéraire a été mis à jour.",
+    "confirmDelete": "Retirer l'itinéraire enregistré {name} ?",
+    "deleteFailed": "Impossible de retirer l'itinéraire.",
+    "deleted": "L'itinéraire a été retiré."
+  },
+  "crewAddressBook": {
+    "title": "Carnet d'adresses",
+    "subtitle": "Contacts que vous avez explicitement enregistrés lors d'invitations d'équipage, afin de pouvoir les réutiliser pour de futures sorties",
+    "loading": "Chargement des contacts enregistrés...",
+    "loadFailed": "Impossible de récupérer les contacts enregistrés.",
+    "emptyTitle": "Aucun contact enregistré pour le moment",
+    "emptyBody": "Cochez « Enregistrer le contact » lors de l'invitation d'un équipier à une sortie pour qu'il apparaisse ici en vue d'une réutilisation.",
+    "form": {
+      "nameLabel": "Nom",
+      "emailLabel": "E-mail"
+    },
+    "saveFailed": "Impossible d'enregistrer le contact.",
+    "updated": "Le contact a été mis à jour.",
+    "confirmDelete": "Retirer {name} de votre carnet d'adresses ?",
+    "deleteFailed": "Impossible de retirer le contact.",
+    "deleted": "Le contact a été retiré.",
+    "bulk": {
+      "selectAllLabel": "Tout sélectionner",
+      "selectedCount": "{count} sélectionné(s)",
+      "inviteToNewTrip": "Inviter à une sortie",
+      "addToTripPlaceholder": "Ajouter à une sortie…",
+      "addToTripNoneEligible": "Aucune sortie disponible pour y ajouter des équipiers",
+      "addSuccess": "{count} personne(s) ajoutée(s) à la sortie.",
+      "addPartial": "{success} personne(s) sur {total} ajoutée(s) à la sortie.",
+      "addFailed": "Impossible d'ajouter les personnes sélectionnées à la sortie."
+    }
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Statistiques du système et gestion des utilisateurs - cliquez sur une case pour voir les détails",
+    "loadingStats": "Chargement des statistiques...",
+    "statsLoadFailed": "Impossible de récupérer les statistiques.",
+    "loadTabFailed": "Impossible de récupérer {title}.",
+    "yes": "Oui",
+    "no": "Non",
+    "cannotDeleteSelf": "Vous ne pouvez pas supprimer votre propre compte depuis cet écran",
+    "confirmDeleteUser": "Supprimer l'utilisateur {name} ({email}) et toutes les données associées ? Cette action est irréversible.",
+    "deleteUserFailed": "Impossible de supprimer l'utilisateur.",
+    "userDeleted": "L'utilisateur a été supprimé.",
+    "stats": {
+      "users": "Utilisateurs",
+      "routes": "Itinéraires",
+      "vessels": "Navires",
+      "iceContacts": "Contacts ICE",
+      "logs": "Journaux système"
+    },
+    "empty": {
+      "users": "Aucun utilisateur",
+      "routes": "Aucun itinéraire",
+      "vessels": "Aucun navire",
+      "iceContacts": "Aucun contact ICE",
+      "logs": "Aucun journal ne correspond au filtre"
+    },
+    "table": {
+      "adminHeader": "Admin",
+      "created": "Créé le",
+      "skipper": "Skipper",
+      "departure": "Départ",
+      "arrival": "Arrivée",
+      "tripStatus": "Statut de la sortie",
+      "order": "Ordre",
+      "owner": "Propriétaire",
+      "mmsi": "MMSI",
+      "callSign": "Indicatif d'appel",
+      "model": "Modèle",
+      "relationship": "Lien de parenté",
+      "channel": "Canal",
+      "confirmed": "Confirmé"
+    },
+    "logLevel": {
+      "info": "Info",
+      "warning": "Avertissement",
+      "error": "Erreur"
+    },
+    "logCategory": {
+      "cron": "Cron",
+      "email": "E-mail",
+      "notification": "Notification",
+      "database": "Base de données",
+      "api": "Backend/API",
+      "auth": "Authentification",
+      "trip": "Sortie",
+      "route": "Itinéraire",
+      "vessel": "Navire",
+      "crew": "Équipage",
+      "ice": "Contact ICE",
+      "sar": "SAR",
+      "user": "Utilisateur",
+      "admin": "Admin",
+      "photo": "Photo"
+    },
+    "logs": {
+      "searchLabel": "Recherche",
+      "searchPlaceholder": "Rechercher dans le message ou l'ID...",
+      "levelLabel": "Niveau de journal",
+      "allLevels": "Tous les niveaux",
+      "categoryLabel": "Catégorie",
+      "allCategories": "Toutes les catégories",
+      "loadFailed": "Impossible de récupérer les journaux.",
+      "stackTrace": "Pile d'appels",
+      "piiData": "Données personnelles (PII)",
+      "prevPage": "Précédent",
+      "nextPage": "Suivant",
+      "pageInfo": "Page {page} sur {totalPages} ({total} journaux)",
+      "table": {
+        "time": "Heure",
+        "level": "Niveau",
+        "category": "Catégorie",
+        "message": "Message",
+        "user": "Utilisateur"
+      }
+    }
+  },
+  "tripDetail": {
+    "loading": "Chargement de la sortie…",
+    "loadFailed": "Impossible de récupérer la sortie.",
+    "backToDashboard": "Retour à mes sorties",
+    "unknownVessel": "Navire inconnu",
+    "readOnlyBanner": {
+      "crew": "Vous consultez cette sortie en tant qu'équipier invité. Cette vue est en lecture seule pour vous.",
+      "ice": "Vous consultez cette sortie en tant que contact ICE. Cette vue est en lecture seule pour vous."
+    },
+    "header": {
+      "meta": "Départ {departure} · Arrivée {arrival} · Délai de grâce {grace}",
+      "iceNotified": "Contact ICE notifié"
+    },
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "schedule": {
+      "heading": "Horaire",
+      "departureLabel": "Départ (UTC)",
+      "arrivalLabel": "Arrivée (UTC)",
+      "graceLabel": "Délai de grâce",
+      "changeButton": "Enregistrer",
+      "departureLockedHint": "Le départ ne peut plus être modifié une fois la sortie activée.",
+      "arrivalLockedHint": "L'arrivée ne peut plus être modifiée une fois la sortie confirmée terminée.",
+      "graceLockedHint": "Le délai de grâce ne peut plus être modifié une fois la sortie confirmée terminée.",
+      "changeFailed": "Impossible de modifier l'horaire.",
+      "changed": "L'horaire a été modifié."
+    },
+    "vessel": {
+      "heading": "Navire",
+      "modelLabel": "Modèle {model}",
+      "yearBuilt": "Année du modèle {year}",
+      "mmsi": "MMSI {mmsi}",
+      "callSign": "Indicatif d'appel {callSign}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "D {value} m",
+      "changeLabel": "Changer de navire",
+      "changeButton": "Changer de navire",
+      "changeFailed": "Impossible de changer le navire.",
+      "mmsiConflictNotice": "Remarque : une autre sortie avec le même numéro MMSI est déjà programmée sur une période qui se chevauche.",
+      "changed": "Le navire a été changé."
+    },
+    "iceContact": {
+      "heading": "Contact ICE",
+      "allContacts": "Tous mes contacts ICE sont alertés pour cette sortie.",
+      "specificContact": "Un contact ICE spécifique a été désigné pour cette sortie par le skipper.",
+      "changeLabel": "Changer de contact ICE",
+      "changeButton": "Enregistrer",
+      "changeFailed": "Impossible de changer le contact ICE.",
+      "changed": "Le contact ICE a été changé."
+    },
+    "routes": {
+      "heading": "Itinéraires",
+      "addAltHeading": "Ajouter un itinéraire alternatif",
+      "importWindy": "Importer depuis Windy",
+      "drawManual": "Tracer manuellement",
+      "importGpx": "Importer un fichier GPX",
+      "addSavedRoute": "+ Ajouter un itinéraire enregistré",
+      "reasonOptionalLabel": "Raison (facultatif)",
+      "reasonPlaceholder": "ex. Si le vent passe au nord",
+      "saveToArchive": "Enregistrer dans les itinéraires archivés",
+      "saveRouteNamePlaceholder": "Nommez cet itinéraire, ex. Marstrand-Skagen",
+      "saveRouteNameRequired": "Indiquez un nom pour l'itinéraire.",
+      "saveRouteArchiveFailed": "Impossible d'enregistrer l'itinéraire dans vos archives.",
+      "saveRouteArchiveSuccess": "Itinéraire enregistré dans vos archives.",
+      "addButton": "Ajouter l'itinéraire",
+      "empty": "Aucun itinéraire ajouté pour le moment.",
+      "mainRoute": "Itinéraire principal",
+      "altRoute": "Itinéraire alternatif {n}",
+      "moveUpTitle": "Monter",
+      "moveDownTitle": "Descendre",
+      "noRouteToShow": "Aucun itinéraire à afficher",
+      "drawOnMapLabel": "Tracer l'itinéraire sur la carte",
+      "drawHint": "Cliquez sur la carte pour ajouter des points. Faites glisser un point pour le déplacer, cliquez sur un point et choisissez « Supprimer le point » pour le retirer.",
+      "pointsLabel": "points",
+      "clearRoute": "Effacer l'itinéraire",
+      "windyUrlLabel": "Lien Windy",
+      "gpxLabel": "Fichier GPX",
+      "gpxHint": "Importez un fichier .gpx exporté depuis votre traceur de cartes ou votre application de navigation. L'itinéraire est lu immédiatement et le fichier lui-même n'est pas conservé.",
+      "gpxParseError": "Impossible de lire un itinéraire depuis ce fichier GPX. Vérifiez qu'il contient un itinéraire ou une trace d'au moins deux points.",
+      "reasonLabel": "Raison",
+      "minPointsError": "Tracez au moins deux points pour l'itinéraire.",
+      "addFailed": "Impossible d'ajouter l'itinéraire.",
+      "added": "Itinéraire ajouté",
+      "saveFailed": "Impossible d'enregistrer l'itinéraire.",
+      "saved": "L'itinéraire a été enregistré",
+      "deleteConfirm": "Retirer cet itinéraire ?",
+      "deleteFailed": "Impossible de retirer l'itinéraire.",
+      "deleted": "L'itinéraire a été retiré",
+      "reorderFailed": "Impossible de modifier l'ordre."
+    },
+    "crew": {
+      "heading": "Équipage",
+      "inviteHeading": "Inviter un équipier",
+      "nameOptionalLabel": "Nom (facultatif)",
+      "addressBookAriaLabel": "Suggestions de vos contacts enregistrés",
+      "saveContactLabel": "Enregistrer le contact",
+      "sendInviteButton": "Envoyer l'invitation",
+      "empty": "Aucun équipier invité pour le moment.",
+      "unknownName": "Inconnu",
+      "iceContactLabel": "Contact d'urgence : {contact}",
+      "accepted": "✓ Accepté",
+      "pending": "⏳ En attente",
+      "changePhoto": "Changer la photo",
+      "addPhoto": "Ajouter une photo",
+      "copyLink": "Copier le lien",
+      "choosePhotoFirst": "Choisissez d'abord une image.",
+      "photoSaveFailed": "Impossible d'enregistrer la photo.",
+      "photoSaved": "La photo a été enregistrée.",
+      "linkCopied": "Lien copié",
+      "inviteFailed": "Impossible d'envoyer l'invitation.",
+      "inviteCreatedEmailSent": "Invitation créée et envoyée par e-mail à l'équipier. Vous pouvez aussi partager le lien manuellement :",
+      "inviteCreatedNotice": "Invitation créée, mais l'e-mail n'a pas pu être envoyé - partagez le lien manuellement :",
+      "removeConfirm": "Retirer cet équipier de la sortie ?",
+      "removeFailed": "Impossible de retirer l'équipier",
+      "removed": "Équipier retiré"
+    },
+    "actions": {
+      "heading": "Actions",
+      "notActiveHint": "La sortie n'est pas encore active. Activez-la manuellement, ou elle s'activera automatiquement à l'heure de départ prévue.",
+      "activateButton": "Activer la sortie",
+      "snoozeLabel": "Reporter l'heure d'arrivée",
+      "verifyButton": "✓ Confirmer l'arrivée",
+      "inactiveHint": "La sortie est {status} - aucune action supplémentaire disponible.",
+      "deleteButton": "Supprimer la sortie",
+      "mmsiConflictError": "La sortie ne peut pas être activée — une autre sortie active utilise déjà ce numéro MMSI.",
+      "activated": "La sortie a été activée",
+      "actionFailed": "L'action a échoué.",
+      "snoozed": "Heure d'arrivée reportée de {minutes} min",
+      "verifyConfirm": "Confirmer que le navire est arrivé en toute sécurité ?",
+      "verified": "Arrivée confirmée - la sortie est terminée",
+      "deleteForceConfirm": "Des personnes sont enregistrées sur cette sortie. Supprimer la sortie quand même ? Pensez à les prévenir vous-même.",
+      "deleteConfirm": "Supprimer cette sortie ?",
+      "deleteAnywayButton": "Supprimer quand même",
+      "deleteHasPersonsWarning": "La sortie compte {crewCount} équipier(s) et {iceCount} contact(s) ICE enregistré(s) qui pourraient devoir être prévenus. Cliquez à nouveau pour supprimer quand même.",
+      "deleteFailed": "Impossible de supprimer la sortie.",
+      "deleted": "La sortie a été supprimée"
+    },
+    "log": {
+      "heading": "Journal des modifications",
+      "empty": "Aucune modification enregistrée.",
+      "showMore": "Afficher plus",
+      "showLess": "Afficher moins"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "Yachting Earth — Préparation de voyage et informations d'urgence pour navigateurs",
+      "description": "Yachting Earth est un dossier de voyage numérique pour navigateurs : enregistrez votre navire, vos itinéraires, votre équipage et votre contact d'urgence avant le départ, afin que les bonnes informations soient déjà en place si un voyage ne se déroule pas comme prévu."
+    },
+    "skipLink": "Aller au contenu principal",
+    "nav": {
+      "prepared": "Ce qui est préparé",
+      "howItWorks": "Comment ça marche",
+      "different": "Pourquoi c'est différent",
+      "privacy": "Confidentialité",
+      "login": "Se connecter",
+      "cta": "Créer un compte gratuit"
+    },
+    "hero": {
+      "heading": "Chaque voyage mérite un plan.<br>Chaque urgence mérite la bonne information.",
+      "lead": "Préparez votre navire, vos itinéraires, votre équipage et votre contact d'urgence avant le départ. Si vous ne confirmez pas votre arrivée après l'heure prévue, votre contact d'urgence désigné reçoit un accès sécurisé aux informations qui peuvent aider les secours à intervenir plus rapidement.",
+      "ctaPrimary": "Créer un compte gratuit",
+      "ctaSecondary": "Comment ça marche",
+      "badges": ["Gratuit", "Itinéraires multiples", "RGPD dès la conception", "Portail ICE sécurisé"]
+    },
+    "notice": {
+      "heading": "Important",
+      "p1": "Yachting Earth ICE n'est pas une balise de détresse, une EPIRB ni un système de suivi en temps réel.",
+      "p2": "C'est un système de préparation de voyage et d'information d'urgence conçu pour garantir que la bonne personne dispose de la bonne information au bon moment en cas d'imprévu, du départ du quai jusqu'à une opération de sauvetage menée à son terme."
+    },
+    "prepared": {
+      "heading": "Tout est prêt avant le départ",
+      "lead": "Un dossier de voyage complet, constitué avant même de quitter le quai.",
+      "cards": [
+        { "icon": "ship", "title": "Navire", "items": ["Photo", "Immatriculation", "Caractéristiques", "Identification"] },
+        { "icon": "compass", "title": "Voyage", "items": ["Départ", "Destination", "Arrivée estimée", "Délai de grâce"] },
+        { "icon": "route", "title": "Itinéraires", "items": ["Itinéraires multiples", "Import depuis GPX/Windy/tracé manuel", "Itinéraires alternatifs", "Aperçu cartographique interactif"] },
+        { "icon": "users", "title": "Équipage", "items": ["Liste d'équipage", "Profils individuels", "Photos", "Contacts d'urgence personnels"] },
+        { "icon": "shield-check", "title": "Contact d'urgence", "items": ["Identité confirmée", "Portail sécurisé", "Accès en lecture seule", "Notification automatique"] }
+      ]
+    },
+    "howItWorks": {
+      "heading": "Comment ça marche",
+      "steps": [
+        "Le skipper crée le voyage",
+        "Invite l'équipage",
+        "L'équipage complète son propre profil",
+        "Le contact d'urgence confirme sa participation",
+        "Activation du voyage"
+      ],
+      "fork": {
+        "arriveTitle": "Arrivée en toute sécurité",
+        "arriveText": "Le skipper confirme l'arrivée. Rien d'autre ne se passe.",
+        "graceTitle": "Le délai de grâce expire",
+        "graceText": "Le skipper n'a pas confirmé son arrivée après l'heure prévue plus le délai de grâce configuré."
+      },
+      "afterFork": [
+        "Le contact d'urgence est notifié",
+        "Les informations sont prêtes à être partagées si les secours doivent être contactés"
+      ]
+    },
+    "compare": {
+      "heading": "Pourquoi Yachting Earth est différent",
+      "traditionalLabel": "Plan traditionnel",
+      "yachtingLabel": "Yachting Earth",
+      "rows": [
+        { "traditional": "Documents statiques", "yachting": "Informations de voyage vivantes" },
+        { "traditional": "Itinéraire unique", "yachting": "Itinéraires multiples" },
+        { "traditional": "Liste d'équipage sommaire", "yachting": "L'équipage tient ses propres informations à jour" },
+        { "traditional": "Repose sur une surveillance manuelle", "yachting": "Contrôle automatique et tracé" },
+        { "traditional": "Post-it, SMS et appels", "yachting": "Portail sécurisé" }
+      ]
+    },
+    "features": {
+      "heading": "Conçu pour de vrais voyages",
+      "items": [
+        { "icon": "route", "title": "Itinéraires multiples", "description": "Un voyage suit rarement une seule ligne droite." },
+        { "icon": "users", "title": "Participation de l'équipage", "description": "Chaque équipier tient ses propres informations à jour." },
+        { "icon": "shield-check", "title": "Contact d'urgence vérifié", "description": "Le contact d'urgence confirme son rôle avant le départ." }
+      ]
+    },
+    "privacy": {
+      "heading": "Confidentialité dès la conception",
+      "lead": "Les données personnelles de voyage sont automatiquement supprimées conformément aux principes du RGPD.",
+      "lifecycle": [
+        { "icon": "file-plus", "label": "Voyage créé" },
+        { "icon": "check-circle", "label": "Voyage terminé" },
+        { "icon": "clock", "label": "Suppression logique" },
+        { "icon": "timer", "label": "Suppression automatique après 30 jours" },
+        { "icon": "shield", "label": "Seuls le skipper et le navire subsistent" }
+      ]
+    },
+    "mapDemo": {
+      "heading": "Les itinéraires, cartographiés",
+      "lead": "Un voyage peut comporter plusieurs itinéraires prévus. Voici un exemple avec trois.",
+      "note": "Données de démonstration — pas une position de navire réelle.",
+      "ariaLabel": "Carte d'exemple montrant trois itinéraires de navigation le long d'une côte",
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternative)"],
+      "descriptions": ["Itinéraire principal", "Si le vent tourne à l'ouest", "Si le vent tourne au nord et dépasse 35 nœuds"]
+    },
+    "worst": {
+      "heading": "Si le pire arrive",
+      "insteadTitle": "Au lieu de…",
+      "insteadItems": ["Fouiller de vieux e-mails", "Essayer de se souvenir de qui était à bord", "Chercher des captures d'écran d'itinéraires", "Deviner les contacts d'urgence"],
+      "haveTitle": "Votre contact d'urgence dispose déjà de",
+      "haveItems": ["Navire", "Itinéraires", "Équipage", "Photos", "Contacts d'urgence", "Détails du voyage"],
+      "readyTitle": "Prêt à transmettre à",
+      "readyItems": ["Garde-côtes", "Police", "Centre de coordination de sauvetage", "Compagnie d'assurance"],
+      "readyNote": "Le contact d'urgence décide quand partager l'information, et avec qui."
+    },
+    "finalCta": {
+      "heading": "Prêt pour votre prochain voyage ?",
+      "lead": "Enregistrez votre premier voyage en moins de cinq minutes.",
+      "cta": "Créer un compte gratuit"
+    },
+    "footer": {
+      "disclaimer": "Yachting Earth ICE est un outil de préparation de voyage et d'information. Ce n'est pas une balise de détresse, une EPIRB ni un système de suivi en temps réel, et le système lui-même ne contacte pas les services de secours.",
+      "links": {
+        "about": "À propos",
+        "blog": "Blog",
+        "privacy": "Confidentialité",
+        "gdpr": "RGPD",
+        "contact": "Contact",
+        "terms": "Conditions",
+        "faq": "FAQ",
+        "changelog": "Journal des modifications"
+      },
+      "comingSoon": "Page {page} bientôt disponible"
+    }
+  },
+  "privacy": {
+    "title": "Confidentialité & RGPD",
+    "lastUpdated": "Dernière mise à jour : 14 juillet 2026",
+    "intro": "Cette page explique quelles données personnelles Yachting Earth ICE collecte, pourquoi, combien de temps elles sont conservées, et les droits dont vous disposez sur elles au titre du RGPD.",
+    "sections": [
+      {
+        "heading": "Qui exploite ce service",
+        "body": [
+          "Yachting Earth ICE (« le système ») est détenu et exploité par Manjo Consulting AB, société suédoise (n° d'entreprise/TVA 5568138464), opérant sous le nom commercial Yachting Earth (yachting.earth). Il s'agit d'un outil de préparation de voyage et de suivi de sécurité de l'équipage - pas une balise de détresse, une EPIRB ni un système de suivi en temps réel, et il ne contacte pas lui-même les services de secours. Le skipper reste responsable des décisions de sécurité réelles ; cette page explique comment le système traite les données personnelles que vous lui confiez à cet effet."
+        ]
+      },
+      {
+        "heading": "Quelles données nous collectons",
+        "body": [
+          "Nous ne collectons que ce dont le système a besoin pour préparer un voyage et, en cas de problème, faire parvenir la bonne information à la bonne personne."
+        ],
+        "list": [
+          "Données de compte - e-mail, nom, téléphone, et un mot de passe (stocké uniquement sous forme de hachage bcrypt, jamais en clair)",
+          "Données du navire - nom, immatriculation/indicatif d'appel, caractéristiques, et une photo facultative",
+          "Données de sortie - itinéraires prévus (extraits de Windy.com), heures de départ/arrivée prévues, et délai de grâce",
+          "Données d'équipage - nom, e-mail, téléphone, et une photo facultative à des fins d'identification",
+          "Données du contact d'urgence (« ICE ») - nom, e-mail, téléphone, et lien de parenté avec le skipper",
+          "Journaux de sécurité - tentatives de connexion (pour appliquer la limitation de débit) et statut de remise des notifications"
+        ]
+      },
+      {
+        "heading": "Pourquoi nous les traitons",
+        "body": ["Chaque catégorie de données est traitée sur l'une de ces bases légales :"],
+        "list": [
+          "Contrat - données de compte, de navire et de sortie, afin que le système puisse remplir sa mission",
+          "Consentement explicite - coordonnées du contact d'urgence",
+          "Intérêt légitime - téléchargement de photos d'équipage à des fins d'identification, ainsi que journaux de sécurité et registres de remise des notifications, pour garantir la fiabilité du système et sa résistance aux abus"
+        ]
+      },
+      {
+        "heading": "Combien de temps nous les conservons",
+        "body": [
+          "Une sortie terminée ou annulée est immédiatement supprimée de manière logique - elle disparaît de la vue du skipper, de l'équipage et du contact d'urgence - puis définitivement supprimée (suppression physique), avec ses itinéraires, ses enregistrements d'équipage, ses photos, son journal d'audit, ses notifications et ses jetons d'accès, par une tâche de nettoyage quotidienne 30 jours plus tard.",
+          "Les comptes utilisateurs enregistrés et les navires ne sont pas concernés par ce processus - seules les données propres à la sortie le sont. Vous pouvez supprimer votre compte et ses données à tout moment depuis votre page de profil.",
+          "Les comptes des contacts d'urgence sont également conservés indéfiniment par défaut, car le contact peut avoir besoin de se reconnecter pour une future sortie, mais un contact peut choisir - depuis « Mon compte ICE » - de faire supprimer automatiquement son compte une fois qu'il n'est plus lié à aucune sortie en cours ou à venir.",
+          "Les messages envoyés via le formulaire de contact (votre nom, votre e-mail et le texte du message) sont conservés 18 mois à compter de leur envoi, puis définitivement supprimés. Cette période de 18 mois suit son propre cours et n'est pas raccourcie par la suppression de votre compte - si vous supprimez votre compte, vos messages passés sont conservés jusqu'à la fin de leur propre période de 18 mois, sauf si nous les supprimons plus tôt. Nous pouvons supprimer un message avant 18 mois, par exemple une fois qu'une demande est résolue."
+        ]
+      },
+      {
+        "heading": "Vos droits",
+        "body": ["Au titre du RGPD, vous pouvez :"],
+        "list": [
+          "Accéder aux données personnelles que nous détenons à votre sujet",
+          "Corriger des données inexactes - vous pouvez modifier la plupart d'entre elles directement depuis votre profil",
+          "Supprimer votre compte et les données associées, via l'option « Supprimer le compte » de votre page de profil (les messages envoyés via le formulaire de contact constituent la seule exception - voir « Combien de temps nous les conservons » ci-dessus)",
+          "Recevoir vos données dans un format portable et lisible par machine",
+          "Retirer un consentement précédemment donné, par exemple une confirmation de contact d'urgence",
+          "Déposer une réclamation auprès de l'autorité de contrôle compétente en matière de protection des données - en Suède, l'Autorité suédoise de protection de la vie privée (Integritetsskyddsmyndigheten, IMY, imy.se) - en vertu de l'article 77 du RGPD"
+        ]
+      },
+      {
+        "heading": "Si vous n'avez pas de compte",
+        "body": [
+          "Si vous avez été ajouté(e) comme équipier pour une sortie, ou comme contact d'urgence (« ICE »), sans créer de compte, vous pouvez tout de même exercer les droits ci-dessus. Rendez-vous sur la page de connexion et suivez le lien « Invité comme équipier sans compte ? Gérez vos données ici. », saisissez l'adresse e-mail à laquelle votre invitation a été envoyée, et nous vous enverrons par e-mail un lien d'accès sécurisé et à durée limitée. Depuis ce portail, vous pouvez télécharger vos données, demander la suppression immédiate de votre enregistrement d'équipage sur une sortie déjà terminée, ou nous envoyer un message directement."
+        ]
+      },
+      {
+        "heading": "Cookies et traçage",
+        "body": [
+          "Nous n'utilisons pas de cookies. Votre session de connexion est conservée dans le stockage local de votre navigateur, et il n'existe aucun outil d'analyse ou de traçage publicitaire tiers dans le système."
+        ]
+      },
+      {
+        "heading": "Avec qui nous partageons les données",
+        "body": ["Nous ne vendons ni ne partageons jamais vos données avec des annonceurs. Les données ne sont accessibles qu'à :"],
+        "list": [
+          "Mailgun - pour la remise des e-mails transactionnels (notifications de sortie, invitations, alertes)",
+          "Telegram et Twilio WhatsApp - pour la remise des notifications, lorsque ces canaux sont activés",
+          "Notre hébergeur - pour exploiter et sauvegarder le service",
+          "Cloudflare (cdnjs) et unpkg - pour fournir les bibliothèques logicielles Leaflet et Lucide utilisées par l'application ; ces fournisseurs voient l'adresse IP et le navigateur (User-Agent) de chaque visiteur qui charge une page",
+          "OpenStreetMap - pour fournir les tuiles cartographiques affichées sur les cartes d'itinéraire/de sortie ; OpenStreetMap voit l'adresse IP et le navigateur (User-Agent) de toute personne consultant une carte, ainsi que la zone cartographique demandée"
+        ]
+      },
+      {
+        "heading": "Transferts internationaux de données",
+        "body": [
+          "Mailgun et Twilio (WhatsApp), mentionnés ci-dessus, sont des sous-traitants basés aux États-Unis ; le contenu des notifications - noms, e-mails, numéros de téléphone des destinataires et texte des alertes de sortie - peut donc être transféré et traité aux États-Unis. Le cas échéant, nous nous appuyons sur la participation de ces fournisseurs au cadre de protection des données UE-États-Unis (Data Privacy Framework) et/ou sur des clauses contractuelles types afin de garantir à vos données un niveau de protection équivalent en dehors de l'EEE."
+        ]
+      },
+      {
+        "heading": "Comment nous les protégeons",
+        "body": [
+          "Le système fonctionne entièrement en HTTPS. Les mots de passe sont hachés avec bcrypt. Les skippers s'authentifient au moyen d'un jeton signé ; les contacts d'urgence et les autorités de recherche et sauvetage bénéficient d'un accès à usage unique, en lecture seule, limité à une seule sortie, au lieu d'une connexion classique. Les photos d'équipage, de navire et de profil sont stockées en dehors du serveur web public et ne sont servies que via une requête authentifiée. Les tentatives de connexion répétées échouées sont soumises à une limitation de débit."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Des questions ?",
+      "body": "Pour exercer l'un des droits ci-dessus, ou pour toute autre question sur cette politique ou sur vos données, contactez-nous via le formulaire de contact disponible dans votre compte. Nous répondons sous 30 jours, conformément à l'article 12 du RGPD."
+    }
+  },
+  "terms": {
+    "title": "Conditions d'utilisation",
+    "lastUpdated": "Dernière mise à jour : 11 juillet 2026",
+    "intro": "Ces conditions régissent votre utilisation de Yachting Earth ICE. En créant un compte ou en accédant au système, vous les acceptez.",
+    "sections": [
+      {
+        "heading": "Avec qui vous contractez",
+        "body": [
+          "Yachting Earth ICE (« le système ») est détenu et exploité par Manjo Consulting AB, société suédoise (n° d'entreprise/TVA 5568138464), opérant sous le nom commercial Yachting Earth (yachting.earth)."
+        ]
+      },
+      {
+        "heading": "Ce qu'est le service",
+        "body": [
+          "Yachting Earth ICE est un outil de préparation de voyage et de notification de sécurité pour l'équipage. Il permet à un skipper d'enregistrer une sortie et un navire, d'ajouter des itinéraires prévus, d'inviter l'équipage, et de désigner un contact d'urgence (« ICE ») qui est averti si la sortie devient en retard."
+        ],
+        "list": [
+          "Ce n'est pas une balise de détresse, une EPIRB, ni un système de suivi en temps réel",
+          "Il ne surveille pas la position réelle d'un navire et ne contacte pas lui-même les services de secours",
+          "Le skipper reste seul responsable des décisions de sécurité réelles, de la navigabilité du navire, et du respect du droit maritime et de la réglementation locale"
+        ]
+      },
+      {
+        "heading": "Votre compte",
+        "body": [
+          "Vous devez fournir des informations exactes lors de l'enregistrement d'une sortie, d'un navire, d'un équipier ou d'un contact d'urgence, et les tenir à jour - l'utilité du système en dépend.",
+          "Vous êtes responsable de la confidentialité de vos identifiants de connexion et de toute activité effectuée sous votre compte. Prévenez-nous rapidement si vous pensez que votre compte a été compromis."
+        ]
+      },
+      {
+        "heading": "Utilisation acceptable",
+        "body": ["Vous acceptez de ne pas :"],
+        "list": [
+          "Utiliser le système à des fins illégales, pour harceler, usurper l'identité ou tromper autrui",
+          "Ajouter un équipier ou un contact d'urgence sans motif raisonnable de croire qu'il consent à être contacté au sujet de la sortie",
+          "Tenter d'interférer avec le système, de le perturber, ou d'accéder sans autorisation au système ou aux données d'autres utilisateurs"
+        ]
+      },
+      {
+        "heading": "Contacts d'urgence et équipage",
+        "body": [
+          "Les contacts d'urgence et les équipiers que vous invitez reçoivent leur propre accès à usage limité (une vue de sortie en lecture seule ou une invitation à confirmer leurs informations) et sont liés par les présentes conditions à cette fin. Vous êtes responsable de disposer d'une base légale pour partager leurs coordonnées avec nous."
+        ]
+      },
+      {
+        "heading": "Disponibilité et limitation de responsabilité",
+        "body": [
+          "Nous nous efforçons de maintenir le système disponible et les notifications rapides, mais nous ne garantissons pas une disponibilité ininterrompue, et la remise des notifications par e-mail, Telegram ou WhatsApp dépend de services tiers hors de notre contrôle.",
+          "Dans toute la mesure permise par la loi, Manjo Consulting AB ne saurait être tenue responsable de toute perte ou dommage résultant du fait de s'être fié au système pour des décisions de sécurité réellement critiques, de notifications retardées ou non abouties, ou d'informations inexactes saisies par un utilisateur. Le système est fourni « en l'état » en tant qu'outil de gestion de l'information, et non comme une garantie de sécurité."
+        ]
+      },
+      {
+        "heading": "Services tiers",
+        "body": [
+          "Le système s'appuie sur des services tiers pour fonctionner : Mailgun pour la remise des e-mails, Telegram et Twilio WhatsApp pour les notifications facultatives, OpenStreetMap pour les tuiles cartographiques, et Windy.com comme source pour la planification d'itinéraires. Votre utilisation de ces services est soumise à leurs propres conditions."
+        ]
+      },
+      {
+        "heading": "Résiliation",
+        "body": [
+          "Vous pouvez supprimer votre compte à tout moment depuis votre page de profil. Nous pouvons suspendre ou résilier l'accès aux comptes qui enfreignent ces conditions ou dont nous estimons raisonnablement qu'ils présentent un risque pour le système ou d'autres utilisateurs."
+        ]
+      },
+      {
+        "heading": "Modifications de ces conditions",
+        "body": [
+          "Nous pouvons modifier ces conditions de temps à autre. Les changements importants seront reflétés par la mise à jour de la date « Dernière mise à jour » ci-dessus. La poursuite de l'utilisation du système après une modification vaut acceptation des conditions mises à jour."
+        ]
+      },
+      {
+        "heading": "Droit applicable",
+        "body": [
+          "Ces conditions sont régies par le droit suédois, sans égard aux principes de conflit de lois. Tout litige découlant de ces conditions ou de votre utilisation du système relève de la compétence des tribunaux suédois."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Des questions ?",
+      "body": "Pour toute question sur ces conditions, contactez-nous via le formulaire de contact disponible dans votre compte."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Une question, un bug trouvé, ou une fonctionnalité à suggérer ? Envoyez-nous un message et nous vous répondrons.",
+    "categoryLabel": "De quoi s'agit-il ?",
+    "category": {
+      "general": "Demandes générales",
+      "privacyGdpr": "Demandes confidentialité & RGPD",
+      "bug": "Bugs et problèmes",
+      "featureRequest": "Améliorations et suggestions de fonctionnalités"
+    },
+    "messageLabel": "Message",
+    "attachmentsLabel": "Pièces jointes",
+    "attachmentsHint": "Facultatif. Jusqu'à 5 fichiers, 1 Mo chacun (images ou PDF).",
+    "retentionHint": "Nous conservons les messages envoyés via ce formulaire pendant 18 mois, puis les supprimons - cela ne change pas si vous supprimez votre compte entre-temps. Consultez notre Politique de confidentialité pour plus de détails.",
+    "submit": "Envoyer le message",
+    "submitting": "Envoi...",
+    "success": "Votre message a été envoyé. Nous vous répondrons bientôt.",
+    "submitFailed": "Échec de l'envoi de votre message. Veuillez réessayer."
+  },
+  "about": {
+    "title": "À propos de nous",
+    "intro": "Yachting Earth ICE est conçu et exploité par Manjo Consulting AB, société suédoise (n° d'entreprise/TVA 5568138464), opérant sous le nom commercial Yachting Earth (yachting.earth).",
+    "sections": [
+      {
+        "heading": "Pourquoi nous avons créé cet outil",
+        "body": [
+          "Tout skipper connaît la routine : indiquer son itinéraire et son heure d'arrivée prévue à quelqu'un à terre, puis confirmer son arrivée une fois à quai en sécurité. En pratique, ce plan tient dans un SMS ou une note griffonnée, et il est facile pour les détails - l'itinéraire réel, l'équipage à bord, qui appeler et quand - de se perdre ou de devenir obsolètes d'une sortie à l'autre.",
+          "Yachting Earth ICE transforme cette routine en un check-in structuré et reproductible : enregistrez la sortie et le navire une fois, invitez votre équipage, et le système surveille le temps qui passe afin que votre contact d'urgence (« ICE ») désigné dispose toujours d'informations exactes et à jour si vous ne confirmez pas votre arrivée à temps."
+        ]
+      },
+      {
+        "heading": "Ce que nous sommes - et ce que nous ne sommes pas",
+        "body": [
+          "Il s'agit d'un outil d'information pour la préparation de voyage et la sécurité de l'équipage, pas d'une balise de détresse, d'une EPIRB, ni d'un système de suivi en temps réel. Il ne surveille pas la position de votre navire et ne contacte pas lui-même les services de secours."
+        ],
+        "list": [
+          "Vous (le skipper) restez responsable des décisions de sécurité réelles en mer",
+          "Le rôle du système est de garantir que la bonne information parvient à la bonne personne si une sortie prend du retard",
+          "Tout ce que fait le système - délais de grâce, report de l'heure d'arrivée, notification d'un contact ICE - vise à appuyer votre propre jugement, pas à le remplacer"
+        ]
+      },
+      {
+        "heading": "Qui est derrière",
+        "body": [
+          "Manjo Consulting AB est une société suédoise qui conçoit et exploite Yachting Earth ICE de bout en bout - produit, ingénierie et support. Nous sommes nous-mêmes navigateurs, et nous avons créé l'outil que nous aurions aimé avoir pour nos propres sorties."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Nous contacter",
+      "body": "Des questions sur l'entreprise derrière Yachting Earth, ou sur le service lui-même ? Contactez-nous via le formulaire de contact disponible dans votre compte, ou consultez nos pages Confidentialité & RGPD et Conditions d'utilisation pour en savoir plus sur le fonctionnement du système."
+    }
+  },
+  "faq": {
+    "title": "Foire aux questions",
+    "lead": "Questions courantes sur le fonctionnement de Yachting Earth ICE. Vous ne trouvez pas ce que vous cherchez ? Contactez-nous via le formulaire de contact disponible dans votre compte.",
+    "categories": [
+      {
+        "heading": "Prise en main",
+        "items": [
+          {
+            "q": "Qu'est-ce que Yachting Earth ICE ?",
+            "a": "C'est un outil de préparation de voyage et de suivi de sécurité pour l'équipage. Un skipper enregistre une sortie et un navire, ajoute un ou plusieurs itinéraires prévus, invite l'équipage, et désigne un contact d'urgence (« ICE ») qui est averti automatiquement si la sortie prend du retard."
+          },
+          {
+            "q": "Est-ce une balise de détresse ou un système de suivi en temps réel ?",
+            "a": "Non. Yachting Earth ICE ne suit pas la position en direct d'un navire et ne contacte pas lui-même les services de secours. C'est un outil de gestion de l'information - le skipper reste responsable des décisions de sécurité réelles. En cas d'urgence réelle, contactez toujours directement votre centre de coordination de sauvetage local ou les garde-côtes."
+          },
+          {
+            "q": "Comment ajouter un itinéraire à une sortie ?",
+            "a": "Planifiez votre itinéraire sur le planificateur d'itinéraires de Windy.com, puis collez l'URL obtenue dans le formulaire de la sortie. Elle est automatiquement convertie en coordonnées et affichée sur la carte. Une sortie peut comporter plusieurs itinéraires prévus."
+          },
+          {
+            "q": "Comment inviter des équipiers ?",
+            "a": "Depuis la page de détail de la sortie, ajoutez un équipier par e-mail. Il reçoit une invitation pour confirmer ses informations et, éventuellement, créer son propre compte et ajouter une photo."
+          }
+        ]
+      },
+      {
+        "heading": "Sécurité & notifications",
+        "items": [
+          {
+            "q": "Qu'est-ce que le délai de grâce ?",
+            "a": "C'est une marge ajoutée à l'heure d'arrivée prévue de la sortie avant qu'elle soit considérée en retard - afin de tenir compte des retards normaux sans déclencher de fausse alerte. Vous choisissez le délai de grâce lors de la création de la sortie."
+          },
+          {
+            "q": "Que se passe-t-il si une sortie prend du retard ?",
+            "a": "Une tâche de fond vérifie chaque minute les sorties dépassant leur heure d'arrivée prévue plus le délai de grâce. Une fois la sortie en retard, le contact ICE est averti par e-mail et, si configuré, par Telegram ou WhatsApp."
+          },
+          {
+            "q": "Je suis en retard - comment éviter de déclencher une alerte ?",
+            "a": "Ouvrez votre sortie et utilisez « Reporter » pour prolonger l'heure d'arrivée prévue à tout moment avant l'échéance."
+          },
+          {
+            "q": "Comment marquer une sortie comme terminée en toute sécurité ?",
+            "a": "Ouvrez la sortie et sélectionnez « Confirmer l'arrivée ». Cela peut être fait à tout moment, y compris après l'envoi d'une alerte - votre contact ICE reçoit une mise à jour dans tous les cas."
+          },
+          {
+            "q": "Comment mon contact d'urgence voit-il les détails de la sortie ?",
+            "a": "Il reçoit un lien en lecture seule vers un portail de sortie, protégé par un jeton d'accès privé - aucun compte ni connexion requis. Les autorités de recherche et sauvetage peuvent également consulter une sortie à l'aide d'un numéro de référence et d'un code PIN."
+          },
+          {
+            "q": "Mon contact ICE doit-il confirmer avant de pouvoir être notifié ?",
+            "a": "Non. Confirmer son e-mail ne fait que vérifier que l'adresse fonctionne, mais les alertes de retard sont envoyées dans tous les cas - conditionner une alerte de sécurité à un lien cliqué irait à l'encontre de son objectif."
+          }
+        ]
+      },
+      {
+        "heading": "Confidentialité & données",
+        "items": [
+          {
+            "q": "Que deviennent mes données après la fin d'une sortie ?",
+            "a": "Une sortie terminée ou annulée est immédiatement supprimée de manière logique (elle disparaît de la vue) puis définitivement supprimée, avec ses itinéraires, ses enregistrements d'équipage, ses photos et ses notifications, 30 jours plus tard. Votre compte et vos navires ne sont pas concernés. Consultez la page Confidentialité & RGPD pour tous les détails."
+          },
+          {
+            "q": "Puis-je supprimer mon compte ?",
+            "a": "Oui, à tout moment depuis votre page de profil."
+          },
+          {
+            "q": "Mes données sont-elles partagées avec quelqu'un ?",
+            "a": "Jamais vendues ni partagées avec des annonceurs. Elles ne sont accessibles qu'aux services nécessaires au fonctionnement du système, comme nos fournisseurs d'e-mail et de notification. Consultez la page Confidentialité & RGPD pour la liste complète."
+          }
+        ]
+      }
+    ]
+  },
+  "changelog": {
+    "title": "Journal des modifications",
+    "intro": "Ce qui a changé dans Yachting Earth ICE, version par version. Chaque entrée correspond à une version promue en production.",
+    "sectionNew": "Nouveautés",
+    "sectionImproved": "Améliorations",
+    "sectionFixed": "Corrections",
+    "entries": [
+      {
+        "version": "v1.2.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE est désormais disponible en cinq langues - anglais, suédois, français, italien et espagnol - afin que vous et votre équipage puissiez l'utiliser dans la langue qui vous convient le mieux."
+          ],
+          "improved": [
+            "Dès que votre contact d'urgence a été alerté, les photos de l'équipage sont maintenant verrouillées avec le reste du voyage, afin que rien ne puisse être modifié pendant que les secours sont peut-être en route.",
+            "Le pied de page du site, avec ses liens rapides et le numéro de version, apparaît désormais sur toutes les pages, que vous soyez connecté ou non.",
+            "Nous avons allégé le menu principal : le Blog et la FAQ se trouvent désormais dans le pied de page, afin que la navigation reste centrée sur vos voyages."
+          ]
+        }
+      },
+      {
+        "version": "v1.1.0",
+        "date": "2026-07-15",
+        "sections": {
+          "new": [
+            "Verrouillage d'urgence : une fois le contact ICE d'une sortie alerté suite à un retard, la sortie ainsi que son équipage, ses itinéraires et son contact ICE sont verrouillés contre toute modification ultérieure, pour des raisons de sécurité et de traçabilité.",
+            "Champ d'informations médicales privé pour l'équipage, communiqué uniquement aux autorités de recherche et sauvetage en cas d'urgence - jamais au skipper ni au contact ICE.",
+            "Chaque sortie dispose désormais d'exactement un contact ICE. Une sortie peut être enregistrée sans contact, mais il faut en désigner un avant de pouvoir l'activer.",
+            "Le tableau de bord met désormais en évidence les sorties en retard avec des états d'avertissement et d'alerte clairs.",
+            "Nouveau carnet d'adresses d'équipage, itinéraires enregistrés et navires enregistrés pour une préparation de sortie plus rapide et une réutilisation facile entre sorties.",
+            "Ce journal des modifications, un indicateur de version dans le pied de page, une formulation anglaise et suédoise affinée, et une présentation cohérente sur les pages publiques."
+          ]
+        }
+      },
+      {
+        "version": "v1.0.0",
+        "date": "2026-07-14",
+        "sections": {
+          "new": [
+            "Première version de production publiée.",
+            "Enregistrement de sortie, planification d'itinéraire, invitations d'équipage et notifications de contact ICE.",
+            "Portails skipper et ICE/SAR, cycle de vie des données RGPD, prise en charge des langues anglaise et suédoise."
+          ]
+        }
+      }
+    ]
+  }
+}

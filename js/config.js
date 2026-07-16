@@ -12,7 +12,7 @@ const CONFIG = (() => {
         API_BASE_URL: isLocal ? 'http://localhost:8080' : 'https://ice-api.manjo.se',
         // Matches the latest git tag (see "Versioning & releases" in CLAUDE.md).
         // Bump by hand alongside a new changelog.js entry when main is tagged.
-        APP_VERSION: 'v1.1.0',
+        APP_VERSION: 'v1.2.0',
         // Labels are looked up via t('common.gracePeriod.hNN') at render time
         // (formatGracePeriod() in i18n.js) rather than stored here, since
         // config.js loads before the active language dictionary.
