@@ -2,8 +2,7 @@ const IceContactsPage = {
     channelLabels() {
         return {
             email: t('iceContacts.channelLabels.email'),
-            telegram: t('iceContacts.channelLabels.telegram'),
-            whatsapp: t('iceContacts.channelLabels.whatsapp')
+            telegram: t('iceContacts.channelLabels.telegram')
         };
     },
 
@@ -54,7 +53,6 @@ const IceContactsPage = {
                             <select id="contact-channel">
                                 <option value="email" selected>${escapeHtml(t('iceContacts.channelLabels.email'))}</option>
                                 <option value="telegram">${escapeHtml(t('iceContacts.channelLabels.telegram'))}</option>
-                                <option value="whatsapp">${escapeHtml(t('iceContacts.channelLabels.whatsapp'))}</option>
                             </select>
                             <small>${escapeHtml(t('iceContacts.channelHint'))}</small>
                         </div>

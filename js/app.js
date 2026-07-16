@@ -308,6 +308,14 @@ const LANG_META = {
             + '<rect width="30" height="20" fill="#AA151B"/>'
             + '<rect y="5" width="30" height="10" fill="#F1BF00"/>'
             + '</svg>'
+    },
+    de: {
+        name: 'Deutsch',
+        flag: '<svg viewBox="0 0 30 20" class="lang-flag" aria-hidden="true" focusable="false">'
+            + '<rect width="30" height="6.67" fill="#000"/>'
+            + '<rect y="6.67" width="30" height="6.67" fill="#DD0000"/>'
+            + '<rect y="13.33" width="30" height="6.67" fill="#FFCE00"/>'
+            + '</svg>'
     }
 };
 

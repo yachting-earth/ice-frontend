@@ -1,0 +1,1552 @@
+{
+  "common": {
+    "save": "Speichern",
+    "saveChanges": "Änderungen speichern",
+    "saving": "Wird gespeichert…",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "remove": "Entfernen",
+    "loading": "Wird geladen…",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "name": "Name",
+    "phone": "Telefon",
+    "optional": "(optional)",
+    "gracePeriod": {
+      "h1": "1 Stunde",
+      "h4": "4 Stunden",
+      "h12": "12 Stunden",
+      "h24": "24 Stunden",
+      "h48": "48 Stunden"
+    }
+  },
+  "errors": {
+    "AUTH_REQUIRED": "Du musst dich erneut anmelden.",
+    "AUTH_INVALID": "Falsche E-Mail-Adresse oder falsches Passwort.",
+    "ACCESS_DENIED": "Du hast keinen Zugriff darauf.",
+    "VALIDATION_ERROR": "Bitte überprüfe die markierten Felder.",
+    "INVALID_EMAIL": "Ungültige E-Mail-Adresse.",
+    "INVALID_PHONE": "Ungültige Telefonnummer.",
+    "ACCOUNT_REQUIRED": "Dafür wird ein Konto benötigt.",
+    "PASSWORD_WEAK": "Das Passwort ist zu schwach.",
+    "EMAIL_NOT_VERIFIED": "Bitte bestätige zuerst deine E-Mail-Adresse.",
+    "VERIFICATION_INVALID": "Der Bestätigungslink ist ungültig.",
+    "VERIFICATION_EXPIRED": "Der Bestätigungslink ist abgelaufen.",
+    "PASSWORD_RESET_INVALID": "Dieser Link zum Zurücksetzen des Passworts ist ungültig oder wurde bereits verwendet.",
+    "PASSWORD_RESET_EXPIRED": "Dieser Link zum Zurücksetzen des Passworts ist abgelaufen.",
+    "NOT_FOUND": "Nicht gefunden.",
+    "RESOURCE_CONFLICT": "Das gibt es bereits.",
+    "MMSI_ALREADY_ACTIVE": "Für dieses Boot läuft bereits ein aktiver Törn.",
+    "INVALID_ETA": "Ungültige Ankunftszeit.",
+    "NOTIFICATION_FAILED": "Die Benachrichtigung konnte nicht gesendet werden.",
+    "DEPARTURE_EDIT_LOCKED": "Die Abfahrtszeit kann nur geändert werden, bevor der Törn aktiviert wird.",
+    "ARRIVAL_EDIT_LOCKED": "Die Ankunftszeit kann nur geändert werden, bevor der Törn als abgeschlossen bestätigt wird.",
+    "GRACE_PERIOD_EDIT_LOCKED": "Die Kulanzzeit kann nur geändert werden, bevor der Törn als abgeschlossen bestätigt wird.",
+    "ICE_CONTACT_REQUIRED": "Für diesen Törn muss ein ICE-Kontakt festgelegt werden, bevor er aktiviert werden kann.",
+    "TRIP_LOCKED": "Dieser Törn ist aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt und kann nicht mehr geändert werden.",
+    "CONTACT_RATE_LIMITED": "Du hast das Tageslimit für Einsendungen über das Kontaktformular erreicht. Bitte versuche es morgen erneut.",
+    "CONTACT_TOO_MANY_FILES": "Zu viele Anhänge.",
+    "CONTACT_FILE_TOO_LARGE": "Einer deiner Anhänge ist zu groß.",
+    "CONTACT_INVALID_FILE_TYPE": "Einer deiner Anhänge hat ein nicht unterstütztes Dateiformat.",
+    "CONTACT_ATTACHMENT_NOT_FOUND": "Anhang nicht gefunden.",
+    "CREW_GDPR_TOKEN_INVALID": "Dieser Link ist ungültig.",
+    "CREW_GDPR_TOKEN_EXPIRED": "Dieser Link ist abgelaufen. Bitte fordere einen neuen an.",
+    "TELEGRAM_NOT_LINKED": "Verknüpfe zuerst dein Telegram-Konto.",
+    "TELEGRAM_ALREADY_LINKED": "Dieses Telegram-Konto ist bereits mit einem anderen Benutzer verknüpft.",
+    "SERVER_ERROR": "Ein unerwarteter Fehler ist aufgetreten.",
+    "DATABASE_ERROR": "Ein Datenbankfehler ist aufgetreten.",
+    "RATE_LIMITED": "Zu viele Versuche. Bitte versuche es später erneut.",
+    "NETWORK_ERROR": "Der Server konnte nicht erreicht werden. Überprüfe deine Verbindung.",
+    "PARSE_ERROR": "Ungültige Antwort vom Server.",
+    "UNKNOWN": "Ein unerwarteter Fehler ist aufgetreten."
+  },
+  "validation": {
+    "emailRequired": "E-Mail-Adresse ist erforderlich",
+    "emailInvalid": "Ungültige E-Mail-Adresse",
+    "passwordRequired": "Passwort ist erforderlich",
+    "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein",
+    "passwordNeedsUppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+    "passwordNeedsNumber": "Das Passwort muss mindestens eine Zahl enthalten",
+    "nameRequired": "Name ist erforderlich",
+    "nameTooShort": "Der Name muss mindestens 2 Zeichen lang sein",
+    "phoneRequired": "Telefonnummer ist erforderlich",
+    "phoneInvalid": "Ungültige Telefonnummer (internationales Format verwenden, z. B. +46701234567)",
+    "windyUrlRequired": "Windy-Link ist erforderlich",
+    "windyUrlInvalid": "Ungültiger Windy-Link. Muss von windy.com/route-planner stammen",
+    "messageRequired": "Nachricht ist erforderlich",
+    "tooManyFiles": "Zu viele Anhänge (max. {max})",
+    "fileTooLarge": "{name} ist zu groß (max. {maxMb} MB)",
+    "invalidFileType": "{name} hat ein nicht unterstütztes Dateiformat (nur Bilder und PDF)",
+    "vesselYearInvalid": "Baujahr muss eine ganze Zahl zwischen 1900 und {maxYear} sein",
+    "vesselDimensionInvalid": "{label} muss eine positive Zahl in Metern sein (max. 200)"
+  },
+  "trip": {
+    "status": {
+      "all": "Alle",
+      "draft": "Entwurf",
+      "published": "Veröffentlicht",
+      "active": "Aktiv",
+      "completed": "Abgeschlossen",
+      "cancelled": "Storniert"
+    }
+  },
+  "app": {
+    "brand": "Yachting Earth",
+    "nav": {
+      "myTrips": "Meine Törns",
+      "myVessels": "Meine Boote",
+      "savedRoutes": "Gespeicherte Routen",
+      "iceContacts": "ICE-Kontakte",
+      "crewAddressBook": "Adressbuch",
+      "myIceAccount": "Mein ICE-Konto",
+      "admin": "Admin",
+      "logout": "Abmelden"
+    },
+    "toggleNav": "Navigationsmenü ein-/ausblenden",
+    "profileBadgeTitle": "{name} - Meine Seite",
+    "lightboxClose": "Bild in voller Größe schließen",
+    "renderError": "Beim Anzeigen dieser Seite ist etwas schiefgelaufen. Bitte neu laden.",
+    "version": "Version {version}"
+  },
+  "dashboard": {
+    "title": "Meine Törns",
+    "subtitle": "Übersicht über alle geplanten und laufenden Törns",
+    "newTrip": "+ Neuer Törn",
+    "loadingTrips": "Törns werden geladen…",
+    "loadFailed": "Törns konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine Törns",
+    "emptyBody": "Erstelle deinen ersten Törn, um loszulegen.",
+    "verifyEmailBanner": "Bestätige deine E-Mail-Adresse (<strong>{email}</strong>), um Törns anlegen und Boote hinzufügen zu können. Den Link findest du in deinem Posteingang.",
+    "resendLink": "Link erneut senden",
+    "resending": "Wird gesendet…",
+    "alreadyVerified": "Deine E-Mail-Adresse ist bereits bestätigt.",
+    "verificationResent": "Ein neuer Bestätigungslink wurde gesendet.",
+    "verificationResendFailed": "Der Link konnte gerade nicht gesendet werden. Bitte versuche es später erneut.",
+    "noIceContact": "Du hast noch keinen ICE-Kontakt - ohne einen kann niemand benachrichtigt werden, falls dein Törn nicht rechtzeitig bestätigt wird.",
+    "addIceContact": "ICE-Kontakt hinzufügen",
+    "vesselFallback": "Boot #{id}",
+    "departure": "Abfahrt: {datetime}",
+    "arrival": "Ankunft: {datetime}",
+    "grace": "Kulanzzeit: {label}",
+    "graceHours": "{hours} Std.",
+    "iceNotified": "⚠ ICE-Kontakt benachrichtigt",
+    "view": "Ansehen",
+    "role": {
+      "crew": "Crew",
+      "ice": "ICE-Kontakt"
+    },
+    "readOnly": "Nur Lesezugriff"
+  },
+  "login": {
+    "tagline": "Gute Fahrt, sichere Heimkehr",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "submit": "Anmelden",
+    "submitting": "Wird angemeldet…",
+    "noAccount": "Noch kein Konto?",
+    "registerLink": "Registrieren",
+    "errorDefault": "Anmeldung fehlgeschlagen.",
+    "forgotPasswordLink": "Passwort vergessen?",
+    "crewGdprLink": "Als Crew ohne Konto eingeladen? Verwalte hier deine Daten.",
+    "redirectNotice": {
+      "default": "Bitte melde dich an, um fortzufahren.",
+      "contact": "Bitte melde dich an, um das Kontaktformular zu nutzen."
+    },
+    "tabs": {
+      "user": "Anmelden",
+      "sar": "SAR-Zugang"
+    }
+  },
+  "register": {
+    "tagline": "Konto erstellen",
+    "nameLabel": "Name",
+    "emailLabel": "E-Mail",
+    "phoneLabel": "Telefon (optional)",
+    "phonePlaceholder": "+46701234567",
+    "passwordLabel": "Passwort",
+    "passwordHint": "Mindestens 8 Zeichen, ein Großbuchstabe und eine Zahl.",
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "submit": "Konto erstellen",
+    "submitting": "Konto wird erstellt…",
+    "haveAccount": "Bereits ein Konto?",
+    "loginLink": "Anmelden",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "acceptTerms": "Ich akzeptiere die {termsLink} und die {privacyLink}",
+    "termsLink": "Nutzungsbedingungen",
+    "privacyLink": "Datenschutzerklärung",
+    "acceptTermsRequired": "Du musst die Nutzungsbedingungen und die Datenschutzerklärung akzeptieren",
+    "errorDefault": "Das Konto konnte nicht erstellt werden."
+  },
+  "forgotPassword": {
+    "tagline": "Passwort zurücksetzen",
+    "emailLabel": "E-Mail",
+    "submit": "Link zum Zurücksetzen senden",
+    "submitting": "Wird gesendet…",
+    "sent": "Falls diese E-Mail-Adresse registriert ist, haben wir einen Link zum Zurücksetzen deines Passworts gesendet. Bitte prüfe deinen Posteingang.",
+    "backToLogin": "Zurück zur Anmeldung"
+  },
+  "resetPassword": {
+    "tagline": "Neues Passwort wählen",
+    "noToken": "Kein Link zum Zurücksetzen gefunden. Prüfe, ob du den vollständigen Link angeklickt hast.",
+    "requestNew": "Neuen Link anfordern",
+    "passwordLabel": "Neues Passwort",
+    "confirmPasswordLabel": "Neues Passwort bestätigen",
+    "submit": "Passwort zurücksetzen",
+    "submitting": "Wird zurückgesetzt…",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "linkExpired": "Dieser Link ist abgelaufen. Bitte fordere einen neuen an.",
+    "errorDefault": "Das Passwort konnte nicht zurückgesetzt werden.",
+    "successTitle": "Passwort zurückgesetzt",
+    "successBody": "Dein Passwort wurde geändert. Du wurdest überall abgemeldet und kannst dich jetzt mit deinem neuen Passwort anmelden."
+  },
+  "crewGdprRequest": {
+    "tagline": "Crew-Daten verwalten",
+    "intro": "Wurdest du als Crew (oder als ICE-Kontakt) eingeladen, ohne ein Konto zu erstellen? Gib die E-Mail-Adresse ein, an die die Einladung gesendet wurde. Wir senden dir einen sicheren, zeitlich begrenzten Link zu einem Portal, in dem du deine Daten einsehen, exportieren oder löschen oder uns eine Nachricht senden kannst.",
+    "emailLabel": "E-Mail",
+    "submit": "Zugangslink senden",
+    "submitting": "Wird gesendet…",
+    "sent": "Falls diese E-Mail-Adresse zu einem Crew- oder ICE-Kontakt-Datensatz passt, haben wir einen sicheren Zugangslink gesendet. Bitte prüfe deinen Posteingang.",
+    "backToLogin": "Zurück zur Anmeldung"
+  },
+  "crewGdprPortal": {
+    "noToken": "Kein Zugangslink gefunden. Prüfe, ob du den vollständigen Link angeklickt hast.",
+    "requestNew": "Neuen Link anfordern",
+    "loading": "Wird geladen…",
+    "invalidLink": "Dieser Link ist ungültig.",
+    "linkExpired": "Dieser Link ist abgelaufen. Bitte fordere einen neuen an.",
+    "title": "Deine Crew-Daten",
+    "intro": "Zeigt Daten zu {email}.",
+    "membershipsTitle": "Törns, zu denen du eingeladen wurdest",
+    "withSkipper": "mit {skipper}",
+    "tripStatus": {
+      "draft": "noch nicht veröffentlicht",
+      "published": "bevorstehend",
+      "active": "läuft",
+      "completed": "abgeschlossen",
+      "cancelled": "storniert"
+    },
+    "noMemberships": "Für diese E-Mail-Adresse wurden keine Crew-Mitgliedschaften gefunden.",
+    "notErasableActive": "Dieser Törn ist noch nicht beendet, daher kann diese Mitgliedschaft nicht sofort gelöscht werden - die Crew-Daten werden aus Sicherheitsgründen noch benötigt, solange der Törn läuft. Sie wird automatisch 30 Tage nach Ende des Törns gelöscht.",
+    "notErasableLocked": "Deine Daten sind aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt. Sie werden automatisch 30 Tage nach Abschluss des Törns gelöscht.",
+    "iceContactNote": "Diese E-Mail-Adresse ist außerdem für {count} Skipper als Notfallkontakt (ICE) registriert. Diese Daten sind im untenstehenden Export enthalten; um sie entfernen zu lassen, bitte den Skipper, dich aus seinen ICE-Kontakten zu löschen.",
+    "exportTitle": "Meine Daten exportieren",
+    "exportHint": "Lade alles, was wir über diese E-Mail-Adresse gespeichert haben, als JSON-Datei herunter.",
+    "exportButton": "Meine Daten herunterladen",
+    "eraseTitle": "Vergiss mich",
+    "eraseHint": "Lösche deine Crew-Mitgliedschaft bei jedem bereits abgeschlossenen Törn sofort, statt auf die automatische Löschung nach 30 Tagen zu warten. Mitgliedschaften bei einem noch laufenden Törn bleiben aus Sicherheitsgründen bis zu dessen Abschluss erhalten.",
+    "eraseButton": "Meine Daten jetzt löschen",
+    "eraseConfirm": "Dadurch werden deine Crew-Daten für jeden abgeschlossenen Törn dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden. Fortfahren?",
+    "erasing": "Wird gelöscht…",
+    "eraseSuccess": "{count} Crew-Mitgliedschaft(en) gelöscht.",
+    "eraseKeptActive": "{count} Mitgliedschaft(en) bei einem noch laufenden Törn wurden beibehalten und werden automatisch gelöscht, sobald dieser abgeschlossen ist.",
+    "eraseKeptLocked": "{count} Mitgliedschaft(en) bei einem Törn mit einem Notfall wurden aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit beibehalten und werden automatisch 30 Tage nach Abschluss des Törns gelöscht.",
+    "eraseFailed": "Deine Daten konnten nicht gelöscht werden.",
+    "contactTitle": "Sende uns eine Nachricht",
+    "contactHint": "Hast du eine Frage zu deinen Daten oder etwas anderes mitzuteilen? Diese Nachricht geht direkt an den Systembetreiber.",
+    "messageLabel": "Nachricht",
+    "contactSubmit": "Nachricht senden",
+    "contactSubmitting": "Wird gesendet…",
+    "contactSuccess": "Deine Nachricht wurde gesendet.",
+    "contactFailed": "Deine Nachricht konnte nicht gesendet werden."
+  },
+  "verifyEmail": {
+    "noToken": "Kein Bestätigungslink gefunden. Prüfe, ob du den vollständigen Link angeklickt hast.",
+    "backToStart": "Zurück zum Start",
+    "confirming": "Deine E-Mail-Adresse wird bestätigt…",
+    "failedTitle": "Bestätigung fehlgeschlagen",
+    "emailTaken": "Die neue E-Mail-Adresse wird bereits von einem anderen Konto verwendet.",
+    "linkInvalid": "Der Link ist ungültig oder abgelaufen.",
+    "toOverview": "Zu deiner Übersicht",
+    "toLogin": "Zur Anmeldung",
+    "changedTitle": "E-Mail-Adresse aktualisiert",
+    "confirmedTitle": "E-Mail-Adresse bestätigt",
+    "changedBody": "Deine E-Mail-Adresse wurde zu <strong>{email}</strong> geändert.",
+    "confirmedBody": "Danke! Dein Konto ist jetzt bestätigt und du hast vollen Zugriff auf Yachting Earth."
+  },
+  "profile": {
+    "title": "Meine Seite",
+    "subtitle": "Deine Kontodaten einsehen und verwalten",
+    "photoHeading": "Foto",
+    "photoChangeLabel": "Foto ändern (optional)",
+    "photoHint": "Wird von Search and Rescue genutzt, um dich als Skipper zu identifizieren. JPEG/PNG, max. 10 MB.",
+    "photoSubmit": "Foto speichern",
+    "photoSaving": "Wird gespeichert…",
+    "photoChooseFirst": "Wähle zuerst ein Bild aus.",
+    "photoSaveFailed": "Das Foto konnte nicht gespeichert werden.",
+    "photoSaved": "Das Foto wurde gespeichert.",
+    "detailsHeading": "Meine Daten",
+    "loadingDetails": "Deine Daten werden geladen…",
+    "loadFailed": "Deine Daten konnten nicht abgerufen werden.",
+    "nameLabel": "Name",
+    "phoneLabel": "Telefon",
+    "emailLabel": "E-Mail",
+    "languageLabel": "Sprache",
+    "submit": "Änderungen speichern",
+    "saveFailed": "Die Änderungen konnten nicht gespeichert werden.",
+    "emailChangePending": "Ein Bestätigungslink wurde an <strong>{email}</strong> gesendet. Deine E-Mail-Adresse ändert sich erst, wenn du auf den Link klickst. Wir haben außerdem deine aktuelle Adresse benachrichtigt.",
+    "saved": "Deine Daten wurden aktualisiert.",
+    "gdprHeading": "Meine Daten herunterladen",
+    "gdprHint": "Fordere eine Zusammenfassung von allem an, was wir über dich gespeichert haben - Konto, Boote, ICE-Kontakte und Törns. Die Datei wird sofort im maschinenlesbaren JSON-Format bereitgestellt und steht 7 Tage lang zum Download bereit.",
+    "gdprChecking": "Status wird geprüft…",
+    "gdprRequestButton": "Meine Daten anfordern",
+    "gdprAvailableUntil": "Deine Zusammenfassung ist bereit und kann bis {date} heruntergeladen werden.",
+    "gdprDownloadButton": "Meine Daten herunterladen",
+    "gdprRequestAgainButton": "Erneut anfordern",
+    "gdprRequestFailed": "Deine Daten konnten nicht zusammengestellt werden.",
+    "gdprRequestReady": "Deine Daten stehen zum Download bereit.",
+    "gdprDownloadFailed": "Deine Daten konnten nicht heruntergeladen werden.",
+    "gdprDownloaded": "Deine Daten wurden heruntergeladen.",
+    "channelHeading": "Benachrichtigungskanal",
+    "channelHint": "Wähle, wie wir dich zu deinem Konto kontaktieren. Das ist getrennt vom Kanal, der für die Benachrichtigung deines ICE-Kontakts verwendet wird.",
+    "channelLabel": "Bevorzugter Kanal",
+    "channelLabels": {
+      "email": "E-Mail",
+      "telegram": "Telegram"
+    },
+    "channelSaveFailed": "Dein bevorzugter Kanal konnte nicht gespeichert werden.",
+    "channelSaved": "Benachrichtigungskanal aktualisiert.",
+    "deleteHeading": "Konto löschen",
+    "deleteWarning": "Das Löschen deines Kontos entfernt dauerhaft deine Boote und ICE-Kontakte und beendet deine Törns. Dies kann nicht rückgängig gemacht werden.",
+    "deleteButton": "Mein Konto löschen",
+    "deletePasswordLabel": "Mit deinem Passwort bestätigen",
+    "deleteConfirmButton": "Endgültig löschen",
+    "deleteCancelButton": "Abbrechen",
+    "passwordRequired": "Gib dein Passwort ein, um zu bestätigen.",
+    "deleteFailed": "Das Konto konnte nicht gelöscht werden.",
+    "deleted": "Dein Konto wurde gelöscht."
+  },
+  "telegramLink": {
+    "heading": "Telegram verknüpfen",
+    "notLinkedHint": "Verknüpfe dein Telegram-Konto, um dort Benachrichtigungen zu erhalten.",
+    "linkedSince": "Seit {date} mit Telegram verknüpft.",
+    "openButton": "Telegram öffnen, um dein Konto zu verknüpfen",
+    "waitingHint": "Warte auf Bestätigung in Telegram…",
+    "checkNowButton": "Erledigt - jetzt prüfen",
+    "manualHint": "Wenn sich die App nicht über die Schaltfläche öffnet, kopiere diesen Link in Telegram:",
+    "linkedToast": "Telegram verknüpft!",
+    "unlinkButton": "Telegram trennen",
+    "unlinkConfirm": "Dein Telegram-Konto trennen? Du erhältst dann keine Telegram-Benachrichtigungen mehr.",
+    "unlinkedToast": "Telegram getrennt.",
+    "linkFailed": "Telegram-Verknüpfung konnte nicht gestartet werden. Versuche es erneut.",
+    "statusCheckFailed": "Der Telegram-Verknüpfungsstatus konnte nicht geprüft werden.",
+    "botNotConfigured": "Die Telegram-Verknüpfung ist noch nicht verfügbar. Bitte versuche es später erneut."
+  },
+  "createTrip": {
+    "title": "Neuen Törn erstellen",
+    "submit": "Törn erstellen",
+    "submitting": "Törn wird erstellt…",
+    "scheduleConflictNotice": "Hinweis: Für dieselbe MMSI-Nummer ist bereits ein anderer Törn im selben Zeitraum geplant.",
+    "created": "Törn erstellt",
+    "crewInvited": "{count} Personen zum Törn eingeladen.",
+    "crewInvitePartial": "{success} von {total} Personen zum Törn eingeladen.",
+    "crewInviteFailed": "Die ausgewählte Crew konnte nicht automatisch eingeladen werden. Füge sie manuell über die Törn-Seite hinzu.",
+    "pendingCrew": {
+      "heading": "Einzuladende Crew",
+      "hint": "Diese Personen aus deinem Adressbuch werden automatisch eingeladen, sobald der Törn erstellt ist.",
+      "removeAria": "{name} aus der Einladungsliste entfernen"
+    },
+    "vessel": {
+      "heading": "Boot",
+      "loading": "Boote werden geladen…",
+      "selectLabel": "Boot auswählen",
+      "mmsiSuffix": " (MMSI {mmsi})",
+      "noneRegistered": "Du hast noch keine registrierten Boote. Füge unten eins hinzu.",
+      "addNew": "+ Neues Boot hinzufügen",
+      "nameLabel": "Bootsname",
+      "namePlaceholder": "z. B. Thrym",
+      "mmsiLabel": "MMSI (optional)",
+      "callSignLabel": "Rufzeichen (optional)",
+      "modelLabel": "Modell (optional)",
+      "modelPlaceholder": "z. B. Bavaria 34",
+      "yearLabel": "Baujahr (optional)",
+      "yearPlaceholder": "z. B. 2011",
+      "lengthLabel": "Länge, Meter (optional)",
+      "widthLabel": "Breite, Meter (optional)",
+      "draftLabel": "Tiefgang, Meter (optional)",
+      "notesLabel": "Notizen (optional)",
+      "notesPlaceholder": "Weitere Informationen zum Boot",
+      "photoLabel": "Bootsfoto (optional)",
+      "photoHint": "Wird von Search and Rescue zur Identifizierung des Boots genutzt. JPEG/PNG, max. 10 MB.",
+      "saveButton": "Boot speichern",
+      "saveFailed": "Das Boot konnte nicht gespeichert werden.",
+      "mmsiAlreadyRegistered": "Diese MMSI-Nummer ist bereits im System registriert.",
+      "photoUploadFailed": "Das Boot wurde gespeichert, aber das Foto konnte nicht hochgeladen werden ({error})",
+      "unknownError": "unbekannter Fehler",
+      "added": "Boot hinzugefügt",
+      "length": "Länge",
+      "width": "Breite",
+      "draft": "Tiefgang"
+    },
+    "iceContact": {
+      "heading": "ICE-Kontakt",
+      "loading": "ICE-Kontakte werden geladen…",
+      "selectLabel": "Wer soll benachrichtigt werden, wenn dieser Törn nicht rechtzeitig bestätigt wird?",
+      "selectHint": "Wähle den einen ICE-Kontakt, der für diesen Törn benachrichtigt werden soll. Du kannst dies vorerst überspringen, aber der Törn kann erst aktiviert werden, wenn einer festgelegt ist.",
+      "required": "Bitte wähle einen ICE-Kontakt für diesen Törn.",
+      "noneRegistered": "Du hast noch keine registrierten ICE-Kontakte.",
+      "addLink": "ICE-Kontakt hinzufügen"
+    },
+    "schedule": {
+      "heading": "Zeitplan",
+      "departureLabel": "Abfahrt (UTC)",
+      "arrivalLabel": "Geplante Ankunft (UTC)",
+      "gracePeriodLabel": "Kulanzzeit, bevor der ICE-Kontakt benachrichtigt wird",
+      "gracePeriodHint": "Zeitspanne nach der geplanten Ankunft, bevor der ICE-Kontakt benachrichtigt wird, falls du deine Ankunft nicht bestätigt hast."
+    },
+    "routes": {
+      "heading": "Routen",
+      "addAlternative": "+ Alternative Route hinzufügen",
+      "addSavedRoute": "+ Gespeicherte Route hinzufügen",
+      "primary": "Hauptroute",
+      "alternative": "Alternative Route {index}",
+      "moveUp": "Nach oben",
+      "moveDown": "Nach unten",
+      "modeWindy": "Aus Windy importieren",
+      "modeManual": "Manuell zeichnen",
+      "modeGpx": "GPX-Datei importieren",
+      "drawLabel": "Route auf der Karte zeichnen",
+      "drawHint": "Klicke auf die Karte, um Punkte hinzuzufügen. Ziehe einen Punkt, um ihn zu verschieben; klicke auf einen Punkt und wähle „Punkt entfernen“, um ihn zu löschen.",
+      "points": "Punkte",
+      "clear": "Route löschen",
+      "windyUrlLabel": "Windy-Link",
+      "windyUrlPlaceholder": "https://www.windy.com/route-planner/boat/...",
+      "gpxLabel": "GPX-Datei",
+      "gpxHint": "Lade eine .gpx-Datei hoch, die aus deinem Kartenplotter oder deiner Navigations-App exportiert wurde. Die Route wird sofort eingelesen, die Datei selbst wird nicht gespeichert.",
+      "reasonLabel": "Grund",
+      "reasonPlaceholder": "z. B. falls der Wind auf Nord dreht",
+      "saveToArchive": "Im Routenarchiv speichern",
+      "saveRouteNamePlaceholder": "Name für diese Route, z. B. Marstrand-Skagen",
+      "saveRouteNameRequired": "Gib einen Namen für die Route ein.",
+      "saveRouteFailed": "Die Route konnte nicht gespeichert werden.",
+      "saveRouteSuccess": "Route gespeichert."
+    },
+    "errors": {
+      "vesselRequired": "Wähle ein Boot aus oder füge eins hinzu.",
+      "datesRequired": "Gib sowohl Abfahrts- als auch Ankunftszeit an.",
+      "arrivalBeforeDeparture": "Die Ankunftszeit muss nach der Abfahrtszeit liegen.",
+      "primaryRouteMinPoints": "Zeichne mindestens zwei Punkte für die Hauptroute.",
+      "gpxParseError": "Aus dieser GPX-Datei konnte keine Route gelesen werden. Stelle sicher, dass sie eine Route oder Aufzeichnung mit mindestens zwei Punkten enthält.",
+      "createFailed": "Der Törn konnte nicht erstellt werden."
+    }
+  },
+  "crewInvite": {
+    "noToken": "Kein Einladungslink gefunden. Prüfe, ob du den vollständigen Link angeklickt hast.",
+    "loading": "Einladung wird geladen...",
+    "invalidInvite": "Die Einladung ist ungültig oder abgelaufen.",
+    "backToStart": "Zurück zum Start",
+    "accountSection": {
+      "loggedIn": "Du bist angemeldet als <strong>{name}</strong> - die Einladung wird mit deinem Konto verknüpft.",
+      "saveAccountLabel": "Mein Konto speichern, damit ich mich später anmelden kann{emailSuffix}",
+      "passwordHint": "Mindestens 8 Zeichen, ein Großbuchstabe und eine Zahl.",
+      "confirmPasswordLabel": "Passwort bestätigen",
+      "acceptTerms": "Ich akzeptiere die {termsLink} und die {privacyLink}",
+      "termsLink": "Nutzungsbedingungen",
+      "privacyLink": "Datenschutzerklärung",
+      "haveAccount": "Bereits ein Konto? {loginLink} und öffne den Link erneut, damit die Einladung mit deinem Konto verknüpft wird."
+    },
+    "loginLink": "Anmelden",
+    "title": "Du bist zu einem Törn eingeladen!",
+    "summary": {
+      "skipper": "Skipper",
+      "vessel": "Boot",
+      "departure": "Abfahrt",
+      "arrival": "Ankunft",
+      "crewCount": "Crew bisher",
+      "crewCountValue": "{count} Personen"
+    },
+    "nameLabel": "Dein Name",
+    "phoneLabel": "Telefonnummer (optional)",
+    "phonePlaceholder": "+46701234567",
+    "iceContactLabel": "Dein Notfallkontakt",
+    "iceContactPlaceholder": "z. B. Erik (Ehemann) +46701234568",
+    "iceContactHint": "Name und Telefonnummer einer Person, die im Notfall kontaktiert werden soll.",
+    "medicalLabel": "Medizinische Informationen für Search and Rescue (optional)",
+    "medicalPlaceholder": "z. B. Allergien, Medikamente, Blutgruppe, Vorerkrankungen",
+    "medicalHint": "Wird nur im Notfall den Such- und Rettungsbehörden angezeigt - niemals dem Skipper oder dem ICE-Kontakt.",
+    "sharing": {
+      "heading": "Freigabe",
+      "contactHint": "Deine Telefonnummer und E-Mail-Adresse werden standardmäßig nur dem Skipper angezeigt. Wähle, ob du sie auch mit dem ICE-Kontakt teilen möchtest.",
+      "shareContactWithIce": "Meine Telefonnummer und E-Mail-Adresse mit dem ICE-Kontakt (Notfallkontakt) teilen",
+      "emergencyHint": "Dein oben angegebener Notfallkontakt wird standardmäßig nur dem Skipper angezeigt.",
+      "shareEmergencyWithIce": "Meinen Notfallkontakt mit dem ICE-Kontakt teilen"
+    },
+    "photoLabel": "Foto von dir (optional, aber empfohlen)",
+    "photoHint": "Wird von Search and Rescue zur Identifizierung der Crew genutzt. JPEG/PNG, max. 10 MB.",
+    "submit": "Annehmen & beitreten",
+    "submitting": "Wird beigetreten...",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "acceptTermsRequired": "Du musst die Nutzungsbedingungen und die Datenschutzerklärung akzeptieren",
+    "photoUploadFailed": "Das Foto konnte jedoch nicht hochgeladen werden ({reason}).",
+    "unknownError": "unbekannter Fehler",
+    "acceptFailed": "Der Beitritt zum Törn ist fehlgeschlagen.",
+    "acceptSuccess": "Du bist jetzt Teil der Crew. Gute Fahrt und allzeit sichere Rückkehr!",
+    "toOverview": "Zu deiner Übersicht",
+    "crewViewLinkHint": "Speichere diesen Link - er ermöglicht dir jederzeit die Ansicht des Törns und die Verwaltung deiner Freigaben.",
+    "crewViewLinkOpen": "Törn-Ansicht öffnen",
+    "crewViewLinkCopy": "Link kopieren",
+    "crewViewLinkCopied": "Link kopiert"
+  },
+  "iceConfirm": {
+    "noToken": "Kein Bestätigungslink gefunden. Prüfe, ob du den vollständigen Link angeklickt hast.",
+    "loading": "Wird geladen...",
+    "invalidLink": "Der Link ist ungültig oder wurde bereits verwendet.",
+    "backToStart": "Zurück zum Start",
+    "accountSection": {
+      "loggedIn": "Du bist angemeldet als <strong>{name}</strong> - die Bestätigung wird mit deinem Konto verknüpft.",
+      "passwordHint": "Mindestens 8 Zeichen, ein Großbuchstabe und eine Zahl.",
+      "confirmPasswordLabel": "Passwort bestätigen",
+      "deleteAfterTripLabel": "Mein Konto und meine Daten automatisch löschen, sobald der/die Törn(s), für die ich ICE-Kontakt bin, beendet sind",
+      "retentionNote": "Standardmäßig behalten wir dein Konto dauerhaft bei, damit du dich für künftige Törns wieder anmelden und deine Daten aktualisieren kannst. Setze das Häkchen oben, wenn Konto und Daten stattdessen einige Zeit nach Ende des Törns automatisch gelöscht werden sollen.",
+      "acceptTerms": "Ich akzeptiere die {termsLink} und die {privacyLink}",
+      "termsLink": "Nutzungsbedingungen",
+      "privacyLink": "Datenschutzerklärung",
+      "haveAccount": "Bereits ein Konto? {loginLink} und öffne den Link erneut, damit die Bestätigung mit deinem Konto verknüpft wird."
+    },
+    "loginLink": "Anmelden",
+    "title": "Als ICE-Kontakt bestätigen",
+    "intro": "{skipper} hat dich als ICE-Kontakt (In Case of Emergency) hinzugefügt{relationshipSuffix}. Das bedeutet, dass du kontaktiert werden kannst, falls er/sie sich nach einem Törn nicht rechtzeitig zurückmeldet.",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "acceptTermsRequired": "Du musst die Nutzungsbedingungen und die Datenschutzerklärung akzeptieren",
+    "confirming": "Wird bestätigt...",
+    "accountConflict": "Für diese E-Mail-Adresse besteht bereits ein Konto. Melde dich an und öffne den Link erneut, um zu bestätigen.",
+    "confirmFailed": "Bestätigung fehlgeschlagen.",
+    "policyNoteDelete": "Dein Konto und deine Daten werden automatisch gelöscht, sobald der/die Törn(s), für die du ICE-Kontakt bist, beendet sind.",
+    "policyNoteKeep": "Dein Konto wurde jetzt erstellt.",
+    "confirmSuccess": "Danke! Du bist jetzt als ICE-Kontakt bestätigt.",
+    "toOverview": "Zu deiner Übersicht"
+  },
+  "iceContacts": {
+    "title": "ICE-Kontakte",
+    "subtitle": "Deine ICE-Kontakte (In Case of Emergency), die benachrichtigt werden, wenn ein Törn nicht rechtzeitig bestätigt wird",
+    "addTitle": "Kontakt hinzufügen",
+    "cancelEdit": "Bearbeitung abbrechen",
+    "relationshipLabel": "Beziehung",
+    "relationshipPlaceholder": "z. B. Ehepartner, Bruder, Freund",
+    "phonePlaceholder": "+46701234567",
+    "channelLabel": "Bevorzugter Benachrichtigungskanal",
+    "channelLabels": {
+      "email": "E-Mail",
+      "telegram": "Telegram"
+    },
+    "channelHint": "Wird ein Törn nicht rechtzeitig bestätigt, erfolgt die Benachrichtigung des Kontakts über diesen Kanal.",
+    "submitAdd": "Kontakt speichern",
+    "loadingContacts": "Kontakte werden geladen...",
+    "loadFailed": "Kontakte konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine ICE-Kontakte",
+    "emptyBody": "Ohne einen ICE-Kontakt kann das System niemanden benachrichtigen, falls dein Törn nicht rechtzeitig bestätigt wird. Füge oben mindestens einen Kontakt hinzu.",
+    "confirmed": "✓ Bestätigt",
+    "pending": "⏳ Bestätigung ausstehend",
+    "copyConfirmLink": "Bestätigungslink kopieren",
+    "editButton": "Bearbeiten",
+    "linkCopied": "Link kopiert",
+    "editTitle": "Bearbeiten: {name}",
+    "relationshipRequired": "Beziehung ist erforderlich",
+    "relationshipTooLong": "Beziehung: max. 50 Zeichen",
+    "saveFailed": "Der Kontakt konnte nicht gespeichert werden.",
+    "addedEmailSent": "Kontakt hinzugefügt. Eine Bestätigungs-E-Mail wurde gesendet.",
+    "addedEmailFailed": "Kontakt hinzugefügt. Der E-Mail-Versand ist fehlgeschlagen - teile den Link manuell:",
+    "updated": "Kontakt aktualisiert.",
+    "deleteConfirm": "ICE-Kontakt {name} entfernen?",
+    "deleteFailed": "Der Kontakt konnte nicht entfernt werden.",
+    "deleted": "Kontakt entfernt."
+  },
+  "iceAccount": {
+    "title": "Mein ICE-Konto",
+    "subtitle": "Skipper, für die du ICE-Kontakt bist, sowie deine eigenen Daten",
+    "deletePolicyHeading": "Konto nach Törnende löschen",
+    "deletePolicyLabel": "Mein Konto und meine Daten automatisch löschen, sobald der/die Törn(s), für die ich ICE-Kontakt bin, beendet sind",
+    "deletePolicyHint": "Standardmäßig bleibt dein Konto dauerhaft bestehen. Setze das Häkchen, wenn es stattdessen automatisch gelöscht werden soll, sobald du für keinen laufenden oder künftigen Törn mehr ICE-Kontakt bist.",
+    "loading": "Wird geladen...",
+    "policySaveFailed": "Die Einstellung konnte nicht gespeichert werden.",
+    "policyEnabled": "Dein Konto wird jetzt automatisch gelöscht, sobald der/die Törn(s) beendet sind.",
+    "policyDisabled": "Dein Konto bleibt dauerhaft bestehen.",
+    "loadContactsFailed": "Deine Verbindungen konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine Verbindungen",
+    "emptyBody": "Du bist mit diesem Konto für keinen Skipper als ICE-Kontakt bestätigt.",
+    "editMyDetails": "Meine Daten bearbeiten",
+    "phonePlaceholder": "+46701234567",
+    "channelLabel": "Bevorzugter Benachrichtigungskanal",
+    "channelLabels": {
+      "email": "E-Mail",
+      "telegram": "Telegram"
+    },
+    "saveFailed": "Die Änderungen konnten nicht gespeichert werden.",
+    "updated": "Deine Daten wurden aktualisiert."
+  },
+  "icePortal": {
+    "invalidLink": "Ungültiger Link - Törn oder Zugangscode fehlt. Verwende den Link aus der Benachrichtigungsnachricht.",
+    "loadingTrip": "Törn wird geladen…",
+    "loadFailed": "Der Törn konnte nicht abgerufen werden. Der Link ist möglicherweise ungültig oder wurde widerrufen.",
+    "title": "Törn-Informationen",
+    "readOnlyNotice": "Nur-Lese-Ansicht für ICE-Kontakt und Search and Rescue (SAR)",
+    "alertTriggered": "<strong>Alarm ausgelöst - Ankunft nicht rechtzeitig bestätigt</strong>",
+    "printButton": "Drucken / Als PDF speichern",
+    "expandImagesButton": "Alle Bilder ausklappen",
+    "collapseImagesButton": "Alle Bilder einklappen",
+    "sarAccess": {
+      "heading": "Zugangsdaten für Search and Rescue (SAR)",
+      "description": "Benötigt eine SAR-Behörde Lesezugriff auf diesen Törn, gib ihr diese Referenz und PIN zur Eingabe auf der SAR-Abfrageseite.",
+      "referenceLabel": "Referenz",
+      "pinLabel": "PIN",
+      "showPin": "PIN anzeigen",
+      "hidePin": "PIN verbergen"
+    },
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "trip": {
+      "heading": "Törn",
+      "plannedDeparture": "Geplante Abfahrt: <strong>{datetime}</strong>",
+      "plannedArrival": "Geplante Ankunft: <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Boot: {name}",
+      "modelLabel": "Modell {value}",
+      "yearBuilt": "Baujahr {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Rufzeichen {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "T {value} m"
+    },
+    "routes": {
+      "heading": "Routen",
+      "empty": "Keine Routen registriert.",
+      "primary": "Hauptroute",
+      "alternate": "Alternative Route {order}",
+      "mapLabel": "Route {order}",
+      "noMap": "Keine Route zum Anzeigen",
+      "downloadGpx": "GPX herunterladen"
+    },
+    "crew": {
+      "heading": "Crew an Bord",
+      "empty": "Keine bestätigte Crew registriert.",
+      "unknownName": "Unbekannt",
+      "ownIceContact": "Eigener Notfallkontakt: {contact}",
+      "medicalLabel": "Medizinische Info"
+    },
+    "iceContact": {
+      "heading": "Notfallkontakt (ICE) des Skippers",
+      "empty": "Kein Notfallkontakt registriert.",
+      "relationshipLabel": "Beziehung"
+    },
+    "log": {
+      "heading": "Änderungsprotokoll",
+      "empty": "Keine Änderungen protokolliert.",
+      "ip": "IP: {ip}",
+      "showMore": "Mehr anzeigen",
+      "showLess": "Weniger anzeigen"
+    }
+  },
+  "crewView": {
+    "invalidLink": "Ungültiger Link - Törn oder Zugangscode fehlt. Verwende den Link aus deiner Crew-Einladungs-E-Mail.",
+    "loadingTrip": "Törn wird geladen…",
+    "loadFailed": "Der Törn konnte nicht abgerufen werden. Der Link ist möglicherweise ungültig oder wurde widerrufen.",
+    "title": "Törn-Informationen",
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "trip": {
+      "heading": "Törn",
+      "plannedDeparture": "Geplante Abfahrt: <strong>{datetime}</strong>",
+      "plannedArrival": "Geplante Ankunft: <strong>{datetime}</strong>"
+    },
+    "vessel": {
+      "nameLine": "Boot: {name}",
+      "modelLabel": "Modell {value}",
+      "yearBuilt": "Baujahr {year}",
+      "mmsi": "MMSI {value}",
+      "callSign": "Rufzeichen {value}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "T {value} m"
+    },
+    "routes": {
+      "heading": "Routen",
+      "empty": "Keine Routen registriert.",
+      "primary": "Hauptroute",
+      "alternate": "Alternative Route {order}",
+      "mapLabel": "Route {order}",
+      "noMap": "Keine Route zum Anzeigen"
+    },
+    "crew": {
+      "heading": "Crew an Bord",
+      "empty": "Keine bestätigte Crew registriert.",
+      "unknownName": "Unbekannt",
+      "you": "du",
+      "ownIceContact": "Eigener Notfallkontakt: {contact}"
+    },
+    "sharingSettings": {
+      "heading": "Freigabe",
+      "hint": "Wähle, welche deiner Kontaktdaten mit dem ICE-Kontakt geteilt werden.",
+      "shareContactWithIce": "Meine Telefonnummer und E-Mail-Adresse mit dem ICE-Kontakt teilen",
+      "shareEmergencyWithIce": "Meinen Notfallkontakt mit dem ICE-Kontakt teilen",
+      "saveButton": "Speichern",
+      "saved": "Deine Freigabeeinstellungen wurden gespeichert.",
+      "saveFailed": "Deine Freigabeeinstellungen konnten nicht gespeichert werden."
+    },
+    "medical": {
+      "heading": "Deine Informationen für Search and Rescue",
+      "hint": "Medizinische Informationen, die im Notfall hilfreich sein können - Erkrankungen, Allergien, Blutgruppe, Medikamente. Wird nur den Such- und Rettungsbehörden angezeigt, niemals dem Skipper oder dem ICE-Kontakt.",
+      "placeholder": "z. B. Allergien, Medikamente, Blutgruppe, Vorerkrankungen",
+      "empty": "Du hast noch keine Informationen hinzugefügt.",
+      "readOnlyNote": "Melde dich mit einem Konto an, um dies zu ändern.",
+      "saveButton": "Speichern",
+      "saved": "Deine Informationen wurden gespeichert.",
+      "saveFailed": "Deine Informationen konnten nicht gespeichert werden."
+    },
+    "log": {
+      "heading": "Änderungsprotokoll",
+      "empty": "Keine Änderungen protokolliert.",
+      "showMore": "Mehr anzeigen",
+      "showLess": "Weniger anzeigen"
+    }
+  },
+  "sar": {
+    "tagline": "Search and Rescue (SAR) Zugang",
+    "instructions": "Gib die Referenz und den PIN-Code ein, die du vom Kontakt der Person in Seenot erhalten hast, für Lesezugriff auf Crew-Liste, Routen und Änderungsprotokoll des Törns.",
+    "referenceLabel": "Referenz",
+    "referencePlaceholder": "YE-XXXXXX",
+    "pinLabel": "PIN-Code",
+    "pinPlaceholder": "6 Ziffern",
+    "submit": "Törn anzeigen",
+    "missingFields": "Gib sowohl Referenz als auch PIN-Code ein.",
+    "checking": "Wird geprüft…",
+    "invalidCredentials": "Falsche Referenz oder falscher PIN-Code. Überprüfe die Angaben und versuche es erneut."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Neuigkeiten und Artikel von Yachting Earth",
+    "loading": "Beiträge werden geladen…",
+    "loadFailed": "Die Blog-Beiträge konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine Beiträge",
+    "emptyBody": "Schau bald wieder vorbei für neue Artikel.",
+    "readMore": "Weiterlesen",
+    "byAuthor": "Verfasst von {author}",
+    "backToList": "Zurück zum Blog",
+    "notFound": "Dieser Beitrag konnte nicht gefunden werden."
+  },
+  "vessels": {
+    "title": "Meine Boote",
+    "subtitle": "Boote, die du bei der Erstellung eines neuen Törns auswählen kannst",
+    "loadingVessels": "Boote werden geladen...",
+    "form": {
+      "addTitle": "Boot hinzufügen",
+      "editTitle": "Bearbeiten: {name}",
+      "cancelEdit": "Änderung abbrechen",
+      "nameLabel": "Bootsname",
+      "namePlaceholder": "z. B. Thrym",
+      "mmsiLabel": "MMSI (optional)",
+      "callSignLabel": "Rufzeichen (optional)",
+      "modelLabel": "Modell (optional)",
+      "modelPlaceholder": "z. B. Bavaria 34",
+      "yearLabel": "Baujahr (optional)",
+      "yearPlaceholder": "z. B. 2011",
+      "lengthLabel": "Länge, Meter (optional)",
+      "widthLabel": "Breite, Meter (optional)",
+      "draftLabel": "Tiefgang, Meter (optional)",
+      "notesLabel": "Notizen (optional)",
+      "notesPlaceholder": "Weitere Informationen zum Boot",
+      "photoLabel": "Bootsfoto (optional)",
+      "photoHint": "Wird von Search and Rescue zur Identifizierung des Boots genutzt. JPEG/PNG, max. 10 MB.",
+      "submit": "Boot speichern",
+      "submitEdit": "Änderungen speichern"
+    },
+    "dimensions": {
+      "length": "Länge",
+      "width": "Breite",
+      "draft": "Tiefgang"
+    },
+    "loadFailed": "Boote konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine Boote",
+    "emptyBody": "Füge oben ein Boot hinzu, damit du es bei der Erstellung eines Törns auswählen kannst.",
+    "card": {
+      "yearBuilt": "Baujahr {year}",
+      "mmsi": "MMSI {mmsi}",
+      "callSign": "Rufzeichen {callSign}",
+      "editButton": "Bearbeiten"
+    },
+    "saveFailed": "Das Boot konnte nicht gespeichert werden.",
+    "mmsiAlreadyRegistered": "Diese MMSI-Nummer ist bereits im System registriert.",
+    "photoUploadFailed": "Das Boot wurde gespeichert, aber das Foto konnte nicht hochgeladen werden ({error})",
+    "unknownError": "unbekannter Fehler",
+    "updated": "Das Boot wurde aktualisiert.",
+    "added": "Das Boot wurde hinzugefügt.",
+    "confirmDelete": "Boot {name} entfernen?",
+    "deleteFailed": "Das Boot konnte nicht entfernt werden.",
+    "deleted": "Das Boot wurde entfernt."
+  },
+  "savedRoutes": {
+    "title": "Gespeicherte Routen",
+    "subtitle": "Routen, die du bei der Erstellung eines neuen Törns wiederverwenden kannst",
+    "loading": "Gespeicherte Routen werden geladen...",
+    "loadFailed": "Gespeicherte Routen konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine gespeicherten Routen",
+    "emptyBody": "Speichere eine Route bei der Erstellung eines Törns, um sie später wiederzuverwenden.",
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "z. B. Marstrand-Skagen",
+      "windyUrlLabel": "Windy-Link",
+      "addTitle": "Route erstellen",
+      "submit": "Route speichern"
+    },
+    "saveFailed": "Die Route konnte nicht gespeichert werden.",
+    "updated": "Die Route wurde aktualisiert.",
+    "confirmDelete": "Gespeicherte Route {name} entfernen?",
+    "deleteFailed": "Die Route konnte nicht entfernt werden.",
+    "deleted": "Die Route wurde entfernt."
+  },
+  "crewAddressBook": {
+    "title": "Adressbuch",
+    "subtitle": "Kontakte, die du beim Einladen von Crew ausdrücklich gespeichert hast, um sie bei künftigen Törns wiederzuverwenden",
+    "loading": "Gespeicherte Kontakte werden geladen...",
+    "loadFailed": "Gespeicherte Kontakte konnten nicht abgerufen werden.",
+    "emptyTitle": "Noch keine gespeicherten Kontakte",
+    "emptyBody": "Aktiviere „Kontakt speichern“ beim Einladen von Crew zu einem Törn, damit sie hier zur Wiederverwendung erscheinen.",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail"
+    },
+    "saveFailed": "Der Kontakt konnte nicht gespeichert werden.",
+    "updated": "Der Kontakt wurde aktualisiert.",
+    "confirmDelete": "{name} aus deinem Adressbuch entfernen?",
+    "deleteFailed": "Der Kontakt konnte nicht entfernt werden.",
+    "deleted": "Der Kontakt wurde entfernt.",
+    "bulk": {
+      "selectAllLabel": "Alle auswählen",
+      "selectedCount": "{count} ausgewählt",
+      "inviteToNewTrip": "Zu Törn einladen",
+      "addToTripPlaceholder": "Zu Törn hinzufügen…",
+      "addToTripNoneEligible": "Keine Törns verfügbar, um Crew hinzuzufügen",
+      "addSuccess": "{count} Personen zum Törn hinzugefügt.",
+      "addPartial": "{success} von {total} Personen zum Törn hinzugefügt.",
+      "addFailed": "Die ausgewählten Personen konnten nicht zum Törn hinzugefügt werden."
+    }
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Systemstatistiken und Benutzerverwaltung - klicke auf eine Kachel für Details",
+    "loadingStats": "Statistiken werden geladen...",
+    "statsLoadFailed": "Statistiken konnten nicht abgerufen werden.",
+    "loadTabFailed": "{title} konnte nicht abgerufen werden.",
+    "yes": "Ja",
+    "no": "Nein",
+    "cannotDeleteSelf": "Du kannst dein eigenes Konto hier nicht löschen",
+    "confirmDeleteUser": "Benutzer {name} ({email}) und alle zugehörigen Daten löschen? Dies kann nicht rückgängig gemacht werden.",
+    "deleteUserFailed": "Der Benutzer konnte nicht gelöscht werden.",
+    "userDeleted": "Der Benutzer wurde gelöscht.",
+    "stats": {
+      "users": "Benutzer",
+      "routes": "Routen",
+      "vessels": "Boote",
+      "iceContacts": "ICE-Kontakte",
+      "logs": "Systemprotokolle"
+    },
+    "empty": {
+      "users": "Keine Benutzer",
+      "routes": "Keine Routen",
+      "vessels": "Keine Boote",
+      "iceContacts": "Keine ICE-Kontakte",
+      "logs": "Keine Protokolle entsprechen dem Filter"
+    },
+    "table": {
+      "adminHeader": "Admin",
+      "created": "Erstellt",
+      "skipper": "Skipper",
+      "departure": "Abfahrt",
+      "arrival": "Ankunft",
+      "tripStatus": "Törn-Status",
+      "order": "Reihenfolge",
+      "owner": "Eigentümer",
+      "mmsi": "MMSI",
+      "callSign": "Rufzeichen",
+      "model": "Modell",
+      "relationship": "Beziehung",
+      "channel": "Kanal",
+      "confirmed": "Bestätigt"
+    },
+    "logLevel": {
+      "info": "Info",
+      "warning": "Warnung",
+      "error": "Fehler"
+    },
+    "logCategory": {
+      "cron": "Cron",
+      "email": "E-Mail",
+      "notification": "Benachrichtigung",
+      "database": "Datenbank",
+      "api": "Backend/API",
+      "auth": "Authentifizierung",
+      "trip": "Törn",
+      "route": "Route",
+      "vessel": "Boot",
+      "crew": "Crew",
+      "ice": "ICE-Kontakt",
+      "sar": "SAR",
+      "user": "Benutzer",
+      "admin": "Admin",
+      "photo": "Foto"
+    },
+    "logs": {
+      "searchLabel": "Suche",
+      "searchPlaceholder": "In Nachricht oder ID suchen...",
+      "levelLabel": "Protokollebene",
+      "allLevels": "Alle Ebenen",
+      "categoryLabel": "Kategorie",
+      "allCategories": "Alle Kategorien",
+      "loadFailed": "Protokolle konnten nicht abgerufen werden.",
+      "stackTrace": "Stacktrace",
+      "piiData": "Personenbezogene Daten",
+      "prevPage": "Zurück",
+      "nextPage": "Weiter",
+      "pageInfo": "Seite {page} von {totalPages} ({total} Protokolle)",
+      "table": {
+        "time": "Zeit",
+        "level": "Ebene",
+        "category": "Kategorie",
+        "message": "Nachricht",
+        "user": "Benutzer"
+      }
+    }
+  },
+  "tripDetail": {
+    "loading": "Törn wird geladen…",
+    "loadFailed": "Der Törn konnte nicht abgerufen werden.",
+    "backToDashboard": "Zurück zu meinen Törns",
+    "unknownVessel": "Unbekanntes Boot",
+    "readOnlyBanner": {
+      "crew": "Du betrachtest diesen Törn als eingeladenes Crew-Mitglied. Für dich ist er nur lesbar.",
+      "ice": "Du betrachtest diesen Törn als dessen ICE-Kontakt. Für dich ist er nur lesbar."
+    },
+    "header": {
+      "meta": "Abfahrt {departure} · Ankunft {arrival} · Kulanzzeit {grace}",
+      "iceNotified": "ICE-Kontakt benachrichtigt"
+    },
+    "skipper": {
+      "heading": "Skipper"
+    },
+    "schedule": {
+      "heading": "Zeitplan",
+      "departureLabel": "Abfahrt (UTC)",
+      "arrivalLabel": "Ankunft (UTC)",
+      "graceLabel": "Kulanzzeit",
+      "changeButton": "Speichern",
+      "departureLockedHint": "Die Abfahrtszeit kann nach Aktivierung des Törns nicht mehr geändert werden.",
+      "arrivalLockedHint": "Die Ankunftszeit kann nach Bestätigung des Törnabschlusses nicht mehr geändert werden.",
+      "graceLockedHint": "Die Kulanzzeit kann nach Bestätigung des Törnabschlusses nicht mehr geändert werden.",
+      "changeFailed": "Der Zeitplan konnte nicht geändert werden.",
+      "changed": "Der Zeitplan wurde geändert."
+    },
+    "vessel": {
+      "heading": "Boot",
+      "modelLabel": "Modell {model}",
+      "yearBuilt": "Baujahr {year}",
+      "mmsi": "MMSI {mmsi}",
+      "callSign": "Rufzeichen {callSign}",
+      "dimLength": "L {value} m",
+      "dimWidth": "B {value} m",
+      "dimDraft": "T {value} m",
+      "changeLabel": "Boot wechseln",
+      "changeButton": "Boot wechseln",
+      "changeFailed": "Das Boot konnte nicht gewechselt werden.",
+      "mmsiConflictNotice": "Hinweis: Für dieselbe MMSI-Nummer ist bereits ein anderer Törn im selben Zeitraum geplant.",
+      "changed": "Das Boot wurde gewechselt."
+    },
+    "iceContact": {
+      "heading": "ICE-Kontakt",
+      "allContacts": "Für diesen Törn werden alle meine ICE-Kontakte benachrichtigt.",
+      "specificContact": "Für diesen Törn wurde vom Skipper ein bestimmter ICE-Kontakt festgelegt.",
+      "changeLabel": "ICE-Kontakt ändern",
+      "changeButton": "Speichern",
+      "changeFailed": "Der ICE-Kontakt konnte nicht geändert werden.",
+      "changed": "Der ICE-Kontakt wurde geändert."
+    },
+    "routes": {
+      "heading": "Routen",
+      "addAltHeading": "Alternative Route hinzufügen",
+      "importWindy": "Aus Windy importieren",
+      "drawManual": "Manuell zeichnen",
+      "importGpx": "GPX-Datei importieren",
+      "addSavedRoute": "+ Gespeicherte Route hinzufügen",
+      "reasonOptionalLabel": "Grund (optional)",
+      "reasonPlaceholder": "z. B. falls der Wind auf Nord dreht",
+      "saveToArchive": "Im Routenarchiv speichern",
+      "saveRouteNamePlaceholder": "Name für diese Route, z. B. Marstrand-Skagen",
+      "saveRouteNameRequired": "Gib einen Namen für die Route ein.",
+      "saveRouteArchiveFailed": "Die Route konnte nicht in deinem Archiv gespeichert werden.",
+      "saveRouteArchiveSuccess": "Route in deinem Archiv gespeichert.",
+      "addButton": "Route hinzufügen",
+      "empty": "Noch keine Routen hinzugefügt.",
+      "mainRoute": "Hauptroute",
+      "altRoute": "Alternative Route {n}",
+      "moveUpTitle": "Nach oben",
+      "moveDownTitle": "Nach unten",
+      "noRouteToShow": "Keine Route zum Anzeigen",
+      "drawOnMapLabel": "Route auf der Karte zeichnen",
+      "drawHint": "Klicke auf die Karte, um Punkte hinzuzufügen. Ziehe einen Punkt, um ihn zu verschieben; klicke auf einen Punkt und wähle „Punkt entfernen“, um ihn zu löschen.",
+      "pointsLabel": "Punkte",
+      "clearRoute": "Route löschen",
+      "windyUrlLabel": "Windy-Link",
+      "gpxLabel": "GPX-Datei",
+      "gpxHint": "Lade eine .gpx-Datei hoch, die aus deinem Kartenplotter oder deiner Navigations-App exportiert wurde. Die Route wird sofort eingelesen, die Datei selbst wird nicht gespeichert.",
+      "gpxParseError": "Aus dieser GPX-Datei konnte keine Route gelesen werden. Stelle sicher, dass sie eine Route oder Aufzeichnung mit mindestens zwei Punkten enthält.",
+      "reasonLabel": "Grund",
+      "minPointsError": "Zeichne mindestens zwei Punkte für die Route.",
+      "addFailed": "Die Route konnte nicht hinzugefügt werden.",
+      "added": "Route hinzugefügt",
+      "saveFailed": "Die Route konnte nicht gespeichert werden.",
+      "saved": "Die Route wurde gespeichert",
+      "deleteConfirm": "Diese Route entfernen?",
+      "deleteFailed": "Die Route konnte nicht entfernt werden.",
+      "deleted": "Die Route wurde entfernt",
+      "reorderFailed": "Die Reihenfolge konnte nicht geändert werden."
+    },
+    "crew": {
+      "heading": "Crew",
+      "inviteHeading": "Crew-Mitglied einladen",
+      "nameOptionalLabel": "Name (optional)",
+      "addressBookAriaLabel": "Vorschläge aus deinen gespeicherten Kontakten",
+      "saveContactLabel": "Kontakt speichern",
+      "sendInviteButton": "Einladung senden",
+      "empty": "Noch keine Crew eingeladen.",
+      "unknownName": "Unbekannt",
+      "iceContactLabel": "Notfallkontakt: {contact}",
+      "accepted": "✓ Angenommen",
+      "pending": "⏳ Ausstehend",
+      "changePhoto": "Foto ändern",
+      "addPhoto": "Foto hinzufügen",
+      "copyLink": "Link kopieren",
+      "choosePhotoFirst": "Wähle zuerst ein Bild aus.",
+      "photoSaveFailed": "Das Foto konnte nicht gespeichert werden.",
+      "photoSaved": "Das Foto wurde gespeichert.",
+      "linkCopied": "Link kopiert",
+      "inviteFailed": "Die Einladung konnte nicht gesendet werden.",
+      "inviteCreatedEmailSent": "Einladung erstellt und per E-Mail an das Crew-Mitglied gesendet. Du kannst den Link auch manuell teilen:",
+      "inviteCreatedNotice": "Einladung erstellt, aber die E-Mail konnte nicht gesendet werden - teile den Link manuell:",
+      "removeConfirm": "Dieses Crew-Mitglied vom Törn entfernen?",
+      "removeFailed": "Das Crew-Mitglied konnte nicht entfernt werden",
+      "removed": "Crew-Mitglied entfernt"
+    },
+    "actions": {
+      "heading": "Aktionen",
+      "notActiveHint": "Der Törn ist noch nicht aktiv. Aktiviere ihn manuell, oder er wird zur geplanten Abfahrtszeit automatisch aktiviert.",
+      "activateButton": "Törn aktivieren",
+      "snoozeLabel": "Ankunftszeit verschieben",
+      "verifyButton": "✓ Ankunft bestätigen",
+      "inactiveHint": "Der Törn ist {status} - keine weiteren Aktionen verfügbar.",
+      "deleteButton": "Törn löschen",
+      "mmsiConflictError": "Der Törn kann nicht aktiviert werden - ein anderer aktiver Törn nutzt bereits diese MMSI-Nummer.",
+      "activated": "Der Törn wurde aktiviert",
+      "actionFailed": "Die Aktion ist fehlgeschlagen.",
+      "snoozed": "Ankunftszeit um {minutes} Min. verschoben",
+      "verifyConfirm": "Bestätigen, dass das Boot sicher angekommen ist?",
+      "verified": "Ankunft bestätigt - der Törn ist abgeschlossen",
+      "deleteForceConfirm": "Es sind Personen für den Törn registriert. Törn trotzdem löschen? Denk daran, sie selbst zu benachrichtigen.",
+      "deleteConfirm": "Diesen Törn löschen?",
+      "deleteAnywayButton": "Trotzdem löschen",
+      "deleteHasPersonsWarning": "Der Törn hat {crewCount} Crew-Mitglied(er) und {iceCount} ICE-Kontakt(e) registriert, die möglicherweise benachrichtigt werden müssen. Klicke erneut, um trotzdem zu löschen.",
+      "deleteFailed": "Der Törn konnte nicht gelöscht werden.",
+      "deleted": "Der Törn wurde gelöscht"
+    },
+    "log": {
+      "heading": "Änderungsprotokoll",
+      "empty": "Keine Änderungen protokolliert.",
+      "showMore": "Mehr anzeigen",
+      "showLess": "Weniger anzeigen"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "Yachting Earth — Reisevorbereitung & Notfallinformationen für Segler",
+      "description": "Yachting Earth ist ein digitales Törn-Dossier für Segler: Erfasse dein Boot, deine Routen, Crew und deinen Notfallkontakt vor dem Auslaufen, damit im Ernstfall bereits die richtigen Informationen vorliegen, falls ein Törn nicht wie geplant verläuft."
+    },
+    "skipLink": "Zum Hauptinhalt springen",
+    "nav": {
+      "prepared": "Was vorbereitet ist",
+      "howItWorks": "So funktioniert's",
+      "different": "Was uns unterscheidet",
+      "privacy": "Datenschutz",
+      "login": "Anmelden",
+      "cta": "Kostenloses Konto erstellen"
+    },
+    "hero": {
+      "heading": "Jeder Törn verdient einen Plan.<br>Jeder Notfall verdient die richtigen Informationen.",
+      "lead": "Bereite dein Boot, deine Routen, Crew und deinen Notfallkontakt vor dem Auslaufen vor. Meldest du dich nach der geplanten Ankunft nicht zurück, erhält dein festgelegter Notfallkontakt sicheren Zugriff auf die Informationen, die den Rettungsdiensten helfen können, schneller zu reagieren.",
+      "ctaPrimary": "Kostenloses Konto erstellen",
+      "ctaSecondary": "So funktioniert's",
+      "badges": ["Kostenlos nutzbar", "Mehrere Routen", "DSGVO by design", "Sicheres ICE-Portal"]
+    },
+    "notice": {
+      "heading": "Wichtiger Hinweis",
+      "p1": "Yachting Earth ICE ist kein Notfunkbake (EPIRB) und kein Echtzeit-Ortungssystem.",
+      "p2": "Es ist ein System zur Reisevorbereitung und Notfallinformation, das sicherstellen soll, dass die richtige Person zur richtigen Zeit die richtigen Informationen hat, wenn etwas Unerwartetes passiert - vom Ablegen bis zum Abschluss eines Rettungseinsatzes."
+    },
+    "prepared": {
+      "heading": "Alles ist vor dem Auslaufen vorbereitet",
+      "lead": "Ein vollständiges Törn-Dossier, zusammengestellt, bevor du überhaupt ablegst.",
+      "cards": [
+        { "icon": "ship", "title": "Boot", "items": ["Foto", "Registrierung", "Spezifikationen", "Identifikation"] },
+        { "icon": "compass", "title": "Törn", "items": ["Abfahrt", "Zielort", "Voraussichtliche Ankunft", "Kulanzzeit"] },
+        { "icon": "route", "title": "Routen", "items": ["Mehrere Routen", "Import aus GPX/Windy/Zeichnen", "Routenalternativen", "Interaktive Kartenvorschau"] },
+        { "icon": "users", "title": "Crew", "items": ["Crew-Liste", "Individuelle Profile", "Fotos", "Persönliche Notfallkontakte"] },
+        { "icon": "shield-check", "title": "Notfallkontakt", "items": ["Identität bestätigt", "Sicheres Portal", "Nur-Lese-Zugriff", "Automatische Benachrichtigung"] }
+      ]
+    },
+    "howItWorks": {
+      "heading": "So funktioniert's",
+      "steps": [
+        "Skipper erstellt Törn",
+        "Lädt Crew ein",
+        "Crew vervollständigt eigene Profile",
+        "Notfallkontakt bestätigt Teilnahme",
+        "Törn aktivieren"
+      ],
+      "fork": {
+        "arriveTitle": "Sicher angekommen",
+        "arriveText": "Skipper bestätigt die Ankunft. Es passiert nichts weiter.",
+        "graceTitle": "Kulanzzeit abgelaufen",
+        "graceText": "Der Skipper hat sich nach der geplanten Ankunft plus Kulanzzeit nicht zurückgemeldet."
+      },
+      "afterFork": [
+        "Notfallkontakt benachrichtigt",
+        "Informationen bereit zur Weitergabe, falls Rettungsdienste kontaktiert werden müssen"
+      ]
+    },
+    "compare": {
+      "heading": "Warum Yachting Earth anders ist",
+      "traditionalLabel": "Klassischer Plan",
+      "yachtingLabel": "Yachting Earth",
+      "rows": [
+        { "traditional": "Statische Dokumente", "yachting": "Lebendige Törn-Informationen" },
+        { "traditional": "Eine einzelne Route", "yachting": "Mehrere Routen" },
+        { "traditional": "Einfache Crew-Liste", "yachting": "Crew pflegt eigene Daten" },
+        { "traditional": "Manuelle Überwachung nötig", "yachting": "Automatische, protokollierte Kontrolle" },
+        { "traditional": "Klebezettel, SMS und Anrufe", "yachting": "Sicheres Portal" }
+      ]
+    },
+    "features": {
+      "heading": "Gemacht für echte Törns",
+      "items": [
+        { "icon": "route", "title": "Mehrere Routen", "description": "Ein Törn folgt selten nur einer geraden Linie." },
+        { "icon": "users", "title": "Crew-Beteiligung", "description": "Jedes Crew-Mitglied pflegt seine eigenen Daten." },
+        { "icon": "shield-check", "title": "Bestätigter Notfallkontakt", "description": "Der Notfallkontakt bestätigt seine Rolle vor dem Auslaufen." }
+      ]
+    },
+    "privacy": {
+      "heading": "Datenschutz by design",
+      "lead": "Persönliche Törn-Daten werden nach DSGVO-Grundsätzen automatisch entfernt.",
+      "lifecycle": [
+        { "icon": "file-plus", "label": "Törn erstellt" },
+        { "icon": "check-circle", "label": "Törn abgeschlossen" },
+        { "icon": "clock", "label": "Soft gelöscht" },
+        { "icon": "timer", "label": "Nach 30 Tagen automatisch entfernt" },
+        { "icon": "shield", "label": "Nur Skipper und Boot bleiben erhalten" }
+      ]
+    },
+    "mapDemo": {
+      "heading": "Routen, kartiert",
+      "lead": "Ein Törn kann mehrere geplante Routen umfassen. Hier ein Beispiel mit drei.",
+      "note": "Demonstrationsdaten — keine Live-Position eines Boots.",
+      "ariaLabel": "Beispielkarte mit drei beispielhaften Segelrouten entlang einer Küste",
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"],
+      "descriptions": ["Hauptroute", "Falls der Wind auf West dreht", "Falls der Wind auf Nord dreht und über 35 Knoten auffrischt"]
+    },
+    "worst": {
+      "heading": "Wenn es hart auf hart kommt",
+      "insteadTitle": "Statt…",
+      "insteadItems": ["Alte E-Mails zu durchsuchen", "Sich zu erinnern, wer an Bord war", "Nach Routen-Screenshots zu suchen", "Notfallkontakte zu erraten"],
+      "haveTitle": "Dein Notfallkontakt hat bereits",
+      "haveItems": ["Boot", "Routen", "Crew", "Fotos", "Notfallkontakte", "Törn-Details"],
+      "readyTitle": "Bereit zur Weitergabe an",
+      "readyItems": ["Küstenwache", "Polizei", "Seenotleitung", "Versicherung"],
+      "readyNote": "Der Notfallkontakt entscheidet, wann die Informationen geteilt werden und mit wem."
+    },
+    "finalCta": {
+      "heading": "Bereit für deinen nächsten Törn?",
+      "lead": "Registriere deinen ersten Törn in weniger als fünf Minuten.",
+      "cta": "Kostenloses Konto erstellen"
+    },
+    "footer": {
+      "disclaimer": "Yachting Earth ICE ist ein Werkzeug zur Reisevorbereitung und Information. Es ist kein Notfunkbake (EPIRB) oder Echtzeit-Ortungssystem, und das System selbst kontaktiert keine Rettungsdienste.",
+      "links": {
+        "about": "Über uns",
+        "blog": "Blog",
+        "privacy": "Datenschutz",
+        "gdpr": "DSGVO",
+        "contact": "Kontakt",
+        "terms": "AGB",
+        "faq": "FAQ",
+        "changelog": "Änderungsprotokoll"
+      },
+      "comingSoon": "Seite „{page}“ folgt in Kürze"
+    }
+  },
+  "privacy": {
+    "title": "Datenschutz & DSGVO",
+    "lastUpdated": "Zuletzt aktualisiert: 14. Juli 2026",
+    "intro": "Diese Seite erklärt, welche personenbezogenen Daten Yachting Earth ICE erhebt, warum, wie lange sie gespeichert werden und welche Rechte du gemäß DSGVO darüber hast.",
+    "sections": [
+      {
+        "heading": "Wer diesen Dienst betreibt",
+        "body": [
+          "Yachting Earth ICE („das System“) wird von der Manjo Consulting AB betrieben, einem schwedischen Unternehmen (Org./USt-IdNr. 5568138464), das unter dem Namen Yachting Earth (yachting.earth) auftritt. Es handelt sich um ein Werkzeug zur Reisevorbereitung und für den Sicherheits-Check-in der Crew - kein Notfunkbake (EPIRB) oder Echtzeit-Ortungssystem, und es kontaktiert Rettungsdienste nicht selbst. Die Verantwortung für tatsächliche Sicherheitsentscheidungen bleibt beim Skipper; diese Seite erklärt, wie das System die personenbezogenen Daten verarbeitet, die du ihm dafür zur Verfügung stellst."
+        ]
+      },
+      {
+        "heading": "Welche Daten wir erheben",
+        "body": [
+          "Wir erheben nur das, was das System benötigt, um einen Törn vorzubereiten und - falls etwas schiefgeht - die richtigen Informationen an die richtige Person weiterzugeben."
+        ],
+        "list": [
+          "Kontodaten - E-Mail, Name, Telefonnummer und ein Passwort (nur als bcrypt-Hash gespeichert, niemals im Klartext)",
+          "Bootsdaten - Name, Registrierung/Rufzeichen, Spezifikationen und ein optionales Foto",
+          "Törn-Daten - geplante Routen (aus Windy.com übernommen), geplante Abfahrts-/Ankunftszeiten und Kulanzzeit",
+          "Crew-Daten - Name, E-Mail, Telefonnummer und ein optionales Foto zur Identifizierung",
+          "Notfallkontakt-Daten („ICE“) - Name, E-Mail, Telefonnummer und Beziehung zum Skipper",
+          "Sicherheitsprotokolle - Anmeldeversuche (zur Durchsetzung von Ratenbegrenzung) und Zustellstatus von Benachrichtigungen"
+        ]
+      },
+      {
+        "heading": "Warum wir sie verarbeiten",
+        "body": ["Jede Datenkategorie wird auf einer dieser Rechtsgrundlagen verarbeitet:"],
+        "list": [
+          "Vertrag - Konto-, Boots- und Törn-Daten, damit das System das tun kann, wofür du dich angemeldet hast",
+          "Ausdrückliche Einwilligung - Notfallkontaktdaten",
+          "Berechtigtes Interesse - Crew-Fotos zur Identifizierung sowie Sicherheitsprotokolle und Zustellnachweise von Benachrichtigungen, um das System zuverlässig und missbrauchsresistent zu halten"
+        ]
+      },
+      {
+        "heading": "Wie lange wir sie speichern",
+        "body": [
+          "Ein abgeschlossener oder stornierter Törn wird sofort soft-gelöscht - er verschwindet aus der Ansicht von Skipper, Crew und Notfallkontakt - und wird anschließend zusammen mit seinen Routen, Crew-Datensätzen, Fotos, Änderungsprotokollen, Benachrichtigungen und Zugangstoken 30 Tage später durch einen täglichen Aufräumjob endgültig (hart) gelöscht.",
+          "Registrierte Benutzerkonten und Boote sind von diesem Vorgang nicht betroffen - nur die Daten des Törns selbst. Du kannst dein Konto und dessen Daten jederzeit über deine Profilseite löschen.",
+          "Notfallkontakt-Konten werden standardmäßig ebenfalls unbegrenzt aufbewahrt, da der Kontakt sich für einen künftigen Törn erneut anmelden können muss - ein Kontakt kann sich jedoch unter „Mein ICE-Konto“ dafür entscheiden, sein Konto automatisch löschen zu lassen, sobald es mit keinem aktuellen oder künftigen Törn mehr verknüpft ist.",
+          "Über das Kontaktformular gesendete Nachrichten (Name, E-Mail-Adresse und Nachrichtentext) werden 18 Monate ab dem Versand aufbewahrt und dann endgültig gelöscht. Dieser Zeitraum von 18 Monaten läuft unabhängig und wird nicht durch das Löschen deines Kontos verkürzt - löschst du dein Konto, werden deine bisherigen Nachrichten dennoch bis zum Ablauf ihrer eigenen 18-Monats-Frist aufbewahrt, sofern wir sie nicht früher löschen. Wir können eine Nachricht auch vor Ablauf der 18 Monate löschen, zum Beispiel sobald eine Anfrage abgeschlossen ist."
+        ]
+      },
+      {
+        "heading": "Deine Rechte",
+        "body": ["Gemäß DSGVO kannst du:"],
+        "list": [
+          "Auf die personenbezogenen Daten zugreifen, die wir über dich gespeichert haben",
+          "Unrichtige Daten korrigieren - die meisten davon kannst du direkt über deine Profilseite bearbeiten",
+          "Dein Konto und die zugehörigen Daten löschen lassen, über die Option „Konto löschen“ auf deiner Profilseite (Ausnahme: über das Kontaktformular gesendete Nachrichten - siehe „Wie lange wir sie speichern“ oben)",
+          "Deine Daten in einem übertragbaren, maschinenlesbaren Format erhalten",
+          "Eine zuvor erteilte Einwilligung widerrufen, zum Beispiel eine Notfallkontakt-Bestätigung",
+          "Bei der zuständigen Aufsichtsbehörde für Datenschutz Beschwerde einlegen - in Schweden bei der schwedischen Datenschutzbehörde (Integritetsskyddsmyndigheten, IMY, imy.se) - gemäß Artikel 77 DSGVO"
+        ]
+      },
+      {
+        "heading": "Wenn du kein Konto hast",
+        "body": [
+          "Wurdest du ohne eigenes Konto als Crew oder als Notfallkontakt („ICE“) hinzugefügt, kannst du die oben genannten Rechte dennoch ausüben. Gehe zur Anmeldeseite und folge dem Link „Als Crew ohne Konto eingeladen? Verwalte hier deine Daten.“, gib die E-Mail-Adresse ein, an die deine Einladung gesendet wurde, und wir senden dir einen sicheren, zeitlich begrenzten Zugangslink. Über dieses Portal kannst du deine Daten herunterladen, die sofortige Löschung deines Crew-Datensatzes bei einem bereits abgeschlossenen Törn beantragen oder uns direkt eine Nachricht senden."
+        ]
+      },
+      {
+        "heading": "Cookies und Tracking",
+        "body": [
+          "Wir verwenden keine Cookies. Deine Anmeldesitzung wird im lokalen Speicher (Local Storage) deines Browsers gehalten, und es gibt im gesamten System kein Tracking durch Drittanbieter für Analyse oder Werbung."
+        ]
+      },
+      {
+        "heading": "Mit wem wir Daten teilen",
+        "body": ["Wir verkaufen oder teilen deine Daten niemals mit Werbetreibenden. Daten erreichen ausschließlich:"],
+        "list": [
+          "Mailgun - zur Zustellung transaktionaler E-Mails (Törn-Benachrichtigungen, Einladungen, Alarme)",
+          "Telegram - zur Zustellung von Benachrichtigungen, sofern aktiviert",
+          "Unser Hosting-Anbieter - zum Betrieb und zur Sicherung des Dienstes",
+          "Cloudflare (cdnjs) und unpkg - zur Bereitstellung der Leaflet- und Lucide-Codebibliotheken, die von der App genutzt werden; diese Anbieter sehen die IP-Adresse und den Browser (User-Agent) jedes Besuchers, der eine Seite lädt",
+          "OpenStreetMap - zur Bereitstellung der Kartenkacheln auf Routen-/Törn-Karten; OpenStreetMap sieht die IP-Adresse und den Browser (User-Agent) jedes Nutzers, der eine Karte ansieht, sowie den angeforderten Kartenbereich"
+        ]
+      },
+      {
+        "heading": "Internationale Datenübermittlungen",
+        "body": [
+          "Mailgun, oben genannt, ist ein in den USA ansässiger Auftragsverarbeiter, weshalb Benachrichtigungsinhalte - Namen, E-Mail-Adressen, Telefonnummern und Törn-Alarmtexte der Empfänger - in die Vereinigten Staaten übermittelt und dort verarbeitet werden können. In diesem Fall stützen wir uns auf die Teilnahme dieses Anbieters am EU-US Data Privacy Framework und/oder auf Standardvertragsklauseln, um sicherzustellen, dass deine Daten außerhalb des EWR ein gleichwertiges Schutzniveau erhalten."
+        ]
+      },
+      {
+        "heading": "Wie wir sie schützen",
+        "body": [
+          "Das System läuft ausschließlich über HTTPS. Passwörter werden mit bcrypt gehasht. Skipper authentifizieren sich über ein signiertes Token; Notfallkontakte und Search-and-Rescue-Behörden erhalten statt eines Logins einen einmaligen, schreibgeschützten Zugriff, der auf einen einzelnen Törn beschränkt ist. Crew-, Boots- und Profilfotos werden außerhalb des öffentlichen Webservers gespeichert und ausschließlich über eine authentifizierte Anfrage ausgeliefert. Wiederholte fehlgeschlagene Anmeldeversuche werden ratenbegrenzt."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Fragen?",
+      "body": "Um eines der oben genannten Rechte auszuüben oder bei jeder anderen Frage zu dieser Richtlinie oder deinen Daten, kontaktiere uns über das Kontaktformular in deinem Konto. Wir antworten innerhalb von 30 Tagen, wie von Artikel 12 DSGVO vorgeschrieben."
+    }
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "lastUpdated": "Zuletzt aktualisiert: 11. Juli 2026",
+    "intro": "Diese Bedingungen regeln deine Nutzung von Yachting Earth ICE. Mit der Erstellung eines Kontos oder der Nutzung des Systems stimmst du ihnen zu.",
+    "sections": [
+      {
+        "heading": "Mit wem du diese Vereinbarung triffst",
+        "body": [
+          "Yachting Earth ICE („das System“) wird von der Manjo Consulting AB betrieben, einem schwedischen Unternehmen (Org./USt-IdNr. 5568138464), das unter dem Namen Yachting Earth (yachting.earth) auftritt."
+        ]
+      },
+      {
+        "heading": "Was der Dienst ist",
+        "body": [
+          "Yachting Earth ICE ist ein Werkzeug zur Reisevorbereitung und für den Sicherheits-Check-in der Crew. Es ermöglicht einem Skipper, einen Törn und ein Boot zu registrieren, geplante Routen hinzuzufügen, Crew einzuladen und einen Notfallkontakt („ICE“) zu benennen, der benachrichtigt wird, wenn der Törn überfällig wird."
+        ],
+        "list": [
+          "Es ist kein Notfunkbake (EPIRB) und kein Echtzeit-Ortungssystem",
+          "Es überwacht nicht die tatsächliche Position eines Boots und kontaktiert Rettungsdienste nicht selbst",
+          "Der Skipper trägt allein die Verantwortung für tatsächliche Sicherheitsentscheidungen, die Seetüchtigkeit des Boots sowie die Einhaltung des Seerechts und örtlicher Vorschriften"
+        ]
+      },
+      {
+        "heading": "Dein Konto",
+        "body": [
+          "Du musst bei der Registrierung eines Törns, Boots, Crew-Mitglieds oder Notfallkontakts korrekte Angaben machen und diese aktuell halten - der Nutzen des Systems hängt davon ab, dass die Daten aktuell sind.",
+          "Du bist dafür verantwortlich, deine Anmeldedaten vertraulich zu behandeln, sowie für alle Aktivitäten unter deinem Konto. Informiere uns umgehend, falls du annimmst, dass dein Konto kompromittiert wurde."
+        ]
+      },
+      {
+        "heading": "Zulässige Nutzung",
+        "body": ["Du verpflichtest dich, Folgendes zu unterlassen:"],
+        "list": [
+          "Das System für rechtswidrige Zwecke oder zur Belästigung, Nachahmung oder Täuschung einer anderen Person zu nutzen",
+          "Ein Crew-Mitglied oder einen Notfallkontakt hinzuzufügen, ohne begründeten Anlass zur Annahme, dass diese Person damit einverstanden ist, bezüglich des Törns kontaktiert zu werden",
+          "Zu versuchen, das System oder die Daten anderer Nutzer zu stören, zu beeinträchtigen oder sich unbefugten Zugriff darauf zu verschaffen"
+        ]
+      },
+      {
+        "heading": "Notfallkontakte und Crew",
+        "body": [
+          "Von dir eingeladene Notfallkontakte und Crew-Mitglieder erhalten ihren eigenen, zweckgebundenen Zugang (eine schreibgeschützte Törn-Ansicht oder eine Einladung zur Bestätigung ihrer Daten) und sind für diesen Zweck an diese Bedingungen gebunden. Du bist dafür verantwortlich, eine rechtmäßige Grundlage zu haben, um deren Kontaktdaten mit uns zu teilen."
+        ]
+      },
+      {
+        "heading": "Verfügbarkeit und Haftungsbeschränkung",
+        "body": [
+          "Wir sind bemüht, das System verfügbar und Benachrichtigungen zeitnah zu halten, garantieren jedoch keine unterbrechungsfreie Verfügbarkeit; die Zustellung von E-Mail- oder Telegram-Benachrichtigungen hängt von Drittanbieterdiensten außerhalb unserer Kontrolle ab.",
+          "Soweit gesetzlich zulässig, haftet die Manjo Consulting AB nicht für Verluste oder Schäden, die aus dem Vertrauen auf das System für tatsächliche sicherheitsrelevante Entscheidungen, aus verzögerten oder fehlgeschlagenen Benachrichtigungen oder aus von einem Nutzer falsch eingegebenen Informationen entstehen. Das System wird „wie besehen“ als Hilfsmittel zur Informationsverwaltung bereitgestellt, nicht als Sicherheitsgarantie."
+        ]
+      },
+      {
+        "heading": "Drittanbieter-Dienste",
+        "body": [
+          "Das System ist für seinen Betrieb auf Drittanbieter-Dienste angewiesen: Mailgun für die E-Mail-Zustellung, Telegram für optionale Benachrichtigungen, OpenStreetMap für Kartenkacheln und Windy.com als Quelle für die Routenplanung. Deine Nutzung dieser Dienste unterliegt deren eigenen Bedingungen."
+        ]
+      },
+      {
+        "heading": "Kündigung",
+        "body": [
+          "Du kannst dein Konto jederzeit über deine Profilseite löschen. Wir können den Zugriff auf Konten aussetzen oder beenden, die gegen diese Bedingungen verstoßen oder von denen wir vernünftigerweise annehmen, dass sie ein Risiko für das System oder andere Nutzer darstellen."
+        ]
+      },
+      {
+        "heading": "Änderungen dieser Bedingungen",
+        "body": [
+          "Wir können diese Bedingungen von Zeit zu Zeit aktualisieren. Wesentliche Änderungen werden durch eine Aktualisierung des oben genannten Datums „Zuletzt aktualisiert“ kenntlich gemacht. Die fortgesetzte Nutzung des Systems nach einer Änderung gilt als Zustimmung zu den aktualisierten Bedingungen."
+        ]
+      },
+      {
+        "heading": "Anwendbares Recht",
+        "body": [
+          "Diese Bedingungen unterliegen dem Recht Schwedens, unter Ausschluss der Kollisionsnormen des internationalen Privatrechts. Jede Streitigkeit aus diesen Bedingungen oder deiner Nutzung des Systems unterliegt der Zuständigkeit der schwedischen Gerichte."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Fragen?",
+      "body": "Bei Fragen zu diesen Bedingungen kontaktiere uns über das Kontaktformular in deinem Konto."
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Hast du eine Frage, einen Fehler gefunden oder einen Funktionswunsch? Sende uns eine Nachricht, und wir melden uns bei dir.",
+    "categoryLabel": "Worum geht es?",
+    "category": {
+      "general": "Allgemeine Anfragen",
+      "privacyGdpr": "Datenschutz- & DSGVO-Anfragen",
+      "bug": "Fehler und Probleme",
+      "featureRequest": "Verbesserungen und Funktionswünsche"
+    },
+    "messageLabel": "Nachricht",
+    "attachmentsLabel": "Anhänge",
+    "attachmentsHint": "Optional. Bis zu 5 Dateien, je 1 MB (Bilder oder PDF).",
+    "retentionHint": "Über dieses Formular gesendete Nachrichten bewahren wir 18 Monate lang auf und löschen sie dann - dies ändert sich nicht, falls du dein Konto in der Zwischenzeit löschst. Details findest du in unserer Datenschutzerklärung.",
+    "submit": "Nachricht senden",
+    "submitting": "Wird gesendet...",
+    "success": "Deine Nachricht wurde gesendet. Wir melden uns bald bei dir.",
+    "submitFailed": "Deine Nachricht konnte nicht gesendet werden. Bitte versuche es erneut."
+  },
+  "about": {
+    "title": "Über uns",
+    "intro": "Yachting Earth ICE wird von der Manjo Consulting AB entwickelt und betrieben, einem schwedischen Unternehmen (Org./USt-IdNr. 5568138464), das unter dem Namen Yachting Earth (yachting.earth) auftritt.",
+    "sections": [
+      {
+        "heading": "Warum wir das gebaut haben",
+        "body": [
+          "Jeder Skipper kennt die Routine: Sag jemandem an Land deine Route und deine voraussichtliche Ankunftszeit und melde dich zurück, sobald du sicher im Hafen bist. In der Praxis lebt dieser Plan in einer SMS oder auf einem gekritzelten Zettel, und es passiert leicht, dass Details - die tatsächliche Route, die Crew an Bord, wer wann anzurufen ist - zwischen den Törns verloren gehen oder veralten.",
+          "Yachting Earth ICE macht aus dieser Routine einen strukturierten, wiederholbaren Check-in: Registriere Törn und Boot einmal, lade deine Crew ein, und das System behält die Zeit im Blick, damit dein festgelegter Notfallkontakt („ICE“) stets aktuelle Informationen hat, falls du dich nicht rechtzeitig zurückmeldest."
+        ]
+      },
+      {
+        "heading": "Was wir sind - und was wir nicht sind",
+        "body": [
+          "Dies ist ein Werkzeug zur Reisevorbereitung und Sicherheitsinformation für die Crew, kein Notfunkbake (EPIRB) und kein Echtzeit-Ortungssystem. Es überwacht nicht die Position deines Boots und kontaktiert Rettungsdienste nicht selbst."
+        ],
+        "list": [
+          "Du (der Skipper) bleibst für tatsächliche Sicherheitsentscheidungen auf See verantwortlich",
+          "Die Aufgabe des Systems ist es, sicherzustellen, dass die richtigen Informationen die richtige Person erreichen, falls ein Törn überfällig wird",
+          "Alles, was das System tut - Kulanzzeiten, das Verschieben einer Ankunftszeit, die Benachrichtigung eines ICE-Kontakts - dient dazu, deine eigene Einschätzung zu unterstützen, nicht sie zu ersetzen"
+        ]
+      },
+      {
+        "heading": "Wer dahintersteckt",
+        "body": [
+          "Die Manjo Consulting AB ist ein schwedisches Unternehmen, das Yachting Earth ICE von A bis Z entwickelt und betreibt - Produkt, Technik und Support. Wir sind selbst Segler und haben das Werkzeug gebaut, das wir uns für unsere eigenen Törns gewünscht hätten."
+        ]
+      }
+    ],
+    "contact": {
+      "heading": "Kontakt aufnehmen",
+      "body": "Fragen zum Unternehmen hinter Yachting Earth oder zum Dienst selbst? Kontaktiere uns über das Kontaktformular in deinem Konto, oder sieh dir unsere Seiten zu Datenschutz & DSGVO und Nutzungsbedingungen an, um mehr darüber zu erfahren, wie das System funktioniert."
+    }
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "lead": "Häufige Fragen dazu, wie Yachting Earth ICE funktioniert. Nicht gefunden, wonach du suchst? Kontaktiere uns über das Kontaktformular in deinem Konto.",
+    "categories": [
+      {
+        "heading": "Erste Schritte",
+        "items": [
+          {
+            "q": "Was ist Yachting Earth ICE?",
+            "a": "Es ist ein Werkzeug zur Reisevorbereitung und für den Sicherheits-Check-in der Crew. Ein Skipper registriert einen Törn und ein Boot, fügt eine oder mehrere geplante Routen hinzu, lädt Crew ein und benennt einen Notfallkontakt („ICE“), der automatisch benachrichtigt wird, falls der Törn überfällig wird."
+          },
+          {
+            "q": "Ist das ein Notfunkbake oder ein Echtzeit-Ortungssystem?",
+            "a": "Nein. Yachting Earth ICE verfolgt nicht die Live-Position eines Boots und kontaktiert Rettungsdienste nicht selbst. Es ist ein Werkzeug zur Informationsverwaltung - die Verantwortung für tatsächliche Sicherheitsentscheidungen bleibt beim Skipper. In einem echten Notfall wende dich immer direkt an deine örtliche Seenotleitung oder Küstenwache."
+          },
+          {
+            "q": "Wie füge ich einem Törn eine Route hinzu?",
+            "a": "Plane deine Route im Routenplaner von Windy.com und füge die daraus entstehende URL in das Törn-Formular ein. Sie wird automatisch in Koordinaten umgewandelt und auf der Karte angezeigt. Ein Törn kann mehr als eine geplante Route haben."
+          },
+          {
+            "q": "Wie lade ich Crew ein?",
+            "a": "Füge auf der Törn-Detailseite ein Crew-Mitglied per E-Mail hinzu. Es erhält eine Einladung, seine Daten zu bestätigen und optional ein eigenes Konto zu erstellen sowie ein Foto hochzuladen."
+          }
+        ]
+      },
+      {
+        "heading": "Sicherheit & Benachrichtigungen",
+        "items": [
+          {
+            "q": "Was ist die Kulanzzeit?",
+            "a": "Es ist ein Puffer, der zur geplanten Ankunftszeit des Törns hinzugefügt wird, bevor dieser als überfällig gilt - um normale Verzögerungen zu berücksichtigen, ohne einen Fehlalarm auszulösen. Du wählst die Kulanzzeit bei der Erstellung des Törns."
+          },
+          {
+            "q": "Was passiert, wenn ein Törn überfällig wird?",
+            "a": "Ein Hintergrundjob prüft jede Minute, ob Törns die geplante Ankunft plus Kulanzzeit überschritten haben. Sobald ein Törn überfällig ist, wird der ICE-Kontakt per E-Mail und, falls konfiguriert, per Telegram benachrichtigt."
+          },
+          {
+            "q": "Ich bin spät dran - wie vermeide ich einen Alarm?",
+            "a": "Öffne deinen Törn und nutze „Verschieben“, um die voraussichtliche Ankunftszeit jederzeit vor Ablauf der Frist zu verlängern."
+          },
+          {
+            "q": "Wie markiere ich einen Törn als sicher abgeschlossen?",
+            "a": "Öffne den Törn und wähle „Ankunft bestätigen“. Das kannst du jederzeit tun, auch nachdem bereits ein Alarm gesendet wurde - dein ICE-Kontakt erhält in beiden Fällen eine Aktualisierung."
+          },
+          {
+            "q": "Wie sieht mein Notfallkontakt die Törn-Details?",
+            "a": "Er erhält einen schreibgeschützten Link zu einem Törn-Portal, geschützt durch ein privates Zugangstoken - kein Konto oder Login erforderlich. Such- und Rettungsbehörden können einen Törn alternativ über eine Referenznummer und einen PIN abrufen."
+          },
+          {
+            "q": "Muss mein ICE-Kontakt bestätigen, bevor er benachrichtigt werden kann?",
+            "a": "Nein. Die Bestätigung der E-Mail-Adresse verifiziert lediglich, dass die Adresse funktioniert, aber Alarme bei Überfälligkeit werden unabhängig davon gesendet - eine Sicherheitswarnung von einem angeklickten Link abhängig zu machen, würde ihren Zweck verfehlen."
+          }
+        ]
+      },
+      {
+        "heading": "Datenschutz & Daten",
+        "items": [
+          {
+            "q": "Was passiert mit meinen Daten, nachdem ein Törn beendet ist?",
+            "a": "Ein abgeschlossener oder stornierter Törn wird sofort soft-gelöscht (er verschwindet aus der Ansicht) und 30 Tage später zusammen mit seinen Routen, Crew-Datensätzen, Fotos und Benachrichtigungen endgültig gelöscht. Dein Konto und deine Boote sind davon nicht betroffen. Details findest du auf der Seite Datenschutz & DSGVO."
+          },
+          {
+            "q": "Kann ich mein Konto löschen?",
+            "a": "Ja, jederzeit über deine Profilseite."
+          },
+          {
+            "q": "Werden meine Daten mit jemandem geteilt?",
+            "a": "Niemals verkauft oder mit Werbetreibenden geteilt. Sie erreichen nur die Dienste, die für den Betrieb des Systems nötig sind, etwa unsere E-Mail- und Benachrichtigungsanbieter. Die vollständige Liste findest du auf der Seite Datenschutz & DSGVO."
+          }
+        ]
+      }
+    ]
+  },
+  "changelog": {
+    "title": "Was ist neu",
+    "intro": "Sieh, was bei Yachting Earth ICE neu ist, Release für Release.",
+    "sectionNew": "Neu",
+    "sectionImproved": "Verbessert",
+    "sectionFixed": "Behoben",
+    "entries": [
+      {
+        "version": "v1.3.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE ist jetzt auch auf Deutsch verfügbar - damit sind es insgesamt sechs Sprachen: Englisch, Schwedisch, Französisch, Italienisch, Spanisch und Deutsch -, sodass noch mehr Crews das System in der Sprache nutzen können, die ihnen am natürlichsten liegt.",
+            "Du kannst deine Sicherheitsbenachrichtigungen jetzt auch über Telegram erhalten: Verknüpfe dein Konto mit wenigen Tippern in deinem Profil und wähle Telegram als deinen bevorzugten Weg, erreicht zu werden."
+          ]
+        }
+      },
+      {
+        "version": "v1.2.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE ist jetzt in fünf Sprachen verfügbar - Englisch, Schwedisch, Französisch, Italienisch und Spanisch -, sodass du und deine Crew das System in der Sprache nutzen könnt, die euch am natürlichsten liegt."
+          ],
+          "improved": [
+            "Sobald dein Notfallkontakt benachrichtigt wurde, sind Crew-Fotos jetzt zusammen mit dem Rest des Törns gesperrt, damit sich nichts daran ändern lässt, während möglicherweise Hilfe unterwegs ist.",
+            "Die Fußzeile der Seite mit ihren Schnelllinks und der Versionsnummer erscheint jetzt auf jeder Seite, unabhängig davon, ob du angemeldet bist.",
+            "Wir haben das obere Menü aufgeräumt: Blog und FAQ sind jetzt in der Fußzeile zu finden, sodass die Hauptnavigation auf deine Törns fokussiert bleibt."
+          ]
+        }
+      },
+      {
+        "version": "v1.1.0",
+        "date": "2026-07-15",
+        "sections": {
+          "new": [
+            "Dein Törn wird jetzt automatisch gesperrt, sobald dein Notfallkontakt benachrichtigt wurde, damit nichts Wichtiges versehentlich geändert werden kann, während möglicherweise Hilfe unterwegs ist.",
+            "Du kannst private medizinische Informationen für jedes Crew-Mitglied hinzufügen - sichtbar nur für Such- und Rettungsteams im echten Notfall, niemals für dich oder deinen Notfallkontakt.",
+            "Jeder Törn hat jetzt genau einen klar zugewiesenen Notfallkontakt, sodass immer eindeutig ist, wer benachrichtigt wird, falls etwas schiefgeht.",
+            "Überfällige Törns werden jetzt auf deinem Dashboard hervorgehoben, sodass du auf einen Blick siehst, ob ein Törn Aufmerksamkeit braucht.",
+            "Speichere deine üblichen Crew-Mitglieder, Boote und Routen einmal und verwende sie beim nächsten Planen eines Törns wieder - ohne dieselben Angaben erneut eintippen zu müssen.",
+            "Diese Seite „Was ist neu“ sowie eine Versionsnummer in der Fußzeile, damit du immer sehen kannst, welche Version du nutzt."
+          ]
+        }
+      },
+      {
+        "version": "v1.0.0",
+        "date": "2026-07-14",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE geht live: Registriere deinen Törn und dein Boot, plane deine Route und lade deine Crew ein.",
+            "Füge einen Notfallkontakt hinzu, der automatisch benachrichtigt wird, falls du dich nicht rechtzeitig zurückmeldest.",
+            "Dein Notfallkontakt und Rettungsdienste können bei Bedarf eine einfache, schreibgeschützte Zusammenfassung deines Törns einsehen.",
+            "Deine Törn-Informationen werden zum Schutz deiner Privatsphäre automatisch und endgültig eine festgelegte Zeit nach Törnende gelöscht.",
+            "Verfügbar auf Englisch und Schwedisch."
+          ]
+        }
+      }
+    ]
+  }
+}

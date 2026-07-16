@@ -56,6 +56,8 @@
     "CONTACT_ATTACHMENT_NOT_FOUND": "Bilagan hittades inte.",
     "CREW_GDPR_TOKEN_INVALID": "Länken är ogiltig.",
     "CREW_GDPR_TOKEN_EXPIRED": "Länken har gått ut. Begär en ny.",
+    "TELEGRAM_NOT_LINKED": "Koppla ditt Telegram-konto först.",
+    "TELEGRAM_ALREADY_LINKED": "Det Telegram-kontot är redan kopplat till en annan användare.",
     "SERVER_ERROR": "Ett oväntat fel inträffade.",
     "DATABASE_ERROR": "Ett databasfel inträffade.",
     "RATE_LIMITED": "För många försök. Försök igen senare.",
@@ -299,6 +301,15 @@
     "gdprRequestReady": "Dina uppgifter är redo att laddas ner.",
     "gdprDownloadFailed": "Kunde inte ladda ner dina uppgifter.",
     "gdprDownloaded": "Dina uppgifter har laddats ner.",
+    "channelHeading": "Aviseringskanal",
+    "channelHint": "Välj hur vi kontaktar dig om ditt konto. Detta är separat från kanalen som används för att larma din ICE-kontakt.",
+    "channelLabel": "Föredragen kanal",
+    "channelLabels": {
+      "email": "E-post",
+      "telegram": "Telegram"
+    },
+    "channelSaveFailed": "Kunde inte spara din föredragna kanal.",
+    "channelSaved": "Aviseringskanalen har uppdaterats.",
     "deleteHeading": "Ta bort konto",
     "deleteWarning": "Om du tar bort ditt konto raderas dina båtar och ICE-kontakter permanent och dina resor avslutas. Det går inte att ångra.",
     "deleteButton": "Ta bort mitt konto",
@@ -308,6 +319,22 @@
     "passwordRequired": "Ange ditt lösenord för att bekräfta.",
     "deleteFailed": "Kunde inte ta bort kontot.",
     "deleted": "Ditt konto har tagits bort."
+  },
+  "telegramLink": {
+    "heading": "Koppla Telegram",
+    "notLinkedHint": "Koppla ditt Telegram-konto för att ta emot aviseringar där.",
+    "linkedSince": "Kopplat till Telegram sedan {date}.",
+    "openButton": "Öppna Telegram för att koppla ditt konto",
+    "waitingHint": "Väntar på bekräftelse i Telegram…",
+    "checkNowButton": "Jag har gjort det - kontrollera nu",
+    "manualHint": "Om knappen inte öppnar appen, kopiera den här länken till Telegram:",
+    "linkedToast": "Telegram kopplat!",
+    "unlinkButton": "Koppla bort Telegram",
+    "unlinkConfirm": "Koppla bort ditt Telegram-konto? Du slutar då ta emot Telegram-aviseringar.",
+    "unlinkedToast": "Telegram bortkopplat.",
+    "linkFailed": "Kunde inte starta Telegram-kopplingen. Försök igen.",
+    "statusCheckFailed": "Kunde inte kontrollera Telegram-kopplingens status.",
+    "botNotConfigured": "Telegram-koppling är inte tillgängligt än. Försök igen senare."
   },
   "createTrip": {
     "title": "Skapa ny resa",
@@ -504,8 +531,7 @@
     "channelLabel": "Föredragen notifieringskanal",
     "channelLabels": {
       "email": "E-post",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "channelHint": "Larm skickas till kontakten via den här kanalen när en resa inte bekräftats i tid.",
     "submitAdd": "Spara kontakt",
@@ -547,8 +573,7 @@
     "channelLabel": "Föredragen notifieringskanal",
     "channelLabels": {
       "email": "E-post",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "saveFailed": "Kunde inte spara ändringarna.",
     "updated": "Dina uppgifter har uppdaterats."
@@ -1233,7 +1258,7 @@
         "body": ["Vi säljer eller delar aldrig dina uppgifter med annonsörer. Uppgifter når endast:"],
         "list": [
           "Mailgun - för att leverera transaktionell e-post (aviseringar, inbjudningar, larm)",
-          "Telegram och Twilio WhatsApp - för att leverera aviseringar, där aktiverat",
+          "Telegram - för att leverera aviseringar, där aktiverat",
           "Vår hostingleverantör - för att driva och säkerhetskopiera tjänsten",
           "Cloudflare (cdnjs) och unpkg - för att leverera kodbiblioteken Leaflet och Lucide som används av appen; dessa leverantörer ser IP-adressen och webbläsaren (User-Agent) hos varje besökare som laddar en sida",
           "OpenStreetMap - för att leverera karttiles som visas på rutt-/resekartor; OpenStreetMap ser IP-adressen och webbläsaren (User-Agent) hos den som visar en karta, tillsammans med det kartområde som begärts"
@@ -1242,7 +1267,7 @@
       {
         "heading": "Internationella dataöverföringar",
         "body": [
-          "Mailgun och Twilio (WhatsApp), som nämns ovan, är amerikanska leverantörer, vilket innebär att aviseringsinnehåll - mottagares namn, e-postadresser, telefonnummer och larmtext - kan överföras till och behandlas i USA. I dessa fall förlitar vi oss på dessa leverantörers deltagande i EU-US Data Privacy Framework och/eller standardavtalsklausuler för att säkerställa att dina uppgifter får en likvärdig skyddsnivå utanför EES."
+          "Mailgun, som nämns ovan, är en amerikansk leverantör, vilket innebär att aviseringsinnehåll - mottagares namn, e-postadresser, telefonnummer och larmtext - kan överföras till och behandlas i USA. I dessa fall förlitar vi oss på leverantörens deltagande i EU-US Data Privacy Framework och/eller standardavtalsklausuler för att säkerställa att dina uppgifter får en likvärdig skyddsnivå utanför EES."
         ]
       },
       {
@@ -1304,14 +1329,14 @@
       {
         "heading": "Tillgänglighet och ansvarsbegränsning",
         "body": [
-          "Vi strävar efter att hålla systemet tillgängligt och aviseringar snabba, men vi garanterar inte oavbruten tillgänglighet, och leverans av e-post-, Telegram- eller WhatsApp-aviseringar beror på tredjepartstjänster utanför vår kontroll.",
+          "Vi strävar efter att hålla systemet tillgängligt och aviseringar snabba, men vi garanterar inte oavbruten tillgänglighet, och leverans av e-post- eller Telegram-aviseringar beror på tredjepartstjänster utanför vår kontroll.",
           "I den utsträckning lagen tillåter ansvarar Manjo Consulting AB inte för förlust eller skada som uppstår genom att förlita sig på systemet för faktiska säkerhetskritiska beslut, genom försenade eller misslyckade aviseringar, eller genom felaktig information som en användare angett. Systemet tillhandahålls \"i befintligt skick\" som ett hjälpmedel för informationshantering, inte som en säkerhetsgaranti."
         ]
       },
       {
         "heading": "Tredjepartstjänster",
         "body": [
-          "Systemet förlitar sig på tredjepartstjänster för att fungera: Mailgun för e-postleverans, Telegram och Twilio WhatsApp för valfria aviseringar, OpenStreetMap för kartor och Windy.com som källa för ruttplanering. Din användning av dessa tjänster omfattas av deras egna villkor."
+          "Systemet förlitar sig på tredjepartstjänster för att fungera: Mailgun för e-postleverans, Telegram för valfria aviseringar, OpenStreetMap för kartor och Windy.com som källa för ruttplanering. Din användning av dessa tjänster omfattas av deras egna villkor."
         ]
       },
       {
@@ -1364,17 +1389,18 @@
       {
         "heading": "Varför vi byggde det här",
         "body": [
-          "Alla skeppare känner igen rutinen: berätta för någon i land vilken rutt du tar och när du väntas anlända, och checka in när du är säkert i hamn. I praktiken lever den planen i ett sms eller en klottrad lapp, och det är lätt för detaljerna - den faktiska rutten, besättningen ombord, vem som ska kontaktas och när - att försvinna eller bli inaktuella mellan resor.",
-          "Yachting Earth ICE gör den rutinen till en strukturerad, upprepningsbar incheckning: registrera resan och båten en gång, bjud in din besättning, så håller systemet koll på klockan så att din utsedda nödkontakt (\"ICE\") alltid har korrekt, uppdaterad information om du inte checkar in i tid."
+          "Alla skeppare känner igen rutinen: du berättar för någon i land vilken rutt du tar och när du väntas anlända, och checkar in när du är säkert i hamn. I praktiken lever den planen i ett sms eller en klottrad lapp — och det är lätt för detaljerna, den faktiska rutten, vem som är ombord, vem som ska kontaktas och när, att försvinna eller bli inaktuella mellan resor.",
+          "Yachting Earth ICE började som ett litet verktyg jag byggde åt mig själv och min egen besättning för länge sedan, för att få just den rutinen på plats inför våra egna seglatser. Det växte till tjänsten du ser idag: registrera resan och båten en gång, bjud in din besättning, så håller systemet koll på klockan åt dig — så att din utsedda nödkontakt (\"ICE\") alltid har korrekt, uppdaterad information om du inte checkar in i tid."
         ]
       },
       {
         "heading": "Vad vi är - och vad vi inte är",
         "body": [
-          "Det här är ett verktyg för reseförberedelser och säkerhetsinformation för besättningen, inte en nödsändare, EPIRB eller realtidsspårningssystem. Det övervakar inte båtens position och kontaktar inte räddningstjänsten självt."
+          "Det här är ett verktyg för reseförberedelser och säkerhetsinformation för besättningen — inte en nödsändare, EPIRB eller realtidsspårningssystem. Det övervakar inte båtens position och kontaktar inte räddningstjänsten självt.",
+          "Grundtanken var segling, men samma princip fungerar för alla resor där en karta och en tidsplan är inblandad — bilresor, vandringar och annat friluftsliv funkar precis lika bra."
         ],
         "list": [
-          "Du (skepparen) är fortsatt ansvarig för faktiska säkerhetsbeslut till sjöss",
+          "Du (skepparen/vandringsledaren/chauffören) är fortsatt ansvarig för de faktiska säkerhetsbesluten",
           "Systemets uppgift är att se till att rätt information når rätt person om en resa blir försenad",
           "Allt systemet gör - marginaltider, att skjuta upp en ETA, att meddela en nödkontakt - finns där för att stödja ditt eget omdöme, inte ersätta det"
         ]
@@ -1382,13 +1408,21 @@
       {
         "heading": "Vilka som ligger bakom",
         "body": [
-          "Manjo Consulting AB är ett svenskt företag som designar och driver Yachting Earth ICE från start till mål - produkt, utveckling och support. Vi är seglare själva, och vi byggde verktyget vi önskade fanns för våra egna resor."
+          "Jag heter Tony Johansson och driver Yachting Earth ICE genom mitt eget bolag, Manjo Consulting AB, som normalt jobbar med konsulttjänster inom ekonomi, informations- och IT-säkerhet samt systemutveckling. Jag seglar själv en hel del — de senaste sex åren har det blivit omkring 2 000 nm om året under kölen — så det här är inte ett verktyg byggt på pappret, det är byggt för resor jag själv gör.",
+          "Manjo Consulting AB äger domänen och står för de tjänster som krävs för att hålla Yachting Earth ICE igång, nu när tjänsten är öppen för fler än bara oss själva."
+        ]
+      },
+      {
+        "heading": "Vår syn på din data",
+        "body": [
+          "Kostar en produkt inget brukar man säga att du själv är produkten — och för många tjänster, inte minst sociala medier, stämmer det. Så är det inte här. Varken jag eller Manjo Consulting AB har någon avsikt att någonsin ta betalt för Yachting Earth ICE, och vi säljer inte — och kommer aldrig sälja — någon av den information du laddar upp. Det ligger så långt ifrån vad vi vill uppnå med tjänsten att det inte ens är intressant.",
+          "Hela systemet är byggt med GDPR och personuppgifter i åtanke från grunden: vi sparar bara det vi behöver för att driva tjänsten, aldrig mer. Resedata — rutt, besättning, foton — raderas automatiskt 30 dagar efter att en resa avslutas eller avbryts. Ber du oss inte spara ditt konto inför framtida resor tar vi bort det också."
         ]
       }
     ],
     "contact": {
       "heading": "Kontakta oss",
-      "body": "Frågor om företaget bakom Yachting Earth, eller om själva tjänsten? Hör av dig via kontaktformuläret i ditt konto, eller se våra sidor Integritet & GDPR och Användarvillkor för mer information om hur systemet fungerar."
+      "body": "Frågor om företaget bakom Yachting Earth, eller om själva tjänsten? Hör av dig via kontaktformuläret i ditt konto, eller läs mer om hur systemet hanterar dina uppgifter i Integritet & GDPR och Användarvillkor."
     }
   },
   "faq": {
@@ -1425,7 +1459,7 @@
           },
           {
             "q": "Vad händer om en resa blir försenad?",
-            "a": "En bakgrundsjobb kontrollerar varje minut om resor har passerat planerad ankomsttid plus marginaltid. När en resa räknas som försenad meddelas nödkontakten via e-post och, om det är konfigurerat, Telegram eller WhatsApp."
+            "a": "En bakgrundsjobb kontrollerar varje minut om resor har passerat planerad ankomsttid plus marginaltid. När en resa räknas som försenad meddelas nödkontakten via e-post och, om det är konfigurerat, Telegram."
           },
           {
             "q": "Jag är sen - hur undviker jag att utlösa ett larm?",
@@ -1471,6 +1505,16 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.3.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE finns nu även på tyska, vilket ger totalt sex språk - engelska, svenska, franska, italienska, spanska och tyska - så att ännu fler besättningar kan använda tjänsten på det språk som känns mest naturligt.",
+            "Du kan nu få dina säkerhetsaviseringar via Telegram: koppla ditt konto från din profil med några få tryck och välj Telegram som det sätt du helst vill bli kontaktad på."
+          ]
+        }
+      },
       {
         "version": "v1.2.0",
         "date": "2026-07-16",

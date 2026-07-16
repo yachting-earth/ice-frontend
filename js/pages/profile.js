@@ -41,6 +41,22 @@ const ProfilePage = {
                 </div>
                 <div class="card">
                     <div class="card-header">
+                        <h2>${escapeHtml(t('profile.channelHeading'))}</h2>
+                    </div>
+                    <p>${escapeHtml(t('profile.channelHint'))}</p>
+                    <div id="channel-alert"></div>
+                    <div class="field">
+                        <label for="profile-channel">${escapeHtml(t('profile.channelLabel'))}</label>
+                        <select id="profile-channel">
+                            <option value="email">${escapeHtml(t('profile.channelLabels.email'))}</option>
+                            <option value="telegram">${escapeHtml(t('profile.channelLabels.telegram'))}</option>
+                        </select>
+                    </div>
+                    <div id="telegram-link-widget"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
                         <h2>${escapeHtml(t('profile.gdprHeading'))}</h2>
                     </div>
                     <p>${escapeHtml(t('profile.gdprHint'))}</p>
@@ -88,9 +104,56 @@ const ProfilePage = {
         });
         document.getElementById('photo-submit').addEventListener('click', () => this.handlePhotoSubmit());
 
+        document.getElementById('profile-channel').addEventListener('change', (e) => this.handleChannelChange(e.target.value));
+
         await this.loadProfile();
         await this.loadOwnPhoto();
         await this.loadGdprExportStatus();
+        await TelegramLink.render(document.getElementById('telegram-link-widget'), {
+            onLinked: () => this.saveChannel('telegram'),
+            onUnlinked: () => {
+                // The backend already reset preferred_channel back to
+                // 'email' server-side (User::unlinkTelegram()) - just
+                // reflect that locally.
+                document.getElementById('profile-channel').value = 'email';
+                this.state.user = { ...this.state.user, preferred_channel: 'email' };
+            }
+        });
+    },
+
+    async handleChannelChange(channel) {
+        const status = await apiRequest('/user/telegram/status');
+
+        if (channel === 'telegram' && !(status.success && status.data.linked)) {
+            // Not linked yet - don't save, just surface the onboarding
+            // widget so the user can complete it. saveChannel() runs
+            // automatically via the widget's onLinked callback once they do.
+            document.getElementById('telegram-link-widget').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const startBtn = document.querySelector('#telegram-link-widget [data-telegram-start]');
+            if (startBtn) startBtn.click();
+            return;
+        }
+
+        await this.saveChannel(channel);
+    },
+
+    async saveChannel(channel) {
+        const alertBox = document.getElementById('channel-alert');
+        const response = await apiRequest('/user/profile', {
+            method: 'PUT',
+            body: JSON.stringify({ preferred_channel: channel })
+        });
+
+        document.getElementById('profile-channel').value = response.success ? channel : (this.state.user.preferred_channel || 'email');
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.channelSaveFailed')))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        this.state.user = { ...this.state.user, preferred_channel: channel };
+        showToast(t('profile.channelSaved'), 'success');
     },
 
     async loadGdprExportStatus() {
@@ -232,6 +295,7 @@ const ProfilePage = {
 
         this.state.user = response.data;
         this.renderForm();
+        document.getElementById('profile-channel').value = response.data.preferred_channel || 'email';
     },
 
     renderForm() {

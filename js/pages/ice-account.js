@@ -2,8 +2,7 @@ const IceAccountPage = {
     channelLabels() {
         return {
             email: t('iceAccount.channelLabels.email'),
-            telegram: t('iceAccount.channelLabels.telegram'),
-            whatsapp: t('iceAccount.channelLabels.whatsapp')
+            telegram: t('iceAccount.channelLabels.telegram')
         };
     },
 
@@ -137,9 +136,9 @@ const IceAccountPage = {
                     <select id="my-channel-${contact.id}">
                         <option value="email" ${contact.preferred_channel === 'email' ? 'selected' : ''}>${escapeHtml(t('iceAccount.channelLabels.email'))}</option>
                         <option value="telegram" ${contact.preferred_channel === 'telegram' ? 'selected' : ''}>${escapeHtml(t('iceAccount.channelLabels.telegram'))}</option>
-                        <option value="whatsapp" ${contact.preferred_channel === 'whatsapp' ? 'selected' : ''}>${escapeHtml(t('iceAccount.channelLabels.whatsapp'))}</option>
                     </select>
                 </div>
+                <div id="telegram-widget-${contact.id}" hidden></div>
                 <div class="btn-group">
                     <button class="btn btn-primary btn-sm" type="submit">${escapeHtml(t('common.save'))}</button>
                     <button class="btn btn-ghost btn-sm" type="button" data-cancel="${contact.id}">${escapeHtml(t('common.cancel'))}</button>
@@ -150,15 +149,7 @@ const IceAccountPage = {
     startEdit(contactId) {
         this.state.editingId = contactId;
         this.rerenderCard(contactId);
-
-        document.querySelector(`[data-contact-form="${contactId}"]`).addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleSave(contactId);
-        });
-        document.querySelector(`[data-cancel="${contactId}"]`).addEventListener('click', () => {
-            this.state.editingId = null;
-            this.rerenderCard(contactId);
-        });
+        this.bindEditFormListeners(contactId);
     },
 
     rerenderCard(contactId) {
@@ -169,17 +160,56 @@ const IceAccountPage = {
         card.outerHTML = this.renderContactCard(contact);
 
         if (this.state.editingId === contactId) {
-            document.querySelector(`[data-contact-form="${contactId}"]`).addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleSave(contactId);
-            });
-            document.querySelector(`[data-cancel="${contactId}"]`).addEventListener('click', () => {
-                this.state.editingId = null;
-                this.rerenderCard(contactId);
-            });
+            this.bindEditFormListeners(contactId);
         } else {
             document.querySelector(`[data-edit="${contactId}"]`).addEventListener('click', () => this.startEdit(contactId));
         }
+    },
+
+    bindEditFormListeners(contactId) {
+        document.querySelector(`[data-contact-form="${contactId}"]`).addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleSave(contactId);
+        });
+        document.querySelector(`[data-cancel="${contactId}"]`).addEventListener('click', () => {
+            this.state.editingId = null;
+            this.rerenderCard(contactId);
+        });
+
+        const channelSelect = document.getElementById(`my-channel-${contactId}`);
+        channelSelect.addEventListener('change', (e) => this.handleChannelSelect(contactId, e.target.value));
+
+        // Selecting telegram earlier (or a legacy row saved before this
+        // account was linked) should still surface the onboarding widget
+        // if the account isn't actually linked (yet/anymore).
+        if (channelSelect.value === 'telegram') {
+            this.handleChannelSelect(contactId, 'telegram');
+        }
+    },
+
+    // Triggered by the per-contact preferred-channel <select> - see
+    // renderEditForm(). Telegram delivery for this contact rides on the
+    // caller's own account-wide Telegram link (backend gates this too, in
+    // IceContactHandler::updateMine()), so picking "telegram" here shows the
+    // same onboarding widget used on the profile page rather than a
+    // per-contact chat ID field.
+    async handleChannelSelect(contactId, channel) {
+        const widget = document.getElementById(`telegram-widget-${contactId}`);
+        if (!widget) return;
+
+        if (channel !== 'telegram') {
+            widget.hidden = true;
+            return;
+        }
+
+        const status = await apiRequest('/user/telegram/status');
+        if (status.success && status.data.linked) {
+            widget.hidden = true;
+            return;
+        }
+
+        widget.hidden = false;
+        await TelegramLink.render(widget);
     },
 
     async handleSave(contactId) {

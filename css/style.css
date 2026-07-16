@@ -1173,6 +1173,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .blog-article__body ol {
     margin: 0 0 var(--space-3);
     padding-left: var(--space-5);
+    list-style: revert;
+}
+
+.blog-article__body li + li {
+    margin-top: var(--space-2);
 }
 
 .blog-article__body blockquote {

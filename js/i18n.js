@@ -67,6 +67,8 @@ const EN_INLINE = {
     "CONTACT_ATTACHMENT_NOT_FOUND": "Attachment not found.",
     "CREW_GDPR_TOKEN_INVALID": "This link is invalid.",
     "CREW_GDPR_TOKEN_EXPIRED": "This link has expired. Please request a new one.",
+    "TELEGRAM_NOT_LINKED": "Link your Telegram account first.",
+    "TELEGRAM_ALREADY_LINKED": "That Telegram account is already linked to another user.",
     "SERVER_ERROR": "An unexpected error occurred.",
     "DATABASE_ERROR": "A database error occurred.",
     "RATE_LIMITED": "Too many attempts. Try again later.",
@@ -310,6 +312,15 @@ const EN_INLINE = {
     "gdprRequestReady": "Your data is ready to download.",
     "gdprDownloadFailed": "Could not download your data.",
     "gdprDownloaded": "Your data has been downloaded.",
+    "channelHeading": "Notification channel",
+    "channelHint": "Choose how we contact you about your account. This is separate from the channel used to alert your ICE contact.",
+    "channelLabel": "Preferred channel",
+    "channelLabels": {
+      "email": "Email",
+      "telegram": "Telegram"
+    },
+    "channelSaveFailed": "Could not save your preferred channel.",
+    "channelSaved": "Notification channel updated.",
     "deleteHeading": "Delete account",
     "deleteWarning": "Deleting your account permanently removes your vessels and ICE contacts, and ends your trips. This cannot be undone.",
     "deleteButton": "Delete my account",
@@ -319,6 +330,22 @@ const EN_INLINE = {
     "passwordRequired": "Enter your password to confirm.",
     "deleteFailed": "Could not delete the account.",
     "deleted": "Your account has been deleted."
+  },
+  "telegramLink": {
+    "heading": "Link Telegram",
+    "notLinkedHint": "Link your Telegram account to receive notifications there.",
+    "linkedSince": "Linked to Telegram since {date}.",
+    "openButton": "Open Telegram to link your account",
+    "waitingHint": "Waiting for confirmation in Telegram…",
+    "checkNowButton": "I've done this - check now",
+    "manualHint": "If the button doesn't open the app, copy this link into Telegram:",
+    "linkedToast": "Telegram linked!",
+    "unlinkButton": "Unlink Telegram",
+    "unlinkConfirm": "Unlink your Telegram account? You'll stop receiving Telegram notifications.",
+    "unlinkedToast": "Telegram unlinked.",
+    "linkFailed": "Could not start Telegram linking. Try again.",
+    "statusCheckFailed": "Could not check the Telegram link status.",
+    "botNotConfigured": "Telegram linking isn't available yet. Please try again later."
   },
   "createTrip": {
     "title": "Create new trip",
@@ -515,8 +542,7 @@ const EN_INLINE = {
     "channelLabel": "Preferred notification channel",
     "channelLabels": {
       "email": "Email",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "channelHint": "Alerts are sent to the contact via this channel when a trip isn't confirmed in time.",
     "submitAdd": "Save contact",
@@ -558,8 +584,7 @@ const EN_INLINE = {
     "channelLabel": "Preferred notification channel",
     "channelLabels": {
       "email": "Email",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "saveFailed": "Could not save the changes.",
     "updated": "Your details have been updated."
@@ -1367,7 +1392,7 @@ const EN_INLINE = {
         ],
         "list": [
           "Mailgun - to deliver transactional email (trip notifications, invitations, alerts)",
-          "Telegram and Twilio WhatsApp - to deliver notifications, where enabled",
+          "Telegram - to deliver notifications, where enabled",
           "Our hosting provider - to run and back up the service",
           "Cloudflare (cdnjs) and unpkg - to serve the Leaflet and Lucide code libraries used by the app; these providers see the IP address and browser (User-Agent) of every visitor who loads a page",
           "OpenStreetMap - to serve the map tiles shown on route/trip maps; OpenStreetMap sees the IP address and browser (User-Agent) of anyone who views a map, along with the map area requested"
@@ -1376,7 +1401,7 @@ const EN_INLINE = {
       {
         "heading": "International data transfers",
         "body": [
-          "Mailgun and Twilio (WhatsApp), listed above, are US-headquartered processors, so notification content - recipient names, emails, phone numbers and trip alert text - may be transferred to and processed in the United States. Where this happens, we rely on those providers' participation in the EU-US Data Privacy Framework and/or Standard Contractual Clauses to ensure your data receives an equivalent level of protection outside the EEA."
+          "Mailgun, listed above, is a US-headquartered processor, so notification content - recipient names, emails, phone numbers and trip alert text - may be transferred to and processed in the United States. Where this happens, we rely on their participation in the EU-US Data Privacy Framework and/or Standard Contractual Clauses to ensure your data receives an equivalent level of protection outside the EEA."
         ]
       },
       {
@@ -1440,14 +1465,14 @@ const EN_INLINE = {
       {
         "heading": "Availability and limitation of liability",
         "body": [
-          "We aim to keep the system available and notifications timely, but we do not guarantee uninterrupted availability, and delivery of email, Telegram, or WhatsApp notifications depends on third-party services outside our control.",
+          "We aim to keep the system available and notifications timely, but we do not guarantee uninterrupted availability, and delivery of email or Telegram notifications depends on third-party services outside our control.",
           "To the maximum extent permitted by law, Manjo Consulting AB is not liable for any loss or damage arising from reliance on the system for actual safety-critical decisions, from delayed or failed notifications, or from inaccurate information entered by a user. The system is provided \"as is\" as an information-management aid, not a safety guarantee."
         ]
       },
       {
         "heading": "Third-party services",
         "body": [
-          "The system relies on third-party services to operate: Mailgun for email delivery, Telegram and Twilio WhatsApp for optional notifications, OpenStreetMap for map tiles, and Windy.com as a source for route planning. Your use of those services is subject to their own terms."
+          "The system relies on third-party services to operate: Mailgun for email delivery, Telegram for optional notifications, OpenStreetMap for map tiles, and Windy.com as a source for route planning. Your use of those services is subject to their own terms."
         ]
       },
       {
@@ -1561,7 +1586,7 @@ const EN_INLINE = {
           },
           {
             "q": "What happens if a trip becomes overdue?",
-            "a": "A background job checks every minute for trips past their scheduled arrival plus grace period. Once a trip is overdue, the ICE contact is notified by email and, if configured, Telegram or WhatsApp."
+            "a": "A background job checks every minute for trips past their scheduled arrival plus grace period. Once a trip is overdue, the ICE contact is notified by email and, if configured, Telegram."
           },
           {
             "q": "I'm running late - how do I avoid triggering an alert?",
@@ -1608,6 +1633,16 @@ const EN_INLINE = {
     "sectionFixed": "Fixed",
     "entries": [
       {
+        "version": "v1.3.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE is now available in German too, bringing the total to six languages - English, Swedish, French, Italian, Spanish and German - so even more crews can use it in the language that feels most natural.",
+            "You can now receive your safety notifications on Telegram: link your account from your profile in a couple of taps and choose Telegram as your preferred way to be reached."
+          ]
+        }
+      },
+      {
         "version": "v1.2.0",
         "date": "2026-07-16",
         "sections": {
@@ -1653,7 +1688,7 @@ const EN_INLINE = {
 };
 
 const I18n = {
-  SUPPORTED: ['en', 'sv', 'fr', 'it', 'es'],
+  SUPPORTED: ['en', 'sv', 'fr', 'it', 'es', 'de'],
   DEFAULT: 'en',
   _dicts: { en: EN_INLINE },
   _lang: null,

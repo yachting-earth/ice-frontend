@@ -56,6 +56,8 @@
     "CONTACT_ATTACHMENT_NOT_FOUND": "Archivo adjunto no encontrado.",
     "CREW_GDPR_TOKEN_INVALID": "Este enlace no es válido.",
     "CREW_GDPR_TOKEN_EXPIRED": "Este enlace ha caducado. Solicita uno nuevo.",
+    "TELEGRAM_NOT_LINKED": "Vincula primero tu cuenta de Telegram.",
+    "TELEGRAM_ALREADY_LINKED": "Esa cuenta de Telegram ya está vinculada a otro usuario.",
     "SERVER_ERROR": "Se ha producido un error inesperado.",
     "DATABASE_ERROR": "Se ha producido un error en la base de datos.",
     "RATE_LIMITED": "Demasiados intentos. Inténtalo de nuevo más tarde.",
@@ -299,6 +301,15 @@
     "gdprRequestReady": "Tus datos están listos para descargar.",
     "gdprDownloadFailed": "No se pudieron descargar tus datos.",
     "gdprDownloaded": "Tus datos se han descargado.",
+    "channelHeading": "Canal de notificación",
+    "channelHint": "Elige cómo te contactamos sobre tu cuenta. Esto es independiente del canal usado para avisar a tu contacto ICE.",
+    "channelLabel": "Canal preferido",
+    "channelLabels": {
+      "email": "Correo electrónico",
+      "telegram": "Telegram"
+    },
+    "channelSaveFailed": "No se pudo guardar tu canal preferido.",
+    "channelSaved": "Canal de notificación actualizado.",
     "deleteHeading": "Eliminar cuenta",
     "deleteWarning": "Eliminar tu cuenta borra permanentemente tus embarcaciones y contactos ICE, y finaliza tus viajes. Esta acción no se puede deshacer.",
     "deleteButton": "Eliminar mi cuenta",
@@ -308,6 +319,22 @@
     "passwordRequired": "Introduce tu contraseña para confirmar.",
     "deleteFailed": "No se pudo eliminar la cuenta.",
     "deleted": "Tu cuenta ha sido eliminada."
+  },
+  "telegramLink": {
+    "heading": "Vincular Telegram",
+    "notLinkedHint": "Vincula tu cuenta de Telegram para recibir notificaciones allí.",
+    "linkedSince": "Vinculado a Telegram desde {date}.",
+    "openButton": "Abrir Telegram para vincular tu cuenta",
+    "waitingHint": "Esperando confirmación en Telegram…",
+    "checkNowButton": "Ya lo hice - comprobar ahora",
+    "manualHint": "Si el botón no abre la aplicación, copia este enlace en Telegram:",
+    "linkedToast": "¡Telegram vinculado!",
+    "unlinkButton": "Desvincular Telegram",
+    "unlinkConfirm": "¿Desvincular tu cuenta de Telegram? Dejarás de recibir notificaciones por Telegram.",
+    "unlinkedToast": "Telegram desvinculado.",
+    "linkFailed": "No se pudo iniciar la vinculación con Telegram. Inténtalo de nuevo.",
+    "statusCheckFailed": "No se pudo comprobar el estado de la vinculación con Telegram.",
+    "botNotConfigured": "La vinculación con Telegram aún no está disponible. Inténtalo más tarde."
   },
   "createTrip": {
     "title": "Crear nuevo viaje",
@@ -504,8 +531,7 @@
     "channelLabel": "Canal de notificación preferido",
     "channelLabels": {
       "email": "Correo electrónico",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "channelHint": "Las alertas se envían al contacto por este canal cuando un viaje no se confirma a tiempo.",
     "submitAdd": "Guardar contacto",
@@ -547,8 +573,7 @@
     "channelLabel": "Canal de notificación preferido",
     "channelLabels": {
       "email": "Correo electrónico",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "saveFailed": "No se pudieron guardar los cambios.",
     "updated": "Tus datos se han actualizado."
@@ -1233,7 +1258,7 @@
         "body": ["Nunca vendemos ni compartimos tus datos con anunciantes. Los datos solo llegan a:"],
         "list": [
           "Mailgun - para entregar correo electrónico transaccional (notificaciones de viaje, invitaciones, alertas)",
-          "Telegram y Twilio WhatsApp - para entregar notificaciones, cuando estén habilitadas",
+          "Telegram - para entregar notificaciones, cuando esté habilitado",
           "Nuestro proveedor de hosting - para ejecutar y respaldar el servicio",
           "Cloudflare (cdnjs) y unpkg - para servir las librerías de código Leaflet y Lucide que usa la aplicación; estos proveedores ven la dirección IP y el navegador (User-Agent) de cada visitante que carga una página",
           "OpenStreetMap - para servir los mosaicos de mapa mostrados en los mapas de rutas/viajes; OpenStreetMap ve la dirección IP y el navegador (User-Agent) de cualquiera que consulte un mapa, junto con el área de mapa solicitada"
@@ -1242,7 +1267,7 @@
       {
         "heading": "Transferencias internacionales de datos",
         "body": [
-          "Mailgun y Twilio (WhatsApp), mencionados arriba, son responsables del tratamiento con sede en EE. UU., por lo que el contenido de las notificaciones - nombres de destinatarios, correos electrónicos, números de teléfono y texto de alerta del viaje - puede transferirse y tratarse en Estados Unidos. Cuando esto ocurre, nos basamos en la participación de esos proveedores en el Marco de Privacidad de Datos UE-EE. UU. y/o en las Cláusulas Contractuales Tipo para garantizar que tus datos reciban un nivel de protección equivalente fuera del EEE."
+          "Mailgun, mencionado arriba, es responsable del tratamiento con sede en EE. UU., por lo que el contenido de las notificaciones - nombres de destinatarios, correos electrónicos, números de teléfono y texto de alerta del viaje - puede transferirse y tratarse en Estados Unidos. Cuando esto ocurre, nos basamos en la participación de ese proveedor en el Marco de Privacidad de Datos UE-EE. UU. y/o en las Cláusulas Contractuales Tipo para garantizar que tus datos reciban un nivel de protección equivalente fuera del EEE."
         ]
       },
       {
@@ -1304,14 +1329,14 @@
       {
         "heading": "Disponibilidad y limitación de responsabilidad",
         "body": [
-          "Procuramos mantener el sistema disponible y las notificaciones puntuales, pero no garantizamos una disponibilidad ininterrumpida, y la entrega de notificaciones por correo electrónico, Telegram o WhatsApp depende de servicios de terceros ajenos a nuestro control.",
+          "Procuramos mantener el sistema disponible y las notificaciones puntuales, pero no garantizamos una disponibilidad ininterrumpida, y la entrega de notificaciones por correo electrónico o Telegram depende de servicios de terceros ajenos a nuestro control.",
           "En la medida máxima permitida por la ley, Manjo Consulting AB no es responsable de ninguna pérdida o daño derivado de confiar en el sistema para decisiones de seguridad realmente críticas, de notificaciones retrasadas o fallidas, o de información inexacta introducida por un usuario. El sistema se ofrece «tal cual» como ayuda de gestión de información, no como garantía de seguridad."
         ]
       },
       {
         "heading": "Servicios de terceros",
         "body": [
-          "El sistema depende de servicios de terceros para funcionar: Mailgun para la entrega de correo electrónico, Telegram y Twilio WhatsApp para notificaciones opcionales, OpenStreetMap para los mosaicos de mapa, y Windy.com como fuente para la planificación de rutas. El uso de esos servicios está sujeto a sus propios términos."
+          "El sistema depende de servicios de terceros para funcionar: Mailgun para la entrega de correo electrónico, Telegram para notificaciones opcionales, OpenStreetMap para los mosaicos de mapa, y Windy.com como fuente para la planificación de rutas. El uso de esos servicios está sujeto a sus propios términos."
         ]
       },
       {
@@ -1425,7 +1450,7 @@
           },
           {
             "q": "¿Qué ocurre si un viaje se retrasa más de lo previsto?",
-            "a": "Una tarea en segundo plano comprueba cada minuto los viajes que superan su hora de llegada programada más el período de gracia. En cuanto un viaje se retrasa, se avisa al contacto ICE por correo electrónico y, si está configurado, por Telegram o WhatsApp."
+            "a": "Una tarea en segundo plano comprueba cada minuto los viajes que superan su hora de llegada programada más el período de gracia. En cuanto un viaje se retrasa, se avisa al contacto ICE por correo electrónico y, si está configurado, por Telegram."
           },
           {
             "q": "Voy con retraso - ¿cómo evito que se active una alerta?",
@@ -1471,6 +1496,16 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.3.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE ya está disponible también en alemán, lo que eleva el total a seis idiomas - inglés, sueco, francés, italiano, español y alemán -, para que aún más tripulaciones puedan usarlo en el idioma que les resulte más natural.",
+            "Ahora puedes recibir tus avisos de seguridad en Telegram: vincula tu cuenta desde tu perfil con unos pocos toques y elige Telegram como tu forma preferida de que te contacten."
+          ]
+        }
+      },
       {
         "version": "v1.2.0",
         "date": "2026-07-16",

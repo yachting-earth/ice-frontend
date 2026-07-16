@@ -56,6 +56,8 @@
     "CONTACT_ATTACHMENT_NOT_FOUND": "Pièce jointe introuvable.",
     "CREW_GDPR_TOKEN_INVALID": "Ce lien est invalide.",
     "CREW_GDPR_TOKEN_EXPIRED": "Ce lien a expiré. Merci d'en demander un nouveau.",
+    "TELEGRAM_NOT_LINKED": "Liez d'abord votre compte Telegram.",
+    "TELEGRAM_ALREADY_LINKED": "Ce compte Telegram est déjà lié à un autre utilisateur.",
     "SERVER_ERROR": "Une erreur inattendue s'est produite.",
     "DATABASE_ERROR": "Une erreur de base de données s'est produite.",
     "RATE_LIMITED": "Trop de tentatives. Réessayez plus tard.",
@@ -299,6 +301,15 @@
     "gdprRequestReady": "Vos données sont prêtes à être téléchargées.",
     "gdprDownloadFailed": "Impossible de télécharger vos données.",
     "gdprDownloaded": "Vos données ont été téléchargées.",
+    "channelHeading": "Canal de notification",
+    "channelHint": "Choisissez comment nous vous contactons au sujet de votre compte. Ceci est distinct du canal utilisé pour alerter votre contact ICE.",
+    "channelLabel": "Canal préféré",
+    "channelLabels": {
+      "email": "E-mail",
+      "telegram": "Telegram"
+    },
+    "channelSaveFailed": "Impossible d'enregistrer votre canal préféré.",
+    "channelSaved": "Canal de notification mis à jour.",
     "deleteHeading": "Supprimer le compte",
     "deleteWarning": "La suppression de votre compte retire définitivement vos navires et vos contacts ICE, et met fin à vos sorties. Cette action est irréversible.",
     "deleteButton": "Supprimer mon compte",
@@ -308,6 +319,22 @@
     "passwordRequired": "Saisissez votre mot de passe pour confirmer.",
     "deleteFailed": "Impossible de supprimer le compte.",
     "deleted": "Votre compte a été supprimé."
+  },
+  "telegramLink": {
+    "heading": "Lier Telegram",
+    "notLinkedHint": "Liez votre compte Telegram pour y recevoir des notifications.",
+    "linkedSince": "Lié à Telegram depuis le {date}.",
+    "openButton": "Ouvrir Telegram pour lier votre compte",
+    "waitingHint": "En attente de confirmation dans Telegram…",
+    "checkNowButton": "C'est fait - vérifier maintenant",
+    "manualHint": "Si le bouton n'ouvre pas l'application, copiez ce lien dans Telegram :",
+    "linkedToast": "Telegram lié !",
+    "unlinkButton": "Délier Telegram",
+    "unlinkConfirm": "Délier votre compte Telegram ? Vous ne recevrez plus de notifications Telegram.",
+    "unlinkedToast": "Telegram délié.",
+    "linkFailed": "Impossible de démarrer la liaison Telegram. Réessayez.",
+    "statusCheckFailed": "Impossible de vérifier l'état de la liaison Telegram.",
+    "botNotConfigured": "La liaison Telegram n'est pas encore disponible. Réessayez plus tard."
   },
   "createTrip": {
     "title": "Créer une nouvelle sortie",
@@ -504,8 +531,7 @@
     "channelLabel": "Canal de notification préféré",
     "channelLabels": {
       "email": "E-mail",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "channelHint": "Les alertes sont envoyées au contact via ce canal lorsqu'une sortie n'est pas confirmée à temps.",
     "submitAdd": "Enregistrer le contact",
@@ -547,8 +573,7 @@
     "channelLabel": "Canal de notification préféré",
     "channelLabels": {
       "email": "E-mail",
-      "telegram": "Telegram",
-      "whatsapp": "WhatsApp"
+      "telegram": "Telegram"
     },
     "saveFailed": "Impossible d'enregistrer les modifications.",
     "updated": "Vos informations ont été mises à jour."
@@ -1233,7 +1258,7 @@
         "body": ["Nous ne vendons ni ne partageons jamais vos données avec des annonceurs. Les données ne sont accessibles qu'à :"],
         "list": [
           "Mailgun - pour la remise des e-mails transactionnels (notifications de sortie, invitations, alertes)",
-          "Telegram et Twilio WhatsApp - pour la remise des notifications, lorsque ces canaux sont activés",
+          "Telegram - pour la remise des notifications, lorsque ce canal est activé",
           "Notre hébergeur - pour exploiter et sauvegarder le service",
           "Cloudflare (cdnjs) et unpkg - pour fournir les bibliothèques logicielles Leaflet et Lucide utilisées par l'application ; ces fournisseurs voient l'adresse IP et le navigateur (User-Agent) de chaque visiteur qui charge une page",
           "OpenStreetMap - pour fournir les tuiles cartographiques affichées sur les cartes d'itinéraire/de sortie ; OpenStreetMap voit l'adresse IP et le navigateur (User-Agent) de toute personne consultant une carte, ainsi que la zone cartographique demandée"
@@ -1242,7 +1267,7 @@
       {
         "heading": "Transferts internationaux de données",
         "body": [
-          "Mailgun et Twilio (WhatsApp), mentionnés ci-dessus, sont des sous-traitants basés aux États-Unis ; le contenu des notifications - noms, e-mails, numéros de téléphone des destinataires et texte des alertes de sortie - peut donc être transféré et traité aux États-Unis. Le cas échéant, nous nous appuyons sur la participation de ces fournisseurs au cadre de protection des données UE-États-Unis (Data Privacy Framework) et/ou sur des clauses contractuelles types afin de garantir à vos données un niveau de protection équivalent en dehors de l'EEE."
+          "Mailgun, mentionné ci-dessus, est un sous-traitant basé aux États-Unis ; le contenu des notifications - noms, e-mails, numéros de téléphone des destinataires et texte des alertes de sortie - peut donc être transféré et traité aux États-Unis. Le cas échéant, nous nous appuyons sur la participation de ce fournisseur au cadre de protection des données UE-États-Unis (Data Privacy Framework) et/ou sur des clauses contractuelles types afin de garantir à vos données un niveau de protection équivalent en dehors de l'EEE."
         ]
       },
       {
@@ -1304,14 +1329,14 @@
       {
         "heading": "Disponibilité et limitation de responsabilité",
         "body": [
-          "Nous nous efforçons de maintenir le système disponible et les notifications rapides, mais nous ne garantissons pas une disponibilité ininterrompue, et la remise des notifications par e-mail, Telegram ou WhatsApp dépend de services tiers hors de notre contrôle.",
+          "Nous nous efforçons de maintenir le système disponible et les notifications rapides, mais nous ne garantissons pas une disponibilité ininterrompue, et la remise des notifications par e-mail ou Telegram dépend de services tiers hors de notre contrôle.",
           "Dans toute la mesure permise par la loi, Manjo Consulting AB ne saurait être tenue responsable de toute perte ou dommage résultant du fait de s'être fié au système pour des décisions de sécurité réellement critiques, de notifications retardées ou non abouties, ou d'informations inexactes saisies par un utilisateur. Le système est fourni « en l'état » en tant qu'outil de gestion de l'information, et non comme une garantie de sécurité."
         ]
       },
       {
         "heading": "Services tiers",
         "body": [
-          "Le système s'appuie sur des services tiers pour fonctionner : Mailgun pour la remise des e-mails, Telegram et Twilio WhatsApp pour les notifications facultatives, OpenStreetMap pour les tuiles cartographiques, et Windy.com comme source pour la planification d'itinéraires. Votre utilisation de ces services est soumise à leurs propres conditions."
+          "Le système s'appuie sur des services tiers pour fonctionner : Mailgun pour la remise des e-mails, Telegram pour les notifications facultatives, OpenStreetMap pour les tuiles cartographiques, et Windy.com comme source pour la planification d'itinéraires. Votre utilisation de ces services est soumise à leurs propres conditions."
         ]
       },
       {
@@ -1425,7 +1450,7 @@
           },
           {
             "q": "Que se passe-t-il si une sortie prend du retard ?",
-            "a": "Une tâche de fond vérifie chaque minute les sorties dépassant leur heure d'arrivée prévue plus le délai de grâce. Une fois la sortie en retard, le contact ICE est averti par e-mail et, si configuré, par Telegram ou WhatsApp."
+            "a": "Une tâche de fond vérifie chaque minute les sorties dépassant leur heure d'arrivée prévue plus le délai de grâce. Une fois la sortie en retard, le contact ICE est averti par e-mail et, si configuré, par Telegram."
           },
           {
             "q": "Je suis en retard - comment éviter de déclencher une alerte ?",
@@ -1471,6 +1496,16 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.3.0",
+        "date": "2026-07-16",
+        "sections": {
+          "new": [
+            "Yachting Earth ICE est désormais aussi disponible en allemand, ce qui porte le total à six langues - anglais, suédois, français, italien, espagnol et allemand -, afin qu'encore plus d'équipages puissent l'utiliser dans la langue qui leur convient le mieux.",
+            "Vous pouvez désormais recevoir vos notifications de sécurité sur Telegram : reliez votre compte depuis votre profil en quelques touches et choisissez Telegram comme moyen privilégié pour être joint."
+          ]
+        }
+      },
       {
         "version": "v1.2.0",
         "date": "2026-07-16",
