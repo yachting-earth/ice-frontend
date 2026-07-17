@@ -511,6 +511,17 @@ function renderPublicHeader() {
         </div>`;
 }
 
+// The footer version is derived from the newest changelog entry
+// (changelog.entries[0].version in the i18n dict) rather than a hand-bumped
+// constant, so it tracks each release automatically as long as that release
+// adds its changelog entry (which is required anyway). Falls back to '' if
+// the changelog dictionary isn't loaded yet. Shared by renderPublicFooter()
+// here and the landing page's own footer (landing.js).
+function currentAppVersion() {
+    const entries = t('changelog.entries');
+    return (Array.isArray(entries) && entries.length && entries[0].version) ? entries[0].version : '';
+}
+
 function renderPublicFooter() {
     return `
         <div class="landing-page">
@@ -527,7 +538,7 @@ function renderPublicFooter() {
                 <a href="#/faq">${escapeHtml(t('landing.footer.links.faq'))}</a>
               </nav>
               <p class="site-footer__disclaimer">${escapeHtml(t('landing.footer.disclaimer'))}</p>
-              <a class="site-footer__version" href="#/changelog">${escapeHtml(t('app.version', { version: CONFIG.APP_VERSION }))}</a>
+              <a class="site-footer__version" href="#/changelog">${escapeHtml(t('app.version', { version: currentAppVersion() }))}</a>
             </div>
           </footer>
         </div>`;
