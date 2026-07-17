@@ -153,6 +153,12 @@ html { scroll-behavior: smooth; }
     text-decoration: none;
 }
 
+.landing-page .site-nav__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
 .landing-page .site-nav__toggle {
     display: none;
     flex-direction: column;
@@ -213,8 +219,6 @@ html { scroll-behavior: smooth; }
     }
     .landing-page .site-nav__links.is-open { display: flex; }
     .landing-page .site-nav__cta, .landing-page .site-nav__cta--ghost { text-align: center; }
-    .landing-page .site-nav__links .lang-switcher { align-self: flex-start; }
-    .landing-page .site-nav__links .lang-switcher__menu { left: 0; right: auto; }
 }
 
 /* ==================== Hero ==================== */

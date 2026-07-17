@@ -364,16 +364,6 @@ ul { margin: 0; padding: 0; list-style: none; }
         padding: var(--space-3) var(--space-4);
         text-align: left;
     }
-
-    .topbar__menu .lang-switcher {
-        align-self: flex-start;
-        margin: var(--space-2) var(--space-4);
-    }
-
-    .topbar__menu .lang-switcher__menu {
-        left: 0;
-        right: auto;
-    }
 }
 
 /* ==================== Auth card ==================== */

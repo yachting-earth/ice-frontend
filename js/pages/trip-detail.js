@@ -144,13 +144,15 @@ const TripDetailPage = {
                     <p class="mb-0">${isOwner
                         ? (trip.ice_contact_id ? escapeHtml(this.iceContactLabel(trip.ice_contact_id)) : escapeHtml(t('tripDetail.iceContact.allContacts')))
                         : (trip.has_specific_ice_contact ? escapeHtml(t('tripDetail.iceContact.specificContact')) : escapeHtml(t('tripDetail.iceContact.allContacts')))}</p>
+                    ${isOwner && this.isAssignedIceDeactivated(trip) ? `
+                    <div class="alert alert-warning" style="margin-top: var(--space-2);">${escapeHtml(t('tripDetail.iceContact.deactivatedWarning'))}</div>` : ''}
                     <div id="ice-contact-change-alert"></div>
-                    ${isOwner ? (this.state.iceContacts.length > 0 ? `
+                    ${isOwner ? (this.selectableIceContacts().length > 0 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
                         <div class="field">
                             <label for="ice-contact-select">${t('tripDetail.iceContact.changeLabel')}</label>
                             <select id="ice-contact-select">
-                                ${this.state.iceContacts.map((c) => `<option value="${c.id}" ${String(c.id) === String(trip.ice_contact_id) ? 'selected' : ''}>${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
+                                ${this.selectableIceContacts().map((c) => `<option value="${c.id}" ${String(c.id) === String(trip.ice_contact_id) ? 'selected' : ''}>${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
                             </select>
                         </div>
                         <button class="btn btn-secondary btn-sm" type="button" id="ice-contact-change-btn" style="align-self:flex-end;">${t('tripDetail.iceContact.changeButton')}</button>
@@ -426,6 +428,21 @@ const TripDetailPage = {
     iceContactLabel(contactId) {
         const contact = this.state.iceContacts.find((c) => String(c.id) === String(contactId));
         return contact ? contact.name : '';
+    },
+
+    // Contacts still valid to pick: a deactivated row (issue #268 - the
+    // linked account deleted itself) is kept for label resolution but must
+    // not appear in the change/assign dropdown.
+    selectableIceContacts() {
+        return this.state.iceContacts.filter((c) => !c.deactivated_at);
+    },
+
+    // True when the trip's currently-assigned ICE contact has since been
+    // deactivated - the skipper needs to pick another or re-invite.
+    isAssignedIceDeactivated(trip) {
+        if (!trip.ice_contact_id) return false;
+        const contact = this.state.iceContacts.find((c) => String(c.id) === String(trip.ice_contact_id));
+        return !!(contact && contact.deactivated_at);
     },
 
     async handleChangeIceContact() {

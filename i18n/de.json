@@ -48,6 +48,7 @@
     "ARRIVAL_EDIT_LOCKED": "Die Ankunftszeit kann nur geändert werden, bevor der Törn als abgeschlossen bestätigt wird.",
     "GRACE_PERIOD_EDIT_LOCKED": "Die Kulanzzeit kann nur geändert werden, bevor der Törn als abgeschlossen bestätigt wird.",
     "ICE_CONTACT_REQUIRED": "Für diesen Törn muss ein ICE-Kontakt festgelegt werden, bevor er aktiviert werden kann.",
+    "ICE_CONTACT_DEACTIVATED": "Das Konto dieses ICE-Kontakts wurde entfernt, daher kann er nicht mehr verwendet werden. Wähle einen anderen Kontakt oder lade ihn erneut ein.",
     "TRIP_LOCKED": "Dieser Törn ist aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt und kann nicht mehr geändert werden.",
     "CONTACT_RATE_LIMITED": "Du hast das Tageslimit für Einsendungen über das Kontaktformular erreicht. Bitte versuche es morgen erneut.",
     "CONTACT_TOO_MANY_FILES": "Zu viele Anhänge.",
@@ -528,12 +529,10 @@
     "relationshipLabel": "Beziehung",
     "relationshipPlaceholder": "z. B. Ehepartner, Bruder, Freund",
     "phonePlaceholder": "+46701234567",
-    "channelLabel": "Bevorzugter Benachrichtigungskanal",
     "channelLabels": {
       "email": "E-Mail",
       "telegram": "Telegram"
     },
-    "channelHint": "Wird ein Törn nicht rechtzeitig bestätigt, erfolgt die Benachrichtigung des Kontakts über diesen Kanal.",
     "submitAdd": "Kontakt speichern",
     "loadingContacts": "Kontakte werden geladen...",
     "loadFailed": "Kontakte konnten nicht abgerufen werden.",
@@ -553,7 +552,8 @@
     "updated": "Kontakt aktualisiert.",
     "deleteConfirm": "ICE-Kontakt {name} entfernen?",
     "deleteFailed": "Der Kontakt konnte nicht entfernt werden.",
-    "deleted": "Kontakt entfernt."
+    "deleted": "Kontakt entfernt.",
+    "managedByAccount": "Die Zustellung nutzt die Kontodaten des Kontakts, die er selbst aktuell hält."
   },
   "iceAccount": {
     "title": "Mein ICE-Konto",
@@ -964,7 +964,8 @@
       "changeLabel": "ICE-Kontakt ändern",
       "changeButton": "Speichern",
       "changeFailed": "Der ICE-Kontakt konnte nicht geändert werden.",
-      "changed": "Der ICE-Kontakt wurde geändert."
+      "changed": "Der ICE-Kontakt wurde geändert.",
+      "deactivatedWarning": "Der diesem Törn zugewiesene ICE-Kontakt wurde deaktiviert, weil sein Konto entfernt wurde. Wähle einen anderen Kontakt oder lade ihn erneut ein, bevor du den Törn aktivierst."
     },
     "routes": {
       "heading": "Routen",

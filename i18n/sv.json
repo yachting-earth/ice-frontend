@@ -48,6 +48,7 @@
     "ARRIVAL_EDIT_LOCKED": "Ankomsttiden kan bara ändras fram tills resan bekräftas avslutad.",
     "GRACE_PERIOD_EDIT_LOCKED": "Marginaltiden kan bara ändras fram tills resan bekräftas avslutad.",
     "ICE_CONTACT_REQUIRED": "En ICE-kontakt måste kopplas till resan innan den kan aktiveras.",
+    "ICE_CONTACT_DEACTIVATED": "ICE-kontaktens konto har tagits bort och kan inte längre användas. Välj en annan kontakt eller bjud in personen på nytt.",
     "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter en nödsituation och kan inte längre ändras.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
@@ -528,12 +529,10 @@
     "relationshipLabel": "Relation",
     "relationshipPlaceholder": "t.ex. maka, bror, vän",
     "phonePlaceholder": "+46701234567",
-    "channelLabel": "Föredragen notifieringskanal",
     "channelLabels": {
       "email": "E-post",
       "telegram": "Telegram"
     },
-    "channelHint": "Larm skickas till kontakten via den här kanalen när en resa inte bekräftats i tid.",
     "submitAdd": "Spara kontakt",
     "loadingContacts": "Laddar kontakter...",
     "loadFailed": "Kunde inte hämta kontakter.",
@@ -553,7 +552,8 @@
     "updated": "Kontakten uppdaterad.",
     "deleteConfirm": "Ta bort ICE-kontakten {name}?",
     "deleteFailed": "Kunde inte ta bort kontakten.",
-    "deleted": "Kontakten borttagen."
+    "deleted": "Kontakten borttagen.",
+    "managedByAccount": "Utskick använder kontaktens egna kontouppgifter, som de själva håller uppdaterade."
   },
   "iceAccount": {
     "title": "Mitt ICE-konto",
@@ -964,7 +964,8 @@
       "changeLabel": "Byt ICE-kontakt",
       "changeButton": "Spara",
       "changeFailed": "Kunde inte byta ICE-kontakt.",
-      "changed": "ICE-kontakten har bytts."
+      "changed": "ICE-kontakten har bytts.",
+      "deactivatedWarning": "ICE-kontakten som är kopplad till resan har inaktiverats eftersom kontot togs bort. Välj en annan kontakt eller bjud in personen på nytt innan du aktiverar resan."
     },
     "routes": {
       "heading": "Rutter",

@@ -190,7 +190,11 @@ const CreateTripPage = {
         const section = document.getElementById('ice-contact-section');
         if (!section) return;
 
-        if (this.state.iceContacts.length === 0) {
+        // A deactivated contact (issue #268 - the linked account was deleted)
+        // can no longer be picked; keep it out of the selectable list.
+        const selectable = this.state.iceContacts.filter((c) => !c.deactivated_at);
+
+        if (selectable.length === 0) {
             section.innerHTML = `
                 <div class="alert alert-info">
                     ${escapeHtml(t('createTrip.iceContact.noneRegistered'))}
@@ -203,7 +207,7 @@ const CreateTripPage = {
             <div class="field">
                 <label for="ice-contact-select">${escapeHtml(t('createTrip.iceContact.selectLabel'))}</label>
                 <select id="ice-contact-select">
-                    ${this.state.iceContacts.map((c) => `<option value="${c.id}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
+                    ${selectable.map((c) => `<option value="${c.id}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
                 </select>
                 <small>${escapeHtml(t('createTrip.iceContact.selectHint'))}</small>
             </div>`;

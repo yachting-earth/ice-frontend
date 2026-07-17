@@ -187,19 +187,14 @@ function renderTopbar() {
     const activeClass = (path) => (currentPath === path ? ' topbar__menu-link--active' : '');
 
     if (!authed) {
+        // Guest pages had no nav links to hide behind the hamburger - the
+        // language selector was its only content - so there's no menu to
+        // collapse here at all; the selector renders directly, always visible.
         topbar.innerHTML = `
             <a class="topbar__brand" href="https://yachting.earth">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
-                <div class="topbar__menu" id="topbar-menu">
-                    ${renderLangSelector()}
-                </div>
-                <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
-                    <span class="topbar__hamburger-line"></span>
-                    <span class="topbar__hamburger-line"></span>
-                    <span class="topbar__hamburger-line"></span>
-                </button>
+                ${renderLangSelector()}
             </div>`;
-        setupHamburgerMenu();
         setupLangSelector();
         return;
     }
@@ -219,9 +214,9 @@ function renderTopbar() {
                 ${navVisibility.crewAddressBook ? `<a class="topbar__menu-link${activeClass('#/crew-address-book')}" href="#/crew-address-book">${escapeHtml(t('app.nav.crewAddressBook'))}</a>` : ''}
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
                 ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">${escapeHtml(t('app.nav.admin'))}</a>` : ''}
-                ${renderLangSelector()}
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">${escapeHtml(t('app.nav.logout'))}</button>
             </div>
+            ${renderLangSelector()}
             <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
                 <span class="topbar__hamburger-line"></span>
                 <span class="topbar__hamburger-line"></span>
@@ -327,10 +322,13 @@ function langName(lang) {
     return (LANG_META[lang] || {}).name || lang.toUpperCase();
 }
 
-// Language selector shared by both the authed and guest topbars. A small
-// custom dropdown (flags can't be put inside native <option> elements)
-// that persists the choice via I18n.setLang - which itself reloads the page.
-function renderLangSelector() {
+// Language selector shared by both the authed and guest topbars (and by any
+// page that renders its own extra instance, e.g. login.js). A small custom
+// dropdown (flags can't be put inside native <option> elements) that
+// persists the choice via I18n.setLang - which itself reloads the page.
+// idPrefix lets a page render a second, independent instance alongside the
+// topbar's own without id collisions (element ids must be unique per page).
+function renderLangSelector(idPrefix = 'lang-switcher') {
     const current = I18n._lang || I18n.getLang();
     const options = I18n.SUPPORTED.map((lang) => `
         <li role="none">
@@ -339,19 +337,19 @@ function renderLangSelector() {
             </button>
         </li>`).join('');
     return `
-        <div class="lang-switcher" id="lang-switcher">
-            <button type="button" class="lang-switcher__toggle" id="lang-switcher-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Language: ${escapeHtml(langName(current))}">
+        <div class="lang-switcher" id="${idPrefix}">
+            <button type="button" class="lang-switcher__toggle" id="${idPrefix}-toggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Language: ${escapeHtml(langName(current))}">
                 ${langFlag(current)}
             </button>
-            <ul class="lang-switcher__menu" id="lang-switcher-menu" role="listbox" hidden>${options}</ul>
+            <ul class="lang-switcher__menu" id="${idPrefix}-menu" role="listbox" hidden>${options}</ul>
         </div>`;
 }
 
-function setupLangSelector() {
-    const switcher = document.getElementById('lang-switcher');
+function setupLangSelector(idPrefix = 'lang-switcher') {
+    const switcher = document.getElementById(idPrefix);
     if (!switcher) return;
-    const toggle = document.getElementById('lang-switcher-toggle');
-    const menu = document.getElementById('lang-switcher-menu');
+    const toggle = document.getElementById(`${idPrefix}-toggle`);
+    const menu = document.getElementById(`${idPrefix}-menu`);
 
     const closeMenu = () => {
         menu.hidden = true;
@@ -496,17 +494,18 @@ function renderPublicHeader() {
                 <span>${escapeHtml(t('app.brand'))}</span>
               </a>
 
-              <button class="site-nav__toggle" id="public-nav-toggle" aria-expanded="false" aria-controls="public-nav-links" aria-label="${escapeHtml(t('app.toggleNav'))}">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-              </button>
-
-              <nav class="site-nav__links" id="public-nav-links" aria-label="Primary">
-                <a class="site-nav__cta site-nav__cta--ghost" href="#/login">${escapeHtml(t('landing.nav.login'))}</a>
-                <a class="site-nav__cta" href="#/register">${escapeHtml(t('landing.nav.cta'))}</a>
+              <div class="site-nav__right">
+                <nav class="site-nav__links" id="public-nav-links" aria-label="Primary">
+                  <a class="site-nav__cta site-nav__cta--ghost" href="#/login">${escapeHtml(t('landing.nav.login'))}</a>
+                  <a class="site-nav__cta" href="#/register">${escapeHtml(t('landing.nav.cta'))}</a>
+                </nav>
                 ${renderLangSelector()}
-              </nav>
+                <button class="site-nav__toggle" id="public-nav-toggle" aria-expanded="false" aria-controls="public-nav-links" aria-label="${escapeHtml(t('app.toggleNav'))}">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </button>
+              </div>
             </div>
           </header>
         </div>`;

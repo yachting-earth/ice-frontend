@@ -52,7 +52,7 @@ const ProfilePage = {
                             <option value="telegram">${escapeHtml(t('profile.channelLabels.telegram'))}</option>
                         </select>
                     </div>
-                    <div id="telegram-link-widget"></div>
+                    <div id="telegram-link-widget" hidden></div>
                 </div>
 
                 <div class="card">
@@ -117,11 +117,17 @@ const ProfilePage = {
                 // reflect that locally.
                 document.getElementById('profile-channel').value = 'email';
                 this.state.user = { ...this.state.user, preferred_channel: 'email' };
+                this.updateTelegramWidgetVisibility('email');
             }
         });
     },
 
+    updateTelegramWidgetVisibility(channel) {
+        document.getElementById('telegram-link-widget').hidden = channel !== 'telegram';
+    },
+
     async handleChannelChange(channel) {
+        this.updateTelegramWidgetVisibility(channel);
         const status = await apiRequest('/user/telegram/status');
 
         if (channel === 'telegram' && !(status.success && status.data.linked)) {
@@ -144,7 +150,9 @@ const ProfilePage = {
             body: JSON.stringify({ preferred_channel: channel })
         });
 
-        document.getElementById('profile-channel').value = response.success ? channel : (this.state.user.preferred_channel || 'email');
+        const resolvedChannel = response.success ? channel : (this.state.user.preferred_channel || 'email');
+        document.getElementById('profile-channel').value = resolvedChannel;
+        this.updateTelegramWidgetVisibility(resolvedChannel);
 
         if (!response.success) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.channelSaveFailed')))}</div>`;
@@ -295,7 +303,9 @@ const ProfilePage = {
 
         this.state.user = response.data;
         this.renderForm();
-        document.getElementById('profile-channel').value = response.data.preferred_channel || 'email';
+        const channel = response.data.preferred_channel || 'email';
+        document.getElementById('profile-channel').value = channel;
+        this.updateTelegramWidgetVisibility(channel);
     },
 
     renderForm() {

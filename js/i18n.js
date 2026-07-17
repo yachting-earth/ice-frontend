@@ -59,6 +59,7 @@ const EN_INLINE = {
     "ARRIVAL_EDIT_LOCKED": "The arrival time can only be changed before the trip is confirmed completed.",
     "GRACE_PERIOD_EDIT_LOCKED": "The grace period can only be changed before the trip is confirmed completed.",
     "ICE_CONTACT_REQUIRED": "An ICE contact must be assigned to this trip before it can be activated.",
+    "ICE_CONTACT_DEACTIVATED": "This ICE contact's account was removed, so it can no longer be used. Choose another contact or re-invite them.",
     "TRIP_LOCKED": "This trip is locked for maritime safety/traceability reasons following an emergency incident and can no longer be modified.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
     "CONTACT_TOO_MANY_FILES": "Too many attachments.",
@@ -539,12 +540,10 @@ const EN_INLINE = {
     "relationshipLabel": "Relationship",
     "relationshipPlaceholder": "e.g. spouse, brother, friend",
     "phonePlaceholder": "+46701234567",
-    "channelLabel": "Preferred notification channel",
     "channelLabels": {
       "email": "Email",
       "telegram": "Telegram"
     },
-    "channelHint": "Alerts are sent to the contact via this channel when a trip isn't confirmed in time.",
     "submitAdd": "Save contact",
     "loadingContacts": "Loading contacts...",
     "loadFailed": "Could not fetch contacts.",
@@ -564,7 +563,8 @@ const EN_INLINE = {
     "updated": "Contact updated.",
     "deleteConfirm": "Remove the ICE contact {name}?",
     "deleteFailed": "Could not remove the contact.",
-    "deleted": "Contact removed."
+    "deleted": "Contact removed.",
+    "managedByAccount": "Delivery uses this contact's own account details, which they keep up to date."
   },
   "iceAccount": {
     "title": "My ICE account",
@@ -975,7 +975,8 @@ const EN_INLINE = {
       "changeLabel": "Change ICE contact",
       "changeButton": "Save",
       "changeFailed": "Could not change the ICE contact.",
-      "changed": "The ICE contact has been changed."
+      "changed": "The ICE contact has been changed.",
+      "deactivatedWarning": "The ICE contact assigned to this trip has been deactivated because their account was removed. Choose another contact or re-invite them before activating the trip."
     },
     "routes": {
       "heading": "Routes",

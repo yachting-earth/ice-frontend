@@ -48,6 +48,7 @@
     "ARRIVAL_EDIT_LOCKED": "L'heure d'arrivée ne peut être modifiée qu'avant la confirmation de fin de sortie.",
     "GRACE_PERIOD_EDIT_LOCKED": "Le délai de grâce ne peut être modifié qu'avant la confirmation de fin de sortie.",
     "ICE_CONTACT_REQUIRED": "Un contact ICE doit être associé à cette sortie avant qu'elle puisse être activée.",
+    "ICE_CONTACT_DEACTIVATED": "Le compte de ce contact ICE a été supprimé ; il ne peut donc plus être utilisé. Choisissez un autre contact ou réinvitez-le.",
     "TRIP_LOCKED": "Cette sortie est verrouillée pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence, et ne peut plus être modifiée.",
     "CONTACT_RATE_LIMITED": "Vous avez atteint la limite quotidienne d'envois via le formulaire de contact. Merci de réessayer demain.",
     "CONTACT_TOO_MANY_FILES": "Trop de pièces jointes.",
@@ -528,12 +529,10 @@
     "relationshipLabel": "Lien de parenté",
     "relationshipPlaceholder": "ex. conjoint(e), frère, ami(e)",
     "phonePlaceholder": "+46701234567",
-    "channelLabel": "Canal de notification préféré",
     "channelLabels": {
       "email": "E-mail",
       "telegram": "Telegram"
     },
-    "channelHint": "Les alertes sont envoyées au contact via ce canal lorsqu'une sortie n'est pas confirmée à temps.",
     "submitAdd": "Enregistrer le contact",
     "loadingContacts": "Chargement des contacts...",
     "loadFailed": "Impossible de récupérer les contacts.",
@@ -553,7 +552,8 @@
     "updated": "Contact mis à jour.",
     "deleteConfirm": "Retirer le contact ICE {name} ?",
     "deleteFailed": "Impossible de retirer le contact.",
-    "deleted": "Contact retiré."
+    "deleted": "Contact retiré.",
+    "managedByAccount": "L'envoi utilise les coordonnées du compte du contact, qu'il tient à jour lui-même."
   },
   "iceAccount": {
     "title": "Mon compte ICE",
@@ -964,7 +964,8 @@
       "changeLabel": "Changer de contact ICE",
       "changeButton": "Enregistrer",
       "changeFailed": "Impossible de changer le contact ICE.",
-      "changed": "Le contact ICE a été changé."
+      "changed": "Le contact ICE a été changé.",
+      "deactivatedWarning": "Le contact ICE associé à cette sortie a été désactivé car son compte a été supprimé. Choisissez un autre contact ou réinvitez-le avant d'activer la sortie."
     },
     "routes": {
       "heading": "Itinéraires",

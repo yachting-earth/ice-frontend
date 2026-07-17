@@ -48,14 +48,6 @@ const IceContactsPage = {
                                 <input type="tel" id="contact-phone" placeholder="${escapeHtml(t('iceContacts.phonePlaceholder'))}">
                             </div>
                         </div>
-                        <div class="field">
-                            <label for="contact-channel">${escapeHtml(t('iceContacts.channelLabel'))}</label>
-                            <select id="contact-channel">
-                                <option value="email" selected>${escapeHtml(t('iceContacts.channelLabels.email'))}</option>
-                                <option value="telegram">${escapeHtml(t('iceContacts.channelLabels.telegram'))}</option>
-                            </select>
-                            <small>${escapeHtml(t('iceContacts.channelHint'))}</small>
-                        </div>
                         <button class="btn btn-primary" type="submit" id="contact-submit">${escapeHtml(t('iceContacts.submitAdd'))}</button>
                     </form>
                 </div>
@@ -119,6 +111,13 @@ const IceContactsPage = {
 
     renderContactCard(contact) {
         const confirmed = !!contact.confirmed_at;
+        // Issue #277: a contact with their own account keeps their delivery
+        // details up to date themselves; show that live account address as
+        // the effective target, with the skipper-entered value only as
+        // fallback. registered_email is non-null exactly when linked.
+        const linked = contact.registered_email != null;
+        const effectiveEmail = linked ? contact.registered_email : (contact.email || '');
+        const effectivePhone = (linked && contact.registered_phone) ? contact.registered_phone : (contact.phone || '');
         return `
             <div class="trip-card">
                 <div class="stack" style="flex:1; gap: 0.35rem;">
@@ -131,9 +130,10 @@ const IceContactsPage = {
                     </div>
                     <div class="trip-card__meta">
                         <span>${escapeHtml(contact.relationship || '')}</span>
-                        <span>${escapeHtml(contact.email)}</span>
-                        <span>${escapeHtml(contact.phone)}</span>
+                        <span>${escapeHtml(effectiveEmail)}</span>
+                        <span>${escapeHtml(effectivePhone)}</span>
                     </div>
+                    ${linked ? `<div class="trip-card__meta"><small class="text-muted">${escapeHtml(t('iceContacts.managedByAccount'))}</small></div>` : ''}
                 </div>
                 <div class="trip-card__actions trip-card__actions--top">
                     ${!confirmed && contact.confirmation_token ? `<button class="btn btn-ghost btn-sm" type="button" data-copy-confirm="${escapeHtml(contact.confirmation_token)}">${escapeHtml(t('iceContacts.copyConfirmLink'))}</button>` : ''}
@@ -169,7 +169,6 @@ const IceContactsPage = {
         document.getElementById('contact-relationship').value = contact.relationship || '';
         document.getElementById('contact-email').value = contact.email || '';
         document.getElementById('contact-phone').value = contact.phone || '';
-        document.getElementById('contact-channel').value = contact.preferred_channel || 'email';
         document.getElementById('contact-submit').textContent = t('common.saveChanges');
         document.getElementById('contact-cancel').hidden = false;
         document.getElementById('contact-alert').innerHTML = '';
@@ -208,8 +207,7 @@ const IceContactsPage = {
             name: document.getElementById('contact-name').value.trim(),
             relationship: document.getElementById('contact-relationship').value.trim(),
             email: document.getElementById('contact-email').value.trim(),
-            phone: document.getElementById('contact-phone').value.trim(),
-            preferred_channel: document.getElementById('contact-channel').value
+            phone: document.getElementById('contact-phone').value.trim()
         };
 
         if (!this.validate(values)) return;

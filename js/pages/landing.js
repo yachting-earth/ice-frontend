@@ -27,21 +27,22 @@ const LandingPage = {
                     <span>${escapeHtml(t('app.brand'))}</span>
                   </a>
 
-                  <button class="site-nav__toggle" id="landing-nav-toggle" aria-expanded="false" aria-controls="landing-nav-links" aria-label="${escapeHtml(t('app.toggleNav'))}">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                  </button>
-
-                  <nav class="site-nav__links" id="landing-nav-links" aria-label="Primary">
-                    <a href="#landing-prepared" data-scroll="true">${escapeHtml(t('landing.nav.prepared'))}</a>
-                    <a href="#landing-how-it-works" data-scroll="true">${escapeHtml(t('landing.nav.howItWorks'))}</a>
-                    <a href="#landing-different" data-scroll="true">${escapeHtml(t('landing.nav.different'))}</a>
-                    <a href="#landing-privacy" data-scroll="true">${escapeHtml(t('landing.nav.privacy'))}</a>
-                    <a class="site-nav__cta site-nav__cta--ghost" href="#/login">${escapeHtml(t('landing.nav.login'))}</a>
-                    <a class="site-nav__cta" href="#/register">${escapeHtml(t('landing.nav.cta'))}</a>
+                  <div class="site-nav__right">
+                    <nav class="site-nav__links" id="landing-nav-links" aria-label="Primary">
+                      <a href="#landing-prepared" data-scroll="true">${escapeHtml(t('landing.nav.prepared'))}</a>
+                      <a href="#landing-how-it-works" data-scroll="true">${escapeHtml(t('landing.nav.howItWorks'))}</a>
+                      <a href="#landing-different" data-scroll="true">${escapeHtml(t('landing.nav.different'))}</a>
+                      <a href="#landing-privacy" data-scroll="true">${escapeHtml(t('landing.nav.privacy'))}</a>
+                      <a class="site-nav__cta site-nav__cta--ghost" href="#/login">${escapeHtml(t('landing.nav.login'))}</a>
+                      <a class="site-nav__cta" href="#/register">${escapeHtml(t('landing.nav.cta'))}</a>
+                    </nav>
                     ${renderLangSelector()}
-                  </nav>
+                    <button class="site-nav__toggle" id="landing-nav-toggle" aria-expanded="false" aria-controls="landing-nav-links" aria-label="${escapeHtml(t('app.toggleNav'))}">
+                      <span aria-hidden="true"></span>
+                      <span aria-hidden="true"></span>
+                      <span aria-hidden="true"></span>
+                    </button>
+                  </div>
                 </div>
               </header>
 

@@ -48,6 +48,7 @@
     "ARRIVAL_EDIT_LOCKED": "La hora de llegada solo se puede cambiar antes de confirmar el viaje como finalizado.",
     "GRACE_PERIOD_EDIT_LOCKED": "El período de gracia solo se puede cambiar antes de confirmar el viaje como finalizado.",
     "ICE_CONTACT_REQUIRED": "Este viaje necesita un contacto ICE asignado antes de poder activarse.",
+    "ICE_CONTACT_DEACTIVATED": "La cuenta de este contacto ICE se ha eliminado, por lo que ya no se puede usar. Elige otro contacto o vuelve a invitarlo.",
     "TRIP_LOCKED": "Este viaje está bloqueado por motivos de seguridad marítima y trazabilidad tras un incidente de emergencia, y ya no se puede modificar.",
     "CONTACT_RATE_LIMITED": "Has alcanzado el límite diario de envíos del formulario de contacto. Inténtalo de nuevo mañana.",
     "CONTACT_TOO_MANY_FILES": "Demasiados archivos adjuntos.",
@@ -528,12 +529,10 @@
     "relationshipLabel": "Relación",
     "relationshipPlaceholder": "p. ej. cónyuge, hermano, amigo",
     "phonePlaceholder": "+46701234567",
-    "channelLabel": "Canal de notificación preferido",
     "channelLabels": {
       "email": "Correo electrónico",
       "telegram": "Telegram"
     },
-    "channelHint": "Las alertas se envían al contacto por este canal cuando un viaje no se confirma a tiempo.",
     "submitAdd": "Guardar contacto",
     "loadingContacts": "Cargando contactos...",
     "loadFailed": "No se pudieron obtener los contactos.",
@@ -553,7 +552,8 @@
     "updated": "Contacto actualizado.",
     "deleteConfirm": "¿Eliminar el contacto ICE {name}?",
     "deleteFailed": "No se pudo eliminar el contacto.",
-    "deleted": "Contacto eliminado."
+    "deleted": "Contacto eliminado.",
+    "managedByAccount": "El aviso usa los datos de la cuenta del contacto, que él mismo mantiene actualizados."
   },
   "iceAccount": {
     "title": "Mi cuenta ICE",
@@ -964,7 +964,8 @@
       "changeLabel": "Cambiar contacto ICE",
       "changeButton": "Guardar",
       "changeFailed": "No se pudo cambiar el contacto ICE.",
-      "changed": "El contacto ICE se ha cambiado."
+      "changed": "El contacto ICE se ha cambiado.",
+      "deactivatedWarning": "El contacto ICE asignado a este viaje se ha desactivado porque su cuenta fue eliminada. Elige otro contacto o vuelve a invitarlo antes de activar el viaje."
     },
     "routes": {
       "heading": "Rutas",
