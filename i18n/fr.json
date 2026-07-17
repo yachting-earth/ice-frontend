@@ -1498,6 +1498,20 @@
     "sectionFixed": "Corrections",
     "entries": [
       {
+        "version": "v1.4.0",
+        "date": "2026-07-17",
+        "sections": {
+          "improved": [
+            "Vos contacts d'urgence choisissent désormais eux-mêmes comment ils souhaitent être joints - par e-mail ou Telegram - lorsqu'ils confirment, et les alertes sont toujours envoyées aux coordonnées qu'ils tiennent à jour sur leur propre compte.",
+            "Le sélecteur de langue est maintenant toujours visible sur les pages de connexion et d'accueil ainsi que dans le menu supérieur, pour que vous puissiez changer de langue à tout moment.",
+            "L'option de liaison Telegram sur votre profil n'apparaît désormais que lorsque vous choisissez Telegram comme canal de notification, ce qui garde la page épurée."
+          ],
+          "fixed": [
+            "Si un contact d'urgence disposant de son propre compte le ferme, il est désormais clairement désactivé dans votre liste au lieu d'y rester discrètement - il vous suffit de le réinviter lorsque vous souhaitez l'utiliser à nouveau pour une navigation."
+          ]
+        }
+      },
+      {
         "version": "v1.3.0",
         "date": "2026-07-16",
         "sections": {

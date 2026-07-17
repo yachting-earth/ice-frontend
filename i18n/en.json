@@ -1498,6 +1498,20 @@
     "sectionFixed": "Fixed",
     "entries": [
       {
+        "version": "v1.4.0",
+        "date": "2026-07-17",
+        "sections": {
+          "improved": [
+            "Your emergency contacts now choose for themselves how they'd like to be reached - by email or Telegram - when they confirm, and alerts always go to the contact details they keep up to date on their own account.",
+            "The language selector is now always visible on the sign-in and landing pages and in the top menu, so you can switch language at any time.",
+            "The Telegram linking option on your profile now appears only when you choose Telegram as your notification channel, keeping the page uncluttered."
+          ],
+          "fixed": [
+            "If an emergency contact who has their own account closes it, they're now clearly deactivated on your list instead of quietly staying there - just re-invite them when you want to use them for a trip again."
+          ]
+        }
+      },
+      {
         "version": "v1.3.0",
         "date": "2026-07-16",
         "sections": {

@@ -1498,6 +1498,20 @@
     "sectionFixed": "Behoben",
     "entries": [
       {
+        "version": "v1.4.0",
+        "date": "2026-07-17",
+        "sections": {
+          "improved": [
+            "Deine Notfallkontakte entscheiden jetzt selbst, wie sie erreicht werden möchten - per E-Mail oder Telegram - wenn sie bestätigen, und Benachrichtigungen gehen immer an die Kontaktdaten, die sie in ihrem eigenen Konto aktuell halten.",
+            "Die Sprachauswahl ist jetzt auf der Anmelde- und Startseite sowie im oberen Menü immer sichtbar, sodass du die Sprache jederzeit wechseln kannst.",
+            "Die Option zum Verknüpfen von Telegram in deinem Profil erscheint jetzt nur noch, wenn du Telegram als Benachrichtigungskanal auswählst - das hält die Seite übersichtlich."
+          ],
+          "fixed": [
+            "Wenn ein Notfallkontakt mit eigenem Konto dieses schließt, wird er jetzt in deiner Liste deutlich deaktiviert, statt unbemerkt bestehen zu bleiben - lade die Person einfach erneut ein, wenn du sie wieder für eine Fahrt verwenden möchtest."
+          ]
+        }
+      },
+      {
         "version": "v1.3.0",
         "date": "2026-07-16",
         "sections": {

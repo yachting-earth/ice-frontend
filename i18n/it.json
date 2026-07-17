@@ -1498,6 +1498,20 @@
     "sectionFixed": "Correzioni",
     "entries": [
       {
+        "version": "v1.4.0",
+        "date": "2026-07-17",
+        "sections": {
+          "improved": [
+            "I tuoi contatti di emergenza ora scelgono da soli come preferiscono essere raggiunti - via e-mail o Telegram - al momento della conferma, e gli avvisi vengono sempre inviati ai recapiti che loro stessi mantengono aggiornati sul proprio account.",
+            "Il selettore della lingua è ora sempre visibile nelle pagine di accesso e di benvenuto e nel menu in alto, così puoi cambiare lingua in qualsiasi momento.",
+            "L'opzione per collegare Telegram nel tuo profilo ora compare solo quando scegli Telegram come canale di notifica, mantenendo la pagina ordinata."
+          ],
+          "fixed": [
+            "Se un contatto di emergenza che ha un proprio account lo chiude, ora viene chiaramente disattivato nel tuo elenco invece di rimanervi silenziosamente - basta invitarlo di nuovo quando vuoi utilizzarlo per una navigazione."
+          ]
+        }
+      },
+      {
         "version": "v1.3.0",
         "date": "2026-07-16",
         "sections": {

@@ -1507,6 +1507,20 @@
     "sectionFixed": "Fixat",
     "entries": [
       {
+        "version": "v1.4.0",
+        "date": "2026-07-17",
+        "sections": {
+          "improved": [
+            "Dina nödkontakter väljer nu själva hur de vill bli kontaktade - via e-post eller Telegram - när de bekräftar, och aviseringar går alltid till de kontaktuppgifter som de själva håller uppdaterade på sitt eget konto.",
+            "Språkväljaren är nu alltid synlig på inloggnings- och startsidorna samt i toppmenyn, så att du kan byta språk när som helst.",
+            "Alternativet för att koppla Telegram på din profil visas nu bara när du väljer Telegram som aviseringskanal, vilket håller sidan ren."
+          ],
+          "fixed": [
+            "Om en nödkontakt som har ett eget konto stänger det, avaktiveras den nu tydligt i din lista i stället för att ligga kvar i tysthet - bjud bara in personen på nytt när du vill använda kontakten för en resa igen."
+          ]
+        }
+      },
+      {
         "version": "v1.3.0",
         "date": "2026-07-16",
         "sections": {

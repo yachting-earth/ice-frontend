@@ -1498,6 +1498,20 @@
     "sectionFixed": "Corregido",
     "entries": [
       {
+        "version": "v1.4.0",
+        "date": "2026-07-17",
+        "sections": {
+          "improved": [
+            "Tus contactos de emergencia ahora eligen ellos mismos cómo prefieren que se les avise - por correo electrónico o Telegram - cuando confirman, y las alertas se envían siempre a los datos de contacto que ellos mismos mantienen actualizados en su propia cuenta.",
+            "El selector de idioma ahora está siempre visible en las páginas de inicio de sesión y de bienvenida y en el menú superior, para que puedas cambiar de idioma en cualquier momento.",
+            "La opción para vincular Telegram en tu perfil ahora solo aparece cuando eliges Telegram como canal de notificación, manteniendo la página despejada."
+          ],
+          "fixed": [
+            "Si un contacto de emergencia que tiene su propia cuenta la cierra, ahora se desactiva claramente en tu lista en lugar de permanecer sin más - solo tienes que volver a invitarlo cuando quieras usarlo de nuevo para una travesía."
+          ]
+        }
+      },
+      {
         "version": "v1.3.0",
         "date": "2026-07-16",
         "sections": {
