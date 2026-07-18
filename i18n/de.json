@@ -23,11 +23,19 @@
       "h12": "12 Stunden",
       "h24": "24 Stunden",
       "h48": "48 Stunden"
+    },
+    "vesselEquipment": {
+      "flares": "Signalraketen",
+      "epirb": "Notfunkbake (EPIRB/MOB)",
+      "vhf": "VHF-Funkgerät",
+      "satellitePhone": "Satellitentelefon",
+      "liferaft": "Rettungsinsel"
     }
   },
   "errors": {
     "AUTH_REQUIRED": "Du musst dich erneut anmelden.",
     "AUTH_INVALID": "Falsche E-Mail-Adresse oder falsches Passwort.",
+    "CURRENT_PASSWORD_INVALID": "Falsches aktuelles Passwort.",
     "ACCESS_DENIED": "Du hast keinen Zugriff darauf.",
     "VALIDATION_ERROR": "Bitte überprüfe die markierten Felder.",
     "INVALID_EMAIL": "Ungültige E-Mail-Adresse.",
@@ -42,6 +50,7 @@
     "NOT_FOUND": "Nicht gefunden.",
     "RESOURCE_CONFLICT": "Das gibt es bereits.",
     "MMSI_ALREADY_ACTIVE": "Für dieses Boot läuft bereits ein aktiver Törn.",
+    "VESSEL_HAS_TRIPS": "Das Boot kann nicht gelöscht werden – es ist einer Reise zugeordnet.",
     "INVALID_ETA": "Ungültige Ankunftszeit.",
     "NOTIFICATION_FAILED": "Die Benachrichtigung konnte nicht gesendet werden.",
     "DEPARTURE_EDIT_LOCKED": "Die Abfahrtszeit kann nur geändert werden, bevor der Törn aktiviert wird.",
@@ -49,7 +58,9 @@
     "GRACE_PERIOD_EDIT_LOCKED": "Die Kulanzzeit kann nur geändert werden, bevor der Törn als abgeschlossen bestätigt wird.",
     "ICE_CONTACT_REQUIRED": "Für diesen Törn muss ein ICE-Kontakt festgelegt werden, bevor er aktiviert werden kann.",
     "ICE_CONTACT_DEACTIVATED": "Das Konto dieses ICE-Kontakts wurde entfernt, daher kann er nicht mehr verwendet werden. Wähle einen anderen Kontakt oder lade ihn erneut ein.",
+    "ICE_CONTACT_UNCONFIRMED": "Der ICE-Kontakt dieses Törns hat noch nicht bestätigt. Die Bestätigung ist erforderlich, bevor der Törn aktiviert werden kann.",
     "TRIP_LOCKED": "Dieser Törn ist aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt und kann nicht mehr geändert werden.",
+    "TRIP_NOT_ACTIVE": "SAR-Zugang kann nur für einen aktiven Törn angefordert werden.",
     "CONTACT_RATE_LIMITED": "Du hast das Tageslimit für Einsendungen über das Kontaktformular erreicht. Bitte versuche es morgen erneut.",
     "CONTACT_TOO_MANY_FILES": "Zu viele Anhänge.",
     "CONTACT_FILE_TOO_LARGE": "Einer deiner Anhänge ist zu groß.",
@@ -105,6 +116,7 @@
       "iceContacts": "ICE-Kontakte",
       "crewAddressBook": "Adressbuch",
       "myIceAccount": "Mein ICE-Konto",
+      "myProfile": "Mein Profil",
       "admin": "Admin",
       "logout": "Abmelden"
     },
@@ -113,6 +125,83 @@
     "lightboxClose": "Bild in voller Größe schließen",
     "renderError": "Beim Anzeigen dieser Seite ist etwas schiefgelaufen. Bitte neu laden.",
     "version": "Version {version}"
+  },
+  "help": {
+    "buttonLabel": "Hilfe für diese Seite anzeigen",
+    "genericTitle": "Hilfe",
+    "notAvailable": "Für diese Seite ist kein Hilfeabschnitt verfügbar.",
+    "topics": {
+      "dashboard": {
+        "title": "Meine Törns",
+        "paragraphs": [
+          "Dies ist eine Übersicht über alle deine Törns - Entwürfe, veröffentlichte, laufende und abgeschlossene. Klicke auf \"+ Neuer Törn\", um einen neuen Törn anzulegen.",
+          "Falls du noch keinen ICE-Kontakt (In Case of Emergency) hast, erscheint hier ein Hinweisbanner - füge einen hinzu, bevor du einen Törn aktivierst, denn diese Person wird benachrichtigt, falls du dich nicht rechtzeitig zurückmeldest."
+        ]
+      },
+      "vessels": {
+        "title": "Meine Boote",
+        "paragraphs": [
+          "Boote, die du hier registrierst, können bei der Erstellung eines neuen Törns direkt ausgewählt werden, anstatt die gleichen Angaben jedes Mal neu einzugeben.",
+          "Trage MMSI-Nummer, Rufzeichen, Modell und Abmessungen ein, dazu ein optionales Foto - es hilft dem Such- und Rettungsdienst, das Boot im Notfall zu identifizieren."
+        ]
+      },
+      "savedRoutes": {
+        "title": "Gespeicherte Routen",
+        "paragraphs": [
+          "Routen, die du oft segelst - eine jährliche Überfahrt, eine regelmäßige Wochenendtour - kannst du hier speichern, damit du sie nicht jedes Mal erneut aus Windy, einer GPX-Datei oder per Hand zeichnen musst.",
+          "Wähle beim Anlegen oder Bearbeiten eines Törns \"+ Gespeicherte Route hinzufügen\", um eine sofort wiederzuverwenden."
+        ]
+      },
+      "profile": {
+        "title": "Meine Seite",
+        "paragraphs": [
+          "Verwalte dein Konto: Name, Telefon, E-Mail, Sprache und Foto. Dein Foto hilft dem Such- und Rettungsdienst, dich im Notfall als Skipper zu identifizieren.",
+          "Du kannst außerdem eine Kopie aller über dich gespeicherten Daten anfordern (DSGVO), wählen, ob du per E-Mail oder Telegram benachrichtigt werden möchtest, oder dein Konto löschen."
+        ]
+      },
+      "iceContacts": {
+        "title": "ICE-Kontakte",
+        "paragraphs": [
+          "Deine ICE-Kontakte (In Case of Emergency) sind die Personen, die benachrichtigt werden, wenn ein Törn nicht innerhalb der Kulanzzeit als angekommen bestätigt wird. Füge mindestens einen hinzu, bevor du einen Törn aktivieren kannst.",
+          "Ein neuer Kontakt erhält einen Bestätigungslink, muss ihn aber nicht bestätigen, um bei einer überfälligen Rückmeldung benachrichtigt zu werden - eine Sicherheitswarnung sollte nicht davon abhängen, ob ein Link angeklickt wurde."
+        ]
+      },
+      "crewAddressBook": {
+        "title": "Adressbuch",
+        "paragraphs": [
+          "Kontakte, die du beim Einladen von Crewmitgliedern zu einem Törn bewusst gespeichert hast, landen hier, damit du sie für künftige Törns erneut einladen kannst, ohne ihre Daten neu einzugeben.",
+          "Du kannst auch mehrere gespeicherte Kontakte gleichzeitig auswählen und sie direkt zu einem bestehenden Törn einladen."
+        ]
+      },
+      "iceAccount": {
+        "title": "Mein ICE-Konto",
+        "paragraphs": [
+          "Wenn du bestätigt hast, jemandes ICE-Kontakt (In Case of Emergency) zu sein, und ein Konto erstellt oder verknüpft hast, listet diese Seite alle Personen auf, für die du Kontakt bist, und du kannst deine eigenen Angaben aktuell halten.",
+          "Du kannst außerdem festlegen, dass dein Konto automatisch gelöscht wird, sobald du für keinen aktiven Törn mehr ICE-Kontakt bist."
+        ]
+      },
+      "admin": {
+        "title": "Admin",
+        "paragraphs": [
+          "Systemweite Statistiken und Verwaltungswerkzeuge, nur für Administratoren sichtbar. Klicke auf eine Kachel, um die zugrunde liegenden Datensätze einzusehen - Nutzer, Routen, Boote oder ICE-Kontakte.",
+          "Im Reiter für Systemprotokolle kannst du Ereignisse nach Stufe und Kategorie durchsuchen und filtern, um Probleme zu diagnostizieren."
+        ]
+      },
+      "createTrip": {
+        "title": "Neuen Törn erstellen",
+        "paragraphs": [
+          "Richte einen neuen Törn ein: wähle oder füge ein Boot hinzu, wähle den zu alarmierenden ICE-Kontakt, lege Abfahrts-/Ankunftszeit und Kulanzzeit fest und füge eine oder mehrere Routen hinzu - importiert aus Windy, einer GPX-Datei oder von Hand auf der Karte gezeichnet.",
+          "Du kannst auch sofort Crewmitglieder einladen - jede Person erhält eine E-Mail-Einladung, um ihre eigenen Angaben, ein Foto und einen persönlichen Notfallkontakt einzutragen."
+        ]
+      },
+      "tripDetail": {
+        "title": "Törn-Details",
+        "paragraphs": [
+          "Der vollständige Datensatz für einen Törn: Zeitplan, Boot, ICE-Kontakt, Routen und Crew, sowie ein Änderungsprotokoll aller Bearbeitungen.",
+          "Aktiviere den Törn, sobald alles bereit ist (oder lass ihn zur geplanten Abfahrtszeit automatisch aktivieren), nutze dann \"Verschieben\", falls du mehr Zeit brauchst, oder \"Ankunft bestätigen\", sobald du sicher angekommen bist. Läuft die Kulanzzeit ohne Rückmeldung ab, wird dein ICE-Kontakt automatisch benachrichtigt."
+        ]
+      }
+    }
   },
   "dashboard": {
     "title": "Meine Törns",
@@ -128,8 +217,6 @@
     "alreadyVerified": "Deine E-Mail-Adresse ist bereits bestätigt.",
     "verificationResent": "Ein neuer Bestätigungslink wurde gesendet.",
     "verificationResendFailed": "Der Link konnte gerade nicht gesendet werden. Bitte versuche es später erneut.",
-    "noIceContact": "Du hast noch keinen ICE-Kontakt - ohne einen kann niemand benachrichtigt werden, falls dein Törn nicht rechtzeitig bestätigt wird.",
-    "addIceContact": "ICE-Kontakt hinzufügen",
     "vesselFallback": "Boot #{id}",
     "departure": "Abfahrt: {datetime}",
     "arrival": "Ankunft: {datetime}",
@@ -287,6 +374,9 @@
     "phoneLabel": "Telefon",
     "emailLabel": "E-Mail",
     "languageLabel": "Sprache",
+    "timezoneLabel": "Zeitzone",
+    "timezoneAuto": "Automatisch (vom Browser erkannt)",
+    "timezoneHint": "Uhrzeiten in der App werden in dieser Zeitzone angezeigt. Daten werden immer als UTC gespeichert.",
     "submit": "Änderungen speichern",
     "saveFailed": "Die Änderungen konnten nicht gespeichert werden.",
     "emailChangePending": "Ein Bestätigungslink wurde an <strong>{email}</strong> gesendet. Deine E-Mail-Adresse ändert sich erst, wenn du auf den Link klickst. Wir haben außerdem deine aktuelle Adresse benachrichtigt.",
@@ -311,6 +401,17 @@
     },
     "channelSaveFailed": "Dein bevorzugter Kanal konnte nicht gespeichert werden.",
     "channelSaved": "Benachrichtigungskanal aktualisiert.",
+    "passwordHeading": "Passwort ändern",
+    "passwordHint": "Wähle ein starkes Passwort, das du nirgendwo sonst verwendest.",
+    "currentPasswordLabel": "Aktuelles Passwort",
+    "newPasswordLabel": "Neues Passwort",
+    "confirmNewPasswordLabel": "Neues Passwort bestätigen",
+    "passwordSubmit": "Passwort ändern",
+    "passwordSaving": "Wird geändert…",
+    "currentPasswordRequired": "Gib dein aktuelles Passwort ein.",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "passwordChangeFailed": "Das Passwort konnte nicht geändert werden.",
+    "passwordChanged": "Dein Passwort wurde geändert. Eine Bestätigungs-E-Mail wurde gesendet.",
     "deleteHeading": "Konto löschen",
     "deleteWarning": "Das Löschen deines Kontos entfernt dauerhaft deine Boote und ICE-Kontakte und beendet deine Törns. Dies kann nicht rückgängig gemacht werden.",
     "deleteButton": "Mein Konto löschen",
@@ -364,6 +465,8 @@
       "callSignLabel": "Rufzeichen (optional)",
       "modelLabel": "Modell (optional)",
       "modelPlaceholder": "z. B. Bavaria 34",
+      "colorLabel": "Farbe (optional)",
+      "colorPlaceholder": "z. B. Weiß",
       "yearLabel": "Baujahr (optional)",
       "yearPlaceholder": "z. B. 2011",
       "lengthLabel": "Länge, Meter (optional)",
@@ -371,6 +474,11 @@
       "draftLabel": "Tiefgang, Meter (optional)",
       "notesLabel": "Notizen (optional)",
       "notesPlaceholder": "Weitere Informationen zum Boot",
+      "emergencyBeaconLabel": "Notfallsender (optional)",
+      "emergencyBeaconPlaceholder": "z. B. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Sichtbar für deinen Notfallkontakt, die Crew und Search and Rescue - anders als bei Notizen wird er niemandem mit Zugriff auf diese Reise verborgen.",
+      "equipmentLabel": "Sicherheitsausrüstung an Bord",
+      "epirbHint": "Falls markiert, geben Sie Marke, Modell und ID des Geräts im Notfallsender-Feld unten an.",
       "photoLabel": "Bootsfoto (optional)",
       "photoHint": "Wird von Search and Rescue zur Identifizierung des Boots genutzt. JPEG/PNG, max. 10 MB.",
       "saveButton": "Boot speichern",
@@ -388,14 +496,23 @@
       "loading": "ICE-Kontakte werden geladen…",
       "selectLabel": "Wer soll benachrichtigt werden, wenn dieser Törn nicht rechtzeitig bestätigt wird?",
       "selectHint": "Wähle den einen ICE-Kontakt, der für diesen Törn benachrichtigt werden soll. Du kannst dies vorerst überspringen, aber der Törn kann erst aktiviert werden, wenn einer festgelegt ist.",
+      "pendingWarning": "Dieser Kontakt hat die Rolle als ICE-Kontakt noch nicht bestätigt. Du kannst ihn trotzdem zuweisen, aber der Törn kann erst aktiviert werden, wenn er bestätigt hat.",
       "required": "Bitte wähle einen ICE-Kontakt für diesen Törn.",
-      "noneRegistered": "Du hast noch keine registrierten ICE-Kontakte.",
-      "addLink": "ICE-Kontakt hinzufügen"
+      "noneRegistered": "Du hast noch keine registrierten ICE-Kontakte. Füge unten einen hinzu.",
+      "addLink": "ICE-Kontakt hinzufügen",
+      "addNew": "+ Neuen ICE-Kontakt hinzufügen",
+      "saveButton": "ICE-Kontakt speichern",
+      "added": "ICE-Kontakt hinzugefügt. Eine Bestätigungs-E-Mail wurde gesendet.",
+      "addedEmailFailed": "ICE-Kontakt hinzugefügt, aber das Senden der Bestätigungs-E-Mail ist fehlgeschlagen."
     },
     "schedule": {
       "heading": "Zeitplan",
       "departureLabel": "Abfahrt (UTC)",
-      "arrivalLabel": "Geplante Ankunft (UTC)",
+      "durationLabel": "Törndauer",
+      "durationDays": "Tage",
+      "durationHours": "Stunden",
+      "durationMinutes": "Minuten",
+      "estimatedArrival": "Voraussichtliche Ankunft: {datetime}",
       "gracePeriodLabel": "Kulanzzeit, bevor der ICE-Kontakt benachrichtigt wird",
       "gracePeriodHint": "Zeitspanne nach der geplanten Ankunft, bevor der ICE-Kontakt benachrichtigt wird, falls du deine Ankunft nicht bestätigt hast."
     },
@@ -424,12 +541,13 @@
       "saveRouteNamePlaceholder": "Name für diese Route, z. B. Marstrand-Skagen",
       "saveRouteNameRequired": "Gib einen Namen für die Route ein.",
       "saveRouteFailed": "Die Route konnte nicht gespeichert werden.",
-      "saveRouteSuccess": "Route gespeichert."
+      "saveRouteSuccess": "Route gespeichert.",
+      "crewNextStepHint": "Du lädst die Crew im nächsten Schritt ein, sobald die Reise erstellt wurde."
     },
     "errors": {
       "vesselRequired": "Wähle ein Boot aus oder füge eins hinzu.",
-      "datesRequired": "Gib sowohl Abfahrts- als auch Ankunftszeit an.",
-      "arrivalBeforeDeparture": "Die Ankunftszeit muss nach der Abfahrtszeit liegen.",
+      "datesRequired": "Gib die Abfahrtszeit und die Dauer des Törns an.",
+      "durationRequired": "Die Törndauer muss größer als null sein.",
       "primaryRouteMinPoints": "Zeichne mindestens zwei Punkte für die Hauptroute.",
       "gpxParseError": "Aus dieser GPX-Datei konnte keine Route gelesen werden. Stelle sicher, dass sie eine Route oder Aufzeichnung mit mindestens zwei Punkten enthält.",
       "createFailed": "Der Törn konnte nicht erstellt werden."
@@ -607,12 +725,15 @@
     "vessel": {
       "nameLine": "Boot: {name}",
       "modelLabel": "Modell {value}",
+      "colorLabel": "Farbe {value}",
       "yearBuilt": "Baujahr {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Rufzeichen {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "T {value} m"
+      "dimDraft": "T {value} m",
+      "emergencyBeacon": "Notfallsender: {value}",
+      "equipment": "Ausrüstung: {value}"
     },
     "routes": {
       "heading": "Routen",
@@ -659,12 +780,15 @@
     "vessel": {
       "nameLine": "Boot: {name}",
       "modelLabel": "Modell {value}",
+      "colorLabel": "Farbe {value}",
       "yearBuilt": "Baujahr {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Rufzeichen {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "T {value} m"
+      "dimDraft": "T {value} m",
+      "emergencyBeacon": "Notfallsender: {value}",
+      "equipment": "Ausrüstung: {value}"
     },
     "routes": {
       "heading": "Routen",
@@ -745,6 +869,8 @@
       "callSignLabel": "Rufzeichen (optional)",
       "modelLabel": "Modell (optional)",
       "modelPlaceholder": "z. B. Bavaria 34",
+      "colorLabel": "Farbe (optional)",
+      "colorPlaceholder": "z. B. Weiß",
       "yearLabel": "Baujahr (optional)",
       "yearPlaceholder": "z. B. 2011",
       "lengthLabel": "Länge, Meter (optional)",
@@ -752,6 +878,11 @@
       "draftLabel": "Tiefgang, Meter (optional)",
       "notesLabel": "Notizen (optional)",
       "notesPlaceholder": "Weitere Informationen zum Boot",
+      "emergencyBeaconLabel": "Notfallsender (optional)",
+      "emergencyBeaconPlaceholder": "z. B. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Sichtbar für deinen Notfallkontakt, die Crew und Search and Rescue - anders als bei Notizen wird er niemandem mit Zugriff auf diese Reise verborgen.",
+      "equipmentLabel": "Sicherheitsausrüstung an Bord",
+      "epirbHint": "Falls markiert, geben Sie Marke, Modell und ID des Geräts im Notfallsender-Feld unten an.",
       "photoLabel": "Bootsfoto (optional)",
       "photoHint": "Wird von Search and Rescue zur Identifizierung des Boots genutzt. JPEG/PNG, max. 10 MB.",
       "submit": "Boot speichern",
@@ -769,6 +900,8 @@
       "yearBuilt": "Baujahr {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Rufzeichen {callSign}",
+      "emergencyBeacon": "Notfallsender: {value}",
+      "equipment": "Ausrüstung: {value}",
       "editButton": "Bearbeiten"
     },
     "saveFailed": "Das Boot konnte nicht gespeichert werden.",
@@ -930,6 +1063,20 @@
     "skipper": {
       "heading": "Skipper"
     },
+    "sarAccess": {
+      "heading": "Zugang für Search and Rescue (SAR)",
+      "description": "Benötigt eine SAR-Behörde Lesezugriff auf diesen Törn, gib ihr diese Referenz und PIN zur Eingabe auf der SAR-Abfrageseite.",
+      "referenceLabel": "Referenz",
+      "pinLabel": "PIN",
+      "showPin": "PIN anzeigen",
+      "hidePin": "PIN verbergen",
+      "notYetDescription": "Es wurden noch keine SAR-Zugangsdaten erstellt. Wenn du dir um diesen Törn Sorgen machst und bereit sein möchtest, Search and Rescue einzubeziehen, ohne auf den automatischen Alarm zu warten, kannst du sie jetzt anfordern.",
+      "notActiveHint": "SAR-Zugang kann erst angefordert werden, wenn der Törn aktiv ist.",
+      "triggerButton": "SAR-Zugang jetzt anfordern",
+      "triggerConfirm": "Jetzt Zugangsdaten für SAR zu diesem Törn anfordern? Der Skipper wird benachrichtigt.",
+      "triggerFailed": "SAR-Zugang konnte nicht angefordert werden.",
+      "triggered": "SAR-Zugangsdaten wurden erstellt."
+    },
     "schedule": {
       "heading": "Zeitplan",
       "departureLabel": "Abfahrt (UTC)",
@@ -945,12 +1092,15 @@
     "vessel": {
       "heading": "Boot",
       "modelLabel": "Modell {model}",
+      "colorLabel": "Farbe {color}",
       "yearBuilt": "Baujahr {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Rufzeichen {callSign}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
       "dimDraft": "T {value} m",
+      "emergencyBeacon": "Notfallsender: {value}",
+      "equipment": "Ausrüstung: {value}",
       "changeLabel": "Boot wechseln",
       "changeButton": "Boot wechseln",
       "changeFailed": "Das Boot konnte nicht gewechselt werden.",
@@ -1497,6 +1647,23 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.5.0",
+        "date": "2026-07-18",
+        "sections": {
+          "new": [
+            "Du kannst dein Passwort jetzt direkt auf deiner Profilseite ändern, und wir schicken dir bei jeder Änderung eine Bestätigung per E-Mail, damit dir nichts entgeht.",
+            "Wenn du der Notfallkontakt einer Person bist und dir schon Sorgen machst, bevor der automatische Alarm ausgelöst hat, kannst du jetzt sofort die Referenz und PIN für Suche und Rettung zu ihrer laufenden Fahrt anfordern - und der Skipper wird darüber informiert."
+          ],
+          "improved": [
+            "Bei der Planung einer Fahrt gibst du jetzt an, wie lange du voraussichtlich unterwegs bist, statt einer genauen Ankunftszeit - wir berechnen die Ankunft für dich, und wenn du die Abfahrt verschiebst, bleibt die Fahrt gleich lang.",
+            "Wähle deine bevorzugte Zeitzone in deinem Profil, dann werden alle Datums- und Uhrzeitangaben in der App in deiner eigenen Ortszeit angezeigt, während im Hintergrund alles weiterhin sicher in UTC gespeichert wird.",
+            "Du kannst mehr zu deinem Boot festhalten - seine Farbe, die Notfallbake an Bord und welche Sicherheitsausrüstung du dabeihast (Signalraketen, EPIRB, UKW-Funk, Satellitentelefon und Rettungsinsel) - damit deine Notfallkontakte und die Rettungsdienste ein vollständigeres Bild haben.",
+            "Eine Fahrt kann jetzt erst gestartet werden, wenn ihr Notfallkontakt bestätigt hat, sodass du dich nie auf jemanden verlässt, der noch nicht zugestimmt hat, alarmiert zu werden.",
+            "Das Einladen eines Notfallkontakts beim Erstellen einer Fahrt ist übersichtlicher, und deine Kontooptionen befinden sich jetzt ordentlich unter deinem Profilbild - auf dem Desktop wie auf dem Handy."
+          ]
+        }
+      },
       {
         "version": "v1.4.0",
         "date": "2026-07-17",

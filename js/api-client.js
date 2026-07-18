@@ -44,7 +44,7 @@ async function _refreshAccessToken() {
 // these must never trigger a silent-refresh attempt or a forced redirect.
 function _isSessionScoped(endpoint) {
     return !endpoint.startsWith('/auth/') && !endpoint.startsWith('/sar/')
-        && endpoint !== '/user/delete-account';
+        && endpoint !== '/user/delete-account' && endpoint !== '/user/password';
 }
 
 function _handleExpiredSession() {

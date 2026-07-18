@@ -23,11 +23,19 @@
       "h12": "12 heures",
       "h24": "24 heures",
       "h48": "48 heures"
+    },
+    "vesselEquipment": {
+      "flares": "Fusées de détresse",
+      "epirb": "Balise de détresse (EPIRB/MOB)",
+      "vhf": "Radio VHF",
+      "satellitePhone": "Téléphone satellite",
+      "liferaft": "Radeau de survie"
     }
   },
   "errors": {
     "AUTH_REQUIRED": "Vous devez vous reconnecter.",
     "AUTH_INVALID": "E-mail ou mot de passe incorrect.",
+    "CURRENT_PASSWORD_INVALID": "Mot de passe actuel incorrect.",
     "ACCESS_DENIED": "Vous n'avez pas accès à cette ressource.",
     "VALIDATION_ERROR": "Vérifiez les champs signalés.",
     "INVALID_EMAIL": "Adresse e-mail invalide.",
@@ -42,6 +50,7 @@
     "NOT_FOUND": "Introuvable.",
     "RESOURCE_CONFLICT": "Cet élément existe déjà.",
     "MMSI_ALREADY_ACTIVE": "Une sortie est déjà active pour ce navire.",
+    "VESSEL_HAS_TRIPS": "Impossible de supprimer ce navire : il est enregistré sur une sortie.",
     "INVALID_ETA": "Heure d'arrivée invalide.",
     "NOTIFICATION_FAILED": "Échec de l'envoi de la notification.",
     "DEPARTURE_EDIT_LOCKED": "L'heure de départ ne peut être modifiée qu'avant l'activation de la sortie.",
@@ -49,7 +58,9 @@
     "GRACE_PERIOD_EDIT_LOCKED": "Le délai de grâce ne peut être modifié qu'avant la confirmation de fin de sortie.",
     "ICE_CONTACT_REQUIRED": "Un contact ICE doit être associé à cette sortie avant qu'elle puisse être activée.",
     "ICE_CONTACT_DEACTIVATED": "Le compte de ce contact ICE a été supprimé ; il ne peut donc plus être utilisé. Choisissez un autre contact ou réinvitez-le.",
+    "ICE_CONTACT_UNCONFIRMED": "Le contact ICE de cette sortie n'a pas encore confirmé. Il doit confirmer avant que la sortie puisse être activée.",
     "TRIP_LOCKED": "Cette sortie est verrouillée pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence, et ne peut plus être modifiée.",
+    "TRIP_NOT_ACTIVE": "L'accès SAR ne peut être demandé que pour une sortie active.",
     "CONTACT_RATE_LIMITED": "Vous avez atteint la limite quotidienne d'envois via le formulaire de contact. Merci de réessayer demain.",
     "CONTACT_TOO_MANY_FILES": "Trop de pièces jointes.",
     "CONTACT_FILE_TOO_LARGE": "L'une de vos pièces jointes est trop volumineuse.",
@@ -105,6 +116,7 @@
       "iceContacts": "Contacts ICE",
       "crewAddressBook": "Carnet d'adresses",
       "myIceAccount": "Mon compte ICE",
+      "myProfile": "Mon profil",
       "admin": "Admin",
       "logout": "Déconnexion"
     },
@@ -113,6 +125,83 @@
     "lightboxClose": "Fermer l'image en taille réelle",
     "renderError": "Une erreur est survenue lors de l'affichage de cette page. Essayez de recharger.",
     "version": "Version {version}"
+  },
+  "help": {
+    "buttonLabel": "Afficher l'aide pour cette page",
+    "genericTitle": "Aide",
+    "notAvailable": "Aucune section d'aide n'est disponible pour cette page.",
+    "topics": {
+      "dashboard": {
+        "title": "Mes sorties",
+        "paragraphs": [
+          "Voici un aperçu de toutes vos sorties - brouillons, publiées, en cours et terminées. Cliquez sur « + Nouvelle sortie » pour enregistrer une nouvelle sortie.",
+          "Si vous n'avez pas encore de contact ICE (In Case of Emergency), une bannière de rappel s'affiche ici - ajoutez-en un avant d'activer une sortie, car c'est cette personne qui sera alertée si vous ne confirmez pas votre arrivée à temps."
+        ]
+      },
+      "vessels": {
+        "title": "Mes navires",
+        "paragraphs": [
+          "Les navires que vous enregistrez ici peuvent être sélectionnés directement lors de la création d'une nouvelle sortie, au lieu de ressaisir les mêmes informations à chaque fois.",
+          "Ajoutez le numéro MMSI, l'indicatif d'appel, le modèle et les dimensions, ainsi qu'une photo facultative - utilisée par les secours en mer pour identifier le navire en cas d'urgence."
+        ]
+      },
+      "savedRoutes": {
+        "title": "Itinéraires enregistrés",
+        "paragraphs": [
+          "Les itinéraires que vous empruntez souvent - une traversée annuelle, une sortie régulière du week-end - peuvent être enregistrés ici pour éviter de les réimporter depuis Windy, un fichier GPX ou un tracé manuel à chaque fois.",
+          "Lors de la création ou de la modification d'une sortie, choisissez « + Ajouter un itinéraire enregistré » pour en réutiliser un instantanément."
+        ]
+      },
+      "profile": {
+        "title": "Ma page",
+        "paragraphs": [
+          "Gérez votre compte : nom, téléphone, e-mail, langue et photo. Votre photo aide les secours en mer à vous identifier en tant que skipper en cas d'urgence.",
+          "Vous pouvez également demander une copie de toutes les données vous concernant (RGPD), choisir d'être notifié par e-mail ou par Telegram, ou supprimer votre compte."
+        ]
+      },
+      "iceContacts": {
+        "title": "Contacts ICE",
+        "paragraphs": [
+          "Vos contacts ICE (In Case of Emergency) sont les personnes averties si une sortie n'est pas confirmée comme arrivée dans le délai de grâce. Ajoutez-en au moins un avant de pouvoir activer une sortie.",
+          "Un nouveau contact reçoit un lien de confirmation, mais le confirmer n'est pas nécessaire pour qu'il reçoive une alerte en cas de dépassement du délai - une alerte de sécurité ne doit pas dépendre du fait qu'un lien ait été cliqué."
+        ]
+      },
+      "crewAddressBook": {
+        "title": "Carnet d'adresses",
+        "paragraphs": [
+          "Les contacts que vous avez explicitement choisi d'enregistrer en invitant un équipier sur une sortie se retrouvent ici, afin de pouvoir les réinviter facilement sur de futures sorties sans ressaisir leurs informations.",
+          "Vous pouvez aussi sélectionner plusieurs contacts enregistrés à la fois et les inviter directement sur une sortie existante."
+        ]
+      },
+      "iceAccount": {
+        "title": "Mon compte ICE",
+        "paragraphs": [
+          "Si vous avez confirmé être le contact ICE (In Case of Emergency) de quelqu'un et créé ou lié un compte, cette page répertorie toutes les personnes pour lesquelles vous êtes contact, et vous permet de garder vos propres informations à jour.",
+          "Vous pouvez aussi choisir de faire supprimer automatiquement votre compte une fois que vous n'êtes plus contact ICE d'aucune sortie active."
+        ]
+      },
+      "admin": {
+        "title": "Admin",
+        "paragraphs": [
+          "Statistiques et outils de gestion à l'échelle du système, visibles uniquement par les administrateurs. Cliquez sur une case pour consulter les enregistrements sous-jacents - utilisateurs, itinéraires, navires ou contacts ICE.",
+          "L'onglet des journaux système permet de rechercher et filtrer les événements par niveau et par catégorie pour le dépannage."
+        ]
+      },
+      "createTrip": {
+        "title": "Créer une nouvelle sortie",
+        "paragraphs": [
+          "Configurez une nouvelle sortie : choisissez ou ajoutez un navire, choisissez le contact ICE à alerter, définissez les heures de départ/arrivée et le délai de grâce, et ajoutez un ou plusieurs itinéraires - importés depuis Windy, un fichier GPX, ou tracés à la main sur la carte.",
+          "Vous pouvez aussi inviter des équipiers immédiatement - chaque personne reçoit une invitation par e-mail pour renseigner ses propres informations, sa photo et son contact d'urgence personnel."
+        ]
+      },
+      "tripDetail": {
+        "title": "Détails de la sortie",
+        "paragraphs": [
+          "L'ensemble des informations d'une sortie : horaire, navire, contact ICE, itinéraires et équipage, ainsi qu'un journal des modifications apportées.",
+          "Activez la sortie une fois que tout est prêt (ou laissez-la s'activer automatiquement à l'heure de départ prévue), puis utilisez « Reporter » si vous avez besoin de plus de temps, ou « Confirmer l'arrivée » une fois arrivé à bon port. Si le délai de grâce expire sans confirmation, votre contact ICE est alerté automatiquement."
+        ]
+      }
+    }
   },
   "dashboard": {
     "title": "Mes sorties",
@@ -128,8 +217,6 @@
     "alreadyVerified": "Votre adresse e-mail est déjà confirmée.",
     "verificationResent": "Un nouveau lien de confirmation a été envoyé.",
     "verificationResendFailed": "Impossible d'envoyer le lien pour le moment. Réessayez plus tard.",
-    "noIceContact": "Vous n'avez pas encore de contact ICE — sans cela, personne ne pourra être alerté si votre sortie n'est pas confirmée à temps.",
-    "addIceContact": "Ajouter un contact ICE",
     "vesselFallback": "Navire n° {id}",
     "departure": "Départ : {datetime}",
     "arrival": "Arrivée : {datetime}",
@@ -287,6 +374,9 @@
     "phoneLabel": "Téléphone",
     "emailLabel": "E-mail",
     "languageLabel": "Langue",
+    "timezoneLabel": "Fuseau horaire",
+    "timezoneAuto": "Automatique (détecté depuis le navigateur)",
+    "timezoneHint": "Les heures affichées dans l'application utilisent ce fuseau horaire. Les dates sont toujours enregistrées en UTC.",
     "submit": "Enregistrer les modifications",
     "saveFailed": "Impossible d'enregistrer les modifications.",
     "emailChangePending": "Un lien de confirmation a été envoyé à <strong>{email}</strong>. Votre adresse e-mail ne changera qu'une fois le lien cliqué. Nous avons également informé votre adresse actuelle.",
@@ -311,6 +401,17 @@
     },
     "channelSaveFailed": "Impossible d'enregistrer votre canal préféré.",
     "channelSaved": "Canal de notification mis à jour.",
+    "passwordHeading": "Changer le mot de passe",
+    "passwordHint": "Choisissez un mot de passe fort que vous n'utilisez nulle part ailleurs.",
+    "currentPasswordLabel": "Mot de passe actuel",
+    "newPasswordLabel": "Nouveau mot de passe",
+    "confirmNewPasswordLabel": "Confirmer le nouveau mot de passe",
+    "passwordSubmit": "Changer le mot de passe",
+    "passwordSaving": "Modification…",
+    "currentPasswordRequired": "Saisissez votre mot de passe actuel.",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "passwordChangeFailed": "Impossible de changer le mot de passe.",
+    "passwordChanged": "Votre mot de passe a été modifié. Un e-mail de confirmation a été envoyé.",
     "deleteHeading": "Supprimer le compte",
     "deleteWarning": "La suppression de votre compte retire définitivement vos navires et vos contacts ICE, et met fin à vos sorties. Cette action est irréversible.",
     "deleteButton": "Supprimer mon compte",
@@ -364,6 +465,8 @@
       "callSignLabel": "Indicatif d'appel (facultatif)",
       "modelLabel": "Modèle (facultatif)",
       "modelPlaceholder": "ex. Bavaria 34",
+      "colorLabel": "Couleur (facultatif)",
+      "colorPlaceholder": "ex. Blanc",
       "yearLabel": "Année du modèle (facultatif)",
       "yearPlaceholder": "ex. 2011",
       "lengthLabel": "Longueur, en mètres (facultatif)",
@@ -371,6 +474,11 @@
       "draftLabel": "Tirant d'eau, en mètres (facultatif)",
       "notesLabel": "Notes (facultatif)",
       "notesPlaceholder": "Autres informations sur le navire",
+      "emergencyBeaconLabel": "Balise de détresse (facultatif)",
+      "emergencyBeaconPlaceholder": "p. ex. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Visible par votre contact ICE, l'équipage et les secours en mer - contrairement aux notes, elle n'est jamais masquée à quiconque a accès à ce voyage.",
+      "equipmentLabel": "Équipement de sécurité à bord",
+      "epirbHint": "Si coché, indiquez la marque, le modèle et l'identifiant de l'appareil dans le champ balise de détresse ci-dessous.",
       "photoLabel": "Photo du navire (facultatif)",
       "photoHint": "Utilisée par les secours pour identifier le navire. JPEG/PNG, 10 Mo max.",
       "saveButton": "Enregistrer le navire",
@@ -388,14 +496,23 @@
       "loading": "Chargement des contacts ICE…",
       "selectLabel": "Qui doit être alerté si cette sortie n'est pas confirmée à temps ?",
       "selectHint": "Choisissez l'unique contact ICE à alerter pour cette sortie. Vous pouvez passer cette étape pour l'instant, mais la sortie ne pourra pas être activée tant qu'un contact n'est pas défini.",
+      "pendingWarning": "Ce contact n'a pas encore confirmé son rôle de contact ICE. Vous pouvez quand même le désigner, mais la sortie ne pourra pas être activée tant qu'il n'aura pas confirmé.",
       "required": "Veuillez choisir un contact ICE pour cette sortie.",
-      "noneRegistered": "Vous n'avez encore aucun contact ICE enregistré.",
-      "addLink": "Ajouter un contact ICE"
+      "noneRegistered": "Vous n'avez encore aucun contact ICE enregistré. Ajoutez-en un ci-dessous.",
+      "addLink": "Ajouter un contact ICE",
+      "addNew": "+ Ajouter un nouveau contact ICE",
+      "saveButton": "Enregistrer le contact ICE",
+      "added": "Contact ICE ajouté. Un e-mail de confirmation a été envoyé.",
+      "addedEmailFailed": "Contact ICE ajouté, mais l'envoi de l'e-mail de confirmation a échoué."
     },
     "schedule": {
       "heading": "Horaire",
       "departureLabel": "Départ (UTC)",
-      "arrivalLabel": "Arrivée prévue (UTC)",
+      "durationLabel": "Durée de la sortie",
+      "durationDays": "Jours",
+      "durationHours": "Heures",
+      "durationMinutes": "Minutes",
+      "estimatedArrival": "Arrivée estimée : {datetime}",
       "gracePeriodLabel": "Délai de grâce avant l'alerte du contact ICE",
       "gracePeriodHint": "Durée après l'arrivée prévue avant que le contact ICE ne soit averti si vous n'avez pas confirmé votre arrivée."
     },
@@ -424,12 +541,13 @@
       "saveRouteNamePlaceholder": "Nommez cet itinéraire, ex. Marstrand-Skagen",
       "saveRouteNameRequired": "Indiquez un nom pour l'itinéraire.",
       "saveRouteFailed": "Impossible d'enregistrer l'itinéraire.",
-      "saveRouteSuccess": "Itinéraire enregistré."
+      "saveRouteSuccess": "Itinéraire enregistré.",
+      "crewNextStepHint": "Vous inviterez l'équipage à l'étape suivante, une fois le voyage créé."
     },
     "errors": {
       "vesselRequired": "Sélectionnez ou ajoutez un navire.",
-      "datesRequired": "Indiquez les heures de départ et d'arrivée.",
-      "arrivalBeforeDeparture": "L'heure d'arrivée doit être postérieure à l'heure de départ.",
+      "datesRequired": "Indiquez l'heure de départ et la durée de la sortie.",
+      "durationRequired": "La durée de la sortie doit être supérieure à zéro.",
       "primaryRouteMinPoints": "Tracez au moins deux points pour l'itinéraire principal.",
       "gpxParseError": "Impossible de lire un itinéraire depuis ce fichier GPX. Vérifiez qu'il contient un itinéraire ou une trace d'au moins deux points.",
       "createFailed": "Impossible de créer la sortie."
@@ -607,12 +725,15 @@
     "vessel": {
       "nameLine": "Navire : {name}",
       "modelLabel": "Modèle {value}",
+      "colorLabel": "Couleur {value}",
       "yearBuilt": "Année du modèle {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Indicatif d'appel {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Balise de détresse : {value}",
+      "equipment": "Équipement : {value}"
     },
     "routes": {
       "heading": "Itinéraires",
@@ -659,12 +780,15 @@
     "vessel": {
       "nameLine": "Navire : {name}",
       "modelLabel": "Modèle {value}",
+      "colorLabel": "Couleur {value}",
       "yearBuilt": "Année du modèle {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Indicatif d'appel {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Balise de détresse : {value}",
+      "equipment": "Équipement : {value}"
     },
     "routes": {
       "heading": "Itinéraires",
@@ -745,6 +869,8 @@
       "callSignLabel": "Indicatif d'appel (facultatif)",
       "modelLabel": "Modèle (facultatif)",
       "modelPlaceholder": "ex. Bavaria 34",
+      "colorLabel": "Couleur (facultatif)",
+      "colorPlaceholder": "ex. Blanc",
       "yearLabel": "Année du modèle (facultatif)",
       "yearPlaceholder": "ex. 2011",
       "lengthLabel": "Longueur, en mètres (facultatif)",
@@ -752,6 +878,11 @@
       "draftLabel": "Tirant d'eau, en mètres (facultatif)",
       "notesLabel": "Notes (facultatif)",
       "notesPlaceholder": "Autres informations sur le navire",
+      "emergencyBeaconLabel": "Balise de détresse (facultatif)",
+      "emergencyBeaconPlaceholder": "p. ex. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Visible par votre contact ICE, l'équipage et les secours en mer - contrairement aux notes, elle n'est jamais masquée à quiconque a accès à ce voyage.",
+      "equipmentLabel": "Équipement de sécurité à bord",
+      "epirbHint": "Si coché, indiquez la marque, le modèle et l'identifiant de l'appareil dans le champ balise de détresse ci-dessous.",
       "photoLabel": "Photo du navire (facultatif)",
       "photoHint": "Utilisée par les secours pour identifier le navire. JPEG/PNG, 10 Mo max.",
       "submit": "Enregistrer le navire",
@@ -769,6 +900,8 @@
       "yearBuilt": "Année du modèle {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Indicatif d'appel {callSign}",
+      "emergencyBeacon": "Balise de détresse : {value}",
+      "equipment": "Équipement : {value}",
       "editButton": "Modifier"
     },
     "saveFailed": "Impossible d'enregistrer le navire.",
@@ -930,6 +1063,20 @@
     "skipper": {
       "heading": "Skipper"
     },
+    "sarAccess": {
+      "heading": "Accès pour les secours (SAR)",
+      "description": "Si une autorité SAR a besoin d'un accès en lecture seule à cette sortie, communiquez-lui cette référence et ce code PIN à saisir sur la page de recherche SAR.",
+      "referenceLabel": "Référence",
+      "pinLabel": "PIN",
+      "showPin": "Afficher le PIN",
+      "hidePin": "Masquer le PIN",
+      "notYetDescription": "Aucun identifiant SAR n'a encore été créé. Si vous êtes inquiet pour cette sortie et souhaitez être prêt à impliquer les secours sans attendre l'alarme automatique, vous pouvez les demander dès maintenant.",
+      "notActiveHint": "L'accès SAR ne peut être demandé qu'une fois la sortie active.",
+      "triggerButton": "Demander l'accès SAR maintenant",
+      "triggerConfirm": "Demander maintenant les identifiants SAR de cette sortie ? Le skipper en sera informé.",
+      "triggerFailed": "Impossible de demander l'accès SAR.",
+      "triggered": "Les identifiants SAR ont été créés."
+    },
     "schedule": {
       "heading": "Horaire",
       "departureLabel": "Départ (UTC)",
@@ -945,12 +1092,15 @@
     "vessel": {
       "heading": "Navire",
       "modelLabel": "Modèle {model}",
+      "colorLabel": "Couleur {color}",
       "yearBuilt": "Année du modèle {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Indicatif d'appel {callSign}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
+      "emergencyBeacon": "Balise de détresse : {value}",
+      "equipment": "Équipement : {value}",
       "changeLabel": "Changer de navire",
       "changeButton": "Changer de navire",
       "changeFailed": "Impossible de changer le navire.",
@@ -1497,6 +1647,23 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.5.0",
+        "date": "2026-07-18",
+        "sections": {
+          "new": [
+            "Vous pouvez désormais changer votre mot de passe directement depuis votre page de profil, et nous vous envoyons un e-mail de confirmation à chaque changement pour que rien ne vous échappe.",
+            "Si vous êtes le contact d'urgence de quelqu'un et que vous vous inquiétez avant que l'alarme automatique ne se soit déclenchée, vous pouvez maintenant demander immédiatement la référence et le code PIN de recherche et sauvetage pour sa navigation en cours - et le skipper est informé que vous l'avez fait."
+          ],
+          "improved": [
+            "Lorsque vous planifiez une navigation, vous indiquez désormais combien de temps vous prévoyez d'être absent plutôt qu'une heure d'arrivée exacte - nous calculons l'arrivée pour vous, et si vous déplacez le départ, la navigation garde la même durée.",
+            "Choisissez votre fuseau horaire préféré dans votre profil et toutes les dates et heures de l'application s'affichent dans votre propre heure locale, tandis que tout reste enregistré en toute sécurité en UTC en arrière-plan.",
+            "Vous pouvez enregistrer davantage d'informations sur votre bateau - sa couleur, la balise de détresse à bord et l'équipement de sécurité que vous emportez (fusées de détresse, EPIRB, radio VHF, téléphone satellite et radeau de survie) - pour que vos contacts d'urgence et les services de secours aient une image plus complète.",
+            "Une navigation ne peut désormais être démarrée qu'une fois son contact d'urgence confirmé, afin que vous ne partiez jamais en comptant sur quelqu'un qui n'a pas encore accepté d'être alerté.",
+            "Inviter un contact d'urgence lors de la création d'une navigation est plus clair, et les options de votre compte se trouvent désormais bien rangées sous votre photo de profil, aussi bien sur ordinateur que sur mobile."
+          ]
+        }
+      },
       {
         "version": "v1.4.0",
         "date": "2026-07-17",

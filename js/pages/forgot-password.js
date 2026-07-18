@@ -9,7 +9,6 @@ const ForgotPasswordPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">${brandMark()} ${escapeHtml(t('app.brand'))}</div>
                     <div class="auth-card__tagline">${escapeHtml(t('forgotPassword.tagline'))}</div>
                     <div id="forgot-alert"></div>
                     <form id="forgot-form" novalidate>

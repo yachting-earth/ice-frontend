@@ -97,12 +97,15 @@ const CrewViewPage = {
                         <p class="mb-0">
                             ${escapeHtml(t('crewView.vessel.nameLine', { name: vessel?.vessel_name || '–' }))}
                             ${vessel?.model ? ` · ${escapeHtml(t('crewView.vessel.modelLabel', { value: vessel.model }))}` : ''}
+                            ${vessel?.color ? ` · ${escapeHtml(t('crewView.vessel.colorLabel', { value: vessel.color }))}` : ''}
                             ${vessel?.year_built ? ` · ${escapeHtml(t('crewView.vessel.yearBuilt', { year: String(vessel.year_built) }))}` : ''}
                             ${vessel?.mmsi ? ` · ${escapeHtml(t('crewView.vessel.mmsi', { value: vessel.mmsi }))}` : ''}
                             ${vessel?.call_sign ? ` · ${escapeHtml(t('crewView.vessel.callSign', { value: vessel.call_sign }))}` : ''}
                             ${CrewViewPage.formatVesselDimensions(vessel) ? ` · ${escapeHtml(CrewViewPage.formatVesselDimensions(vessel))}` : ''}
                         </p>
                     </div>
+                    ${formatVesselEquipment(vessel) ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted);">${escapeHtml(t('crewView.vessel.equipment', { value: formatVesselEquipment(vessel) }))}</p>` : ''}
+                    ${vessel?.emergency_beacon ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('crewView.vessel.emergencyBeacon', { value: vessel.emergency_beacon }))}</p>` : ''}
                 </div>
 
                 <div class="card">

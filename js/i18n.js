@@ -34,11 +34,19 @@ const EN_INLINE = {
       "h12": "12 hours",
       "h24": "24 hours",
       "h48": "48 hours"
+    },
+    "vesselEquipment": {
+      "flares": "Flares",
+      "epirb": "EPIRB / MOB emergency beacon",
+      "vhf": "VHF radio",
+      "satellitePhone": "Satellite phone",
+      "liferaft": "Life raft"
     }
   },
   "errors": {
     "AUTH_REQUIRED": "You must log in again.",
     "AUTH_INVALID": "Incorrect email or password.",
+    "CURRENT_PASSWORD_INVALID": "Incorrect current password.",
     "ACCESS_DENIED": "You don't have access to this.",
     "VALIDATION_ERROR": "Check the highlighted fields.",
     "INVALID_EMAIL": "Invalid email address.",
@@ -53,6 +61,7 @@ const EN_INLINE = {
     "NOT_FOUND": "Not found.",
     "RESOURCE_CONFLICT": "This already exists.",
     "MMSI_ALREADY_ACTIVE": "There is already an active trip for this vessel.",
+    "VESSEL_HAS_TRIPS": "Can't delete this boat — it's registered on a trip.",
     "INVALID_ETA": "Invalid arrival time.",
     "NOTIFICATION_FAILED": "Failed to send the notification.",
     "DEPARTURE_EDIT_LOCKED": "The departure time can only be changed before the trip is activated.",
@@ -60,7 +69,9 @@ const EN_INLINE = {
     "GRACE_PERIOD_EDIT_LOCKED": "The grace period can only be changed before the trip is confirmed completed.",
     "ICE_CONTACT_REQUIRED": "An ICE contact must be assigned to this trip before it can be activated.",
     "ICE_CONTACT_DEACTIVATED": "This ICE contact's account was removed, so it can no longer be used. Choose another contact or re-invite them.",
+    "ICE_CONTACT_UNCONFIRMED": "This trip's ICE contact hasn't confirmed yet. They must confirm before the trip can be activated.",
     "TRIP_LOCKED": "This trip is locked for maritime safety/traceability reasons following an emergency incident and can no longer be modified.",
+    "TRIP_NOT_ACTIVE": "SAR access can only be requested for an active trip.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
     "CONTACT_TOO_MANY_FILES": "Too many attachments.",
     "CONTACT_FILE_TOO_LARGE": "One of your attachments is too large.",
@@ -116,6 +127,7 @@ const EN_INLINE = {
       "iceContacts": "ICE contacts",
       "crewAddressBook": "Address book",
       "myIceAccount": "My ICE account",
+      "myProfile": "My profile",
       "admin": "Admin",
       "logout": "Log out"
     },
@@ -124,6 +136,83 @@ const EN_INLINE = {
     "lightboxClose": "Close full-size image",
     "renderError": "Something went wrong showing this page. Try reloading.",
     "version": "Version {version}"
+  },
+  "help": {
+    "buttonLabel": "Show help for this page",
+    "genericTitle": "Help",
+    "notAvailable": "No help section is available for this page.",
+    "topics": {
+      "dashboard": {
+        "title": "My trips",
+        "paragraphs": [
+          "This is an overview of all your trips - draft, published, active and completed. Click \"+ New trip\" to register a new voyage.",
+          "If you don't have an ICE (In Case of Emergency) contact yet, a reminder banner appears here - add one before you activate a trip, since it's who gets alerted if you don't check in on time."
+        ]
+      },
+      "vessels": {
+        "title": "My vessels",
+        "paragraphs": [
+          "Vessels you register here can be picked directly when creating a new trip, instead of re-entering the same details every time.",
+          "Add the MMSI number, call sign, model and dimensions, plus an optional photo - used by search and rescue to identify the vessel in an emergency."
+        ]
+      },
+      "savedRoutes": {
+        "title": "Saved routes",
+        "paragraphs": [
+          "Routes you sail often - an annual crossing, a regular weekend trip - can be saved here so you don't have to re-import them from Windy, a GPX file or manual drawing every time.",
+          "When creating or editing a trip, pick \"+ Add saved route\" to reuse one instantly."
+        ]
+      },
+      "profile": {
+        "title": "My page",
+        "paragraphs": [
+          "Manage your account: name, phone, email, language and photo. Your photo helps search and rescue identify you as skipper in an emergency.",
+          "You can also request a copy of everything stored about you (GDPR), choose whether you're notified by email or Telegram, or delete your account."
+        ]
+      },
+      "iceContacts": {
+        "title": "ICE contacts",
+        "paragraphs": [
+          "Your ICE (In Case of Emergency) contacts are the people notified if a trip isn't confirmed as arrived within its grace period. Add at least one before you can activate a trip.",
+          "A new contact receives a confirmation link, but the confirmation process and the safety alert are fully independent of each other - the alert still fires on a delayed trip even if the link was never clicked."
+        ]
+      },
+      "crewAddressBook": {
+        "title": "Address book",
+        "paragraphs": [
+          "Contacts you explicitly chose to save while inviting crew to a trip end up here, so you can invite them again on future trips without retyping their details.",
+          "You can also select several saved contacts at once and invite them straight into an existing trip."
+        ]
+      },
+      "iceAccount": {
+        "title": "My ICE account",
+        "paragraphs": [
+          "If you've confirmed as someone's ICE (In Case of Emergency) contact and created or linked an account, this page lists everyone you're a contact for and lets you keep your own details current.",
+          "You can also choose to have your account automatically deleted once you're no longer an ICE contact for any active trip."
+        ]
+      },
+      "admin": {
+        "title": "Admin",
+        "paragraphs": [
+          "System-wide statistics and management tools, visible only to administrators. Click a tile to inspect its underlying records - users, routes, vessels or ICE contacts.",
+          "The system log tab lets you search and filter events by level and category for troubleshooting."
+        ]
+      },
+      "createTrip": {
+        "title": "Create new trip",
+        "paragraphs": [
+          "Set up a new voyage: pick or add a vessel, choose the ICE contact to alert, set the departure/arrival times and grace period, and add one or more routes - imported from Windy, a GPX file, or drawn by hand on the map.",
+          "You can invite crew right away too - each person gets an email invitation to fill in their own details, photo and personal emergency contact."
+        ]
+      },
+      "tripDetail": {
+        "title": "Trip details",
+        "paragraphs": [
+          "The full record for one trip: schedule, vessel, ICE contact, routes and crew, plus a change log of everything that's been edited.",
+          "Activate the trip once everything is ready (or let it auto-activate at the scheduled departure), then use \"Snooze\" if you need more time, or \"Verify arrival\" once you're safely in. If the grace period runs out without a check-in, your ICE contact is alerted automatically."
+        ]
+      }
+    }
   },
   "dashboard": {
     "title": "My trips",
@@ -139,8 +228,6 @@ const EN_INLINE = {
     "alreadyVerified": "Your email address is already confirmed.",
     "verificationResent": "A new verification link has been sent.",
     "verificationResendFailed": "Could not send the link right now. Try again later.",
-    "noIceContact": "You don't have an ICE contact yet — without one, no one can be alerted if your trip isn't confirmed in time.",
-    "addIceContact": "Add an ICE contact",
     "vesselFallback": "Vessel #{id}",
     "departure": "Departure: {datetime}",
     "arrival": "Arrival: {datetime}",
@@ -298,6 +385,9 @@ const EN_INLINE = {
     "phoneLabel": "Phone",
     "emailLabel": "Email",
     "languageLabel": "Language",
+    "timezoneLabel": "Timezone",
+    "timezoneAuto": "Automatic (detect from browser)",
+    "timezoneHint": "Times throughout the app are shown in this timezone. Dates are always stored as UTC.",
     "submit": "Save changes",
     "saveFailed": "Could not save the changes.",
     "emailChangePending": "A confirmation link has been sent to <strong>{email}</strong>. Your email address only changes once you click the link. We've also notified your current address.",
@@ -322,6 +412,17 @@ const EN_INLINE = {
     },
     "channelSaveFailed": "Could not save your preferred channel.",
     "channelSaved": "Notification channel updated.",
+    "passwordHeading": "Change password",
+    "passwordHint": "Choose a strong password you don't use anywhere else.",
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "confirmNewPasswordLabel": "Confirm new password",
+    "passwordSubmit": "Change password",
+    "passwordSaving": "Changing…",
+    "currentPasswordRequired": "Enter your current password.",
+    "passwordMismatch": "Passwords don't match",
+    "passwordChangeFailed": "Could not change the password.",
+    "passwordChanged": "Your password has been changed. A confirmation email has been sent.",
     "deleteHeading": "Delete account",
     "deleteWarning": "Deleting your account permanently removes your vessels and ICE contacts, and ends your trips. This cannot be undone.",
     "deleteButton": "Delete my account",
@@ -375,6 +476,8 @@ const EN_INLINE = {
       "callSignLabel": "Call sign (optional)",
       "modelLabel": "Model (optional)",
       "modelPlaceholder": "e.g. Bavaria 34",
+      "colorLabel": "Color (optional)",
+      "colorPlaceholder": "e.g. White",
       "yearLabel": "Model year (optional)",
       "yearPlaceholder": "e.g. 2011",
       "lengthLabel": "Length, metres (optional)",
@@ -382,6 +485,11 @@ const EN_INLINE = {
       "draftLabel": "Draft, metres (optional)",
       "notesLabel": "Notes (optional)",
       "notesPlaceholder": "Other information about the vessel",
+      "emergencyBeaconLabel": "Emergency beacon (optional)",
+      "emergencyBeaconPlaceholder": "e.g. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Visible to your ICE contact, crew and search and rescue - unlike notes, it's never hidden from anyone with access to this trip.",
+      "equipmentLabel": "Safety equipment onboard",
+      "epirbHint": "If checked, add the device's make, model and ID in the emergency beacon field below.",
       "photoLabel": "Vessel photo (optional)",
       "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
       "saveButton": "Save vessel",
@@ -399,14 +507,23 @@ const EN_INLINE = {
       "loading": "Loading ICE contacts…",
       "selectLabel": "Who should be alerted if this trip isn't confirmed in time?",
       "selectHint": "Pick the single ICE contact to alert for this trip. You can skip this for now, but the trip can't be activated until one is set.",
+      "pendingWarning": "This contact hasn't confirmed the ICE contact role yet. You can still assign them, but the trip can't be activated until they confirm.",
       "required": "Please choose an ICE contact for this trip.",
-      "noneRegistered": "You don't have any registered ICE contacts yet.",
-      "addLink": "Add an ICE contact"
+      "noneRegistered": "You don't have any registered ICE contacts yet. Add one below.",
+      "addLink": "Add an ICE contact",
+      "addNew": "+ Add new ICE contact",
+      "saveButton": "Save ICE contact",
+      "added": "ICE contact added. A confirmation email has been sent.",
+      "addedEmailFailed": "ICE contact added, but sending the confirmation email failed."
     },
     "schedule": {
       "heading": "Schedule",
       "departureLabel": "Departure (UTC)",
-      "arrivalLabel": "Planned arrival (UTC)",
+      "durationLabel": "Trip duration",
+      "durationDays": "Days",
+      "durationHours": "Hours",
+      "durationMinutes": "Minutes",
+      "estimatedArrival": "Estimated arrival: {datetime}",
       "gracePeriodLabel": "Grace period before the ICE contact is alerted",
       "gracePeriodHint": "Time after the planned arrival before the ICE contact is notified if you haven't verified your arrival."
     },
@@ -435,12 +552,13 @@ const EN_INLINE = {
       "saveRouteNamePlaceholder": "Name this route, e.g. Marstrand-Skagen",
       "saveRouteNameRequired": "Enter a name for the route.",
       "saveRouteFailed": "Could not save the route.",
-      "saveRouteSuccess": "Route saved."
+      "saveRouteSuccess": "Route saved.",
+      "crewNextStepHint": "You'll invite crew in the next step, once the trip has been created."
     },
     "errors": {
       "vesselRequired": "Select or add a vessel.",
-      "datesRequired": "Enter both departure and arrival times.",
-      "arrivalBeforeDeparture": "The arrival time must be after the departure time.",
+      "datesRequired": "Enter the departure time and how long the trip will take.",
+      "durationRequired": "Trip duration must be greater than zero.",
       "primaryRouteMinPoints": "Draw at least two points for the primary route.",
       "gpxParseError": "Could not read a route from that GPX file. Make sure it contains a route or track with at least two points.",
       "createFailed": "Could not create the trip."
@@ -513,7 +631,7 @@ const EN_INLINE = {
       "passwordHint": "At least 8 characters, one uppercase letter and one number.",
       "confirmPasswordLabel": "Confirm password",
       "deleteAfterTripLabel": "Automatically delete my account and my data once the trip(s) I'm an ICE contact for have ended",
-      "retentionNote": "By default we keep your account permanently so you can log in again for future trips and update your details. Check the box above if you'd instead like the account and your data to be deleted automatically some time after the trip is over.",
+      "retentionNote": "By default we keep your account for 18 months after your last login so you can log in again for future trips and update your details. Check the box above if you'd instead like the account and your data to be deleted automatically some time after the trip is over.",
       "acceptTerms": "I accept the {termsLink} and {privacyLink}",
       "termsLink": "Terms of Service",
       "privacyLink": "Privacy Policy",
@@ -618,12 +736,15 @@ const EN_INLINE = {
     "vessel": {
       "nameLine": "Vessel: {name}",
       "modelLabel": "Model {value}",
+      "colorLabel": "Color {value}",
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Call sign {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Emergency beacon: {value}",
+      "equipment": "Equipment: {value}"
     },
     "routes": {
       "heading": "Routes",
@@ -670,12 +791,15 @@ const EN_INLINE = {
     "vessel": {
       "nameLine": "Vessel: {name}",
       "modelLabel": "Model {value}",
+      "colorLabel": "Color {value}",
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Call sign {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Emergency beacon: {value}",
+      "equipment": "Equipment: {value}"
     },
     "routes": {
       "heading": "Routes",
@@ -756,6 +880,8 @@ const EN_INLINE = {
       "callSignLabel": "Call sign (optional)",
       "modelLabel": "Model (optional)",
       "modelPlaceholder": "e.g. Bavaria 34",
+      "colorLabel": "Color (optional)",
+      "colorPlaceholder": "e.g. White",
       "yearLabel": "Model year (optional)",
       "yearPlaceholder": "e.g. 2011",
       "lengthLabel": "Length, metres (optional)",
@@ -763,6 +889,11 @@ const EN_INLINE = {
       "draftLabel": "Draft, metres (optional)",
       "notesLabel": "Notes (optional)",
       "notesPlaceholder": "Other information about the vessel",
+      "emergencyBeaconLabel": "Emergency beacon (optional)",
+      "emergencyBeaconPlaceholder": "e.g. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Visible to your ICE contact, crew and search and rescue - unlike notes, it's never hidden from anyone with access to this trip.",
+      "equipmentLabel": "Safety equipment onboard",
+      "epirbHint": "If checked, add the device's make, model and ID in the emergency beacon field below.",
       "photoLabel": "Vessel photo (optional)",
       "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
       "submit": "Save vessel",
@@ -780,6 +911,8 @@ const EN_INLINE = {
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Call sign {callSign}",
+      "emergencyBeacon": "Emergency beacon: {value}",
+      "equipment": "Equipment: {value}",
       "editButton": "Edit"
     },
     "saveFailed": "Could not save the vessel.",
@@ -941,6 +1074,20 @@ const EN_INLINE = {
     "skipper": {
       "heading": "Skipper"
     },
+    "sarAccess": {
+      "heading": "Search and rescue (SAR) access",
+      "description": "If a SAR authority needs read-only access to this trip, give them this reference and PIN to enter on the SAR lookup page.",
+      "referenceLabel": "Reference",
+      "pinLabel": "PIN",
+      "showPin": "Show PIN",
+      "hidePin": "Hide PIN",
+      "notYetDescription": "No SAR credentials have been created yet. If you're worried about this trip and want to be ready to involve search and rescue without waiting for the automatic alarm, you can request them now.",
+      "notActiveHint": "SAR access can only be requested once the trip is active.",
+      "triggerButton": "Request SAR access now",
+      "triggerConfirm": "Request SAR access credentials for this trip now? The skipper will be notified.",
+      "triggerFailed": "Could not request SAR access.",
+      "triggered": "SAR access credentials created."
+    },
     "schedule": {
       "heading": "Schedule",
       "departureLabel": "Departure (UTC)",
@@ -956,12 +1103,15 @@ const EN_INLINE = {
     "vessel": {
       "heading": "Vessel",
       "modelLabel": "Model {model}",
+      "colorLabel": "Color {color}",
       "yearBuilt": "Model year {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Call sign {callSign}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
+      "emergencyBeacon": "Emergency beacon: {value}",
+      "equipment": "Equipment: {value}",
       "changeLabel": "Change vessel",
       "changeButton": "Change vessel",
       "changeFailed": "Could not change the vessel.",
@@ -1223,6 +1373,16 @@ const EN_INLINE = {
           "icon": "shield-check",
           "title": "Verified emergency contact",
           "description": "The emergency contact confirms their role before departure."
+        },
+        {
+          "icon": "life-buoy",
+          "title": "Search & Rescue access",
+          "description": "If a voyage times out, search and rescue can look up the trip directly with a reference number and PIN - no account or app required."
+        },
+        {
+          "icon": "user-plus",
+          "title": "No account required for crew",
+          "description": "Crew members can be invited and confirm their own details, photo and personal emergency contact by email alone - creating an account is optional."
         }
       ]
     },
@@ -1633,6 +1793,23 @@ const EN_INLINE = {
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.5.0",
+        "date": "2026-07-18",
+        "sections": {
+          "new": [
+            "You can now change your password straight from your profile page, and we'll email you a confirmation whenever it changes so nothing slips past you.",
+            "If you're someone's emergency contact and you're worried before the automatic alarm has gone off, you can now request the search-and-rescue reference and PIN for their active trip right away - and the skipper is told you've done so."
+          ],
+          "improved": [
+            "When planning a trip you now enter how long you expect to be away instead of an exact arrival time - we work out the arrival for you, and moving your departure keeps the trip the same length.",
+            "Pick your preferred time zone on your profile and every date and time across the app is shown in your own local time, while everything stays stored safely in UTC behind the scenes.",
+            "You can record more about your boat - its colour, the emergency beacon aboard and which safety gear you carry (flares, EPIRB, VHF radio, satellite phone and life raft) - so your emergency contacts and rescue services have a fuller picture.",
+            "A trip can now only be started once its emergency contact has confirmed, so you never set off relying on someone who hasn't yet agreed to be alerted.",
+            "Inviting an emergency contact while creating a trip is clearer, and your account options now sit neatly under your profile picture on both desktop and mobile."
+          ]
+        }
+      },
       {
         "version": "v1.4.0",
         "date": "2026-07-17",

@@ -23,11 +23,19 @@
       "h12": "12 ore",
       "h24": "24 ore",
       "h48": "48 ore"
+    },
+    "vesselEquipment": {
+      "flares": "Razzi di segnalazione",
+      "epirb": "Localizzatore di emergenza (EPIRB/MOB)",
+      "vhf": "Radio VHF",
+      "satellitePhone": "Telefono satellitare",
+      "liferaft": "Zattera di salvataggio"
     }
   },
   "errors": {
     "AUTH_REQUIRED": "Devi accedere di nuovo.",
     "AUTH_INVALID": "Email o password errati.",
+    "CURRENT_PASSWORD_INVALID": "Password attuale errata.",
     "ACCESS_DENIED": "Non hai accesso a questa risorsa.",
     "VALIDATION_ERROR": "Controlla i campi evidenziati.",
     "INVALID_EMAIL": "Indirizzo email non valido.",
@@ -42,6 +50,7 @@
     "NOT_FOUND": "Non trovato.",
     "RESOURCE_CONFLICT": "Esiste già.",
     "MMSI_ALREADY_ACTIVE": "Esiste già un viaggio attivo per questa imbarcazione.",
+    "VESSEL_HAS_TRIPS": "Impossibile eliminare questa imbarcazione: è registrata su un viaggio.",
     "INVALID_ETA": "Orario di arrivo non valido.",
     "NOTIFICATION_FAILED": "Invio della notifica non riuscito.",
     "DEPARTURE_EDIT_LOCKED": "L'orario di partenza può essere modificato solo prima che il viaggio venga attivato.",
@@ -49,7 +58,9 @@
     "GRACE_PERIOD_EDIT_LOCKED": "Il periodo di tolleranza può essere modificato solo prima che il viaggio venga confermato come concluso.",
     "ICE_CONTACT_REQUIRED": "È necessario assegnare un contatto ICE a questo viaggio prima di poterlo attivare.",
     "ICE_CONTACT_DEACTIVATED": "L'account di questo contatto ICE è stato rimosso e non può più essere utilizzato. Scegli un altro contatto o invitalo di nuovo.",
+    "ICE_CONTACT_UNCONFIRMED": "Il contatto ICE di questo viaggio non ha ancora confermato. Deve confermare prima che il viaggio possa essere attivato.",
     "TRIP_LOCKED": "Questo viaggio è bloccato per motivi di sicurezza marittima/tracciabilità in seguito a un'emergenza e non può più essere modificato.",
+    "TRIP_NOT_ACTIVE": "L'accesso SAR può essere richiesto solo per un viaggio attivo.",
     "CONTACT_RATE_LIMITED": "Hai raggiunto il limite giornaliero di invii dal modulo di contatto. Riprova domani.",
     "CONTACT_TOO_MANY_FILES": "Troppi allegati.",
     "CONTACT_FILE_TOO_LARGE": "Uno dei tuoi allegati è troppo grande.",
@@ -105,6 +116,7 @@
       "iceContacts": "Contatti ICE",
       "crewAddressBook": "Rubrica",
       "myIceAccount": "Il mio account ICE",
+      "myProfile": "Il mio profilo",
       "admin": "Amministrazione",
       "logout": "Esci"
     },
@@ -113,6 +125,83 @@
     "lightboxClose": "Chiudi immagine a schermo intero",
     "renderError": "Si è verificato un problema nel mostrare questa pagina. Prova a ricaricarla.",
     "version": "Versione {version}"
+  },
+  "help": {
+    "buttonLabel": "Mostra la guida per questa pagina",
+    "genericTitle": "Guida",
+    "notAvailable": "Nessuna sezione di guida è disponibile per questa pagina.",
+    "topics": {
+      "dashboard": {
+        "title": "I miei viaggi",
+        "paragraphs": [
+          "Questa è una panoramica di tutti i tuoi viaggi - bozze, pubblicati, in corso e completati. Clicca su \"+ Nuovo viaggio\" per registrare un nuovo viaggio.",
+          "Se non hai ancora un contatto ICE (In Case of Emergency), qui appare un banner di promemoria - aggiungine uno prima di attivare un viaggio, poiché è la persona che viene avvisata se non confermi l'arrivo in tempo."
+        ]
+      },
+      "vessels": {
+        "title": "Le mie imbarcazioni",
+        "paragraphs": [
+          "Le imbarcazioni che registri qui possono essere selezionate direttamente quando crei un nuovo viaggio, invece di reinserire gli stessi dati ogni volta.",
+          "Aggiungi il numero MMSI, il nominativo, il modello e le dimensioni, oltre a una foto facoltativa - usata dal soccorso marittimo per identificare l'imbarcazione in caso di emergenza."
+        ]
+      },
+      "savedRoutes": {
+        "title": "Rotte salvate",
+        "paragraphs": [
+          "Le rotte che percorri spesso - una traversata annuale, una gita regolare nel weekend - possono essere salvate qui così non devi reimportarle da Windy, un file GPX o disegnarle manualmente ogni volta.",
+          "Quando crei o modifichi un viaggio, scegli \"+ Aggiungi rotta salvata\" per riutilizzarne una all'istante."
+        ]
+      },
+      "profile": {
+        "title": "La mia pagina",
+        "paragraphs": [
+          "Gestisci il tuo account: nome, telefono, email, lingua e foto. La tua foto aiuta il soccorso marittimo a identificarti come skipper in caso di emergenza.",
+          "Puoi anche richiedere una copia di tutti i dati conservati su di te (GDPR), scegliere se essere avvisato via email o Telegram, oppure eliminare il tuo account."
+        ]
+      },
+      "iceContacts": {
+        "title": "Contatti ICE",
+        "paragraphs": [
+          "I tuoi contatti ICE (In Case of Emergency) sono le persone avvisate se un viaggio non viene confermato come concluso entro il periodo di tolleranza. Aggiungine almeno uno prima di poter attivare un viaggio.",
+          "Un nuovo contatto riceve un link di conferma, ma confermarlo non è necessario perché riceva un avviso di scadenza - un avviso di sicurezza non dovrebbe dipendere dal fatto che un link sia stato cliccato."
+        ]
+      },
+      "crewAddressBook": {
+        "title": "Rubrica",
+        "paragraphs": [
+          "I contatti che hai scelto esplicitamente di salvare mentre invitavi un membro dell'equipaggio a un viaggio finiscono qui, così puoi invitarli di nuovo per i viaggi futuri senza reinserire i loro dati.",
+          "Puoi anche selezionare più contatti salvati contemporaneamente e invitarli direttamente in un viaggio esistente."
+        ]
+      },
+      "iceAccount": {
+        "title": "Il mio account ICE",
+        "paragraphs": [
+          "Se hai confermato di essere il contatto ICE (In Case of Emergency) di qualcuno e hai creato o collegato un account, questa pagina elenca tutte le persone per cui sei contatto e ti permette di mantenere aggiornati i tuoi dati.",
+          "Puoi anche scegliere di far eliminare automaticamente il tuo account una volta che non sei più contatto ICE per nessun viaggio attivo."
+        ]
+      },
+      "admin": {
+        "title": "Amministrazione",
+        "paragraphs": [
+          "Statistiche e strumenti di gestione a livello di sistema, visibili solo agli amministratori. Clicca su un riquadro per esaminare i record sottostanti - utenti, rotte, imbarcazioni o contatti ICE.",
+          "La scheda dei log di sistema permette di cercare e filtrare gli eventi per livello e categoria a scopo di risoluzione dei problemi."
+        ]
+      },
+      "createTrip": {
+        "title": "Crea nuovo viaggio",
+        "paragraphs": [
+          "Configura un nuovo viaggio: scegli o aggiungi un'imbarcazione, scegli il contatto ICE da avvisare, imposta gli orari di partenza/arrivo e il periodo di tolleranza, e aggiungi una o più rotte - importate da Windy, da un file GPX, o disegnate a mano sulla mappa.",
+          "Puoi anche invitare subito l'equipaggio - ogni persona riceve un invito via email per compilare i propri dati, la foto e il contatto di emergenza personale."
+        ]
+      },
+      "tripDetail": {
+        "title": "Dettagli del viaggio",
+        "paragraphs": [
+          "Il registro completo di un viaggio: orario, imbarcazione, contatto ICE, rotte ed equipaggio, oltre a un log delle modifiche apportate.",
+          "Attiva il viaggio quando tutto è pronto (oppure lascia che si attivi automaticamente all'orario di partenza previsto), poi usa \"Posticipa\" se hai bisogno di più tempo, o \"Conferma arrivo\" una volta arrivato in sicurezza. Se il periodo di tolleranza scade senza conferma, il tuo contatto ICE viene avvisato automaticamente."
+        ]
+      }
+    }
   },
   "dashboard": {
     "title": "I miei viaggi",
@@ -128,8 +217,6 @@
     "alreadyVerified": "Il tuo indirizzo email è già confermato.",
     "verificationResent": "È stato inviato un nuovo link di verifica.",
     "verificationResendFailed": "Impossibile inviare il link in questo momento. Riprova più tardi.",
-    "noIceContact": "Non hai ancora un contatto ICE — senza uno, nessuno può essere avvisato se il tuo viaggio non viene confermato in tempo.",
-    "addIceContact": "Aggiungi un contatto ICE",
     "vesselFallback": "Imbarcazione #{id}",
     "departure": "Partenza: {datetime}",
     "arrival": "Arrivo: {datetime}",
@@ -287,6 +374,9 @@
     "phoneLabel": "Telefono",
     "emailLabel": "Email",
     "languageLabel": "Lingua",
+    "timezoneLabel": "Fuso orario",
+    "timezoneAuto": "Automatico (rilevato dal browser)",
+    "timezoneHint": "Gli orari nell'app vengono mostrati in questo fuso orario. Le date sono sempre salvate in UTC.",
     "submit": "Salva modifiche",
     "saveFailed": "Impossibile salvare le modifiche.",
     "emailChangePending": "Un link di conferma è stato inviato a <strong>{email}</strong>. Il tuo indirizzo email cambierà solo dopo aver cliccato il link. Abbiamo anche avvisato il tuo indirizzo attuale.",
@@ -311,6 +401,17 @@
     },
     "channelSaveFailed": "Impossibile salvare il canale preferito.",
     "channelSaved": "Canale di notifica aggiornato.",
+    "passwordHeading": "Cambia password",
+    "passwordHint": "Scegli una password sicura che non usi da nessun'altra parte.",
+    "currentPasswordLabel": "Password attuale",
+    "newPasswordLabel": "Nuova password",
+    "confirmNewPasswordLabel": "Conferma nuova password",
+    "passwordSubmit": "Cambia password",
+    "passwordSaving": "Modifica in corso…",
+    "currentPasswordRequired": "Inserisci la tua password attuale.",
+    "passwordMismatch": "Le password non coincidono",
+    "passwordChangeFailed": "Impossibile cambiare la password.",
+    "passwordChanged": "La tua password è stata cambiata. È stata inviata un'email di conferma.",
     "deleteHeading": "Elimina account",
     "deleteWarning": "L'eliminazione del tuo account rimuove definitivamente le tue imbarcazioni e i tuoi contatti ICE, e conclude i tuoi viaggi. L'operazione non può essere annullata.",
     "deleteButton": "Elimina il mio account",
@@ -364,6 +465,8 @@
       "callSignLabel": "Nominativo radio (facoltativo)",
       "modelLabel": "Modello (facoltativo)",
       "modelPlaceholder": "es. Bavaria 34",
+      "colorLabel": "Colore (facoltativo)",
+      "colorPlaceholder": "es. Bianco",
       "yearLabel": "Anno del modello (facoltativo)",
       "yearPlaceholder": "es. 2011",
       "lengthLabel": "Lunghezza, metri (facoltativo)",
@@ -371,6 +474,11 @@
       "draftLabel": "Pescaggio, metri (facoltativo)",
       "notesLabel": "Note (facoltativo)",
       "notesPlaceholder": "Altre informazioni sull'imbarcazione",
+      "emergencyBeaconLabel": "Localizzatore di emergenza (facoltativo)",
+      "emergencyBeaconPlaceholder": "es. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Visibile al tuo contatto ICE, all'equipaggio e al soccorso in mare - a differenza delle note, non viene mai nascosto a chi ha accesso a questo viaggio.",
+      "equipmentLabel": "Dotazioni di sicurezza a bordo",
+      "epirbHint": "Se selezionato, indica marca, modello e ID del dispositivo nel campo localizzatore di emergenza sottostante.",
       "photoLabel": "Foto imbarcazione (facoltativo)",
       "photoHint": "Utilizzata dal soccorso in mare per identificare l'imbarcazione. JPEG/PNG, massimo 10 MB.",
       "saveButton": "Salva imbarcazione",
@@ -388,14 +496,23 @@
       "loading": "Caricamento contatti ICE…",
       "selectLabel": "Chi deve essere avvisato se questo viaggio non viene confermato in tempo?",
       "selectHint": "Scegli l'unico contatto ICE da avvisare per questo viaggio. Puoi saltare questo passaggio per ora, ma il viaggio non potrà essere attivato finché non ne viene impostato uno.",
+      "pendingWarning": "Questo contatto non ha ancora confermato il ruolo di contatto ICE. Puoi comunque assegnarlo, ma il viaggio non potrà essere attivato finché non conferma.",
       "required": "Scegli un contatto ICE per questo viaggio.",
-      "noneRegistered": "Non hai ancora contatti ICE registrati.",
-      "addLink": "Aggiungi un contatto ICE"
+      "noneRegistered": "Non hai ancora contatti ICE registrati. Aggiungine uno qui sotto.",
+      "addLink": "Aggiungi un contatto ICE",
+      "addNew": "+ Aggiungi nuovo contatto ICE",
+      "saveButton": "Salva contatto ICE",
+      "added": "Contatto ICE aggiunto. È stata inviata un'email di conferma.",
+      "addedEmailFailed": "Contatto ICE aggiunto, ma l'invio dell'email di conferma non è riuscito."
     },
     "schedule": {
       "heading": "Programma",
       "departureLabel": "Partenza (UTC)",
-      "arrivalLabel": "Arrivo previsto (UTC)",
+      "durationLabel": "Durata del viaggio",
+      "durationDays": "Giorni",
+      "durationHours": "Ore",
+      "durationMinutes": "Minuti",
+      "estimatedArrival": "Arrivo stimato: {datetime}",
       "gracePeriodLabel": "Periodo di tolleranza prima che il contatto ICE venga avvisato",
       "gracePeriodHint": "Tempo dopo l'arrivo previsto prima che il contatto ICE venga avvisato, se non hai confermato il tuo arrivo."
     },
@@ -424,12 +541,13 @@
       "saveRouteNamePlaceholder": "Assegna un nome a questa rotta, es. Marstrand-Skagen",
       "saveRouteNameRequired": "Inserisci un nome per la rotta.",
       "saveRouteFailed": "Impossibile salvare la rotta.",
-      "saveRouteSuccess": "Rotta salvata."
+      "saveRouteSuccess": "Rotta salvata.",
+      "crewNextStepHint": "Inviterai l'equipaggio nel passaggio successivo, una volta creato il viaggio."
     },
     "errors": {
       "vesselRequired": "Seleziona o aggiungi un'imbarcazione.",
-      "datesRequired": "Inserisci sia l'orario di partenza sia quello di arrivo.",
-      "arrivalBeforeDeparture": "L'orario di arrivo deve essere successivo a quello di partenza.",
+      "datesRequired": "Inserisci l'orario di partenza e la durata del viaggio.",
+      "durationRequired": "La durata del viaggio deve essere maggiore di zero.",
       "primaryRouteMinPoints": "Disegna almeno due punti per la rotta principale.",
       "gpxParseError": "Impossibile leggere una rotta da questo file GPX. Assicurati che contenga una rotta o una traccia con almeno due punti.",
       "createFailed": "Impossibile creare il viaggio."
@@ -607,12 +725,15 @@
     "vessel": {
       "nameLine": "Imbarcazione: {name}",
       "modelLabel": "Modello {value}",
+      "colorLabel": "Colore {value}",
       "yearBuilt": "Anno del modello {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Nominativo radio {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Localizzatore di emergenza: {value}",
+      "equipment": "Dotazione: {value}"
     },
     "routes": {
       "heading": "Rotte",
@@ -659,12 +780,15 @@
     "vessel": {
       "nameLine": "Imbarcazione: {name}",
       "modelLabel": "Modello {value}",
+      "colorLabel": "Colore {value}",
       "yearBuilt": "Anno del modello {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Nominativo radio {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Localizzatore di emergenza: {value}",
+      "equipment": "Dotazione: {value}"
     },
     "routes": {
       "heading": "Rotte",
@@ -745,6 +869,8 @@
       "callSignLabel": "Nominativo radio (facoltativo)",
       "modelLabel": "Modello (facoltativo)",
       "modelPlaceholder": "es. Bavaria 34",
+      "colorLabel": "Colore (facoltativo)",
+      "colorPlaceholder": "es. Bianco",
       "yearLabel": "Anno del modello (facoltativo)",
       "yearPlaceholder": "es. 2011",
       "lengthLabel": "Lunghezza, metri (facoltativo)",
@@ -752,6 +878,11 @@
       "draftLabel": "Pescaggio, metri (facoltativo)",
       "notesLabel": "Note (facoltativo)",
       "notesPlaceholder": "Altre informazioni sull'imbarcazione",
+      "emergencyBeaconLabel": "Localizzatore di emergenza (facoltativo)",
+      "emergencyBeaconPlaceholder": "es. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Visibile al tuo contatto ICE, all'equipaggio e al soccorso in mare - a differenza delle note, non viene mai nascosto a chi ha accesso a questo viaggio.",
+      "equipmentLabel": "Dotazioni di sicurezza a bordo",
+      "epirbHint": "Se selezionato, indica marca, modello e ID del dispositivo nel campo localizzatore di emergenza sottostante.",
       "photoLabel": "Foto imbarcazione (facoltativo)",
       "photoHint": "Utilizzata dal soccorso in mare per identificare l'imbarcazione. JPEG/PNG, massimo 10 MB.",
       "submit": "Salva imbarcazione",
@@ -769,6 +900,8 @@
       "yearBuilt": "Anno del modello {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Nominativo radio {callSign}",
+      "emergencyBeacon": "Localizzatore di emergenza: {value}",
+      "equipment": "Dotazione: {value}",
       "editButton": "Modifica"
     },
     "saveFailed": "Impossibile salvare l'imbarcazione.",
@@ -930,6 +1063,20 @@
     "skipper": {
       "heading": "Skipper"
     },
+    "sarAccess": {
+      "heading": "Accesso per il soccorso in mare (SAR)",
+      "description": "Se un'autorità SAR ha bisogno di accesso in sola lettura a questo viaggio, forniscile questo riferimento e PIN da inserire nella pagina di accesso SAR.",
+      "referenceLabel": "Riferimento",
+      "pinLabel": "PIN",
+      "showPin": "Mostra PIN",
+      "hidePin": "Nascondi PIN",
+      "notYetDescription": "Non sono ancora state create credenziali SAR. Se sei preoccupato per questo viaggio e vuoi essere pronto a coinvolgere il soccorso in mare senza aspettare l'allarme automatico, puoi richiederle ora.",
+      "notActiveHint": "L'accesso SAR può essere richiesto solo quando il viaggio è attivo.",
+      "triggerButton": "Richiedi accesso SAR ora",
+      "triggerConfirm": "Richiedere ora le credenziali SAR per questo viaggio? Lo skipper verrà avvisato.",
+      "triggerFailed": "Impossibile richiedere l'accesso SAR.",
+      "triggered": "Credenziali SAR create."
+    },
     "schedule": {
       "heading": "Programma",
       "departureLabel": "Partenza (UTC)",
@@ -945,12 +1092,15 @@
     "vessel": {
       "heading": "Imbarcazione",
       "modelLabel": "Modello {model}",
+      "colorLabel": "Colore {color}",
       "yearBuilt": "Anno del modello {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Nominativo radio {callSign}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
+      "emergencyBeacon": "Localizzatore di emergenza: {value}",
+      "equipment": "Dotazione: {value}",
       "changeLabel": "Cambia imbarcazione",
       "changeButton": "Cambia imbarcazione",
       "changeFailed": "Impossibile cambiare l'imbarcazione.",
@@ -1497,6 +1647,23 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.5.0",
+        "date": "2026-07-18",
+        "sections": {
+          "new": [
+            "Ora puoi cambiare la password direttamente dalla tua pagina del profilo e ti invieremo un'e-mail di conferma a ogni modifica, così non ti sfugge nulla.",
+            "Se sei il contatto di emergenza di qualcuno e sei in ansia prima che sia scattato l'allarme automatico, ora puoi richiedere subito il riferimento e il PIN di ricerca e soccorso per la sua navigazione in corso - e lo skipper viene avvisato che l'hai fatto."
+          ],
+          "improved": [
+            "Quando pianifichi una navigazione ora indichi per quanto tempo prevedi di essere via invece di un orario di arrivo esatto - calcoliamo l'arrivo al posto tuo e, se sposti la partenza, la navigazione mantiene la stessa durata.",
+            "Scegli il fuso orario che preferisci nel tuo profilo e tutte le date e gli orari nell'app vengono mostrati nella tua ora locale, mentre tutto resta salvato in modo sicuro in UTC dietro le quinte.",
+            "Puoi registrare più informazioni sulla tua barca - il colore, il faro di emergenza a bordo e quali dotazioni di sicurezza porti con te (razzi, EPIRB, radio VHF, telefono satellitare e zattera di salvataggio) - così i tuoi contatti di emergenza e i servizi di soccorso hanno un quadro più completo.",
+            "Una navigazione ora può essere avviata solo dopo che il suo contatto di emergenza ha confermato, così non parti mai facendo affidamento su qualcuno che non ha ancora accettato di essere allertato.",
+            "Invitare un contatto di emergenza durante la creazione di una navigazione è più chiaro e le opzioni del tuo account si trovano ora ordinate sotto la tua foto profilo, sia su desktop che su dispositivo mobile."
+          ]
+        }
+      },
       {
         "version": "v1.4.0",
         "date": "2026-07-17",

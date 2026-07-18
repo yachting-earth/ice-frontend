@@ -37,15 +37,27 @@ const CreateTripPage = {
 
                 <div class="card">
                     <h3>${escapeHtml(t('createTrip.schedule.heading'))}</h3>
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="departure">${escapeHtml(t('createTrip.schedule.departureLabel'))}</label>
-                            <input type="datetime-local" id="departure" required>
+                    <div class="field">
+                        <label for="departure">${escapeHtml(t('createTrip.schedule.departureLabel'))}</label>
+                        <input type="datetime-local" id="departure" required>
+                    </div>
+                    <div class="field">
+                        <label>${escapeHtml(t('createTrip.schedule.durationLabel'))}</label>
+                        <div class="field-row">
+                            <div class="field">
+                                <input type="number" id="duration-days" min="0" step="1" value="0" aria-label="${escapeHtml(t('createTrip.schedule.durationDays'))}">
+                                <small>${escapeHtml(t('createTrip.schedule.durationDays'))}</small>
+                            </div>
+                            <div class="field">
+                                <input type="number" id="duration-hours" min="0" max="23" step="1" value="0" aria-label="${escapeHtml(t('createTrip.schedule.durationHours'))}">
+                                <small>${escapeHtml(t('createTrip.schedule.durationHours'))}</small>
+                            </div>
+                            <div class="field">
+                                <input type="number" id="duration-minutes" min="0" max="59" step="1" value="0" aria-label="${escapeHtml(t('createTrip.schedule.durationMinutes'))}">
+                                <small>${escapeHtml(t('createTrip.schedule.durationMinutes'))}</small>
+                            </div>
                         </div>
-                        <div class="field">
-                            <label for="arrival">${escapeHtml(t('createTrip.schedule.arrivalLabel'))}</label>
-                            <input type="datetime-local" id="arrival" required>
-                        </div>
+                        <small id="arrival-preview" class="text-muted"></small>
                     </div>
                     <div class="field">
                         <label for="grace-period">${escapeHtml(t('createTrip.schedule.gracePeriodLabel'))}</label>
@@ -66,6 +78,7 @@ const CreateTripPage = {
                     </div>
                     <div id="routes-container"></div>
                     <div id="route-map" class="map-container"></div>
+                    <p class="text-muted" style="margin-bottom:0;">${escapeHtml(t('createTrip.routes.crewNextStepHint'))}</p>
                 </div>
 
                 <div class="btn-group">
@@ -79,6 +92,10 @@ const CreateTripPage = {
             this.renderRoutes();
         });
         document.getElementById('create-trip-submit').addEventListener('click', () => this.handleSubmit());
+
+        ['departure', 'duration-days', 'duration-hours', 'duration-minutes'].forEach((id) => {
+            document.getElementById(id).addEventListener('input', () => this.updateArrivalPreview());
+        });
 
         this.renderPendingCrewCard();
         this.renderRoutes();
@@ -156,10 +173,20 @@ const CreateTripPage = {
         const saved = this.state.savedRoutes.find((r) => r.id === savedRouteId);
         if (!saved) return;
 
-        if (saved.raw_windy_url) {
-            this.state.routes.push({ mode: 'windy', windyUrl: saved.raw_windy_url, reason: '', coordinates: [], saveToArchive: false, saveName: '' });
+        const newRoute = saved.raw_windy_url
+            ? { mode: 'windy', windyUrl: saved.raw_windy_url, reason: '', coordinates: [], saveToArchive: false, saveName: '' }
+            : { mode: 'manual', windyUrl: '', reason: '', coordinates: parseWktLineString(saved.geometry_wkt), saveToArchive: false, saveName: '' };
+
+        // If the primary route slot (index 0) is still the untouched blank
+        // placeholder, fill it directly instead of appending as an
+        // "alternative" - otherwise importing a saved route as the only
+        // route leaves the primary slot empty and blocks save.
+        const primary = this.state.routes[0];
+        const primaryIsBlank = primary && !primary.windyUrl.trim() && primary.coordinates.length === 0;
+        if (primaryIsBlank) {
+            this.state.routes[0] = newRoute;
         } else {
-            this.state.routes.push({ mode: 'manual', windyUrl: '', reason: '', coordinates: parseWktLineString(saved.geometry_wkt), saveToArchive: false, saveName: '' });
+            this.state.routes.push(newRoute);
         }
 
         this.renderRoutes();
@@ -194,23 +221,96 @@ const CreateTripPage = {
         // can no longer be picked; keep it out of the selectable list.
         const selectable = this.state.iceContacts.filter((c) => !c.deactivated_at);
 
-        if (selectable.length === 0) {
-            section.innerHTML = `
-                <div class="alert alert-info">
-                    ${escapeHtml(t('createTrip.iceContact.noneRegistered'))}
-                    <a href="#/ice-contacts">${escapeHtml(t('createTrip.iceContact.addLink'))}</a>
-                </div>`;
+        section.innerHTML = `
+            ${selectable.length > 0 ? `
+                <div class="field">
+                    <label for="ice-contact-select">${escapeHtml(t('createTrip.iceContact.selectLabel'))}</label>
+                    <select id="ice-contact-select">
+                        ${selectable.map((c) => `<option value="${c.id}" data-confirmed="${c.confirmed_at ? '1' : '0'}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}${!c.confirmed_at ? ` — ${escapeHtml(t('iceContacts.pending'))}` : ''}</option>`).join('')}
+                    </select>
+                    <small>${escapeHtml(t('createTrip.iceContact.selectHint'))}</small>
+                    <div id="ice-contact-pending-warning" class="alert alert-info" style="display:none; margin-top: var(--space-2);">${escapeHtml(t('createTrip.iceContact.pendingWarning'))}</div>
+                </div>` : `<div class="alert alert-info">${escapeHtml(t('createTrip.iceContact.noneRegistered'))}</div>`}
+            <button class="btn btn-ghost btn-sm" type="button" id="toggle-new-ice-contact">${escapeHtml(t('createTrip.iceContact.addNew'))}</button>
+            <div id="new-ice-contact-form" style="display:${selectable.length > 0 ? 'none' : 'block'}; margin-top: var(--space-3);">
+                <div class="field-row">
+                    <div class="field">
+                        <label for="ice-contact-name">${escapeHtml(t('common.name'))}</label>
+                        <input type="text" id="ice-contact-name" autocomplete="name">
+                    </div>
+                    <div class="field">
+                        <label for="ice-contact-relationship">${escapeHtml(t('iceContacts.relationshipLabel'))}</label>
+                        <input type="text" id="ice-contact-relationship" placeholder="${escapeHtml(t('iceContacts.relationshipPlaceholder'))}">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="ice-contact-email">${escapeHtml(t('common.email'))}</label>
+                        <input type="email" id="ice-contact-email" autocomplete="email">
+                    </div>
+                    <div class="field">
+                        <label for="ice-contact-phone">${escapeHtml(t('common.phone'))}</label>
+                        <input type="tel" id="ice-contact-phone" placeholder="${escapeHtml(t('iceContacts.phonePlaceholder'))}">
+                    </div>
+                </div>
+                <button class="btn btn-secondary btn-sm" type="button" id="save-ice-contact-btn">${escapeHtml(t('createTrip.iceContact.saveButton'))}</button>
+            </div>`;
+
+        document.getElementById('toggle-new-ice-contact').addEventListener('click', () => {
+            const form = document.getElementById('new-ice-contact-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        });
+
+        document.getElementById('save-ice-contact-btn').addEventListener('click', () => this.handleAddIceContact());
+
+        const select = document.getElementById('ice-contact-select');
+        if (select) {
+            const updatePendingWarning = () => {
+                const selected = select.options[select.selectedIndex];
+                const warning = document.getElementById('ice-contact-pending-warning');
+                warning.style.display = selected && selected.dataset.confirmed === '0' ? 'block' : 'none';
+            };
+            select.addEventListener('change', updatePendingWarning);
+            updatePendingWarning();
+        }
+    },
+
+    async handleAddIceContact() {
+        const alertBox = document.getElementById('create-trip-alert');
+        const name = document.getElementById('ice-contact-name').value.trim();
+        const relationship = document.getElementById('ice-contact-relationship').value.trim();
+        const email = document.getElementById('ice-contact-email').value.trim();
+        const phone = document.getElementById('ice-contact-phone').value.trim();
+
+        const error = Validate.name(name)
+            || (!relationship ? t('iceContacts.relationshipRequired') : null)
+            || (relationship.length > 50 ? t('iceContacts.relationshipTooLong') : null)
+            || Validate.email(email)
+            || Validate.phone(phone);
+        if (error) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
             return;
         }
 
-        section.innerHTML = `
-            <div class="field">
-                <label for="ice-contact-select">${escapeHtml(t('createTrip.iceContact.selectLabel'))}</label>
-                <select id="ice-contact-select">
-                    ${selectable.map((c) => `<option value="${c.id}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
-                </select>
-                <small>${escapeHtml(t('createTrip.iceContact.selectHint'))}</small>
-            </div>`;
+        const response = await apiRequest('/ice-contacts', {
+            method: 'POST',
+            body: JSON.stringify({ name, relationship, email, phone })
+        });
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('iceContacts.saveFailed')))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        invalidateNavVisibility('iceContacts');
+
+        const contact = response.data;
+        this.state.iceContacts.push(contact);
+        this.renderIceContactSection();
+        document.getElementById('ice-contact-select').value = contact.id;
+
+        showToast(response.data.confirmation_sent ? t('createTrip.iceContact.added') : t('createTrip.iceContact.addedEmailFailed'), response.data.confirmation_sent ? 'success' : 'info');
     },
 
     renderVesselSection() {
@@ -246,6 +346,10 @@ const CreateTripPage = {
                         <input type="text" id="vessel-model" placeholder="${escapeHtml(t('createTrip.vessel.modelPlaceholder'))}">
                     </div>
                     <div class="field">
+                        <label for="vessel-color">${escapeHtml(t('createTrip.vessel.colorLabel'))}</label>
+                        <input type="text" id="vessel-color" placeholder="${escapeHtml(t('createTrip.vessel.colorPlaceholder'))}">
+                    </div>
+                    <div class="field">
                         <label for="vessel-year">${escapeHtml(t('createTrip.vessel.yearLabel'))}</label>
                         <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="${escapeHtml(t('createTrip.vessel.yearPlaceholder'))}">
                     </div>
@@ -267,6 +371,35 @@ const CreateTripPage = {
                 <div class="field">
                     <label for="vessel-notes">${escapeHtml(t('createTrip.vessel.notesLabel'))}</label>
                     <textarea id="vessel-notes" rows="3" placeholder="${escapeHtml(t('createTrip.vessel.notesPlaceholder'))}"></textarea>
+                </div>
+                <div class="field">
+                    <label>${escapeHtml(t('createTrip.vessel.equipmentLabel'))}</label>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="vessel-eq-flares">
+                        <label for="vessel-eq-flares">${escapeHtml(t('common.vesselEquipment.flares'))}</label>
+                    </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="vessel-eq-epirb">
+                        <label for="vessel-eq-epirb">${escapeHtml(t('common.vesselEquipment.epirb'))}</label>
+                    </div>
+                    <small>${escapeHtml(t('createTrip.vessel.epirbHint'))}</small>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="vessel-eq-vhf">
+                        <label for="vessel-eq-vhf">${escapeHtml(t('common.vesselEquipment.vhf'))}</label>
+                    </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="vessel-eq-satphone">
+                        <label for="vessel-eq-satphone">${escapeHtml(t('common.vesselEquipment.satellitePhone'))}</label>
+                    </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="vessel-eq-liferaft">
+                        <label for="vessel-eq-liferaft">${escapeHtml(t('common.vesselEquipment.liferaft'))}</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="vessel-emergency-beacon">${escapeHtml(t('createTrip.vessel.emergencyBeaconLabel'))}</label>
+                    <input type="text" id="vessel-emergency-beacon" placeholder="${escapeHtml(t('createTrip.vessel.emergencyBeaconPlaceholder'))}">
+                    <small>${escapeHtml(t('createTrip.vessel.emergencyBeaconHint'))}</small>
                 </div>
                 <div class="field">
                     <label for="vessel-photo">${escapeHtml(t('createTrip.vessel.photoLabel'))}</label>
@@ -305,11 +438,18 @@ const CreateTripPage = {
         const mmsi = document.getElementById('vessel-mmsi').value.trim();
         const callSign = document.getElementById('vessel-callsign').value.trim();
         const model = document.getElementById('vessel-model').value.trim();
+        const color = document.getElementById('vessel-color').value.trim();
         const year = document.getElementById('vessel-year').value.trim();
         const length = document.getElementById('vessel-length').value.trim();
         const width = document.getElementById('vessel-width').value.trim();
         const draft = document.getElementById('vessel-draft').value.trim();
         const notes = document.getElementById('vessel-notes').value.trim();
+        const hasFlares = document.getElementById('vessel-eq-flares').checked;
+        const hasEpirb = document.getElementById('vessel-eq-epirb').checked;
+        const hasVhf = document.getElementById('vessel-eq-vhf').checked;
+        const hasSatellitePhone = document.getElementById('vessel-eq-satphone').checked;
+        const hasLiferaft = document.getElementById('vessel-eq-liferaft').checked;
+        const emergencyBeacon = document.getElementById('vessel-emergency-beacon').value.trim();
         const photoFile = document.getElementById('vessel-photo').files[0] || null;
 
         const error = Validate.name(name)
@@ -329,11 +469,18 @@ const CreateTripPage = {
                 mmsi: mmsi || null,
                 call_sign: callSign || null,
                 model: model || null,
+                color: color || null,
                 year_built: year ? Number(year) : null,
                 length_m: length ? Number(length) : null,
                 width_m: width ? Number(width) : null,
                 draft_m: draft ? Number(draft) : null,
-                notes: notes || null
+                notes: notes || null,
+                has_flares: hasFlares,
+                has_epirb: hasEpirb,
+                has_vhf: hasVhf,
+                has_satellite_phone: hasSatellitePhone,
+                has_liferaft: hasLiferaft,
+                emergency_beacon: emergencyBeacon || null
             })
         });
 
@@ -593,6 +740,29 @@ const CreateTripPage = {
         this.state.map = renderRouteMap(mapEl, routes);
     },
 
+    // Live "estimated arrival" preview - the skipper only enters departure +
+    // duration, so this is the only place arrival is ever shown before the
+    // trip is created (the API computes and stores the real value).
+    updateArrivalPreview() {
+        const preview = document.getElementById('arrival-preview');
+        if (!preview) return;
+
+        const departureIso = toApiDatetime(document.getElementById('departure').value);
+        const seconds = durationToSeconds({
+            days: document.getElementById('duration-days').value,
+            hours: document.getElementById('duration-hours').value,
+            minutes: document.getElementById('duration-minutes').value
+        });
+
+        if (!departureIso || seconds <= 0) {
+            preview.textContent = '';
+            return;
+        }
+
+        const arrivalIso = addDurationSeconds(departureIso, seconds);
+        preview.textContent = t('createTrip.schedule.estimatedArrival', { datetime: formatDateTime(arrivalIso) });
+    },
+
     async handleSubmit() {
         const alertBox = document.getElementById('create-trip-alert');
         const submitBtn = document.getElementById('create-trip-submit');
@@ -601,19 +771,23 @@ const CreateTripPage = {
         const vesselSelect = document.getElementById('vessel-select');
         const vesselId = vesselSelect ? Number(vesselSelect.value) : null;
         const departure = document.getElementById('departure').value;
-        const arrival = document.getElementById('arrival').value;
+        const durationSeconds = durationToSeconds({
+            days: document.getElementById('duration-days').value,
+            hours: document.getElementById('duration-hours').value,
+            minutes: document.getElementById('duration-minutes').value
+        });
         const gracePeriod = Number(document.getElementById('grace-period').value);
 
         if (!vesselId) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.vesselRequired'))}</div>`;
             return;
         }
-        if (!departure || !arrival) {
+        if (!departure) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.datesRequired'))}</div>`;
             return;
         }
-        if (toApiDatetime(arrival) <= toApiDatetime(departure)) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.arrivalBeforeDeparture'))}</div>`;
+        if (durationSeconds <= 0) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.durationRequired'))}</div>`;
             return;
         }
 
@@ -669,7 +843,7 @@ const CreateTripPage = {
                 vessel_id: vesselId,
                 ice_contact_id: iceContactId,
                 departure_scheduled: toApiDatetime(departure),
-                arrival_scheduled: toApiDatetime(arrival),
+                duration_seconds: durationSeconds,
                 grace_period_seconds: gracePeriod,
                 routes
             })

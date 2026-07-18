@@ -20,7 +20,6 @@ const ResetPasswordPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">${brandMark()} ${escapeHtml(t('app.brand'))}</div>
                     <div class="auth-card__tagline">${escapeHtml(t('resetPassword.tagline'))}</div>
                     <div id="reset-alert"></div>
                     <form id="reset-form" novalidate>

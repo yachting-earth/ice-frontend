@@ -51,6 +51,8 @@ const TripDetailPage = {
         const role = this.state.data.role || 'owner';
         const isOwner = role === 'owner';
         const graceLabel = formatGracePeriod(trip.grace_period_seconds);
+        const sarAccess = trip.sar_access;
+        const durationParts = secondsToDurationParts(durationSecondsBetween(trip.departure_scheduled, trip.arrival_scheduled));
 
         container.innerHTML = `
             <div class="page">
@@ -73,6 +75,25 @@ const TripDetailPage = {
 
                 ${isOwner ? `<div class="card" id="actions-card"></div>` : ''}
 
+                ${role === 'ice' ? `<div class="card">
+                    <h3>${t('tripDetail.sarAccess.heading')}</h3>
+                    ${sarAccess ? `
+                    <p class="text-muted">${escapeHtml(t('tripDetail.sarAccess.description'))}</p>
+                    <div style="display:flex; align-items:center; gap: var(--space-4); flex-wrap: wrap;">
+                        <p class="mb-0"><strong>${escapeHtml(t('tripDetail.sarAccess.referenceLabel'))}:</strong> ${escapeHtml(sarAccess.reference)}</p>
+                        <p class="mb-0">
+                            <strong>${escapeHtml(t('tripDetail.sarAccess.pinLabel'))}:</strong>
+                            <span id="trip-sar-pin" data-pin="${escapeHtml(sarAccess.pin)}" data-revealed="false">••••••</span>
+                            <button type="button" class="btn btn-secondary" id="trip-sar-pin-toggle" style="margin-left: var(--space-2);">${escapeHtml(t('tripDetail.sarAccess.showPin'))}</button>
+                        </p>
+                    </div>` : `
+                    <p class="text-muted">${escapeHtml(t('tripDetail.sarAccess.notYetDescription'))}</p>
+                    <div id="sar-access-alert"></div>
+                    ${trip.status === 'active'
+                        ? `<button type="button" class="btn btn-secondary btn-sm" id="trigger-sar-access-btn">${escapeHtml(t('tripDetail.sarAccess.triggerButton'))}</button>`
+                        : `<p class="text-muted mb-0">${escapeHtml(t('tripDetail.sarAccess.notActiveHint'))}</p>`}`}
+                </div>` : ''}
+
                 ${isOwner ? `<div class="card">
                     <h3>${t('tripDetail.schedule.heading')}</h3>
                     <div id="schedule-alert"></div>
@@ -82,8 +103,24 @@ const TripDetailPage = {
                             ${this.canEditDeparture(trip) ? `<input type="datetime-local" id="departure-input" value="${toInputDatetime(trip.departure_scheduled)}">` : `<p class="mb-0">${escapeHtml(formatDateTime(trip.departure_scheduled))}</p>`}
                         </div>
                         <div class="field">
-                            <label for="arrival-input">${t('tripDetail.schedule.arrivalLabel')}</label>
-                            ${this.canEditArrival(trip) ? `<input type="datetime-local" id="arrival-input" value="${toInputDatetime(trip.arrival_scheduled)}">` : `<p class="mb-0">${escapeHtml(formatDateTime(trip.arrival_scheduled))}</p>`}
+                            <label>${this.canEditArrival(trip) ? t('createTrip.schedule.durationLabel') : t('tripDetail.schedule.arrivalLabel')}</label>
+                            ${this.canEditArrival(trip) ? `
+                            <div class="field-row">
+                                <div class="field">
+                                    <input type="number" id="duration-days-input" min="0" step="1" value="${durationParts.days}" aria-label="${t('createTrip.schedule.durationDays')}">
+                                    <small>${t('createTrip.schedule.durationDays')}</small>
+                                </div>
+                                <div class="field">
+                                    <input type="number" id="duration-hours-input" min="0" max="23" step="1" value="${durationParts.hours}" aria-label="${t('createTrip.schedule.durationHours')}">
+                                    <small>${t('createTrip.schedule.durationHours')}</small>
+                                </div>
+                                <div class="field">
+                                    <input type="number" id="duration-minutes-input" min="0" max="59" step="1" value="${durationParts.minutes}" aria-label="${t('createTrip.schedule.durationMinutes')}">
+                                    <small>${t('createTrip.schedule.durationMinutes')}</small>
+                                </div>
+                            </div>
+                            <small id="arrival-preview" class="text-muted"></small>
+                            ` : `<p class="mb-0">${escapeHtml(formatDateTime(trip.arrival_scheduled))}</p>`}
                         </div>
                         <div class="field">
                             <label for="grace-input">${t('tripDetail.schedule.graceLabel')}</label>
@@ -119,6 +156,7 @@ const TripDetailPage = {
                         <p class="mb-0">
                             ${escapeHtml(vessel?.vessel_name || '–')}
                             ${vessel?.model ? ` · ${t('tripDetail.vessel.modelLabel', { model: escapeHtml(vessel.model) })}` : ''}
+                            ${vessel?.color ? ` · ${t('tripDetail.vessel.colorLabel', { color: escapeHtml(vessel.color) })}` : ''}
                             ${vessel?.year_built ? ` · ${t('tripDetail.vessel.yearBuilt', { year: escapeHtml(String(vessel.year_built)) })}` : ''}
                             ${vessel?.mmsi ? ` · ${t('tripDetail.vessel.mmsi', { mmsi: escapeHtml(vessel.mmsi) })}` : ''}
                             ${vessel?.call_sign ? ` · ${t('tripDetail.vessel.callSign', { callSign: escapeHtml(vessel.call_sign) })}` : ''}
@@ -126,6 +164,8 @@ const TripDetailPage = {
                         </p>
                     </div>
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
+                    ${formatVesselEquipment(vessel) ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted);">${escapeHtml(t('tripDetail.vessel.equipment', { value: formatVesselEquipment(vessel) }))}</p>` : ''}
+                    ${vessel?.emergency_beacon ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('tripDetail.vessel.emergencyBeacon', { value: vessel.emergency_beacon }))}</p>` : ''}
                     <div id="vessel-change-alert"></div>
                     ${isOwner && this.state.vessels.length > 1 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
@@ -242,6 +282,21 @@ const TripDetailPage = {
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
         document.getElementById('ice-contact-change-btn')?.addEventListener('click', () => this.handleChangeIceContact());
         document.getElementById('schedule-change-btn')?.addEventListener('click', () => this.handleChangeSchedule());
+        ['departure-input', 'duration-days-input', 'duration-hours-input', 'duration-minutes-input'].forEach((id) => {
+            document.getElementById(id)?.addEventListener('input', () => this.updateSchedulePreview());
+        });
+        document.getElementById('trigger-sar-access-btn')?.addEventListener('click', () => this.handleTriggerSarAccess());
+
+        const sarPinToggle = document.getElementById('trip-sar-pin-toggle');
+        if (sarPinToggle) {
+            sarPinToggle.addEventListener('click', () => {
+                const pinEl = document.getElementById('trip-sar-pin');
+                const revealed = pinEl.dataset.revealed === 'true';
+                pinEl.textContent = revealed ? '••••••' : pinEl.dataset.pin;
+                pinEl.dataset.revealed = String(!revealed);
+                sarPinToggle.textContent = revealed ? t('tripDetail.sarAccess.showPin') : t('tripDetail.sarAccess.hidePin');
+            });
+        }
 
         document.getElementById('new-route-mode-windy')?.addEventListener('click', () => {
             this.state.newRouteMode = 'windy';
@@ -494,33 +549,66 @@ const TripDetailPage = {
         return !['completed', 'cancelled'].includes(trip.status);
     },
 
+    // Live "estimated arrival" preview while editing departure/duration -
+    // mirrors create-trip.js's updateArrivalPreview().
+    updateSchedulePreview() {
+        const preview = document.getElementById('arrival-preview');
+        if (!preview) return;
+
+        const trip = this.state.data.trip;
+        const departureInput = document.getElementById('departure-input');
+        const daysInput = document.getElementById('duration-days-input');
+        const hoursInput = document.getElementById('duration-hours-input');
+        const minutesInput = document.getElementById('duration-minutes-input');
+
+        const departureIso = departureInput ? toApiDatetime(departureInput.value) : trip.departure_scheduled;
+        const seconds = durationToSeconds({
+            days: daysInput?.value,
+            hours: hoursInput?.value,
+            minutes: minutesInput?.value
+        });
+
+        if (!departureIso || seconds <= 0) {
+            preview.textContent = '';
+            return;
+        }
+
+        const arrivalIso = addDurationSeconds(departureIso, seconds);
+        preview.textContent = t('createTrip.schedule.estimatedArrival', { datetime: formatDateTime(arrivalIso) });
+    },
+
     async handleChangeSchedule() {
         const alertBox = document.getElementById('schedule-alert');
         const trip = this.state.data.trip;
         const departureInput = document.getElementById('departure-input');
-        const arrivalInput = document.getElementById('arrival-input');
+        const daysInput = document.getElementById('duration-days-input');
+        const hoursInput = document.getElementById('duration-hours-input');
+        const minutesInput = document.getElementById('duration-minutes-input');
         const graceInput = document.getElementById('grace-input');
 
         const currentDeparture = toApiDatetime(toInputDatetime(trip.departure_scheduled));
-        const currentArrival = toApiDatetime(toInputDatetime(trip.arrival_scheduled));
         const newDeparture = departureInput ? toApiDatetime(departureInput.value) : currentDeparture;
-        const newArrival = arrivalInput ? toApiDatetime(arrivalInput.value) : currentArrival;
         const newGrace = graceInput ? Number(graceInput.value) : Number(trip.grace_period_seconds);
+
+        const originalDurationSeconds = durationSecondsBetween(trip.departure_scheduled, trip.arrival_scheduled);
+        const newDurationSeconds = daysInput
+            ? durationToSeconds({ days: daysInput.value, hours: hoursInput.value, minutes: minutesInput.value })
+            : originalDurationSeconds;
 
         // Only send fields that actually changed - a no-op PUT on an
         // already-ICE-notified trip would otherwise trigger a spurious
         // "schedule updated" alert to the ICE contact.
         const payload = {};
         if (departureInput && newDeparture !== currentDeparture) payload.departure_scheduled = newDeparture;
-        if (arrivalInput && newArrival !== currentArrival) payload.arrival_scheduled = newArrival;
+        if (daysInput && newDurationSeconds !== originalDurationSeconds) payload.duration_seconds = newDurationSeconds;
         if (graceInput && newGrace !== Number(trip.grace_period_seconds)) payload.grace_period_seconds = newGrace;
 
         if (Object.keys(payload).length === 0) {
             return;
         }
 
-        if (newArrival <= newDeparture) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.arrivalBeforeDeparture'))}</div>`;
+        if (daysInput && newDurationSeconds <= 0) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('createTrip.errors.durationRequired'))}</div>`;
             return;
         }
 
@@ -556,12 +644,15 @@ const TripDetailPage = {
     },
 
     // Photos are auth-protected, so a plain <img src> won't do (no way to
-    // attach the Authorization header) - fetch as blob and swap in
+    // attach the Authorization header) - fetch as blob and swap in. The
+    // trip id is passed as ?trip= so PhotoHandler::getVesselPhoto can verify
+    // the requester is this trip's accepted crew or confirmed ICE contact
+    // (vessels aren't trip-scoped, so that check needs the trip id).
     async loadVesselPhoto(vesselId) {
         const img = document.getElementById('vessel-photo');
         if (!img) return;
         try {
-            const response = await fetch(`${CONFIG.API_BASE_URL}/vessels/${vesselId}/photo`, {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/vessels/${vesselId}/photo?trip=${encodeURIComponent(this.state.tripId)}`, {
                 headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
             });
             if (!response.ok) return;
@@ -1163,6 +1254,19 @@ const TripDetailPage = {
             return;
         }
         showToast(t('tripDetail.actions.verified'), 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    async handleTriggerSarAccess() {
+        if (!confirm(t('tripDetail.sarAccess.triggerConfirm'))) return;
+
+        const response = await apiRequest(`/trips/${this.state.tripId}/sar-access`, { method: 'POST' });
+        if (!response.success) {
+            const alertEl = document.getElementById('sar-access-alert');
+            if (alertEl) alertEl.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.sarAccess.triggerFailed')))}</div>`;
+            return;
+        }
+        showToast(t('tripDetail.sarAccess.triggered'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 

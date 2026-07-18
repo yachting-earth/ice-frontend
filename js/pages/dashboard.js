@@ -14,7 +14,6 @@ const DashboardPage = {
                     <a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>
                 </div>
                 <div id="email-verify-warning"></div>
-                <div id="ice-contact-warning"></div>
                 <div class="trip-filters" id="trip-filters"></div>
                 <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('dashboard.loadingTrips'))}</div></div>
             </div>`;
@@ -22,7 +21,6 @@ const DashboardPage = {
         this.renderFilters(container);
 
         await this.loadTrips();
-        this.checkIceContacts();
         this.checkEmailVerified();
     },
 
@@ -71,20 +69,6 @@ const DashboardPage = {
 
         btn.disabled = false;
         btn.textContent = t('dashboard.resendLink');
-    },
-
-    async checkIceContacts() {
-        const response = await apiRequest('/ice-contacts');
-        if (!response.success) return;
-
-        const warningBox = document.getElementById('ice-contact-warning');
-        if (warningBox && (response.data || []).length === 0) {
-            warningBox.innerHTML = `
-                <div class="alert alert-warning">
-                    ${escapeHtml(t('dashboard.noIceContact'))}
-                    <a href="#/ice-contacts">${escapeHtml(t('dashboard.addIceContact'))}</a>
-                </div>`;
-        }
     },
 
     renderFilters(container) {

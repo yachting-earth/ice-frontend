@@ -15,16 +15,16 @@ const Router = {
         { pattern: '#/reset-password', page: ResetPasswordPage },
         { pattern: '#/crew-gdpr', page: CrewGdprRequestPage },
         { pattern: '#/crew-gdpr-portal', page: CrewGdprPortalPage },
-        { pattern: '#/dashboard', page: DashboardPage, auth: true },
-        { pattern: '#/vessels', page: VesselsPage, auth: true },
-        { pattern: '#/saved-routes', page: SavedRoutesPage, auth: true },
-        { pattern: '#/profile', page: ProfilePage, auth: true },
-        { pattern: '#/ice-contacts', page: IceContactsPage, auth: true },
-        { pattern: '#/crew-address-book', page: CrewAddressBookPage, auth: true },
-        { pattern: '#/ice-account', page: IceAccountPage, auth: true },
-        { pattern: '#/admin', page: AdminPage, auth: true, adminOnly: true },
-        { pattern: '#/trips/new', page: CreateTripPage, auth: true },
-        { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true },
+        { pattern: '#/dashboard', page: DashboardPage, auth: true, helpTopic: 'dashboard' },
+        { pattern: '#/vessels', page: VesselsPage, auth: true, helpTopic: 'vessels' },
+        { pattern: '#/saved-routes', page: SavedRoutesPage, auth: true, helpTopic: 'savedRoutes' },
+        { pattern: '#/profile', page: ProfilePage, auth: true, helpTopic: 'profile' },
+        { pattern: '#/ice-contacts', page: IceContactsPage, auth: true, helpTopic: 'iceContacts' },
+        { pattern: '#/crew-address-book', page: CrewAddressBookPage, auth: true, helpTopic: 'crewAddressBook' },
+        { pattern: '#/ice-account', page: IceAccountPage, auth: true, helpTopic: 'iceAccount' },
+        { pattern: '#/admin', page: AdminPage, auth: true, adminOnly: true, helpTopic: 'admin' },
+        { pattern: '#/trips/new', page: CreateTripPage, auth: true, helpTopic: 'createTrip' },
+        { pattern: '#/trips/:tripId', page: TripDetailPage, auth: true, helpTopic: 'tripDetail' },
         { pattern: '#/crew-join', page: CrewInvitePage },
         { pattern: '#/verify-email', page: VerifyEmailPage },
         { pattern: '#/ice-confirm', page: IceConfirmPage },
@@ -73,6 +73,7 @@ const Router = {
     },
 
     async handleRoute() {
+        closeHelpPanel();
         const matched = this.matchRoute();
 
         if (!matched) {
@@ -194,8 +195,10 @@ function renderTopbar() {
             <a class="topbar__brand" href="https://yachting.earth">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
             <div class="topbar__right">
                 ${renderLangSelector()}
+                ${renderHelpButton()}
             </div>`;
         setupLangSelector();
+        setupHelpButton();
         return;
     }
 
@@ -206,23 +209,21 @@ function renderTopbar() {
     topbar.innerHTML = `
         <a class="topbar__brand" href="https://yachting.earth">${brandMark()} ${escapeHtml(t('app.brand'))}</a>
         <div class="topbar__right">
+            <a class="topbar__quick-link${currentPath === '#/dashboard' ? ' topbar__quick-link--active' : ''}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
             <div class="topbar__menu" id="topbar-menu">
-                <a class="topbar__menu-link${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
+                <a class="topbar__menu-link topbar__menu-link--dashboard${activeClass('#/dashboard')}" href="#/dashboard">${escapeHtml(t('app.nav.myTrips'))}</a>
                 ${navVisibility.myVessels ? `<a class="topbar__menu-link${activeClass('#/vessels')}" href="#/vessels">${escapeHtml(t('app.nav.myVessels'))}</a>` : ''}
                 ${navVisibility.savedRoutes ? `<a class="topbar__menu-link${activeClass('#/saved-routes')}" href="#/saved-routes">${escapeHtml(t('app.nav.savedRoutes'))}</a>` : ''}
                 ${navVisibility.iceContacts ? `<a class="topbar__menu-link${activeClass('#/ice-contacts')}" href="#/ice-contacts">${escapeHtml(t('app.nav.iceContacts'))}</a>` : ''}
                 ${navVisibility.crewAddressBook ? `<a class="topbar__menu-link${activeClass('#/crew-address-book')}" href="#/crew-address-book">${escapeHtml(t('app.nav.crewAddressBook'))}</a>` : ''}
                 ${iceAccountVisible ? `<a class="topbar__menu-link${activeClass('#/ice-account')}" href="#/ice-account">${escapeHtml(t('app.nav.myIceAccount'))}</a>` : ''}
+                <a class="topbar__menu-link${activeClass('#/profile')}" href="#/profile">${escapeHtml(t('app.nav.myProfile'))}</a>
                 ${user.isAdmin ? `<a class="topbar__menu-link${activeClass('#/admin')}" href="#/admin">${escapeHtml(t('app.nav.admin'))}</a>` : ''}
                 <button class="topbar__menu-link topbar__menu-logout" id="logout-btn" type="button">${escapeHtml(t('app.nav.logout'))}</button>
             </div>
             ${renderLangSelector()}
-            <button class="topbar__hamburger" id="hamburger" aria-label="${escapeHtml(t('app.toggleNav'))}" aria-expanded="false">
-                <span class="topbar__hamburger-line"></span>
-                <span class="topbar__hamburger-line"></span>
-                <span class="topbar__hamburger-line"></span>
-            </button>
-            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" title="${escapeHtml(t('app.profileBadgeTitle', { name: userLabel }))}">${escapeHtml(initial)}</a>
+            ${renderHelpButton()}
+            <a class="topbar__badge${currentPath === '#/profile' ? ' topbar__badge--active' : ''}" id="topbar-badge" href="#/profile" aria-haspopup="true" aria-expanded="false" title="${escapeHtml(t('app.profileBadgeTitle', { name: userLabel }))}">${escapeHtml(initial)}</a>
         </div>`;
 
     document.getElementById('logout-btn').addEventListener('click', () => {
@@ -240,8 +241,9 @@ function renderTopbar() {
             });
         }
     });
-    setupHamburgerMenu();
+    setupTopbarMenuToggle();
     setupLangSelector();
+    setupHelpButton();
     loadTopbarPhoto(user.id);
 
     if (iceAccountVisible === null) {
@@ -423,34 +425,62 @@ async function loadTopbarPhoto(userId) {
     } catch (err) { /* leave the initial shown */ }
 }
 
-function setupHamburgerMenu() {
-    const hamburger = document.getElementById('hamburger');
+// The profile badge doubles as the nav-menu trigger on both mobile (full-
+// width dropdown, no separate hamburger icon) and desktop (small anchored
+// dropdown, same markup/CSS pattern as the lang switcher) - clicking it
+// always toggles the menu rather than navigating, so "My profile" (inside
+// the dropdown) is now the only way to reach #/profile from the badge.
+function setupTopbarMenuToggle() {
+    const badge = document.getElementById('topbar-badge');
     const menu = document.getElementById('topbar-menu');
 
-    if (!hamburger || !menu) return;
+    if (!badge || !menu) return;
 
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        menu.classList.toggle('active');
-        hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
+    const closeMenu = () => {
+        menu.classList.remove('active');
+        badge.setAttribute('aria-expanded', 'false');
+    };
+
+    badge.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const willOpen = !menu.classList.contains('active');
+        closeMenu();
+        if (willOpen) {
+            menu.classList.add('active');
+            badge.setAttribute('aria-expanded', 'true');
+        }
     });
 
     const menuLinks = menu.querySelectorAll('.topbar__menu-link');
     menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            menu.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-        });
+        link.addEventListener('click', () => closeMenu());
     });
 
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            hamburger.classList.remove('active');
-            menu.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-        }
-    });
+    // Bound once globally (not per render) so re-rendering the topbar on
+    // every route change never stacks duplicate document-level listeners -
+    // mirrors the lang switcher's own click-outside/Escape handling below.
+    if (!window.__topbarMenuGlobalListenersBound) {
+        window.__topbarMenuGlobalListenersBound = true;
+        document.addEventListener('click', (e) => {
+            const openMenu = document.getElementById('topbar-menu');
+            const openBadge = document.getElementById('topbar-badge');
+            if (!openMenu || !openMenu.classList.contains('active')) return;
+            if (!openMenu.contains(e.target) && e.target !== openBadge) {
+                openMenu.classList.remove('active');
+                if (openBadge) openBadge.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            const openMenu = document.getElementById('topbar-menu');
+            const openBadge = document.getElementById('topbar-badge');
+            if (openMenu && openMenu.classList.contains('active')) {
+                openMenu.classList.remove('active');
+                if (openBadge) openBadge.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 }
 
 function showToast(message, type = 'info') {
@@ -575,6 +605,25 @@ function escapeHtml(value) {
     return div.innerHTML;
 }
 
+// Shared vessel safety-equipment checkbox -> localized names, used by
+// vessels.js, create-trip.js, trip-detail.js, crew-view.js and
+// ice-portal.js so the same field/label mapping lives in one place.
+const VESSEL_EQUIPMENT_FIELDS = [
+    ['has_flares', 'flares'],
+    ['has_epirb', 'epirb'],
+    ['has_vhf', 'vhf'],
+    ['has_satellite_phone', 'satellitePhone'],
+    ['has_liferaft', 'liferaft']
+];
+
+function formatVesselEquipment(vessel) {
+    if (!vessel) return '';
+    return VESSEL_EQUIPMENT_FIELDS
+        .filter(([field]) => vessel[field])
+        .map(([, key]) => t(`common.vesselEquipment.${key}`))
+        .join(', ');
+}
+
 // Shared full-size image viewer for vessel/crew/skipper photos. Reuses
 // whatever URL is already on the triggering <img> (a blob: URL for the
 // auth-protected fetch-as-blob photos, or a direct token-qualified URL on
@@ -601,6 +650,77 @@ function closeLightbox() {
 
 function lightboxKeydown(e) {
     if (e.key === 'Escape') closeLightbox();
+}
+
+// Help panel - a page-specific help slide-in triggered by the "?" button in
+// the topbar (both the authed and guest variants above). Content is looked
+// up from the i18n `help.topics.<topic>` namespace via the current route's
+// `helpTopic` (set in Router.routes above); routes without one, or a topic
+// missing its translated content, fall back to a "no help available" notice
+// rather than a broken/empty panel.
+function renderHelpButton() {
+    return `<button type="button" class="topbar__help" id="help-btn" aria-label="${escapeHtml(t('help.buttonLabel'))}" title="${escapeHtml(t('help.buttonLabel'))}">?</button>`;
+}
+
+function setupHelpButton() {
+    const btn = document.getElementById('help-btn');
+    if (!btn) return;
+    btn.addEventListener('click', () => openHelpPanel());
+}
+
+function currentHelpTopic() {
+    const matched = Router.matchRoute();
+    return matched ? matched.route.helpTopic : undefined;
+}
+
+function helpTopicContent(topic) {
+    if (!topic) return null;
+    const title = t(`help.topics.${topic}.title`);
+    const paragraphs = t(`help.topics.${topic}.paragraphs`);
+    if (!Array.isArray(paragraphs) || !paragraphs.length) return null;
+    return { title, paragraphs };
+}
+
+function openHelpPanel() {
+    closeHelpPanel();
+
+    const content = helpTopicContent(currentHelpTopic());
+    const title = content ? content.title : t('help.genericTitle');
+    const bodyHtml = content
+        ? content.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('')
+        : `<p class="help-panel__empty">${escapeHtml(t('help.notAvailable'))}</p>`;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'help-panel-overlay';
+    overlay.id = 'help-panel-overlay';
+    overlay.innerHTML = `
+        <aside class="help-panel" role="dialog" aria-modal="true" aria-label="${escapeHtml(title)}">
+            <div class="help-panel__header">
+                <h2 class="help-panel__title">${escapeHtml(title)}</h2>
+                <button type="button" class="help-panel__close" aria-label="${escapeHtml(t('common.close'))}">&times;</button>
+            </div>
+            <div class="help-panel__body">${bodyHtml}</div>
+        </aside>`;
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeHelpPanel();
+    });
+    document.body.appendChild(overlay);
+    overlay.querySelector('.help-panel__close').addEventListener('click', () => closeHelpPanel());
+    document.addEventListener('keydown', helpPanelKeydown);
+
+    // Added transparent/closed then flipped to .active on the next frame so
+    // the CSS transition (opacity + translateX) actually animates in,
+    // instead of the panel just appearing already open.
+    requestAnimationFrame(() => overlay.classList.add('active'));
+}
+
+function closeHelpPanel() {
+    document.getElementById('help-panel-overlay')?.remove();
+    document.removeEventListener('keydown', helpPanelKeydown);
+}
+
+function helpPanelKeydown(e) {
+    if (e.key === 'Escape') closeHelpPanel();
 }
 
 // Wires click-to-expand onto every already-rendered `<img class="lightbox-trigger">`

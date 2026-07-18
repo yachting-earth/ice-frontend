@@ -10,7 +10,6 @@ const CrewGdprRequestPage = {
         container.innerHTML = `
             <div class="centered-page">
                 <div class="auth-card">
-                    <div class="auth-card__logo">${brandMark()} ${escapeHtml(t('app.brand'))}</div>
                     <div class="auth-card__tagline">${escapeHtml(t('crewGdprRequest.tagline'))}</div>
                     <p class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(t('crewGdprRequest.intro'))}</p>
                     <div id="crew-gdpr-alert"></div>

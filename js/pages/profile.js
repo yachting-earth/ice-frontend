@@ -15,8 +15,9 @@ const ProfilePage = {
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h2>${escapeHtml(t('profile.photoHeading'))}</h2>
+                        <h2>${escapeHtml(t('profile.detailsHeading'))}</h2>
                     </div>
+                    <h3>${escapeHtml(t('profile.photoHeading'))}</h3>
                     <div id="photo-alert"></div>
                     <div style="display:flex; align-items:center; gap: var(--space-3);">
                         <img id="profile-photo-preview" class="lightbox-trigger" alt=""
@@ -28,12 +29,7 @@ const ProfilePage = {
                         </div>
                     </div>
                     <button class="btn btn-secondary btn-sm" type="button" id="photo-submit" style="margin-top: var(--space-3);">${escapeHtml(t('profile.photoSubmit'))}</button>
-                </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h2>${escapeHtml(t('profile.detailsHeading'))}</h2>
-                    </div>
                     <div id="profile-alert"></div>
                     <div id="profile-form-container">
                         <div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('profile.loadingDetails'))}</div>
@@ -53,6 +49,30 @@ const ProfilePage = {
                         </select>
                     </div>
                     <div id="telegram-link-widget" hidden></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>${escapeHtml(t('profile.passwordHeading'))}</h2>
+                    </div>
+                    <p>${escapeHtml(t('profile.passwordHint'))}</p>
+                    <div id="password-alert"></div>
+                    <form id="password-form" novalidate>
+                        <div class="field">
+                            <label for="current-password">${escapeHtml(t('profile.currentPasswordLabel'))}</label>
+                            <input type="password" id="current-password" autocomplete="current-password">
+                        </div>
+                        <div class="field">
+                            <label for="new-password">${escapeHtml(t('profile.newPasswordLabel'))}</label>
+                            <input type="password" id="new-password" autocomplete="new-password">
+                            <small>${escapeHtml(t('register.passwordHint'))}</small>
+                        </div>
+                        <div class="field">
+                            <label for="confirm-new-password">${escapeHtml(t('profile.confirmNewPasswordLabel'))}</label>
+                            <input type="password" id="confirm-new-password" autocomplete="new-password">
+                        </div>
+                        <button class="btn btn-primary" type="submit" id="password-submit">${escapeHtml(t('profile.passwordSubmit'))}</button>
+                    </form>
                 </div>
 
                 <div class="card">
@@ -105,6 +125,11 @@ const ProfilePage = {
         document.getElementById('photo-submit').addEventListener('click', () => this.handlePhotoSubmit());
 
         document.getElementById('profile-channel').addEventListener('change', (e) => this.handleChannelChange(e.target.value));
+
+        document.getElementById('password-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleChangePassword();
+        });
 
         await this.loadProfile();
         await this.loadOwnPhoto();
@@ -332,6 +357,14 @@ const ProfilePage = {
                         ${I18n.SUPPORTED.map((lang) => `<option value="${lang}">${lang.toUpperCase()}</option>`).join('')}
                     </select>
                 </div>
+                <div class="field">
+                    <label for="profile-timezone">${escapeHtml(t('profile.timezoneLabel'))}</label>
+                    <select id="profile-timezone">
+                        <option value="">${escapeHtml(t('profile.timezoneAuto'))}</option>
+                        ${TZ.list().map((tz) => `<option value="${escapeHtml(tz)}">${escapeHtml(tz)}</option>`).join('')}
+                    </select>
+                    <small>${escapeHtml(t('profile.timezoneHint'))}</small>
+                </div>
                 <button class="btn btn-primary" type="submit" id="profile-submit">${escapeHtml(t('profile.submit'))}</button>
             </form>`;
 
@@ -341,6 +374,7 @@ const ProfilePage = {
         document.getElementById('profile-phone').value = this.state.user.phone || '';
         document.getElementById('profile-email').value = this.state.user.email || '';
         document.getElementById('profile-lang').value = this.state.user.locale || I18n._lang || I18n.DEFAULT;
+        document.getElementById('profile-timezone').value = this.state.user.timezone || '';
 
         document.getElementById('profile-form').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -360,7 +394,8 @@ const ProfilePage = {
             name: document.getElementById('profile-name').value.trim(),
             phone: document.getElementById('profile-phone').value.trim(),
             email: document.getElementById('profile-email').value.trim(),
-            locale: document.getElementById('profile-lang').value
+            locale: document.getElementById('profile-lang').value,
+            timezone: document.getElementById('profile-timezone').value
         };
 
         if (!this.validate(values)) return;
@@ -370,7 +405,10 @@ const ProfilePage = {
 
         const response = await apiRequest('/user/profile', {
             method: 'PUT',
-            body: JSON.stringify({ name: values.name, email: values.email, phone: values.phone || null, locale: values.locale })
+            body: JSON.stringify({
+                name: values.name, email: values.email, phone: values.phone || null,
+                locale: values.locale, timezone: values.timezone || null
+            })
         });
 
         submitBtn.disabled = false;
@@ -386,6 +424,7 @@ const ProfilePage = {
         // only lands after the link mailed to the new address is clicked.
         Auth.updateUser({ name: response.data.name, email: response.data.email });
         renderTopbar();
+        TZ.set(values.timezone || null);
         I18n.setLang(values.locale);
 
         if (response.data.email_change_pending) {
@@ -402,6 +441,43 @@ const ProfilePage = {
 
         alertBox.innerHTML = '';
         showToast(t('profile.saved'), 'success');
+    },
+
+    async handleChangePassword() {
+        const currentPassword = document.getElementById('current-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmNewPassword = document.getElementById('confirm-new-password').value;
+        const alertBox = document.getElementById('password-alert');
+
+        const error = (!currentPassword ? t('profile.currentPasswordRequired') : null)
+            || Validate.password(newPassword)
+            || (newPassword !== confirmNewPassword ? t('profile.passwordMismatch') : null);
+
+        if (error) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
+            return;
+        }
+
+        const submitBtn = document.getElementById('password-submit');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('profile.passwordSaving'))}`;
+
+        const response = await apiRequest('/user/password', {
+            method: 'PUT',
+            body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })
+        });
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = t('profile.passwordSubmit');
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.passwordChangeFailed')))}</div>`;
+            return;
+        }
+
+        document.getElementById('password-form').reset();
+        alertBox.innerHTML = '';
+        showToast(t('profile.passwordChanged'), 'success');
     },
 
     showDeleteForm() {

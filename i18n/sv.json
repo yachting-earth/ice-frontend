@@ -23,11 +23,19 @@
       "h12": "12 timmar",
       "h24": "24 timmar",
       "h48": "48 timmar"
+    },
+    "vesselEquipment": {
+      "flares": "Nödraketer",
+      "epirb": "Nödsändare (EPIRB/MOB)",
+      "vhf": "VHF-radio",
+      "satellitePhone": "Satellittelefon",
+      "liferaft": "Livflotte"
     }
   },
   "errors": {
     "AUTH_REQUIRED": "Du måste logga in igen.",
     "AUTH_INVALID": "Felaktig e-post eller lösenord.",
+    "CURRENT_PASSWORD_INVALID": "Felaktigt nuvarande lösenord.",
     "ACCESS_DENIED": "Du har inte behörighet till detta.",
     "VALIDATION_ERROR": "Kontrollera de markerade fälten.",
     "INVALID_EMAIL": "Ogiltig e-postadress.",
@@ -41,15 +49,18 @@
     "PASSWORD_RESET_EXPIRED": "Denna länk för lösenordsåterställning har gått ut.",
     "NOT_FOUND": "Hittades inte.",
     "RESOURCE_CONFLICT": "Detta finns redan.",
+    "VESSEL_HAS_TRIPS": "Det går inte att radera båten – den är registrerad på en resa.",
     "MMSI_ALREADY_ACTIVE": "Det finns redan en aktiv resa för båten.",
     "INVALID_ETA": "Ogiltig ankomsttid.",
     "NOTIFICATION_FAILED": "Kunde inte skicka aviseringen.",
     "DEPARTURE_EDIT_LOCKED": "Avgångstiden kan bara ändras fram tills resan aktiveras.",
     "ARRIVAL_EDIT_LOCKED": "Ankomsttiden kan bara ändras fram tills resan bekräftas avslutad.",
     "GRACE_PERIOD_EDIT_LOCKED": "Marginaltiden kan bara ändras fram tills resan bekräftas avslutad.",
-    "ICE_CONTACT_REQUIRED": "En ICE-kontakt måste kopplas till resan innan den kan aktiveras.",
-    "ICE_CONTACT_DEACTIVATED": "ICE-kontaktens konto har tagits bort och kan inte längre användas. Välj en annan kontakt eller bjud in personen på nytt.",
+    "ICE_CONTACT_REQUIRED": "En nödkontakt måste kopplas till resan innan den kan aktiveras.",
+    "ICE_CONTACT_DEACTIVATED": "Nödkontaktens konto har tagits bort och kan inte längre användas. Välj en annan kontakt eller bjud in personen på nytt.",
+    "ICE_CONTACT_UNCONFIRMED": "Resans nödkontakt har inte bekräftat ännu. Personen måste bekräfta innan resan kan aktiveras.",
     "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter en nödsituation och kan inte längre ändras.",
+    "TRIP_NOT_ACTIVE": "SAR-åtkomst kan bara begäras för en aktiv resa.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
     "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
@@ -102,9 +113,10 @@
       "myTrips": "Mina resor",
       "myVessels": "Mina båtar",
       "savedRoutes": "Sparade rutter",
-      "iceContacts": "ICE-kontakter",
+      "iceContacts": "Nödkontakter",
       "crewAddressBook": "Adressbok",
       "myIceAccount": "Mitt ICE-konto",
+      "myProfile": "Min profil",
       "admin": "Admin",
       "logout": "Logga ut"
     },
@@ -113,6 +125,83 @@
     "lightboxClose": "Stäng helskärmsbild",
     "renderError": "Något gick fel när sidan skulle visas. Försök ladda om.",
     "version": "Version {version}"
+  },
+  "help": {
+    "buttonLabel": "Visa hjälp för sidan",
+    "genericTitle": "Hjälp",
+    "notAvailable": "Hjälpavsnitt för sidan saknas",
+    "topics": {
+      "dashboard": {
+        "title": "Mina resor",
+        "paragraphs": [
+          "Det här är en översikt över alla dina resor - utkast, publicerade, aktiva och avslutade. Klicka på \"+ Ny resa\" för att registrera en ny resa.",
+          "Om du inte har någon nödkontakt än visas en påminnelsebanner här - lägg till en innan du aktiverar en resa, eftersom det är den personen som larmas om du inte checkar in i tid."
+        ]
+      },
+      "vessels": {
+        "title": "Mina båtar",
+        "paragraphs": [
+          "Båtar du registrerar här kan väljas direkt när du skapar en ny resa, istället för att du behöver ange samma uppgifter varje gång.",
+          "Lägg till MMSI-nummer, anropssignal, modell och mått, samt en valfri bild - används av sjöräddningen för att identifiera båten vid en nödsituation."
+        ]
+      },
+      "savedRoutes": {
+        "title": "Sparade rutter",
+        "paragraphs": [
+          "Rutter du seglar ofta - en årlig överfart, en återkommande helgtur - kan sparas här så att du slipper importera dem från Windy, en GPX-fil eller rita dem manuellt varje gång.",
+          "När du skapar eller redigerar en resa väljer du \"+ Lägg till sparad rutt\" för att återanvända en direkt."
+        ]
+      },
+      "profile": {
+        "title": "Min sida",
+        "paragraphs": [
+          "Hantera ditt konto: namn, telefon, e-post, språk och bild. Din bild hjälper sjöräddningen att identifiera dig som skeppare vid en nödsituation.",
+          "Du kan också begära en kopia av allt som lagras om dig (GDPR), välja om du vill meddelas via e-post eller Telegram, eller radera ditt konto."
+        ]
+      },
+      "iceContacts": {
+        "title": "Nödkontakter",
+        "paragraphs": [
+          "Dina nödkontakter är de personer som meddelas om en resa inte bekräftas som ankommen inom marginaltiden. Lägg till minst en innan du kan aktivera en resa.",
+          "En ny kontakt får en bekräftelselänk, men bekräftelseprocessen och säkerhetslarmet är helt oberoende av varandra - larmet skickas ändå om resan blir försenad, även om länken aldrig klickats."
+        ]
+      },
+      "crewAddressBook": {
+        "title": "Adressbok",
+        "paragraphs": [
+          "Kontakter du aktivt valt att spara när du bjöd in besättning till en resa hamnar här, så att du kan bjuda in dem igen till framtida resor utan att skriva in uppgifterna på nytt.",
+          "Du kan också välja flera sparade kontakter samtidigt och bjuda in dem direkt till en befintlig resa."
+        ]
+      },
+      "iceAccount": {
+        "title": "Mitt ICE-konto",
+        "paragraphs": [
+          "Om du har bekräftat att du är någons nödkontakt och skapat eller kopplat ett konto listas här alla du är kontakt för, och du kan hålla dina egna uppgifter uppdaterade.",
+          "Du kan också välja att ditt konto ska raderas automatiskt när du inte längre är nödkontakt för någon aktiv resa."
+        ]
+      },
+      "admin": {
+        "title": "Admin",
+        "paragraphs": [
+          "Systemomfattande statistik och administrationsverktyg, synliga endast för administratörer. Klicka på en ruta för att granska underliggande poster - användare, rutter, båtar eller nödkontakter.",
+          "Under fliken för systemloggar kan du söka och filtrera händelser efter nivå och kategori för felsökning."
+        ]
+      },
+      "createTrip": {
+        "title": "Skapa ny resa",
+        "paragraphs": [
+          "Ställ in en ny resa: välj eller lägg till en båt, välj vilken nödkontakt som ska larmas, ange avgångs-/ankomsttid och marginaltid, och lägg till en eller flera rutter - importerade från Windy, en GPX-fil, eller ritade för hand på kartan.",
+          "Du kan även bjuda in besättning direkt - varje person får en e-postinbjudan för att fylla i sina egna uppgifter, bild och personliga nödkontakt."
+        ]
+      },
+      "tripDetail": {
+        "title": "Resedetaljer",
+        "paragraphs": [
+          "Den fullständiga informationen för en resa: schema, båt, nödkontakt, rutter och besättning, samt en ändringslogg över allt som redigerats.",
+          "Aktivera resan när allt är klart (eller låt den aktiveras automatiskt vid planerad avgång), använd sedan \"Skjut upp\" om du behöver mer tid, eller \"Bekräfta ankomst\" när du är i hamn. Om marginaltiden löper ut utan incheckning larmas din nödkontakt automatiskt."
+        ]
+      }
+    }
   },
   "dashboard": {
     "title": "Mina resor",
@@ -128,18 +217,16 @@
     "alreadyVerified": "Din e-postadress är redan bekräftad.",
     "verificationResent": "En ny verifieringslänk har skickats.",
     "verificationResendFailed": "Kunde inte skicka länken just nu. Försök igen senare.",
-    "noIceContact": "Du har ingen ICE-kontakt än — utan en kan ingen larmas om din resa inte bekräftas i tid.",
-    "addIceContact": "Lägg till en ICE-kontakt",
     "vesselFallback": "Båt #{id}",
     "departure": "Avgång: {datetime}",
     "arrival": "Ankomst: {datetime}",
     "grace": "Marginaltid: {label}",
     "graceHours": "{hours} tim",
-    "iceNotified": "⚠ ICE-kontakt notifierad",
+    "iceNotified": "⚠ Nödkontakt notifierad",
     "view": "Visa",
     "role": {
       "crew": "Besättning",
-      "ice": "ICE-kontakt"
+      "ice": "Nödkontakt"
     },
     "readOnly": "Skrivskyddad"
   },
@@ -207,11 +294,11 @@
   },
   "crewGdprRequest": {
     "tagline": "Hantera dina besättningsuppgifter",
-    "intro": "Om du blev inbjuden som besättning (eller tillagd som ICE-kontakt) utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera eller radera dina uppgifter, eller skicka oss ett meddelande.",
+    "intro": "Om du blev inbjuden som besättning (eller tillagd som nödkontakt) utan att skapa ett konto, ange den e-postadress inbjudan skickades till. Vi skickar en säker, tidsbegränsad länk till en portal där du kan visa, exportera eller radera dina uppgifter, eller skicka oss ett meddelande.",
     "emailLabel": "E-post",
     "submit": "Skicka åtkomstlänk",
     "submitting": "Skickar…",
-    "sent": "Om den e-postadressen matchar en besättnings- eller ICE-kontaktpost har vi skickat en säker åtkomstlänk. Kontrollera din inkorg.",
+    "sent": "Om den e-postadressen matchar en besättnings- eller nödkontaktpost har vi skickat en säker åtkomstlänk. Kontrollera din inkorg.",
     "backToLogin": "Tillbaka till inloggning"
   },
   "crewGdprPortal": {
@@ -234,7 +321,7 @@
     "noMemberships": "Inga besättningsposter hittades för den här e-postadressen.",
     "notErasableActive": "Den här resan är inte avslutad än, så den här posten kan inte raderas direkt - besättningsuppgifter behövs fortfarande av säkerhetsskäl medan en resa pågår. Den raderas automatiskt 30 dagar efter att resan avslutats.",
     "notErasableLocked": "Dina uppgifter är låsta av sjösäkerhets- och spårbarhetsskäl efter en nödsituation. De raderas automatiskt 30 dagar efter att resan avslutades.",
-    "iceContactNote": "Den här e-postadressen är också registrerad som ICE-kontakt (nödkontakt) för {count} skeppare. Den uppgiften ingår i exporten nedan; för att få den borttagen, be skepparen ta bort dig från sina ICE-kontakter.",
+    "iceContactNote": "Den här e-postadressen är också registrerad som nödkontakt för {count} skeppare. Den uppgiften ingår i exporten nedan; för att få den borttagen, be skepparen ta bort dig från sina nödkontakter.",
     "exportTitle": "Exportera mina uppgifter",
     "exportHint": "Ladda ner allt vi har lagrat om den här e-postadressen som en JSON-fil.",
     "exportButton": "Ladda ner mina uppgifter",
@@ -287,12 +374,15 @@
     "phoneLabel": "Telefon",
     "emailLabel": "E-post",
     "languageLabel": "Språk",
+    "timezoneLabel": "Tidszon",
+    "timezoneAuto": "Automatiskt (baserat på webbläsaren)",
+    "timezoneHint": "Tider i systemet visas i denna tidszon men lagras alltid som UTC.",
     "submit": "Spara ändringar",
     "saveFailed": "Kunde inte spara ändringarna.",
     "emailChangePending": "En bekräftelselänk har skickats till <strong>{email}</strong>. Din e-postadress ändras först när du klickat på länken. Vi har även meddelat din nuvarande adress.",
     "saved": "Dina uppgifter har uppdaterats.",
     "gdprHeading": "Ladda ner mina uppgifter",
-    "gdprHint": "Begär en sammanställning av all information vi har lagrat om dig - konto, båtar, ICE-kontakter och resor. Filen levereras omedelbart i ett maskinläsbart JSON-format och är tillgänglig för nedladdning i 7 dagar.",
+    "gdprHint": "Begär en sammanställning av all information vi har lagrat om dig - konto, båtar, nödkontakter och resor. Filen levereras omedelbart i ett maskinläsbart JSON-format och är tillgänglig för nedladdning i 7 dagar.",
     "gdprChecking": "Kontrollerar status…",
     "gdprRequestButton": "Begär mina uppgifter",
     "gdprAvailableUntil": "Din sammanställning är klar och kan laddas ner till och med {date}.",
@@ -303,7 +393,7 @@
     "gdprDownloadFailed": "Kunde inte ladda ner dina uppgifter.",
     "gdprDownloaded": "Dina uppgifter har laddats ner.",
     "channelHeading": "Aviseringskanal",
-    "channelHint": "Välj hur vi kontaktar dig om ditt konto. Detta är separat från kanalen som används för att larma din ICE-kontakt.",
+    "channelHint": "Välj hur vi kontaktar dig om ditt konto. Detta är separat från kanalen som används för att larma din nödkontakt.",
     "channelLabel": "Föredragen kanal",
     "channelLabels": {
       "email": "E-post",
@@ -311,8 +401,19 @@
     },
     "channelSaveFailed": "Kunde inte spara din föredragna kanal.",
     "channelSaved": "Aviseringskanalen har uppdaterats.",
+    "passwordHeading": "Byt lösenord",
+    "passwordHint": "Välj ett starkt lösenord som du inte använder någon annanstans.",
+    "currentPasswordLabel": "Nuvarande lösenord",
+    "newPasswordLabel": "Nytt lösenord",
+    "confirmNewPasswordLabel": "Bekräfta nytt lösenord",
+    "passwordSubmit": "Byt lösenord",
+    "passwordSaving": "Byter…",
+    "currentPasswordRequired": "Ange ditt nuvarande lösenord.",
+    "passwordMismatch": "Lösenorden matchar inte",
+    "passwordChangeFailed": "Kunde inte byta lösenord.",
+    "passwordChanged": "Ditt lösenord har bytts. Ett bekräftelsemail har skickats.",
     "deleteHeading": "Ta bort konto",
-    "deleteWarning": "Om du tar bort ditt konto raderas dina båtar och ICE-kontakter permanent och dina resor avslutas. Det går inte att ångra.",
+    "deleteWarning": "Om du tar bort ditt konto raderas dina båtar och nödkontakter permanent och dina resor avslutas. Det går inte att ångra.",
     "deleteButton": "Ta bort mitt konto",
     "deletePasswordLabel": "Bekräfta med ditt lösenord",
     "deleteConfirmButton": "Radera permanent",
@@ -364,6 +465,8 @@
       "callSignLabel": "Anropssignal (valfritt)",
       "modelLabel": "Modell (valfritt)",
       "modelPlaceholder": "t.ex. Malö 116",
+      "colorLabel": "Färg (valfritt)",
+      "colorPlaceholder": "t.ex. Vit",
       "yearLabel": "Årsmodell (valfritt)",
       "yearPlaceholder": "t.ex. 1984",
       "lengthLabel": "Längd, meter (valfritt)",
@@ -371,6 +474,11 @@
       "draftLabel": "Djup, meter (valfritt)",
       "notesLabel": "Övrigt (valfritt)",
       "notesPlaceholder": "Övrig information om båten",
+      "emergencyBeaconLabel": "Nödsändare (valfritt)",
+      "emergencyBeaconPlaceholder": "t.ex. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Synlig för din nödkontakt, besättningen och sjöräddningen - till skillnad från övrigt döljs den aldrig för någon som har åtkomst till resan.",
+      "equipmentLabel": "Säkerhetsutrustning ombord",
+      "epirbHint": "Om ikryssad, ange enhetens märke, modell och ID i nödsändarfältet nedan.",
       "photoLabel": "Båtfoto (valfritt)",
       "photoHint": "Används av sjöräddningen för att lättare identifiera båten. JPEG/PNG, max 10 MB.",
       "saveButton": "Spara båt",
@@ -384,20 +492,29 @@
       "draft": "Djup"
     },
     "iceContact": {
-      "heading": "ICE-kontakt",
-      "loading": "Laddar ICE-kontakter...",
+      "heading": "Nödkontakt",
+      "loading": "Laddar nödkontakter...",
       "selectLabel": "Vem ska larmas om resan inte bekräftas i tid?",
-      "selectHint": "Välj den ICE-kontakt som ska larmas för den här resan. Du kan hoppa över detta nu, men resan kan inte aktiveras förrän en kontakt är vald.",
-      "required": "Välj en ICE-kontakt för den här resan.",
-      "noneRegistered": "Du har inga registrerade ICE-kontakter än.",
-      "addLink": "Lägg till en ICE-kontakt"
+      "selectHint": "Välj den nödkontakt som ska larmas för den här resan. Du kan hoppa över detta nu, men resan kan inte aktiveras förrän en kontakt är vald.",
+      "pendingWarning": "Den här kontakten har inte bekräftat rollen som nödkontakt än. Du kan ändå koppla kontakten till resan, men resan kan inte aktiveras förrän personen bekräftat.",
+      "required": "Välj en nödkontakt för den här resan.",
+      "noneRegistered": "Du har inga registrerade nödkontakter än. Lägg till en nedan.",
+      "addLink": "Lägg till en nödkontakt",
+      "addNew": "+ Lägg till ny nödkontakt",
+      "saveButton": "Spara nödkontakt",
+      "added": "Nödkontakt tillagd. Ett bekräftelsemejl har skickats.",
+      "addedEmailFailed": "Nödkontakt tillagd, men bekräftelsemejlet kunde inte skickas."
     },
     "schedule": {
       "heading": "Tidsplan",
       "departureLabel": "Avgång (UTC)",
-      "arrivalLabel": "Planerad ankomst (UTC)",
-      "gracePeriodLabel": "Marginaltid innan ICE-kontakt varnas",
-      "gracePeriodHint": "Tid efter planerad ankomst innan ICE-kontakten notifieras om du inte har verifierat ankomst."
+      "durationLabel": "Resans varaktighet",
+      "durationDays": "Dagar",
+      "durationHours": "Timmar",
+      "durationMinutes": "Minuter",
+      "estimatedArrival": "Beräknad ankomst: {datetime}",
+      "gracePeriodLabel": "Marginaltid innan nödkontakt varnas",
+      "gracePeriodHint": "Tid efter planerad ankomst innan nödkontakten notifieras om du inte har verifierat ankomst."
     },
     "routes": {
       "heading": "Rutter",
@@ -424,12 +541,13 @@
       "saveRouteNamePlaceholder": "Namnge rutten, t.ex. Marstrand-Skagen",
       "saveRouteNameRequired": "Ange ett namn för rutten.",
       "saveRouteFailed": "Kunde inte spara rutten.",
-      "saveRouteSuccess": "Rutten sparad."
+      "saveRouteSuccess": "Rutten sparad.",
+      "crewNextStepHint": "Du bjuder in besättning i nästa steg, när resan har skapats."
     },
     "errors": {
       "vesselRequired": "Välj eller lägg till en båt.",
-      "datesRequired": "Ange både avgångs- och ankomsttid.",
-      "arrivalBeforeDeparture": "Ankomsttiden måste vara efter avgångstiden.",
+      "datesRequired": "Ange avgångstid och hur lång resan ska vara.",
+      "durationRequired": "Resans varaktighet måste vara längre än noll.",
       "primaryRouteMinPoints": "Rita minst två punkter för huvudrutten.",
       "gpxParseError": "Kunde inte läsa någon rutt från den GPX-filen. Kontrollera att den innehåller en rutt eller ett spår med minst två punkter.",
       "createFailed": "Kunde inte skapa resan."
@@ -468,13 +586,13 @@
     "iceContactHint": "Namn och telefonnummer till någon som ska kontaktas om något händer.",
     "medicalLabel": "Medicinsk information för sjöräddningen (valfritt)",
     "medicalPlaceholder": "t.ex. allergier, mediciner, blodgrupp, sjukdomar",
-    "medicalHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller ICE-kontakten.",
+    "medicalHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller skepparens nödkontakt.",
     "sharing": {
       "heading": "Delning",
-      "contactHint": "Din telefon och e-post visas bara för skepparen som standard. Välj om de även ska delas med ICE-kontakten.",
-      "shareContactWithIce": "Dela mitt telefonnummer och e-post med ICE-kontakten (nödkontakten)",
+      "contactHint": "Din telefon och e-post visas bara för skepparen som standard. Välj om de även ska delas med skepparens nödkontakt.",
+      "shareContactWithIce": "Dela mitt telefonnummer och e-post med skepparens nödkontakt",
       "emergencyHint": "Din nödkontakt ovan visas bara för skepparen som standard.",
-      "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten"
+      "shareEmergencyWithIce": "Dela min nödkontakt med skepparens nödkontakt"
     },
     "photoLabel": "Foto på dig (valfritt men rekommenderat)",
     "photoHint": "Används av sjöräddningen för att identifiera besättningen. JPEG/PNG, max 10 MB.",
@@ -502,7 +620,7 @@
       "passwordHint": "Minst 8 tecken, en stor bokstav och en siffra.",
       "confirmPasswordLabel": "Bekräfta lösenord",
       "deleteAfterTripLabel": "Radera mitt konto och mina uppgifter automatiskt när resan/resorna jag är nödkontakt för är avslutade",
-      "retentionNote": "Som standard behåller vi ditt konto 18 månader så att du kan logga in igen vid framtida resor och uppdatera dina uppgifter. Kryssa i rutan ovan om du istället vill att kontot och dina uppgifter raderas automatiskt 30 dagar efter att resan är över.",
+      "retentionNote": "Som standard behåller vi ditt konto 18 månader efter senaste inloggning så att du kan logga in igen vid framtida resor och uppdatera dina uppgifter. Kryssa i rutan ovan om du istället vill att kontot och dina uppgifter raderas automatiskt 30 dagar efter att resan är över.",
       "acceptTerms": "Jag godkänner {termsLink} och {privacyLink}",
       "termsLink": "Användarvillkoren",
       "privacyLink": "Integritetspolicyn",
@@ -510,7 +628,7 @@
     },
     "loginLink": "Logga in",
     "title": "Bekräfta som nödkontakt",
-    "intro": "{skipper} har lagt till dig som sin ICE-kontakt (In Case of Emergency){relationshipSuffix}. Det innebär att du kan bli kontaktad om personen inte checkar in från en segling i tid.",
+    "intro": "{skipper} har lagt till dig som sin nödkontakt{relationshipSuffix}. Det innebär att du kan bli kontaktad om personen inte checkar in från en segling i tid.",
     "passwordMismatch": "Lösenorden stämmer inte överens",
     "acceptTermsRequired": "Du måste godkänna användarvillkoren och integritetspolicyn",
     "confirming": "Bekräftar...",
@@ -522,8 +640,8 @@
     "toOverview": "Till din översikt"
   },
   "iceContacts": {
-    "title": "ICE-kontakter",
-    "subtitle": "Dina nödkontakter (In Case of Emergency) som larmas om en resa inte bekräftas i tid",
+    "title": "Nödkontakter",
+    "subtitle": "Dina nödkontakter som larmas om en resa inte bekräftas i tid",
     "addTitle": "Lägg till kontakt",
     "cancelEdit": "Avbryt ändring",
     "relationshipLabel": "Relation",
@@ -536,8 +654,8 @@
     "submitAdd": "Spara kontakt",
     "loadingContacts": "Laddar kontakter...",
     "loadFailed": "Kunde inte hämta kontakter.",
-    "emptyTitle": "Inga ICE-kontakter än",
-    "emptyBody": "Utan en ICE-kontakt kan systemet inte larma någon om din resa inte bekräftas i tid. Lägg till minst en kontakt ovan.",
+    "emptyTitle": "Inga nödkontakter än",
+    "emptyBody": "Utan en nödkontakt kan systemet inte larma någon om din resa inte bekräftas i tid. Lägg till minst en kontakt ovan.",
     "confirmed": "✓ Bekräftad",
     "pending": "⏳ Väntar på bekräftelse",
     "copyConfirmLink": "Kopiera bekräftelselänk",
@@ -550,14 +668,14 @@
     "addedEmailSent": "Kontakten tillagd. Ett bekräftelsemejl har skickats.",
     "addedEmailFailed": "Kontakten tillagd. E-postutskick misslyckades - dela länken manuellt:",
     "updated": "Kontakten uppdaterad.",
-    "deleteConfirm": "Ta bort ICE-kontakten {name}?",
+    "deleteConfirm": "Ta bort nödkontakten {name}?",
     "deleteFailed": "Kunde inte ta bort kontakten.",
     "deleted": "Kontakten borttagen.",
     "managedByAccount": "Utskick använder kontaktens egna kontouppgifter, som de själva håller uppdaterade."
   },
   "iceAccount": {
     "title": "Mitt ICE-konto",
-    "subtitle": "Skeppare du är nödkontakt (In Case of Emergency) för, och dina egna uppgifter",
+    "subtitle": "Skeppare du är nödkontakt för, och dina egna uppgifter",
     "deletePolicyHeading": "Radera konto efter resan",
     "deletePolicyLabel": "Radera mitt konto och mina uppgifter automatiskt när resan/resorna jag är nödkontakt för är avslutade",
     "deletePolicyHint": "Som standard behålls ditt konto permanent. Kryssa i rutan om du istället vill att det raderas automatiskt en tid efter att du inte längre är nödkontakt för någon aktiv resa.",
@@ -607,12 +725,15 @@
     "vessel": {
       "nameLine": "Båt: {name}",
       "modelLabel": "Modell {value}",
+      "colorLabel": "Färg {value}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Anropssignal {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Nödsändare: {value}",
+      "equipment": "Utrustning: {value}"
     },
     "routes": {
       "heading": "Rutter",
@@ -659,12 +780,15 @@
     "vessel": {
       "nameLine": "Båt: {name}",
       "modelLabel": "Modell {value}",
+      "colorLabel": "Färg {value}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {value}",
       "callSign": "Anropssignal {value}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
-      "dimDraft": "D {value} m"
+      "dimDraft": "D {value} m",
+      "emergencyBeacon": "Nödsändare: {value}",
+      "equipment": "Utrustning: {value}"
     },
     "routes": {
       "heading": "Rutter",
@@ -683,16 +807,16 @@
     },
     "sharingSettings": {
       "heading": "Delning",
-      "hint": "Välj vad av dina egna kontaktuppgifter som delas med ICE-kontakten (nödkontakten).",
-      "shareContactWithIce": "Dela mitt telefonnummer och e-post med ICE-kontakten",
-      "shareEmergencyWithIce": "Dela min nödkontakt med ICE-kontakten",
+      "hint": "Välj vad av dina egna kontaktuppgifter som delas med skepparens nödkontakt.",
+      "shareContactWithIce": "Dela mitt telefonnummer och e-post med skepparens nödkontakt",
+      "shareEmergencyWithIce": "Dela min nödkontakt med skepparens nödkontakt",
       "saveButton": "Spara",
       "saved": "Dina delningsinställningar har sparats.",
       "saveFailed": "Kunde inte spara dina delningsinställningar."
     },
     "medical": {
       "heading": "Din information för sjöräddningen",
-      "hint": "Medicinsk information som kan vara till nytta vid en nödsituation - sjukdomar, allergier, blodgrupp, mediciner. Visas endast för sjöräddningen, aldrig för skepparen eller ICE-kontakten.",
+      "hint": "Medicinsk information som kan vara till nytta vid en nödsituation - sjukdomar, allergier, blodgrupp, mediciner. Visas endast för sjöräddningen, aldrig för skepparen eller skepparens nödkontakt.",
       "placeholder": "t.ex. allergier, mediciner, blodgrupp, sjukdomar",
       "empty": "Du har inte lagt till någon information.",
       "readOnlyNote": "Logga in med ett konto för att ändra detta.",
@@ -745,6 +869,8 @@
       "callSignLabel": "Anropssignal (valfritt)",
       "modelLabel": "Modell (valfritt)",
       "modelPlaceholder": "t.ex. Malö 116",
+      "colorLabel": "Färg (valfritt)",
+      "colorPlaceholder": "t.ex. Vit",
       "yearLabel": "Årsmodell (valfritt)",
       "yearPlaceholder": "t.ex. 1984",
       "lengthLabel": "Längd, meter (valfritt)",
@@ -752,6 +878,11 @@
       "draftLabel": "Djup, meter (valfritt)",
       "notesLabel": "Övrigt (valfritt)",
       "notesPlaceholder": "Övrig information om båten",
+      "emergencyBeaconLabel": "Nödsändare (valfritt)",
+      "emergencyBeaconPlaceholder": "t.ex. Garmin inReach Mini 2, IMEI 300434...",
+      "emergencyBeaconHint": "Synlig för din nödkontakt, besättningen och sjöräddningen - till skillnad från övrigt döljs den aldrig för någon som har åtkomst till resan.",
+      "equipmentLabel": "Säkerhetsutrustning ombord",
+      "epirbHint": "Om ikryssad, ange enhetens märke, modell och ID i nödsändarfältet nedan.",
       "photoLabel": "Båtfoto (valfritt)",
       "photoHint": "Används av sjöräddningen för att lättare identifiera båten. JPEG/PNG, max 10 MB.",
       "submit": "Spara båt",
@@ -769,6 +900,8 @@
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Anropssignal {callSign}",
+      "emergencyBeacon": "Nödsändare: {value}",
+      "equipment": "Utrustning: {value}",
       "editButton": "Ändra"
     },
     "saveFailed": "Kunde inte spara båten.",
@@ -844,14 +977,14 @@
       "users": "Användare",
       "routes": "Rutter",
       "vessels": "Båtar",
-      "iceContacts": "ICE-kontakter",
+      "iceContacts": "Nödkontakter",
       "logs": "Systemloggar"
     },
     "empty": {
       "users": "Inga användare",
       "routes": "Inga rutter",
       "vessels": "Inga båtar",
-      "iceContacts": "Inga ICE-kontakter",
+      "iceContacts": "Inga nödkontakter",
       "logs": "Inga loggar matchar filtret"
     },
     "table": {
@@ -886,7 +1019,7 @@
       "route": "Rutt",
       "vessel": "Båt",
       "crew": "Besättning",
-      "ice": "ICE-kontakt",
+      "ice": "Nödkontakt",
       "sar": "SAR",
       "user": "Användare",
       "admin": "Admin",
@@ -921,14 +1054,28 @@
     "unknownVessel": "Okänd båt",
     "readOnlyBanner": {
       "crew": "Du visar den här resan som inbjuden besättningsmedlem. Den är skrivskyddad för dig.",
-      "ice": "Du visar den här resan som dess ICE-kontakt. Den är skrivskyddad för dig."
+      "ice": "Du visar den här resan som dess nödkontakt. Den är skrivskyddad för dig."
     },
     "header": {
       "meta": "Avgång {departure} · Ankomst {arrival} · Marginaltid {grace}",
-      "iceNotified": "ICE-kontakt notifierad"
+      "iceNotified": "Nödkontakt notifierad"
     },
     "skipper": {
       "heading": "Skeppare"
+    },
+    "sarAccess": {
+      "heading": "Åtkomst för sjöräddning (SAR)",
+      "description": "Om en sjöräddningsmyndighet behöver skrivskyddad åtkomst till den här resan, ge dem denna referens och PIN att ange på SAR-uppslagssidan.",
+      "referenceLabel": "Referens",
+      "pinLabel": "PIN",
+      "showPin": "Visa PIN",
+      "hidePin": "Dölj PIN",
+      "notYetDescription": "Inga SAR-uppgifter har skapats än. Om du är orolig för den här resan och vill vara redo att koppla in sjöräddning utan att vänta på det automatiska larmet kan du begära dem nu.",
+      "notActiveHint": "SAR-åtkomst kan bara begäras när resan är aktiv.",
+      "triggerButton": "Begär SAR-åtkomst nu",
+      "triggerConfirm": "Begära inloggningsuppgifter för SAR till den här resan nu? Skepparen meddelas.",
+      "triggerFailed": "Kunde inte begära SAR-åtkomst.",
+      "triggered": "SAR-uppgifter har skapats."
     },
     "schedule": {
       "heading": "Tidsschema",
@@ -945,12 +1092,15 @@
     "vessel": {
       "heading": "Båt",
       "modelLabel": "Modell {model}",
+      "colorLabel": "Färg {color}",
       "yearBuilt": "Årsmodell {year}",
       "mmsi": "MMSI {mmsi}",
       "callSign": "Anropssignal {callSign}",
       "dimLength": "L {value} m",
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
+      "emergencyBeacon": "Nödsändare: {value}",
+      "equipment": "Utrustning: {value}",
       "changeLabel": "Byt båt",
       "changeButton": "Byt båt",
       "changeFailed": "Kunde inte byta båt.",
@@ -958,14 +1108,14 @@
       "changed": "Båten har bytts."
     },
     "iceContact": {
-      "heading": "ICE-kontakt",
-      "allContacts": "Alla mina ICE-kontakter larmas för den här resan.",
-      "specificContact": "En specifik ICE-kontakt har tilldelats denna resa av skepparen.",
-      "changeLabel": "Byt ICE-kontakt",
+      "heading": "Nödkontakt",
+      "allContacts": "Alla mina nödkontakter larmas för den här resan.",
+      "specificContact": "En specifik nödkontakt har tilldelats denna resa av skepparen.",
+      "changeLabel": "Byt nödkontakt",
       "changeButton": "Spara",
-      "changeFailed": "Kunde inte byta ICE-kontakt.",
-      "changed": "ICE-kontakten har bytts.",
-      "deactivatedWarning": "ICE-kontakten som är kopplad till resan har inaktiverats eftersom kontot togs bort. Välj en annan kontakt eller bjud in personen på nytt innan du aktiverar resan."
+      "changeFailed": "Kunde inte byta nödkontakt.",
+      "changed": "Nödkontakten har bytts.",
+      "deactivatedWarning": "Nödkontakten som är kopplad till resan har inaktiverats eftersom kontot togs bort. Välj en annan kontakt eller bjud in personen på nytt innan du aktiverar resan."
     },
     "routes": {
       "heading": "Rutter",
@@ -1050,7 +1200,7 @@
       "deleteForceConfirm": "Det finns registrerade personer på resan. Radera resan ändå? Kom ihåg att notifiera dem själv.",
       "deleteConfirm": "Radera den här resan?",
       "deleteAnywayButton": "Radera ändå",
-      "deleteHasPersonsWarning": "Resan har {crewCount} besättningsmedlem(mar) och {iceCount} ICE-kontakt(er) registrerade som kan behöva notifieras. Klicka igen för att radera ändå.",
+      "deleteHasPersonsWarning": "Resan har {crewCount} besättningsmedlem(mar) och {iceCount} nödkontakt(er) registrerade som kan behöva notifieras. Klicka igen för att radera ändå.",
       "deleteFailed": "Kunde inte radera resan.",
       "deleted": "Resan har raderats"
     },
@@ -1135,7 +1285,9 @@
       "items": [
         { "icon": "route", "title": "Flera rutter", "description": "En resa följer sällan en enda rak linje." },
         { "icon": "users", "title": "Besättningens medverkan", "description": "Varje besättningsmedlem underhåller sin egen information." },
-        { "icon": "shield-check", "title": "Bekräftad nödkontakt", "description": "Nödkontakten bekräftar sin roll innan avfärd." }
+        { "icon": "shield-check", "title": "Bekräftad nödkontakt", "description": "Nödkontakten bekräftar sin roll innan avfärd." },
+        { "icon": "life-buoy", "title": "Åtkomst för sjöräddningen (SAR)", "description": "Om en resa blir försenad kan sjöräddningen slå upp resan direkt med ett referensnummer och en PIN-kod - inget konto eller app krävs." },
+        { "icon": "user-plus", "title": "Inget konto krävs för besättningen", "description": "Besättningen kan bjudas in och bekräfta sina egna uppgifter, bild och personliga nödkontakt enbart via e-post - att skapa ett konto är valfritt." }
       ]
     },
     "privacy": {
@@ -1475,7 +1627,7 @@
             "a": "De får en skrivskyddad länk till en resportal, skyddad av en privat åtkomsttoken - inget konto eller inloggning krävs. Räddningstjänsten kan alternativt slå upp en resa med ett referensnummer och en PIN-kod."
           },
           {
-            "q": "Måste min ICE-kontakt bekräfta innan de kan meddelas?",
+            "q": "Måste min nödkontakt bekräfta innan de kan meddelas?",
             "a": "Nej. Att bekräfta deras e-post verifierar bara att adressen fungerar, men larm om försening skickas oavsett - att villkora ett säkerhetslarm på en klickad länk skulle motverka syftet."
           }
         ]
@@ -1506,6 +1658,23 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.5.0",
+        "date": "2026-07-18",
+        "sections": {
+          "new": [
+            "Du kan nu byta lösenord direkt från din profilsida, och vi mejlar dig en bekräftelse varje gång det ändras så att inget slinker förbi dig.",
+            "Om du är någons nödkontakt och blir orolig innan det automatiska larmet har gått, kan du nu begära referens och PIN-kod för sök och räddning till deras pågående resa med en gång - och skepparen får veta att du har gjort det."
+          ],
+          "improved": [
+            "När du planerar en resa anger du nu hur länge du väntas vara borta i stället för en exakt ankomsttid - vi räknar ut ankomsten åt dig, och om du flyttar avresan behåller resan samma längd.",
+            "Välj din föredragna tidszon på din profil så visas alla datum och tider i appen i din egen lokala tid, medan allt fortsatt lagras säkert i UTC i bakgrunden.",
+            "Du kan spara mer om din båt - dess färg, nödsändaren ombord och vilken säkerhetsutrustning du har med dig (nödraketer, EPIRB, VHF-radio, satellittelefon och livflotte) - så att dina nödkontakter och räddningstjänsten får en fylligare bild.",
+            "En resa kan nu bara startas när dess nödkontakt har bekräftat, så att du aldrig ger dig av och förlitar dig på någon som ännu inte har tackat ja till att bli larmad.",
+            "Att bjuda in en nödkontakt när du skapar en resa är tydligare, och dina kontoinställningar ligger nu snyggt samlade under din profilbild på både dator och mobil."
+          ]
+        }
+      },
       {
         "version": "v1.4.0",
         "date": "2026-07-17",

@@ -110,6 +110,7 @@ const IcePortalPage = {
                         <p class="mb-0">
                             ${escapeHtml(t('icePortal.vessel.nameLine', { name: vessel?.vessel_name || '–' }))}
                             ${vessel?.model ? ` · ${escapeHtml(t('icePortal.vessel.modelLabel', { value: vessel.model }))}` : ''}
+                            ${vessel?.color ? ` · ${escapeHtml(t('icePortal.vessel.colorLabel', { value: vessel.color }))}` : ''}
                             ${vessel?.year_built ? ` · ${escapeHtml(t('icePortal.vessel.yearBuilt', { year: String(vessel.year_built) }))}` : ''}
                             ${vessel?.mmsi ? ` · ${escapeHtml(t('icePortal.vessel.mmsi', { value: vessel.mmsi }))}` : ''}
                             ${vessel?.call_sign ? ` · ${escapeHtml(t('icePortal.vessel.callSign', { value: vessel.call_sign }))}` : ''}
@@ -117,6 +118,8 @@ const IcePortalPage = {
                         </p>
                     </div>
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
+                    ${formatVesselEquipment(vessel) ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted);">${escapeHtml(t('icePortal.vessel.equipment', { value: formatVesselEquipment(vessel) }))}</p>` : ''}
+                    ${vessel?.emergency_beacon ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('icePortal.vessel.emergencyBeacon', { value: vessel.emergency_beacon }))}</p>` : ''}
                 </div>
 
                 ${trip.ice_contacts ? `

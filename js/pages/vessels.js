@@ -45,6 +45,10 @@ const VesselsPage = {
                                 <input type="text" id="vessel-model" placeholder="${escapeHtml(t('vessels.form.modelPlaceholder'))}">
                             </div>
                             <div class="field">
+                                <label for="vessel-color">${escapeHtml(t('vessels.form.colorLabel'))}</label>
+                                <input type="text" id="vessel-color" placeholder="${escapeHtml(t('vessels.form.colorPlaceholder'))}">
+                            </div>
+                            <div class="field">
                                 <label for="vessel-year">${escapeHtml(t('vessels.form.yearLabel'))}</label>
                                 <input type="number" id="vessel-year" inputmode="numeric" step="1" placeholder="${escapeHtml(t('vessels.form.yearPlaceholder'))}">
                             </div>
@@ -66,6 +70,35 @@ const VesselsPage = {
                         <div class="field">
                             <label for="vessel-notes">${escapeHtml(t('vessels.form.notesLabel'))}</label>
                             <textarea id="vessel-notes" rows="3" placeholder="${escapeHtml(t('vessels.form.notesPlaceholder'))}"></textarea>
+                        </div>
+                        <div class="field">
+                            <label>${escapeHtml(t('vessels.form.equipmentLabel'))}</label>
+                            <div class="checkbox-field">
+                                <input type="checkbox" id="vessel-eq-flares">
+                                <label for="vessel-eq-flares">${escapeHtml(t('common.vesselEquipment.flares'))}</label>
+                            </div>
+                            <div class="checkbox-field">
+                                <input type="checkbox" id="vessel-eq-epirb">
+                                <label for="vessel-eq-epirb">${escapeHtml(t('common.vesselEquipment.epirb'))}</label>
+                            </div>
+                            <small>${escapeHtml(t('vessels.form.epirbHint'))}</small>
+                            <div class="checkbox-field">
+                                <input type="checkbox" id="vessel-eq-vhf">
+                                <label for="vessel-eq-vhf">${escapeHtml(t('common.vesselEquipment.vhf'))}</label>
+                            </div>
+                            <div class="checkbox-field">
+                                <input type="checkbox" id="vessel-eq-satphone">
+                                <label for="vessel-eq-satphone">${escapeHtml(t('common.vesselEquipment.satellitePhone'))}</label>
+                            </div>
+                            <div class="checkbox-field">
+                                <input type="checkbox" id="vessel-eq-liferaft">
+                                <label for="vessel-eq-liferaft">${escapeHtml(t('common.vesselEquipment.liferaft'))}</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="vessel-emergency-beacon">${escapeHtml(t('vessels.form.emergencyBeaconLabel'))}</label>
+                            <input type="text" id="vessel-emergency-beacon" placeholder="${escapeHtml(t('vessels.form.emergencyBeaconPlaceholder'))}">
+                            <small>${escapeHtml(t('vessels.form.emergencyBeaconHint'))}</small>
                         </div>
                         <div class="field">
                             <label for="vessel-photo">${escapeHtml(t('vessels.form.photoLabel'))}</label>
@@ -158,12 +191,15 @@ const VesselsPage = {
                     </div>
                     <div class="trip-card__meta">
                         ${vessel.model ? `<span>${escapeHtml(vessel.model)}</span>` : ''}
+                        ${vessel.color ? `<span>${escapeHtml(vessel.color)}</span>` : ''}
                         ${vessel.year_built ? `<span>${escapeHtml(t('vessels.card.yearBuilt', { year: vessel.year_built }))}</span>` : ''}
                         ${dims ? `<span>${escapeHtml(dims)}</span>` : ''}
                         ${vessel.mmsi ? `<span>${escapeHtml(t('vessels.card.mmsi', { mmsi: vessel.mmsi }))}</span>` : ''}
                         ${vessel.call_sign ? `<span>${escapeHtml(t('vessels.card.callSign', { callSign: vessel.call_sign }))}</span>` : ''}
                     </div>
                     ${vessel.notes ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(vessel.notes)}</div>` : ''}
+                    ${formatVesselEquipment(vessel) ? `<div class="trip-card__meta">${escapeHtml(t('vessels.card.equipment', { value: formatVesselEquipment(vessel) }))}</div>` : ''}
+                    ${vessel.emergency_beacon ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(t('vessels.card.emergencyBeacon', { value: vessel.emergency_beacon }))}</div>` : ''}
                 </div>
                 <div class="trip-card__actions">
                     <button class="btn btn-secondary btn-sm" type="button" data-edit="${vessel.id}">${escapeHtml(t('vessels.card.editButton'))}</button>
@@ -206,11 +242,18 @@ const VesselsPage = {
         document.getElementById('vessel-mmsi').value = vessel.mmsi || '';
         document.getElementById('vessel-callsign').value = vessel.call_sign || '';
         document.getElementById('vessel-model').value = vessel.model || '';
+        document.getElementById('vessel-color').value = vessel.color || '';
         document.getElementById('vessel-year').value = vessel.year_built ?? '';
         document.getElementById('vessel-length').value = vessel.length_m ?? '';
         document.getElementById('vessel-width').value = vessel.width_m ?? '';
         document.getElementById('vessel-draft').value = vessel.draft_m ?? '';
         document.getElementById('vessel-notes').value = vessel.notes || '';
+        document.getElementById('vessel-eq-flares').checked = !!vessel.has_flares;
+        document.getElementById('vessel-eq-epirb').checked = !!vessel.has_epirb;
+        document.getElementById('vessel-eq-vhf').checked = !!vessel.has_vhf;
+        document.getElementById('vessel-eq-satphone').checked = !!vessel.has_satellite_phone;
+        document.getElementById('vessel-eq-liferaft').checked = !!vessel.has_liferaft;
+        document.getElementById('vessel-emergency-beacon').value = vessel.emergency_beacon || '';
         document.getElementById('vessel-photo').value = '';
         const preview = document.getElementById('vessel-photo-preview');
         preview.hidden = true;
@@ -242,11 +285,18 @@ const VesselsPage = {
         const mmsi = document.getElementById('vessel-mmsi').value.trim();
         const callSign = document.getElementById('vessel-callsign').value.trim();
         const model = document.getElementById('vessel-model').value.trim();
+        const color = document.getElementById('vessel-color').value.trim();
         const year = document.getElementById('vessel-year').value.trim();
         const length = document.getElementById('vessel-length').value.trim();
         const width = document.getElementById('vessel-width').value.trim();
         const draft = document.getElementById('vessel-draft').value.trim();
         const notes = document.getElementById('vessel-notes').value.trim();
+        const hasFlares = document.getElementById('vessel-eq-flares').checked;
+        const hasEpirb = document.getElementById('vessel-eq-epirb').checked;
+        const hasVhf = document.getElementById('vessel-eq-vhf').checked;
+        const hasSatellitePhone = document.getElementById('vessel-eq-satphone').checked;
+        const hasLiferaft = document.getElementById('vessel-eq-liferaft').checked;
+        const emergencyBeacon = document.getElementById('vessel-emergency-beacon').value.trim();
 
         const error = Validate.name(name)
             || Validate.vesselYear(year)
@@ -267,11 +317,18 @@ const VesselsPage = {
             mmsi: mmsi || null,
             call_sign: callSign || null,
             model: model || null,
+            color: color || null,
             year_built: year ? Number(year) : null,
             length_m: length ? Number(length) : null,
             width_m: width ? Number(width) : null,
             draft_m: draft ? Number(draft) : null,
-            notes: notes || null
+            notes: notes || null,
+            has_flares: hasFlares,
+            has_epirb: hasEpirb,
+            has_vhf: hasVhf,
+            has_satellite_phone: hasSatellitePhone,
+            has_liferaft: hasLiferaft,
+            emergency_beacon: emergencyBeacon || null
         });
         const response = this.state.editingId
             ? await apiRequest(`/vessels/${this.state.editingId}`, { method: 'PUT', body })
