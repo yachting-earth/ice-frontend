@@ -75,6 +75,19 @@ const TripDetailPage = {
 
                 ${isOwner ? `<div class="card" id="actions-card"></div>` : ''}
 
+                ${role === 'ice' && trip.ice_trip_confirmation_status === 'pending' ? `<div class="card">
+                    <h3>${t('tripDetail.iceConfirmation.iceHeading')}</h3>
+                    <p class="text-muted">${escapeHtml(t('tripDetail.iceConfirmation.iceDescription', { skipperName: skipper?.name || '' }))}</p>
+                    <div id="ice-confirmation-alert"></div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" type="button" id="ice-confirmation-approve-btn">${escapeHtml(t('tripDetail.iceConfirmation.approveButton'))}</button>
+                        <button class="btn btn-danger" type="button" id="ice-confirmation-reject-btn">${escapeHtml(t('tripDetail.iceConfirmation.rejectButton'))}</button>
+                    </div>
+                </div>` : ''}
+
+                ${role === 'ice' && trip.ice_trip_confirmation_status === 'approved' ? `<div class="alert alert-info">${escapeHtml(t('tripDetail.iceConfirmation.iceApprovedNote'))}</div>` : ''}
+                ${role === 'ice' && trip.ice_trip_confirmation_status === 'rejected' ? `<div class="alert alert-warning">${escapeHtml(t('tripDetail.iceConfirmation.iceRejectedNote'))}</div>` : ''}
+
                 ${role === 'ice' ? `<div class="card">
                     <h3>${t('tripDetail.sarAccess.heading')}</h3>
                     ${sarAccess ? `
@@ -186,6 +199,7 @@ const TripDetailPage = {
                         : (trip.has_specific_ice_contact ? escapeHtml(t('tripDetail.iceContact.specificContact')) : escapeHtml(t('tripDetail.iceContact.allContacts')))}</p>
                     ${isOwner && this.isAssignedIceDeactivated(trip) ? `
                     <div class="alert alert-warning" style="margin-top: var(--space-2);">${escapeHtml(t('tripDetail.iceContact.deactivatedWarning'))}</div>` : ''}
+                    ${isOwner ? this.renderIceConfirmationStatus(trip) : ''}
                     <div id="ice-contact-change-alert"></div>
                     ${isOwner ? (this.selectableIceContacts().length > 0 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">
@@ -286,6 +300,8 @@ const TripDetailPage = {
             document.getElementById(id)?.addEventListener('input', () => this.updateSchedulePreview());
         });
         document.getElementById('trigger-sar-access-btn')?.addEventListener('click', () => this.handleTriggerSarAccess());
+        document.getElementById('ice-confirmation-approve-btn')?.addEventListener('click', () => this.handleRespondIceConfirmation('approve'));
+        document.getElementById('ice-confirmation-reject-btn')?.addEventListener('click', () => this.handleRespondIceConfirmation('reject'));
 
         const sarPinToggle = document.getElementById('trip-sar-pin-toggle');
         if (sarPinToggle) {
@@ -500,6 +516,22 @@ const TripDetailPage = {
         return !!(contact && contact.deactivated_at);
     },
 
+    // Owner-facing status line for the per-trip ICE approval (separate from
+    // the contact's one-time roster confirmation, already covered by
+    // isAssignedIceDeactivated()'s sibling checks server-side) - see
+    // TripHandler::create()/update()/activate().
+    renderIceConfirmationStatus(trip) {
+        const status = trip.ice_trip_confirmation_status;
+        if (!status || status === 'not_required') return '';
+
+        const name = this.iceContactLabel(trip.ice_contact_id) || '';
+        const key = { pending: 'statusPending', approved: 'statusApproved', rejected: 'statusRejected' }[status];
+        if (!key) return '';
+
+        const alertClass = status === 'approved' ? 'alert-info' : 'alert-warning';
+        return `<div class="alert ${alertClass}" style="margin-top: var(--space-2);">${escapeHtml(t('tripDetail.iceConfirmation.' + key, { name }))}</div>`;
+    },
+
     async handleChangeIceContact() {
         const alertBox = document.getElementById('ice-contact-change-alert');
         const select = document.getElementById('ice-contact-select');
@@ -687,12 +719,23 @@ const TripDetailPage = {
         const deleteBtnHtml = `<button class="btn btn-danger" type="button" id="delete-trip-btn">${deleteBtnLabel}</button>`;
 
         if (trip.status === 'draft' || trip.status === 'published') {
+            // Per-trip ICE approval (separate from the contact's one-time
+            // roster confirmation) blocks activation until the assigned
+            // contact responds - see TripHandler::activate(). Disable the
+            // button rather than only surfacing the 409 after a click, so
+            // the skipper isn't left guessing why it failed.
+            const confirmationBlocked = trip.ice_trip_confirmation_status === 'pending' || trip.ice_trip_confirmation_status === 'rejected';
+            const confirmationHint = trip.ice_trip_confirmation_status === 'pending'
+                ? t('tripDetail.actions.iceConfirmationPendingHint')
+                : (trip.ice_trip_confirmation_status === 'rejected' ? t('tripDetail.actions.iceConfirmationRejectedHint') : '');
+
             actionsCard.innerHTML = `
                 <h3>${t('tripDetail.actions.heading')}</h3>
                 <p class="text-muted">${t('tripDetail.actions.notActiveHint')}</p>
+                ${confirmationHint ? `<p class="text-muted">${escapeHtml(confirmationHint)}</p>` : ''}
                 <div id="delete-trip-alert"></div>
                 <div class="btn-group">
-                    <button class="btn btn-primary" type="button" id="activate-btn">${t('tripDetail.actions.activateButton')}</button>
+                    <button class="btn btn-primary" type="button" id="activate-btn" ${confirmationBlocked ? 'disabled' : ''}>${t('tripDetail.actions.activateButton')}</button>
                     ${deleteBtnHtml}
                 </div>`;
             document.getElementById('activate-btn').addEventListener('click', () => this.handleActivate());
@@ -1254,6 +1297,24 @@ const TripDetailPage = {
             return;
         }
         showToast(t('tripDetail.actions.verified'), 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    async handleRespondIceConfirmation(action) {
+        if (action === 'reject' && !confirm(t('tripDetail.iceConfirmation.rejectConfirm'))) return;
+
+        const alertBox = document.getElementById('ice-confirmation-alert');
+        const response = await apiRequest(`/trips/${this.state.tripId}/ice-confirmation`, {
+            method: 'POST',
+            body: JSON.stringify({ action })
+        });
+
+        if (!response.success) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.iceConfirmation.respondFailed')))}</div>`;
+            return;
+        }
+
+        showToast(t(action === 'approve' ? 'tripDetail.iceConfirmation.approved' : 'tripDetail.iceConfirmation.rejected'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 

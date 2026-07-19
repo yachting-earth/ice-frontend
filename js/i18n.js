@@ -70,6 +70,9 @@ const EN_INLINE = {
     "ICE_CONTACT_REQUIRED": "An ICE contact must be assigned to this trip before it can be activated.",
     "ICE_CONTACT_DEACTIVATED": "This ICE contact's account was removed, so it can no longer be used. Choose another contact or re-invite them.",
     "ICE_CONTACT_UNCONFIRMED": "This trip's ICE contact hasn't confirmed yet. They must confirm before the trip can be activated.",
+    "ICE_TRIP_CONFIRMATION_PENDING": "This trip's ICE contact hasn't confirmed they can be ICE for this specific trip yet. It can be activated once they approve it from their account.",
+    "ICE_TRIP_CONFIRMATION_REJECTED": "This trip's ICE contact declined to be ICE for this trip. Assign a different contact before activating.",
+    "ICE_TRIP_CONFIRMATION_NOT_PENDING": "This trip has no outstanding ICE confirmation request.",
     "TRIP_LOCKED": "This trip is locked for maritime safety/traceability reasons following an emergency incident and can no longer be modified.",
     "TRIP_NOT_ACTIVE": "SAR access can only be requested for an active trip.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
@@ -239,7 +242,8 @@ const EN_INLINE = {
       "crew": "Crew",
       "ice": "ICE contact"
     },
-    "readOnly": "Read-only"
+    "readOnly": "Read-only",
+    "pendingIceConfirmation": "⏳ Awaiting your confirmation"
   },
   "login": {
     "tagline": "Safe voyage, safe return",
@@ -373,9 +377,6 @@ const EN_INLINE = {
     "photoHeading": "Photo",
     "photoChangeLabel": "Change photo (optional)",
     "photoHint": "Used by search and rescue to identify you as skipper. JPEG/PNG, max 10 MB.",
-    "photoSubmit": "Save photo",
-    "photoSaving": "Saving…",
-    "photoChooseFirst": "Choose an image first.",
     "photoSaveFailed": "Could not save the photo.",
     "photoSaved": "The photo has been saved.",
     "detailsHeading": "My details",
@@ -455,6 +456,7 @@ const EN_INLINE = {
     "submitting": "Creating trip…",
     "scheduleConflictNotice": "Note: another trip with the same MMSI number is already scheduled during an overlapping time period.",
     "created": "Trip created",
+    "iceConfirmationRequested": "Your ICE contact has already confirmed their account, but needs to log in and approve being ICE for this specific trip before it can be activated.",
     "crewInvited": "Invited {count} people to the trip.",
     "crewInvitePartial": "Invited {success} of {total} people to the trip.",
     "crewInviteFailed": "Could not automatically invite the selected crew. Add them manually from the trip page.",
@@ -1128,6 +1130,22 @@ const EN_INLINE = {
       "changed": "The ICE contact has been changed.",
       "deactivatedWarning": "The ICE contact assigned to this trip has been deactivated because their account was removed. Choose another contact or re-invite them before activating the trip."
     },
+    "iceConfirmation": {
+      "ownerHeading": "ICE confirmation for this trip",
+      "statusPending": "Waiting for {name} to confirm they can be ICE for this trip. The trip can't be activated until they do.",
+      "statusApproved": "{name} confirmed they can be ICE for this trip.",
+      "statusRejected": "{name} declined to be ICE for this trip. Assign a different ICE contact before activating.",
+      "iceHeading": "This trip needs your confirmation",
+      "iceDescription": "{skipperName} has assigned you as their ICE (In Case of Emergency) contact for this trip. Please confirm you can and want to take on this role for this specific trip - the skipper can't activate it until you respond.",
+      "approveButton": "Approve - I can be ICE for this trip",
+      "rejectButton": "Decline",
+      "rejectConfirm": "Decline being ICE contact for this trip? The skipper will be notified and will need to pick someone else.",
+      "respondFailed": "Could not save your response.",
+      "approved": "You've confirmed as ICE contact for this trip.",
+      "rejected": "You've declined to be ICE contact for this trip.",
+      "iceApprovedNote": "You confirmed you can be ICE for this trip.",
+      "iceRejectedNote": "You declined to be ICE for this trip."
+    },
     "routes": {
       "heading": "Routes",
       "addAltHeading": "Add alternative route",
@@ -1197,6 +1215,8 @@ const EN_INLINE = {
     "actions": {
       "heading": "Actions",
       "notActiveHint": "The trip isn't active yet. Activate it manually, or it will activate automatically at its scheduled departure time.",
+      "iceConfirmationPendingHint": "Waiting for the ICE contact to confirm this trip before it can be activated.",
+      "iceConfirmationRejectedHint": "The assigned ICE contact declined this trip. Assign a different one before activating.",
       "activateButton": "Activate trip",
       "snoozeLabel": "Snooze arrival time",
       "verifyButton": "✓ Verify arrival",
@@ -1241,12 +1261,7 @@ const EN_INLINE = {
       "lead": "Prepare your vessel, routes, crew and emergency contact before departure. If you fail to check in after your planned arrival, your designated emergency contact receives secure access to the information that may help emergency services respond faster.",
       "ctaPrimary": "Create Free Account",
       "ctaSecondary": "How It Works",
-      "badges": [
-        "Free to use",
-        "Multiple routes",
-        "GDPR by design",
-        "Secure ICE Portal"
-      ]
+      "badges": ["Free to use", "Multiple routes", "GDPR by design", "Secure ICE Portal"]
     },
     "notice": {
       "heading": "Important",
@@ -1257,56 +1272,11 @@ const EN_INLINE = {
       "heading": "Everything is prepared before departure",
       "lead": "A complete voyage dossier, assembled before you even leave the dock.",
       "cards": [
-        {
-          "icon": "ship",
-          "title": "Vessel",
-          "items": [
-            "Photo",
-            "Registration",
-            "Specifications",
-            "Identification"
-          ]
-        },
-        {
-          "icon": "compass",
-          "title": "Voyage",
-          "items": [
-            "Departure",
-            "Destination",
-            "Estimated arrival",
-            "Grace period"
-          ]
-        },
-        {
-          "icon": "route",
-          "title": "Routes",
-          "items": [
-            "Multiple routes",
-            "Import from GPX/Windy/draw",
-            "Route alternatives",
-            "Interactive map preview"
-          ]
-        },
-        {
-          "icon": "users",
-          "title": "Crew",
-          "items": [
-            "Crew list",
-            "Individual profiles",
-            "Photos",
-            "Personal emergency contacts"
-          ]
-        },
-        {
-          "icon": "shield-check",
-          "title": "Emergency Contact",
-          "items": [
-            "Identity confirmed",
-            "Secure portal",
-            "Read-only access",
-            "Automatic notification"
-          ]
-        }
+        { "icon": "ship", "title": "Vessel", "items": ["Photo", "Registration", "Specifications", "Identification"] },
+        { "icon": "compass", "title": "Voyage", "items": ["Departure", "Destination", "Estimated arrival", "Grace period"] },
+        { "icon": "route", "title": "Routes", "items": ["Multiple routes", "Import from GPX/Windy/draw", "Route alternatives", "Interactive map preview"] },
+        { "icon": "users", "title": "Crew", "items": ["Crew list", "Individual profiles", "Photos", "Personal emergency contacts"] },
+        { "icon": "shield-check", "title": "Emergency Contact", "items": ["Identity confirmed", "Secure portal", "Read-only access", "Automatic notification"] }
       ]
     },
     "howItWorks": {
@@ -1334,82 +1304,32 @@ const EN_INLINE = {
       "traditionalLabel": "Traditional Plan",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        {
-          "traditional": "Static documents",
-          "yachting": "Living voyage information"
-        },
-        {
-          "traditional": "Single route",
-          "yachting": "Multiple routes"
-        },
-        {
-          "traditional": "Basic crew list",
-          "yachting": "Crew maintain their own details"
-        },
-        {
-          "traditional": "Rely on manual monitoring",
-          "yachting": "Automatic audited control"
-        },
-        {
-          "traditional": "Sticky notes, texts and calls",
-          "yachting": "Secure portal"
-        }
+        { "traditional": "Static documents", "yachting": "Living voyage information" },
+        { "traditional": "Single route", "yachting": "Multiple routes" },
+        { "traditional": "Basic crew list", "yachting": "Crew maintain their own details" },
+        { "traditional": "Rely on manual monitoring", "yachting": "Automatic audited control" },
+        { "traditional": "Sticky notes, texts and calls", "yachting": "Secure portal" }
       ]
     },
     "features": {
       "heading": "Built for real voyages",
       "items": [
-        {
-          "icon": "route",
-          "title": "Multiple routes",
-          "description": "A voyage rarely follows a single straight line."
-        },
-        {
-          "icon": "users",
-          "title": "Crew participation",
-          "description": "Every crew member maintains their own information."
-        },
-        {
-          "icon": "shield-check",
-          "title": "Verified emergency contact",
-          "description": "The emergency contact confirms their role before departure."
-        },
-        {
-          "icon": "life-buoy",
-          "title": "Search & Rescue access",
-          "description": "If a voyage times out, search and rescue can look up the trip directly with a reference number and PIN - no account or app required."
-        },
-        {
-          "icon": "user-plus",
-          "title": "No account required for crew",
-          "description": "Crew members can be invited and confirm their own details, photo and personal emergency contact by email alone - creating an account is optional."
-        }
+        { "icon": "route", "title": "Multiple routes", "description": "A voyage rarely follows a single straight line." },
+        { "icon": "users", "title": "Crew participation", "description": "Every crew member maintains their own information." },
+        { "icon": "shield-check", "title": "Verified emergency contact", "description": "The emergency contact confirms their role before departure." },
+        { "icon": "life-buoy", "title": "Search & Rescue access", "description": "If a voyage times out, search and rescue can look up the trip directly with a reference number and PIN - no account or app required." },
+        { "icon": "user-plus", "title": "No account required for crew", "description": "Crew members can be invited and confirm their own details, photo and personal emergency contact by email alone - creating an account is optional." }
       ]
     },
     "privacy": {
       "heading": "Privacy by design",
       "lead": "Personal voyage data is automatically removed according to GDPR principles.",
       "lifecycle": [
-        {
-          "icon": "file-plus",
-          "label": "Voyage created"
-        },
-        {
-          "icon": "check-circle",
-          "label": "Voyage completed"
-        },
-        {
-          "icon": "clock",
-          "label": "Soft deleted"
-        },
-        {
-          "icon": "timer",
-          "label": "Automatically removed after 30 days"
-        },
-        {
-          "icon": "shield",
-          "label": "Only skipper and vessel remain"
-        }
+        { "icon": "file-plus", "label": "Voyage created" },
+        { "icon": "check-circle", "label": "Voyage completed" },
+        { "icon": "clock", "label": "Soft deleted" },
+        { "icon": "timer", "label": "Automatically removed after 30 days" },
+        { "icon": "shield", "label": "Only skipper and vessel remain" }
       ]
     },
     "mapDemo": {
@@ -1417,42 +1337,17 @@ const EN_INLINE = {
       "lead": "A voyage may include several planned routes. Here is an example of three.",
       "note": "Demonstration data — not a live vessel position.",
       "ariaLabel": "Example map showing three sample sailing routes along a coastline",
-      "routes": [
-        "Stockholm → Sandhamn",
-        "Sandhamn → Landsort",
-        "Stockholm → Åland (alternative)"
-      ],
-      "descriptions": [
-        "Primary route",
-        "If the wind shifts westerly",
-        "If the wind shifts north and picks up above 35 knots"
-      ]
+      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternative)"],
+      "descriptions": ["Primary route", "If the wind shifts westerly", "If the wind shifts north and picks up above 35 knots"]
     },
     "worst": {
       "heading": "If the worst happens",
       "insteadTitle": "Instead of…",
-      "insteadItems": [
-        "Searching old emails",
-        "Trying to remember who was onboard",
-        "Looking for route screenshots",
-        "Guessing emergency contacts"
-      ],
+      "insteadItems": ["Searching old emails", "Trying to remember who was onboard", "Looking for route screenshots", "Guessing emergency contacts"],
       "haveTitle": "Your emergency contact already has",
-      "haveItems": [
-        "Vessel",
-        "Routes",
-        "Crew",
-        "Photos",
-        "Emergency contacts",
-        "Voyage details"
-      ],
+      "haveItems": ["Vessel", "Routes", "Crew", "Photos", "Emergency contacts", "Voyage details"],
       "readyTitle": "Ready to provide",
-      "readyItems": [
-        "Coast Guard",
-        "Police",
-        "Rescue Coordination Centre",
-        "Insurance company"
-      ],
+      "readyItems": ["Coast Guard", "Police", "Rescue Coordination Centre", "Insurance company"],
       "readyNote": "The emergency contact decides when the information should be shared, and with whom."
     },
     "finalCta": {
@@ -1502,9 +1397,7 @@ const EN_INLINE = {
       },
       {
         "heading": "Why we process it",
-        "body": [
-          "Each category of data is processed on one of these legal bases:"
-        ],
+        "body": ["Each category of data is processed on one of these legal bases:"],
         "list": [
           "Contract - account, vessel and trip data, so the system can do what you signed up for",
           "Explicit consent - emergency contact details",
@@ -1522,9 +1415,7 @@ const EN_INLINE = {
       },
       {
         "heading": "Your rights",
-        "body": [
-          "Under GDPR you can:"
-        ],
+        "body": ["Under GDPR you can:"],
         "list": [
           "Access the personal data we hold about you",
           "Correct inaccurate data - most of it you can edit directly from your profile",
@@ -1548,9 +1439,7 @@ const EN_INLINE = {
       },
       {
         "heading": "Who we share data with",
-        "body": [
-          "We never sell or share your data with advertisers. Data only reaches:"
-        ],
+        "body": ["We never sell or share your data with advertisers. Data only reaches:"],
         "list": [
           "Mailgun - to deliver transactional email (trip notifications, invitations, alerts)",
           "Telegram - to deliver notifications, where enabled",
@@ -1608,9 +1497,7 @@ const EN_INLINE = {
       },
       {
         "heading": "Acceptable use",
-        "body": [
-          "You agree not to:"
-        ],
+        "body": ["You agree not to:"],
         "list": [
           "Use the system for any unlawful purpose or to harass, impersonate, or deceive another person",
           "Add a crew member or emergency contact without a reasonable basis for believing they consent to being contacted about the trip",
@@ -1793,6 +1680,22 @@ const EN_INLINE = {
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.6.0",
+        "date": "2026-07-19",
+        "sections": {
+          "new": [
+            "When you plan a new trip and pick an emergency contact who already has an account, they now get a quick request to approve being your contact for that particular trip - so you set off knowing they're ready, and they can approve or decline right from their dashboard."
+          ],
+          "improved": [
+            "If you've linked Telegram and made it your preferred way to hear from us, far more of our messages - password changes, security alerts and your own trip reminders - now reach you there too, not just emergency-contact alarms.",
+            "Your profile photo now saves together with the rest of your details when you press Save changes - there's no separate photo button to remember any more."
+          ],
+          "fixed": [
+            "A new profile, crew or boat photo now shows up straight after you upload it, instead of the old picture lingering for a while."
+          ]
+        }
+      },
       {
         "version": "v1.5.0",
         "date": "2026-07-18",

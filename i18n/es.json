@@ -59,6 +59,9 @@
     "ICE_CONTACT_REQUIRED": "Este viaje necesita un contacto ICE asignado antes de poder activarse.",
     "ICE_CONTACT_DEACTIVATED": "La cuenta de este contacto ICE se ha eliminado, por lo que ya no se puede usar. Elige otro contacto o vuelve a invitarlo.",
     "ICE_CONTACT_UNCONFIRMED": "El contacto ICE de este viaje todavía no ha confirmado. Debe confirmar antes de que el viaje pueda activarse.",
+    "ICE_TRIP_CONFIRMATION_PENDING": "El contacto ICE de este viaje todavía no ha confirmado poder ser contacto ICE para este viaje concreto. Podrá activarse en cuanto lo apruebe desde su cuenta.",
+    "ICE_TRIP_CONFIRMATION_REJECTED": "El contacto ICE de este viaje declinó este papel para este viaje. Elige otro contacto antes de activarlo.",
+    "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Este viaje no tiene ninguna solicitud de confirmación ICE pendiente.",
     "TRIP_LOCKED": "Este viaje está bloqueado por motivos de seguridad marítima y trazabilidad tras un incidente de emergencia, y ya no se puede modificar.",
     "TRIP_NOT_ACTIVE": "El acceso SAR solo puede solicitarse para un viaje activo.",
     "CONTACT_RATE_LIMITED": "Has alcanzado el límite diario de envíos del formulario de contacto. Inténtalo de nuevo mañana.",
@@ -228,7 +231,8 @@
       "crew": "Tripulación",
       "ice": "Contacto ICE"
     },
-    "readOnly": "Solo lectura"
+    "readOnly": "Solo lectura",
+    "pendingIceConfirmation": "⏳ Esperando tu confirmación"
   },
   "login": {
     "tagline": "Buena travesía, regreso seguro",
@@ -362,9 +366,6 @@
     "photoHeading": "Foto",
     "photoChangeLabel": "Cambiar foto (opcional)",
     "photoHint": "La usan los equipos de búsqueda y rescate para identificarte como patrón. JPEG/PNG, máx. 10 MB.",
-    "photoSubmit": "Guardar foto",
-    "photoSaving": "Guardando…",
-    "photoChooseFirst": "Elige primero una imagen.",
     "photoSaveFailed": "No se pudo guardar la foto.",
     "photoSaved": "La foto se ha guardado.",
     "detailsHeading": "Mis datos",
@@ -444,6 +445,7 @@
     "submitting": "Creando viaje…",
     "scheduleConflictNotice": "Nota: ya hay otro viaje programado con el mismo número MMSI durante un período de tiempo que se solapa.",
     "created": "Viaje creado",
+    "iceConfirmationRequested": "Tu contacto ICE ya confirmó su cuenta, pero debe iniciar sesión y aprobar ser contacto ICE para este viaje concreto antes de que pueda activarse.",
     "crewInvited": "Se invitó a {count} personas al viaje.",
     "crewInvitePartial": "Se invitó a {success} de {total} personas al viaje.",
     "crewInviteFailed": "No se pudo invitar automáticamente a la tripulación seleccionada. Añádela manualmente desde la página del viaje.",
@@ -1117,6 +1119,22 @@
       "changed": "El contacto ICE se ha cambiado.",
       "deactivatedWarning": "El contacto ICE asignado a este viaje se ha desactivado porque su cuenta fue eliminada. Elige otro contacto o vuelve a invitarlo antes de activar el viaje."
     },
+    "iceConfirmation": {
+      "ownerHeading": "Confirmación ICE para este viaje",
+      "statusPending": "Esperando que {name} confirme que puede ser contacto ICE para este viaje. El viaje no puede activarse hasta que lo haga.",
+      "statusApproved": "{name} confirmó que puede ser contacto ICE para este viaje.",
+      "statusRejected": "{name} declinó ser contacto ICE para este viaje. Elige otro contacto ICE antes de activarlo.",
+      "iceHeading": "Este viaje necesita tu confirmación",
+      "iceDescription": "{skipperName} te ha asignado como su contacto ICE (en caso de emergencia) para este viaje. Confirma que puedes y quieres asumir este papel para este viaje concreto - el patrón no podrá activarlo hasta que respondas.",
+      "approveButton": "Aprobar - puedo ser contacto ICE para este viaje",
+      "rejectButton": "Declinar",
+      "rejectConfirm": "¿Declinar ser contacto ICE para este viaje? Se avisará al patrón, que tendrá que elegir a otra persona.",
+      "respondFailed": "No se pudo guardar tu respuesta.",
+      "approved": "Has confirmado como contacto ICE para este viaje.",
+      "rejected": "Has declinado ser contacto ICE para este viaje.",
+      "iceApprovedNote": "Confirmaste que puedes ser contacto ICE para este viaje.",
+      "iceRejectedNote": "Declinaste ser contacto ICE para este viaje."
+    },
     "routes": {
       "heading": "Rutas",
       "addAltHeading": "Añadir ruta alternativa",
@@ -1186,6 +1204,8 @@
     "actions": {
       "heading": "Acciones",
       "notActiveHint": "El viaje aún no está activo. Actívalo manualmente, o se activará automáticamente en su hora de salida programada.",
+      "iceConfirmationPendingHint": "Esperando que el contacto ICE confirme este viaje antes de poder activarlo.",
+      "iceConfirmationRejectedHint": "El contacto ICE asignado declinó este viaje. Asigna otro antes de activarlo.",
       "activateButton": "Activar viaje",
       "snoozeLabel": "Posponer hora de llegada",
       "verifyButton": "✓ Confirmar llegada",
@@ -1647,6 +1667,22 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.6.0",
+        "date": "2026-07-19",
+        "sections": {
+          "new": [
+            "Cuando planificas una nueva salida y eliges un contacto de emergencia que ya tiene una cuenta, ahora recibe una solicitud rápida para aprobar ser tu contacto para esa salida concreta - así zarpas sabiendo que está listo, y puede aceptar o rechazar directamente desde su panel."
+          ],
+          "improved": [
+            "Si has vinculado Telegram y lo has elegido como tu forma preferida de recibir nuestros mensajes, ahora te llegan también por ahí muchas más de nuestras comunicaciones - cambios de contraseña, avisos de seguridad y los recordatorios de tus propias salidas -, no solo las alertas para contactos de emergencia.",
+            "Tu foto de perfil ahora se guarda junto con el resto de tus datos cuando pulsas Guardar cambios - ya no hay un botón de foto aparte que recordar."
+          ],
+          "fixed": [
+            "Una nueva foto de perfil, de tripulación o del barco ahora aparece justo después de subirla, en lugar de que la imagen antigua permanezca un rato."
+          ]
+        }
+      },
       {
         "version": "v1.5.0",
         "date": "2026-07-18",

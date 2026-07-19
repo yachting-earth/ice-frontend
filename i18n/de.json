@@ -59,6 +59,9 @@
     "ICE_CONTACT_REQUIRED": "Für diesen Törn muss ein ICE-Kontakt festgelegt werden, bevor er aktiviert werden kann.",
     "ICE_CONTACT_DEACTIVATED": "Das Konto dieses ICE-Kontakts wurde entfernt, daher kann er nicht mehr verwendet werden. Wähle einen anderen Kontakt oder lade ihn erneut ein.",
     "ICE_CONTACT_UNCONFIRMED": "Der ICE-Kontakt dieses Törns hat noch nicht bestätigt. Die Bestätigung ist erforderlich, bevor der Törn aktiviert werden kann.",
+    "ICE_TRIP_CONFIRMATION_PENDING": "Der ICE-Kontakt dieses Törns hat noch nicht bestätigt, für genau diesen Törn ICE-Kontakt sein zu können. Der Törn kann aktiviert werden, sobald die Bestätigung im Konto erfolgt ist.",
+    "ICE_TRIP_CONFIRMATION_REJECTED": "Der ICE-Kontakt dieses Törns hat diese Rolle für diesen Törn abgelehnt. Wähle einen anderen Kontakt, bevor du aktivierst.",
+    "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Für diesen Törn liegt keine offene ICE-Bestätigungsanfrage vor.",
     "TRIP_LOCKED": "Dieser Törn ist aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt und kann nicht mehr geändert werden.",
     "TRIP_NOT_ACTIVE": "SAR-Zugang kann nur für einen aktiven Törn angefordert werden.",
     "CONTACT_RATE_LIMITED": "Du hast das Tageslimit für Einsendungen über das Kontaktformular erreicht. Bitte versuche es morgen erneut.",
@@ -228,7 +231,8 @@
       "crew": "Crew",
       "ice": "ICE-Kontakt"
     },
-    "readOnly": "Nur Lesezugriff"
+    "readOnly": "Nur Lesezugriff",
+    "pendingIceConfirmation": "⏳ Warten auf deine Bestätigung"
   },
   "login": {
     "tagline": "Gute Fahrt, sichere Heimkehr",
@@ -362,9 +366,6 @@
     "photoHeading": "Foto",
     "photoChangeLabel": "Foto ändern (optional)",
     "photoHint": "Wird von Search and Rescue genutzt, um dich als Skipper zu identifizieren. JPEG/PNG, max. 10 MB.",
-    "photoSubmit": "Foto speichern",
-    "photoSaving": "Wird gespeichert…",
-    "photoChooseFirst": "Wähle zuerst ein Bild aus.",
     "photoSaveFailed": "Das Foto konnte nicht gespeichert werden.",
     "photoSaved": "Das Foto wurde gespeichert.",
     "detailsHeading": "Meine Daten",
@@ -444,6 +445,7 @@
     "submitting": "Törn wird erstellt…",
     "scheduleConflictNotice": "Hinweis: Für dieselbe MMSI-Nummer ist bereits ein anderer Törn im selben Zeitraum geplant.",
     "created": "Törn erstellt",
+    "iceConfirmationRequested": "Dein ICE-Kontakt hat sein Konto bereits bestätigt, muss sich aber anmelden und bestätigen, für genau diesen Törn ICE-Kontakt zu sein, bevor er aktiviert werden kann.",
     "crewInvited": "{count} Personen zum Törn eingeladen.",
     "crewInvitePartial": "{success} von {total} Personen zum Törn eingeladen.",
     "crewInviteFailed": "Die ausgewählte Crew konnte nicht automatisch eingeladen werden. Füge sie manuell über die Törn-Seite hinzu.",
@@ -1117,6 +1119,22 @@
       "changed": "Der ICE-Kontakt wurde geändert.",
       "deactivatedWarning": "Der diesem Törn zugewiesene ICE-Kontakt wurde deaktiviert, weil sein Konto entfernt wurde. Wähle einen anderen Kontakt oder lade ihn erneut ein, bevor du den Törn aktivierst."
     },
+    "iceConfirmation": {
+      "ownerHeading": "ICE-Bestätigung für diesen Törn",
+      "statusPending": "Warten darauf, dass {name} bestätigt, ICE-Kontakt für diesen Törn sein zu können. Der Törn kann erst danach aktiviert werden.",
+      "statusApproved": "{name} hat bestätigt, ICE-Kontakt für diesen Törn sein zu können.",
+      "statusRejected": "{name} hat abgelehnt, ICE-Kontakt für diesen Törn zu sein. Wähle einen anderen ICE-Kontakt, bevor du aktivierst.",
+      "iceHeading": "Dieser Törn benötigt deine Bestätigung",
+      "iceDescription": "{skipperName} hat dich als ICE-Kontakt (Notfallkontakt) für diesen Törn eingetragen. Bitte bestätige, dass du diese Rolle für genau diesen Törn übernehmen kannst und möchtest - der Skipper kann ihn erst aktivieren, wenn du geantwortet hast.",
+      "approveButton": "Bestätigen - ich kann ICE-Kontakt für diesen Törn sein",
+      "rejectButton": "Ablehnen",
+      "rejectConfirm": "ICE-Kontakt für diesen Törn ablehnen? Der Skipper wird benachrichtigt und muss jemand anderen auswählen.",
+      "respondFailed": "Deine Antwort konnte nicht gespeichert werden.",
+      "approved": "Du hast als ICE-Kontakt für diesen Törn bestätigt.",
+      "rejected": "Du hast abgelehnt, ICE-Kontakt für diesen Törn zu sein.",
+      "iceApprovedNote": "Du hast bestätigt, ICE-Kontakt für diesen Törn sein zu können.",
+      "iceRejectedNote": "Du hast abgelehnt, ICE-Kontakt für diesen Törn zu sein."
+    },
     "routes": {
       "heading": "Routen",
       "addAltHeading": "Alternative Route hinzufügen",
@@ -1186,6 +1204,8 @@
     "actions": {
       "heading": "Aktionen",
       "notActiveHint": "Der Törn ist noch nicht aktiv. Aktiviere ihn manuell, oder er wird zur geplanten Abfahrtszeit automatisch aktiviert.",
+      "iceConfirmationPendingHint": "Warten auf die Bestätigung des ICE-Kontakts, bevor dieser Törn aktiviert werden kann.",
+      "iceConfirmationRejectedHint": "Der zugewiesene ICE-Kontakt hat diesen Törn abgelehnt. Wähle einen anderen, bevor du aktivierst.",
       "activateButton": "Törn aktivieren",
       "snoozeLabel": "Ankunftszeit verschieben",
       "verifyButton": "✓ Ankunft bestätigen",
@@ -1647,6 +1667,22 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.6.0",
+        "date": "2026-07-19",
+        "sections": {
+          "new": [
+            "Wenn du eine neue Fahrt planst und einen Notfallkontakt auswählst, der bereits ein Konto hat, erhält er jetzt eine kurze Anfrage, um zu bestätigen, dass er dein Kontakt für genau diese Fahrt sein möchte - so legst du ab und weißt, dass er bereit ist, und er kann direkt in seiner Übersicht zustimmen oder ablehnen."
+          ],
+          "improved": [
+            "Wenn du Telegram verknüpft und als bevorzugten Weg gewählt hast, von uns zu hören, erreichen dich jetzt deutlich mehr unserer Nachrichten - Passwortänderungen, Sicherheitshinweise und deine eigenen Fahrterinnerungen - auch dort, nicht mehr nur Alarme für Notfallkontakte.",
+            "Dein Profilbild wird jetzt zusammen mit deinen übrigen Angaben gespeichert, wenn du auf Änderungen speichern tippst - kein separater Foto-Knopf mehr, an den du denken musst."
+          ],
+          "fixed": [
+            "Ein neues Profil-, Crew- oder Bootsfoto erscheint jetzt sofort nach dem Hochladen, statt dass das alte Bild noch eine Weile hängen bleibt."
+          ]
+        }
+      },
       {
         "version": "v1.5.0",
         "date": "2026-07-18",

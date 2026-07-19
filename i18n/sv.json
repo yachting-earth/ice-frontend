@@ -59,6 +59,9 @@
     "ICE_CONTACT_REQUIRED": "En nödkontakt måste kopplas till resan innan den kan aktiveras.",
     "ICE_CONTACT_DEACTIVATED": "Nödkontaktens konto har tagits bort och kan inte längre användas. Välj en annan kontakt eller bjud in personen på nytt.",
     "ICE_CONTACT_UNCONFIRMED": "Resans nödkontakt har inte bekräftat ännu. Personen måste bekräfta innan resan kan aktiveras.",
+    "ICE_TRIP_CONFIRMATION_PENDING": "Resans nödkontakt har inte bekräftat att de kan vara nödkontakt för just denna resa ännu. Resan kan aktiveras när de godkänt den från sitt konto.",
+    "ICE_TRIP_CONFIRMATION_REJECTED": "Resans nödkontakt avböjde att vara nödkontakt för denna resa. Välj en annan kontakt innan du aktiverar.",
+    "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Det finns ingen väntande nödkontaktsbekräftelse för denna resa.",
     "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter en nödsituation och kan inte längre ändras.",
     "TRIP_NOT_ACTIVE": "SAR-åtkomst kan bara begäras för en aktiv resa.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
@@ -228,7 +231,8 @@
       "crew": "Besättning",
       "ice": "Nödkontakt"
     },
-    "readOnly": "Skrivskyddad"
+    "readOnly": "Skrivskyddad",
+    "pendingIceConfirmation": "⏳ Väntar på din bekräftelse"
   },
   "login": {
     "tagline": "Trygg resa, trygg ankomst",
@@ -362,9 +366,6 @@
     "photoHeading": "Foto",
     "photoChangeLabel": "Byt foto (valfritt)",
     "photoHint": "Används av sjöräddningen för att identifiera dig som skeppare. JPEG/PNG, max 10 MB.",
-    "photoSubmit": "Spara foto",
-    "photoSaving": "Sparar…",
-    "photoChooseFirst": "Välj en bild först.",
     "photoSaveFailed": "Kunde inte spara fotot.",
     "photoSaved": "Fotot har sparats.",
     "detailsHeading": "Mina uppgifter",
@@ -444,6 +445,7 @@
     "submitting": "Skapar resa...",
     "scheduleConflictNotice": "Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.",
     "created": "Resa skapad",
+    "iceConfirmationRequested": "Din nödkontakt har redan bekräftat sitt konto, men behöver logga in och godkänna att vara nödkontakt för just den här resan innan den kan aktiveras.",
     "crewInvited": "Bjöd in {count} personer till resan.",
     "crewInvitePartial": "Bjöd in {success} av {total} personer till resan.",
     "crewInviteFailed": "Kunde inte bjuda in den valda besättningen automatiskt. Lägg till dem manuellt från resesidan.",
@@ -1117,6 +1119,22 @@
       "changed": "Nödkontakten har bytts.",
       "deactivatedWarning": "Nödkontakten som är kopplad till resan har inaktiverats eftersom kontot togs bort. Välj en annan kontakt eller bjud in personen på nytt innan du aktiverar resan."
     },
+    "iceConfirmation": {
+      "ownerHeading": "Nödkontaktens bekräftelse för denna resa",
+      "statusPending": "Väntar på att {name} ska bekräfta att de kan vara nödkontakt för denna resa. Resan kan inte aktiveras förrän de gjort det.",
+      "statusApproved": "{name} bekräftade att de kan vara nödkontakt för denna resa.",
+      "statusRejected": "{name} avböjde att vara nödkontakt för denna resa. Välj en annan nödkontakt innan du aktiverar.",
+      "iceHeading": "Denna resa behöver din bekräftelse",
+      "iceDescription": "{skipperName} har utsett dig till sin nödkontakt (ICE) för denna resa. Bekräfta att du kan och vill ta på dig den rollen för just den här resan - skepparen kan inte aktivera resan förrän du svarat.",
+      "approveButton": "Godkänn - jag kan vara nödkontakt för denna resa",
+      "rejectButton": "Avböj",
+      "rejectConfirm": "Avböja att vara nödkontakt för denna resa? Skepparen meddelas och behöver välja någon annan.",
+      "respondFailed": "Kunde inte spara ditt svar.",
+      "approved": "Du har bekräftat dig som nödkontakt för denna resa.",
+      "rejected": "Du har avböjt att vara nödkontakt för denna resa.",
+      "iceApprovedNote": "Du bekräftade att du kan vara nödkontakt för denna resa.",
+      "iceRejectedNote": "Du avböjde att vara nödkontakt för denna resa."
+    },
     "routes": {
       "heading": "Rutter",
       "addAltHeading": "Lägg till alternativ rutt",
@@ -1186,6 +1204,8 @@
     "actions": {
       "heading": "Åtgärder",
       "notActiveHint": "Resan är inte aktiv än. Aktivera den manuellt, eller så aktiveras den automatiskt vid tiden för registrerad avfärd.",
+      "iceConfirmationPendingHint": "Väntar på att nödkontakten ska bekräfta denna resa innan den kan aktiveras.",
+      "iceConfirmationRejectedHint": "Den tilldelade nödkontakten avböjde denna resa. Välj en annan innan du aktiverar.",
       "activateButton": "Aktivera resa",
       "snoozeLabel": "Snooza ankomsttid",
       "verifyButton": "✓ Verifiera ankomst",
@@ -1658,6 +1678,22 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.6.0",
+        "date": "2026-07-19",
+        "sections": {
+          "new": [
+            "När du planerar en ny resa och väljer en nödkontakt som redan har ett konto får de nu en snabb förfrågan om att godkänna att vara din kontakt för just den resan - så att du ger dig av med vetskapen om att de är redo, och de kan godkänna eller tacka nej direkt från sin översikt."
+          ],
+          "improved": [
+            "Om du har kopplat Telegram och valt det som ditt föredragna sätt att höra från oss når nu betydligt fler av våra meddelanden - lösenordsändringar, säkerhetsvarningar och dina egna resepåminnelser - fram även där, inte bara larm till nödkontakter.",
+            "Din profilbild sparas nu tillsammans med resten av dina uppgifter när du trycker på Spara ändringar - ingen separat bildknapp att komma ihåg längre."
+          ],
+          "fixed": [
+            "En ny profil-, besättnings- eller båtbild visas nu direkt efter att du laddat upp den, i stället för att den gamla bilden ligger kvar en stund."
+          ]
+        }
+      },
       {
         "version": "v1.5.0",
         "date": "2026-07-18",

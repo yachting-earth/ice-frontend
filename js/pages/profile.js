@@ -28,7 +28,6 @@ const ProfilePage = {
                             <small>${escapeHtml(t('profile.photoHint'))}</small>
                         </div>
                     </div>
-                    <button class="btn btn-secondary btn-sm" type="button" id="photo-submit" style="margin-top: var(--space-3);">${escapeHtml(t('profile.photoSubmit'))}</button>
 
                     <div id="profile-alert"></div>
                     <div id="profile-form-container">
@@ -122,8 +121,6 @@ const ProfilePage = {
                 bindLightboxImages(document);
             }
         });
-        document.getElementById('photo-submit').addEventListener('click', () => this.handlePhotoSubmit());
-
         document.getElementById('profile-channel').addEventListener('change', (e) => this.handleChannelChange(e.target.value));
 
         document.getElementById('password-form').addEventListener('submit', (e) => {
@@ -286,37 +283,6 @@ const ProfilePage = {
         } catch (err) { /* leave the preview hidden */ }
     },
 
-    async handlePhotoSubmit() {
-        const alertBox = document.getElementById('photo-alert');
-        const photoFile = document.getElementById('profile-photo').files[0];
-
-        if (!photoFile) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('profile.photoChooseFirst'))}</div>`;
-            return;
-        }
-
-        const submitBtn = document.getElementById('photo-submit');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span class="spinner"></span> ${escapeHtml(t('profile.photoSaving'))}`;
-
-        const formData = new FormData();
-        formData.append('photo', photoFile);
-        const response = await apiUpload('/user/photo', formData, 'PUT');
-
-        submitBtn.disabled = false;
-        submitBtn.textContent = t('profile.photoSubmit');
-
-        if (!response.success) {
-            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.photoSaveFailed')))}</div>`;
-            return;
-        }
-
-        alertBox.innerHTML = '';
-        Auth.updateUser({ picture: String(Date.now()) });
-        renderTopbar();
-        showToast(t('profile.photoSaved'), 'success');
-    },
-
     async loadProfile() {
         const formContainer = document.getElementById('profile-form-container');
         const response = await apiRequest('/user/profile');
@@ -411,10 +377,9 @@ const ProfilePage = {
             })
         });
 
-        submitBtn.disabled = false;
-
         const alertBox = document.getElementById('profile-alert');
         if (!response.success) {
+            submitBtn.disabled = false;
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.saveFailed')))}</div>`;
             return;
         }
@@ -426,6 +391,26 @@ const ProfilePage = {
         renderTopbar();
         TZ.set(values.timezone || null);
         I18n.setLang(values.locale);
+
+        const photoFile = document.getElementById('profile-photo').files[0];
+        const photoAlertBox = document.getElementById('photo-alert');
+        if (photoFile) {
+            const formData = new FormData();
+            formData.append('photo', photoFile);
+            const photoResponse = await apiUpload('/user/photo', formData, 'PUT');
+
+            if (!photoResponse.success) {
+                submitBtn.disabled = false;
+                photoAlertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(photoResponse.code ? t.error(photoResponse.code) : (photoResponse.error || t('profile.photoSaveFailed')))}</div>`;
+                return;
+            }
+
+            photoAlertBox.innerHTML = '';
+            Auth.updateUser({ picture: String(Date.now()) });
+            renderTopbar();
+        }
+
+        submitBtn.disabled = false;
 
         if (response.data.email_change_pending) {
             // Reset the field back to the current address so it doesn't look

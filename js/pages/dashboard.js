@@ -162,6 +162,7 @@ const DashboardPage = {
         const isInvited = trip.viewer_role && trip.viewer_role !== 'owner';
         const overdueState = this.getOverdueState(trip);
         const stateClass = overdueState ? ` trip-card--${overdueState}` : '';
+        const pendingIceConfirmation = trip.viewer_role === 'ice' && trip.ice_trip_confirmation_status === 'pending';
 
         return `
             <div class="trip-card${isInvited ? ' trip-card--invited' : ''}${stateClass}">
@@ -170,6 +171,7 @@ const DashboardPage = {
                         <span class="trip-card__title">${escapeHtml(vesselName)}</span>
                         <span class="badge badge-${trip.status}">${escapeHtml(t('trip.status.' + trip.status) || trip.status)}</span>
                         ${isInvited ? `<span class="badge badge-role-${trip.viewer_role}">${escapeHtml(t('dashboard.role.' + trip.viewer_role))}</span>` : ''}
+                        ${pendingIceConfirmation ? `<span class="badge badge-warning">${escapeHtml(t('dashboard.pendingIceConfirmation'))}</span>` : ''}
                         ${isInvited ? `<span class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(t('dashboard.readOnly'))}</span>` : ''}
                     </div>
                     <div class="trip-card__meta">

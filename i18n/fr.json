@@ -59,6 +59,9 @@
     "ICE_CONTACT_REQUIRED": "Un contact ICE doit être associé à cette sortie avant qu'elle puisse être activée.",
     "ICE_CONTACT_DEACTIVATED": "Le compte de ce contact ICE a été supprimé ; il ne peut donc plus être utilisé. Choisissez un autre contact ou réinvitez-le.",
     "ICE_CONTACT_UNCONFIRMED": "Le contact ICE de cette sortie n'a pas encore confirmé. Il doit confirmer avant que la sortie puisse être activée.",
+    "ICE_TRIP_CONFIRMATION_PENDING": "Le contact ICE de cette sortie n'a pas encore confirmé pouvoir être contact ICE pour cette sortie précise. Elle pourra être activée une fois qu'il l'aura approuvée depuis son compte.",
+    "ICE_TRIP_CONFIRMATION_REJECTED": "Le contact ICE de cette sortie a décliné ce rôle pour cette sortie. Choisissez un autre contact avant d'activer.",
+    "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Cette sortie n'a aucune demande de confirmation ICE en attente.",
     "TRIP_LOCKED": "Cette sortie est verrouillée pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence, et ne peut plus être modifiée.",
     "TRIP_NOT_ACTIVE": "L'accès SAR ne peut être demandé que pour une sortie active.",
     "CONTACT_RATE_LIMITED": "Vous avez atteint la limite quotidienne d'envois via le formulaire de contact. Merci de réessayer demain.",
@@ -228,7 +231,8 @@
       "crew": "Équipage",
       "ice": "Contact ICE"
     },
-    "readOnly": "Lecture seule"
+    "readOnly": "Lecture seule",
+    "pendingIceConfirmation": "⏳ En attente de votre confirmation"
   },
   "login": {
     "tagline": "Bon vent, retour en toute sécurité",
@@ -362,9 +366,6 @@
     "photoHeading": "Photo",
     "photoChangeLabel": "Changer la photo (facultatif)",
     "photoHint": "Utilisée par les secours pour vous identifier en tant que skipper. JPEG/PNG, 10 Mo max.",
-    "photoSubmit": "Enregistrer la photo",
-    "photoSaving": "Enregistrement…",
-    "photoChooseFirst": "Choisissez d'abord une image.",
     "photoSaveFailed": "Impossible d'enregistrer la photo.",
     "photoSaved": "La photo a été enregistrée.",
     "detailsHeading": "Mes informations",
@@ -444,6 +445,7 @@
     "submitting": "Création de la sortie…",
     "scheduleConflictNotice": "Remarque : une autre sortie avec le même numéro MMSI est déjà programmée sur une période qui se chevauche.",
     "created": "Sortie créée",
+    "iceConfirmationRequested": "Votre contact ICE a déjà confirmé son compte, mais doit se connecter et approuver son rôle de contact ICE pour cette sortie précise avant qu'elle puisse être activée.",
     "crewInvited": "{count} personne(s) invitée(s) à la sortie.",
     "crewInvitePartial": "{success} personne(s) sur {total} invitée(s) à la sortie.",
     "crewInviteFailed": "Impossible d'inviter automatiquement l'équipage sélectionné. Ajoutez-les manuellement depuis la page de la sortie.",
@@ -1117,6 +1119,22 @@
       "changed": "Le contact ICE a été changé.",
       "deactivatedWarning": "Le contact ICE associé à cette sortie a été désactivé car son compte a été supprimé. Choisissez un autre contact ou réinvitez-le avant d'activer la sortie."
     },
+    "iceConfirmation": {
+      "ownerHeading": "Confirmation ICE pour cette sortie",
+      "statusPending": "En attente de la confirmation de {name} pour être contact ICE de cette sortie. La sortie ne peut pas être activée tant qu'il/elle n'a pas répondu.",
+      "statusApproved": "{name} a confirmé pouvoir être contact ICE pour cette sortie.",
+      "statusRejected": "{name} a décliné le rôle de contact ICE pour cette sortie. Choisissez un autre contact ICE avant d'activer.",
+      "iceHeading": "Cette sortie a besoin de votre confirmation",
+      "iceDescription": "{skipperName} vous a désigné comme contact ICE (en cas d'urgence) pour cette sortie. Merci de confirmer que vous pouvez et souhaitez assumer ce rôle pour cette sortie précise - le skipper ne peut pas l'activer tant que vous n'avez pas répondu.",
+      "approveButton": "Approuver - je peux être contact ICE pour cette sortie",
+      "rejectButton": "Décliner",
+      "rejectConfirm": "Décliner le rôle de contact ICE pour cette sortie ? Le skipper sera informé et devra choisir quelqu'un d'autre.",
+      "respondFailed": "Impossible d'enregistrer votre réponse.",
+      "approved": "Vous avez confirmé être contact ICE pour cette sortie.",
+      "rejected": "Vous avez décliné le rôle de contact ICE pour cette sortie.",
+      "iceApprovedNote": "Vous avez confirmé pouvoir être contact ICE pour cette sortie.",
+      "iceRejectedNote": "Vous avez décliné être contact ICE pour cette sortie."
+    },
     "routes": {
       "heading": "Itinéraires",
       "addAltHeading": "Ajouter un itinéraire alternatif",
@@ -1186,6 +1204,8 @@
     "actions": {
       "heading": "Actions",
       "notActiveHint": "La sortie n'est pas encore active. Activez-la manuellement, ou elle s'activera automatiquement à l'heure de départ prévue.",
+      "iceConfirmationPendingHint": "En attente de la confirmation du contact ICE avant que cette sortie puisse être activée.",
+      "iceConfirmationRejectedHint": "Le contact ICE assigné a décliné cette sortie. Choisissez-en un autre avant d'activer.",
       "activateButton": "Activer la sortie",
       "snoozeLabel": "Reporter l'heure d'arrivée",
       "verifyButton": "✓ Confirmer l'arrivée",
@@ -1647,6 +1667,22 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.6.0",
+        "date": "2026-07-19",
+        "sections": {
+          "new": [
+            "Lorsque vous planifiez une nouvelle sortie et choisissez un contact d'urgence qui possède déjà un compte, il reçoit désormais une demande rapide pour confirmer qu'il accepte d'être votre contact pour cette sortie précise - vous partez ainsi en sachant qu'il est prêt, et il peut accepter ou refuser directement depuis son tableau de bord."
+          ],
+          "improved": [
+            "Si vous avez relié Telegram et en avez fait votre moyen préféré de recevoir nos messages, bien plus de nos communications - changements de mot de passe, alertes de sécurité et vos propres rappels de sortie - vous parviennent désormais là aussi, et non plus seulement les alertes destinées aux contacts d'urgence.",
+            "Votre photo de profil s'enregistre désormais avec le reste de vos informations lorsque vous appuyez sur Enregistrer les modifications - plus de bouton photo séparé à retenir."
+          ],
+          "fixed": [
+            "Une nouvelle photo de profil, d'équipier ou de bateau s'affiche désormais immédiatement après son envoi, au lieu que l'ancienne image persiste un moment."
+          ]
+        }
+      },
       {
         "version": "v1.5.0",
         "date": "2026-07-18",

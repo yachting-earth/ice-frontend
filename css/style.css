@@ -725,6 +725,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .badge-log-error { color: var(--color-danger); background: var(--color-danger-bg); }
 .badge-role-crew { color: var(--color-info); background: var(--color-info-bg); }
 .badge-role-ice { color: var(--color-warning); background: var(--color-warning-bg); }
+.badge-warning { color: var(--color-warning); background: var(--color-warning-bg); }
 
 /* ==================== Admin dashboard ==================== */
 

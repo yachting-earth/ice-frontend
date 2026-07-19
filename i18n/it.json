@@ -59,6 +59,9 @@
     "ICE_CONTACT_REQUIRED": "È necessario assegnare un contatto ICE a questo viaggio prima di poterlo attivare.",
     "ICE_CONTACT_DEACTIVATED": "L'account di questo contatto ICE è stato rimosso e non può più essere utilizzato. Scegli un altro contatto o invitalo di nuovo.",
     "ICE_CONTACT_UNCONFIRMED": "Il contatto ICE di questo viaggio non ha ancora confermato. Deve confermare prima che il viaggio possa essere attivato.",
+    "ICE_TRIP_CONFIRMATION_PENDING": "Il contatto ICE di questo viaggio non ha ancora confermato di poter essere contatto ICE per questo specifico viaggio. Potrà essere attivato una volta che lo avrà approvato dal proprio account.",
+    "ICE_TRIP_CONFIRMATION_REJECTED": "Il contatto ICE di questo viaggio ha rifiutato questo ruolo per questo viaggio. Scegli un altro contatto prima di attivare.",
+    "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Questo viaggio non ha richieste di conferma ICE in sospeso.",
     "TRIP_LOCKED": "Questo viaggio è bloccato per motivi di sicurezza marittima/tracciabilità in seguito a un'emergenza e non può più essere modificato.",
     "TRIP_NOT_ACTIVE": "L'accesso SAR può essere richiesto solo per un viaggio attivo.",
     "CONTACT_RATE_LIMITED": "Hai raggiunto il limite giornaliero di invii dal modulo di contatto. Riprova domani.",
@@ -228,7 +231,8 @@
       "crew": "Equipaggio",
       "ice": "Contatto ICE"
     },
-    "readOnly": "Sola lettura"
+    "readOnly": "Sola lettura",
+    "pendingIceConfirmation": "⏳ In attesa della tua conferma"
   },
   "login": {
     "tagline": "Buona navigazione, buon rientro",
@@ -362,9 +366,6 @@
     "photoHeading": "Foto",
     "photoChangeLabel": "Cambia foto (facoltativo)",
     "photoHint": "Utilizzata dal soccorso in mare per identificarti come skipper. JPEG/PNG, massimo 10 MB.",
-    "photoSubmit": "Salva foto",
-    "photoSaving": "Salvataggio…",
-    "photoChooseFirst": "Scegli prima un'immagine.",
     "photoSaveFailed": "Impossibile salvare la foto.",
     "photoSaved": "La foto è stata salvata.",
     "detailsHeading": "I miei dati",
@@ -444,6 +445,7 @@
     "submitting": "Creazione viaggio…",
     "scheduleConflictNotice": "Nota: è già programmato un altro viaggio con lo stesso numero MMSI in un periodo di tempo che si sovrappone.",
     "created": "Viaggio creato",
+    "iceConfirmationRequested": "Il tuo contatto ICE ha già confermato il proprio account, ma deve accedere e approvare il ruolo di contatto ICE per questo specifico viaggio prima che possa essere attivato.",
     "crewInvited": "Invitate {count} persone al viaggio.",
     "crewInvitePartial": "Invitate {success} persone su {total} al viaggio.",
     "crewInviteFailed": "Impossibile invitare automaticamente l'equipaggio selezionato. Aggiungilo manualmente dalla pagina del viaggio.",
@@ -1117,6 +1119,22 @@
       "changed": "Il contatto ICE è stato cambiato.",
       "deactivatedWarning": "Il contatto ICE assegnato a questo viaggio è stato disattivato perché il suo account è stato rimosso. Scegli un altro contatto o invitalo di nuovo prima di attivare il viaggio."
     },
+    "iceConfirmation": {
+      "ownerHeading": "Conferma ICE per questo viaggio",
+      "statusPending": "In attesa che {name} confermi di poter essere contatto ICE per questo viaggio. Il viaggio non può essere attivato finché non lo fa.",
+      "statusApproved": "{name} ha confermato di poter essere contatto ICE per questo viaggio.",
+      "statusRejected": "{name} ha rifiutato di essere contatto ICE per questo viaggio. Scegli un altro contatto ICE prima di attivare.",
+      "iceHeading": "Questo viaggio richiede la tua conferma",
+      "iceDescription": "{skipperName} ti ha assegnato come suo contatto ICE (in caso di emergenza) per questo viaggio. Conferma di poter e voler assumere questo ruolo per questo specifico viaggio - lo skipper non potrà attivarlo finché non risponderai.",
+      "approveButton": "Approva - posso essere contatto ICE per questo viaggio",
+      "rejectButton": "Rifiuta",
+      "rejectConfirm": "Rifiutare di essere contatto ICE per questo viaggio? Lo skipper verrà avvisato e dovrà scegliere qualcun altro.",
+      "respondFailed": "Impossibile salvare la tua risposta.",
+      "approved": "Hai confermato come contatto ICE per questo viaggio.",
+      "rejected": "Hai rifiutato di essere contatto ICE per questo viaggio.",
+      "iceApprovedNote": "Hai confermato di poter essere contatto ICE per questo viaggio.",
+      "iceRejectedNote": "Hai rifiutato di essere contatto ICE per questo viaggio."
+    },
     "routes": {
       "heading": "Rotte",
       "addAltHeading": "Aggiungi rotta alternativa",
@@ -1186,6 +1204,8 @@
     "actions": {
       "heading": "Azioni",
       "notActiveHint": "Il viaggio non è ancora attivo. Attivalo manualmente, oppure si attiverà automaticamente all'orario di partenza programmato.",
+      "iceConfirmationPendingHint": "In attesa che il contatto ICE confermi questo viaggio prima che possa essere attivato.",
+      "iceConfirmationRejectedHint": "Il contatto ICE assegnato ha rifiutato questo viaggio. Assegnane un altro prima di attivare.",
       "activateButton": "Attiva viaggio",
       "snoozeLabel": "Posticipa orario di arrivo",
       "verifyButton": "✓ Verifica arrivo",
@@ -1647,6 +1667,22 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.6.0",
+        "date": "2026-07-19",
+        "sections": {
+          "new": [
+            "Quando pianifichi una nuova uscita e scegli un contatto di emergenza che ha già un account, questo riceve ora una rapida richiesta di approvare di essere il tuo contatto per quella specifica uscita - così parti sapendo che è pronto, e può accettare o rifiutare direttamente dalla sua bacheca."
+          ],
+          "improved": [
+            "Se hai collegato Telegram e lo hai scelto come tuo modo preferito per ricevere le nostre comunicazioni, molti più dei nostri messaggi - modifiche della password, avvisi di sicurezza e i promemoria delle tue uscite - ti arrivano ora anche lì, non solo gli allarmi destinati ai contatti di emergenza.",
+            "La tua foto profilo ora viene salvata insieme al resto dei tuoi dati quando premi Salva modifiche - non c'è più un pulsante separato per la foto da ricordare."
+          ],
+          "fixed": [
+            "Una nuova foto del profilo, dell'equipaggio o della barca ora compare subito dopo averla caricata, invece di lasciare quella vecchia visibile per un po'."
+          ]
+        }
+      },
       {
         "version": "v1.5.0",
         "date": "2026-07-18",

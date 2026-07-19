@@ -870,6 +870,9 @@ const CreateTripPage = {
         await this.invitePendingCrew(response.data.trip_id);
 
         showToast(t('createTrip.created'), 'success');
+        if (response.data.ice_trip_confirmation_status === 'pending') {
+            showToast(t('createTrip.iceConfirmationRequested'), 'info');
+        }
         location.hash = `#/trips/${response.data.trip_id}`;
     },
 
