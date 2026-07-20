@@ -1668,6 +1668,17 @@
     "sectionFixed": "Corregido",
     "entries": [
       {
+        "version": "v1.7.0",
+        "date": "2026-07-20",
+        "sections": {
+          "fixed": [
+            "Cuando editas uno de tus barcos, ahora la foto actual del barco aparece en el formulario de inmediato, para que puedas ver qué hay guardado antes de decidir si la reemplazas.",
+            "Una vez que confirmas que has llegado bien, la salida finalizada ahora desaparece de tu panel de inmediato y comienza su limpieza automática de 30 días, en lugar de quedarse en tu lista.",
+            "Las entradas largas en la vista de solo lectura de la salida que ven tus contactos de emergencia y de rescate ahora se ajustan correctamente en lugar de salirse del borde de la tarjeta."
+          ]
+        }
+      },
+      {
         "version": "v1.6.0",
         "date": "2026-07-19",
         "sections": {

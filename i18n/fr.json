@@ -1668,6 +1668,17 @@
     "sectionFixed": "Corrections",
     "entries": [
       {
+        "version": "v1.7.0",
+        "date": "2026-07-20",
+        "sections": {
+          "fixed": [
+            "Lorsque vous modifiez l'un de vos bateaux, la photo actuelle du bateau s'affiche désormais immédiatement dans le formulaire, afin que vous puissiez voir ce qui est enregistré avant de décider de la remplacer.",
+            "Une fois que vous avez confirmé votre arrivée en toute sécurité, la sortie terminée disparaît désormais immédiatement de votre tableau de bord et commence son nettoyage automatique de 30 jours, au lieu de rester dans votre liste.",
+            "Les entrées longues dans la vue en lecture seule de la sortie que voient vos contacts d'urgence et de secours passent désormais proprement à la ligne au lieu de dépasser le bord de la carte."
+          ]
+        }
+      },
+      {
         "version": "v1.6.0",
         "date": "2026-07-19",
         "sections": {

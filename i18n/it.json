@@ -1668,6 +1668,17 @@
     "sectionFixed": "Correzioni",
     "entries": [
       {
+        "version": "v1.7.0",
+        "date": "2026-07-20",
+        "sections": {
+          "fixed": [
+            "Quando modifichi una delle tue barche, la foto attuale della barca compare ora subito nel modulo, così puoi vedere cosa è salvato prima di decidere se sostituirla.",
+            "Una volta che confermi di essere arrivato sano e salvo, l'uscita conclusa ora scompare subito dalla tua bacheca e avvia la sua pulizia automatica di 30 giorni, invece di restare nella tua lista.",
+            "Le voci lunghe nella vista di sola lettura dell'uscita che vedono i tuoi contatti di emergenza e di soccorso ora vanno a capo in modo ordinato invece di sconfinare oltre il bordo della scheda."
+          ]
+        }
+      },
+      {
         "version": "v1.6.0",
         "date": "2026-07-19",
         "sections": {

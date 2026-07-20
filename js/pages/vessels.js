@@ -223,6 +223,20 @@ const VesselsPage = {
         } catch (err) { /* leave the photo hidden */ }
     },
 
+    // Photos are auth-protected, so a plain <img src> won't do (no way to
+    // attach the Authorization header) - fetch as blob and swap in
+    async loadVesselPhotoPreview(vesselId) {
+        const preview = document.getElementById('vessel-photo-preview');
+        try {
+            const response = await fetch(`${CONFIG.API_BASE_URL}/vessels/${vesselId}/photo`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            });
+            if (!response.ok) return;
+            preview.src = URL.createObjectURL(await response.blob());
+            preview.hidden = false;
+        } catch (err) { /* leave the preview hidden */ }
+    },
+
     openForm() {
         document.getElementById('vessel-form-card').hidden = false;
         document.getElementById('vessel-add-toggle').textContent = t('common.close');
@@ -256,7 +270,11 @@ const VesselsPage = {
         document.getElementById('vessel-emergency-beacon').value = vessel.emergency_beacon || '';
         document.getElementById('vessel-photo').value = '';
         const preview = document.getElementById('vessel-photo-preview');
-        preview.hidden = true;
+        if (vessel.photo_path) {
+            this.loadVesselPhotoPreview(vessel.id);
+        } else {
+            preview.hidden = true;
+        }
         document.getElementById('vessel-submit').textContent = t('vessels.form.submitEdit');
         document.getElementById('vessel-cancel').hidden = false;
         document.getElementById('vessel-alert').innerHTML = '';

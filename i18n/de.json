@@ -1668,6 +1668,17 @@
     "sectionFixed": "Behoben",
     "entries": [
       {
+        "version": "v1.7.0",
+        "date": "2026-07-20",
+        "sections": {
+          "fixed": [
+            "Wenn du eines deiner Boote bearbeitest, erscheint jetzt das aktuelle Foto des Bootes sofort im Formular, sodass du sehen kannst, was gespeichert ist, bevor du entscheidest, ob du es ersetzen möchtest.",
+            "Sobald du bestätigt hast, dass du sicher angekommen bist, verschwindet die abgeschlossene Fahrt jetzt sofort aus deiner Übersicht und beginnt ihre automatische 30-Tage-Bereinigung, statt in deiner Liste hängen zu bleiben.",
+            "Lange Einträge in der schreibgeschützten Fahrtansicht, die deine Notfall- und Rettungskontakte sehen, werden jetzt sauber umgebrochen, statt über den Rand der Karte hinauszulaufen."
+          ]
+        }
+      },
+      {
         "version": "v1.6.0",
         "date": "2026-07-19",
         "sections": {

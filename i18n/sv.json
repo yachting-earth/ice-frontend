@@ -62,7 +62,7 @@
     "ICE_TRIP_CONFIRMATION_PENDING": "Resans nödkontakt har inte bekräftat att de kan vara nödkontakt för just denna resa ännu. Resan kan aktiveras när de godkänt den från sitt konto.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "Resans nödkontakt avböjde att vara nödkontakt för denna resa. Välj en annan kontakt innan du aktiverar.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Det finns ingen väntande nödkontaktsbekräftelse för denna resa.",
-    "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter en nödsituation och kan inte längre ändras.",
+    "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter ett larm utlöst och kan inte längre ändras eller raderas. Resan kommer raderas automatiskt 30 dagar efter den avslutats.",
     "TRIP_NOT_ACTIVE": "SAR-åtkomst kan bara begäras för en aktiv resa.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
@@ -1678,6 +1678,17 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.7.0",
+        "date": "2026-07-20",
+        "sections": {
+          "fixed": [
+            "När du redigerar en av dina båtar visas nu båtens nuvarande bild direkt i formuläret, så att du kan se vad som finns sparat innan du bestämmer dig för om du vill byta ut den.",
+            "När du bekräftat att du kommit fram säkert försvinner nu den avslutade resan direkt från din översikt och påbörjar sin automatiska 30-dagarsrensning, i stället för att ligga kvar i din lista.",
+            "Långa rader i den skrivskyddade resevyn som dina nöd- och räddningskontakter ser radbryts nu snyggt i stället för att sträcka sig utanför kortets kant."
+          ]
+        }
+      },
       {
         "version": "v1.6.0",
         "date": "2026-07-19",

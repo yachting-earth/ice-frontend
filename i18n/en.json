@@ -1670,6 +1670,17 @@
     "sectionFixed": "Fixed",
     "entries": [
       {
+        "version": "v1.7.0",
+        "date": "2026-07-20",
+        "sections": {
+          "fixed": [
+            "When you edit one of your boats, its current photo now appears in the form right away, so you can see what's on file before deciding whether to replace it.",
+            "Once you confirm you've arrived safely, the finished trip now leaves your dashboard straight away and starts its automatic 30-day clean-up, instead of lingering in your list.",
+            "Long entries in the read-only trip view your emergency and rescue contacts see now wrap neatly instead of running past the edge of the card."
+          ]
+        }
+      },
+      {
         "version": "v1.6.0",
         "date": "2026-07-19",
         "sections": {
