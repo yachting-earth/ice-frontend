@@ -1691,6 +1691,17 @@ const EN_INLINE = {
     "sectionFixed": "Fixed",
     "entries": [
       {
+        "version": "v1.8.1",
+        "date": "2026-07-22",
+        "sections": {
+          "fixed": [
+            "Confirming that you've arrived safely now works every time — the button had been failing with an error on some trips, and now completes as expected, so you can close out a trip and let your emergency contact know all is well.",
+            "On small phone screens, the buttons for approving or declining a request to be someone's emergency contact now stay neatly inside their card instead of running off the edge.",
+            "Times shown in UTC now always read \"UTC\", instead of appearing as \"GMT\" for some visitors depending on which browser they use."
+          ]
+        }
+      },
+      {
         "version": "v1.8.0",
         "date": "2026-07-22",
         "sections": {

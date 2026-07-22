@@ -1678,6 +1678,17 @@
     "sectionFixed": "Corrections",
     "entries": [
       {
+        "version": "v1.8.1",
+        "date": "2026-07-22",
+        "sections": {
+          "fixed": [
+            "Confirmer que vous êtes bien arrivé fonctionne désormais à chaque fois — le bouton échouait auparavant avec une erreur pour certaines sorties, et se termine maintenant comme prévu, ce qui vous permet de clôturer une sortie et de prévenir votre contact d'urgence que tout va bien.",
+            "Sur les petits écrans de téléphone, les boutons pour accepter ou refuser une demande d'être le contact d'urgence de quelqu'un restent désormais bien à l'intérieur de leur carte au lieu de déborder du bord.",
+            "Les heures affichées en UTC indiquent désormais toujours « UTC », au lieu d'apparaître comme « GMT » pour certains visiteurs selon le navigateur qu'ils utilisent."
+          ]
+        }
+      },
+      {
         "version": "v1.8.0",
         "date": "2026-07-22",
         "sections": {

@@ -67,8 +67,16 @@ function formatDateTime(isoString, { withSeconds = false } = {}) {
             hourCycle: 'h23'
         }).formatToParts(date).reduce((acc, p) => { acc[p.type] = p.value; return acc; }, {});
 
-        const zoneName = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' })
-            .formatToParts(date).find((p) => p.type === 'timeZoneName').value;
+        // Force the literal string "UTC" for the UTC zone rather than trusting
+        // Intl's short timeZoneName: engines disagree on it (V8 renders "UTC",
+        // WebKit/Safari renders "GMT" for the exact same zone/instant), which
+        // is what made the same timestamp read as both "UTC" and "GMT"
+        // depending on the visitor's browser. Every other zone still uses
+        // Intl's own abbreviation (CET, GMT+2, etc.) since those are correct.
+        const zoneName = timeZone === 'UTC'
+            ? 'UTC'
+            : new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' })
+                .formatToParts(date).find((p) => p.type === 'timeZoneName').value;
 
         return `${parts.year}-${parts.month}-${parts.day} `
             + `${parts.hour}:${parts.minute}`

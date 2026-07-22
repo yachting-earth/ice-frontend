@@ -1678,6 +1678,17 @@
     "sectionFixed": "Correzioni",
     "entries": [
       {
+        "version": "v1.8.1",
+        "date": "2026-07-22",
+        "sections": {
+          "fixed": [
+            "Confermare di essere arrivato in sicurezza ora funziona ogni volta — il pulsante prima falliva con un errore per alcune uscite, e ora si completa come previsto, così puoi chiudere un'uscita e far sapere al tuo contatto di emergenza che è tutto a posto.",
+            "Sui piccoli schermi dei telefoni, i pulsanti per accettare o rifiutare la richiesta di essere il contatto di emergenza di qualcuno ora restano ordinatamente all'interno della loro scheda invece di uscire dal bordo.",
+            "Gli orari mostrati in UTC ora indicano sempre \"UTC\", invece di apparire come \"GMT\" per alcuni visitatori a seconda del browser che usano."
+          ]
+        }
+      },
+      {
         "version": "v1.8.0",
         "date": "2026-07-22",
         "sections": {

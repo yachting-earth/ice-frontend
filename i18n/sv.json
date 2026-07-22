@@ -1689,6 +1689,17 @@
     "sectionFixed": "Fixat",
     "entries": [
       {
+        "version": "v1.8.1",
+        "date": "2026-07-22",
+        "sections": {
+          "fixed": [
+            "Att bekräfta att du kommit fram tryggt fungerar nu varje gång — knappen hade tidigare fallerat med ett fel för vissa resor, men slutförs nu som förväntat så att du kan avsluta en resa och låta din nödkontakt veta att allt är väl.",
+            "På små mobilskärmar håller sig knapparna för att godkänna eller avböja en förfrågan om att vara någons nödkontakt nu snyggt inom sitt kort, i stället för att sticka ut över kanten.",
+            "Tider som visas i UTC står nu alltid som \"UTC\", i stället för att visas som \"GMT\" för vissa besökare beroende på vilken webbläsare de använder."
+          ]
+        }
+      },
+      {
         "version": "v1.8.0",
         "date": "2026-07-22",
         "sections": {

@@ -1678,6 +1678,17 @@
     "sectionFixed": "Behoben",
     "entries": [
       {
+        "version": "v1.8.1",
+        "date": "2026-07-22",
+        "sections": {
+          "fixed": [
+            "Das Bestätigen, dass du sicher angekommen bist, funktioniert jetzt jedes Mal — die Schaltfläche schlug zuvor bei manchen Törns mit einem Fehler fehl und wird nun wie erwartet abgeschlossen, sodass du einen Törn abschließen und deinem Notfallkontakt Bescheid geben kannst, dass alles in Ordnung ist.",
+            "Auf kleinen Handybildschirmen bleiben die Schaltflächen zum Annehmen oder Ablehnen einer Anfrage, jemandes Notfallkontakt zu sein, jetzt ordentlich innerhalb ihrer Karte, anstatt über den Rand hinauszulaufen.",
+            "In UTC angezeigte Zeiten stehen jetzt immer als \"UTC\" da, statt für manche Besucher je nach verwendetem Browser als \"GMT\" zu erscheinen."
+          ]
+        }
+      },
+      {
         "version": "v1.8.0",
         "date": "2026-07-22",
         "sections": {

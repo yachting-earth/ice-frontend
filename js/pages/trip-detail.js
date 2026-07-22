@@ -80,8 +80,8 @@ const TripDetailPage = {
                     <p class="text-muted">${escapeHtml(t('tripDetail.iceConfirmation.iceDescription', { skipperName: skipper?.name || '' }))}</p>
                     <div id="ice-confirmation-alert"></div>
                     <div class="btn-group">
-                        <button class="btn btn-primary" type="button" id="ice-confirmation-approve-btn">${escapeHtml(t('tripDetail.iceConfirmation.approveButton'))}</button>
-                        <button class="btn btn-danger" type="button" id="ice-confirmation-reject-btn">${escapeHtml(t('tripDetail.iceConfirmation.rejectButton'))}</button>
+                        <button class="btn btn-primary btn--wrap" type="button" id="ice-confirmation-approve-btn">${escapeHtml(t('tripDetail.iceConfirmation.approveButton'))}</button>
+                        <button class="btn btn-danger btn--wrap" type="button" id="ice-confirmation-reject-btn">${escapeHtml(t('tripDetail.iceConfirmation.rejectButton'))}</button>
                     </div>
                 </div>` : ''}
 

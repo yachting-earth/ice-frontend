@@ -1678,6 +1678,17 @@
     "sectionFixed": "Corregido",
     "entries": [
       {
+        "version": "v1.8.1",
+        "date": "2026-07-22",
+        "sections": {
+          "fixed": [
+            "Confirmar que has llegado a salvo ahora funciona siempre — el botón antes fallaba con un error en algunas travesías, y ahora se completa como se espera, para que puedas cerrar una travesía y avisar a tu contacto de emergencia de que todo está bien.",
+            "En pantallas pequeñas de teléfono, los botones para aceptar o rechazar una solicitud de ser el contacto de emergencia de alguien ahora se mantienen ordenadamente dentro de su tarjeta en lugar de salirse del borde.",
+            "Las horas mostradas en UTC ahora siempre indican \"UTC\", en lugar de aparecer como \"GMT\" para algunos visitantes según el navegador que usen."
+          ]
+        }
+      },
+      {
         "version": "v1.8.0",
         "date": "2026-07-22",
         "sections": {
