@@ -59,6 +59,7 @@
     "ICE_CONTACT_REQUIRED": "È necessario assegnare un contatto ICE a questo viaggio prima di poterlo attivare.",
     "ICE_CONTACT_DEACTIVATED": "L'account di questo contatto ICE è stato rimosso e non può più essere utilizzato. Scegli un altro contatto o invitalo di nuovo.",
     "ICE_CONTACT_UNCONFIRMED": "Il contatto ICE di questo viaggio non ha ancora confermato. Deve confermare prima che il viaggio possa essere attivato.",
+    "ICE_CONTACT_IN_USE": "Impossibile eliminare questo contatto: è assegnato a un viaggio attivo o imminente. Prima riassegna il contatto ICE di quel viaggio.",
     "ICE_TRIP_CONFIRMATION_PENDING": "Il contatto ICE di questo viaggio non ha ancora confermato di poter essere contatto ICE per questo specifico viaggio. Potrà essere attivato una volta che lo avrà approvato dal proprio account.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "Il contatto ICE di questo viaggio ha rifiutato questo ruolo per questo viaggio. Scegli un altro contatto prima di attivare.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Questo viaggio non ha richieste di conferma ICE in sospeso.",
@@ -975,6 +976,15 @@
     "confirmDeleteUser": "Eliminare l'utente {name} ({email}) e tutti i dati associati? L'operazione non può essere annullata.",
     "deleteUserFailed": "Impossibile eliminare l'utente.",
     "userDeleted": "L'utente è stato eliminato.",
+    "confirmDeleteRoute": "Eliminare questa rotta di {skipper}? L'operazione non può essere annullata.",
+    "confirmDeleteVessel": "Eliminare l'imbarcazione {name} (proprietario {owner}) e la sua foto? L'operazione non può essere annullata.",
+    "confirmDeleteIceContact": "Eliminare il contatto ICE {name} aggiunto da {skipper}? L'operazione non può essere annullata.",
+    "routeDeleted": "La rotta è stata eliminata.",
+    "vesselDeleted": "L'imbarcazione è stata eliminata.",
+    "iceContactDeleted": "Il contatto ICE è stato eliminato.",
+    "deleteRouteFailed": "Impossibile eliminare la rotta.",
+    "deleteVesselFailed": "Impossibile eliminare l'imbarcazione.",
+    "deleteIceContactFailed": "Impossibile eliminare il contatto ICE.",
     "stats": {
       "users": "Utenti",
       "routes": "Rotte",
@@ -1667,6 +1677,22 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.8.0",
+        "date": "2026-07-22",
+        "sections": {
+          "improved": [
+            "Finché non hai confermato il tuo indirizzo e-mail, la tua bacheca non mostra più i pulsanti per pianificare un'uscita che comunque non funzionerebbero ancora, così è chiaro che verificare l'e-mail è il primo passo.",
+            "Quando qualcosa che salvi non può andare a buon fine, il motivo compare ora proprio accanto al pulsante che hai premuto e scorre in vista, così è molto più difficile non notarlo in una pagina lunga."
+          ],
+          "fixed": [
+            "Se sposti il tuo arrivo previsto a un orario successivo, ora ti avviseremo di nuovo all'avvicinarsi del nuovo orario, invece di restare in silenzio perché un promemoria precedente era già stato inviato.",
+            "Cambiare la password ora ti disconnette da ogni altro dispositivo, così una sessione lasciata aperta altrove non può restare attiva in seguito.",
+            "Una volta che confermi di essere arrivato sano e salvo dopo che un allarme è già stato lanciato, al tuo contatto di emergenza viene ora inviato il cessato allarme così sa che sei al sicuro.",
+            "Non puoi più rimuovere un contatto di emergenza da cui un'uscita in corso o pianificata dipende ancora, e nel raro caso in cui un'uscita rimanga senza alcun contatto raggiungibile, ora avvisiamo te direttamente invece di fallire in silenzio."
+          ]
+        }
+      },
       {
         "version": "v1.7.0",
         "date": "2026-07-20",

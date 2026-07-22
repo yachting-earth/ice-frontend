@@ -59,6 +59,7 @@
     "ICE_CONTACT_REQUIRED": "An ICE contact must be assigned to this trip before it can be activated.",
     "ICE_CONTACT_DEACTIVATED": "This ICE contact's account was removed, so it can no longer be used. Choose another contact or re-invite them.",
     "ICE_CONTACT_UNCONFIRMED": "This trip's ICE contact hasn't confirmed yet. They must confirm before the trip can be activated.",
+    "ICE_CONTACT_IN_USE": "Can't delete this contact — it's assigned to an active or upcoming trip. Reassign that trip's ICE contact first.",
     "ICE_TRIP_CONFIRMATION_PENDING": "This trip's ICE contact hasn't confirmed they can be ICE for this specific trip yet. It can be activated once they approve it from their account.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "This trip's ICE contact declined to be ICE for this trip. Assign a different contact before activating.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "This trip has no outstanding ICE confirmation request.",
@@ -975,6 +976,15 @@
     "confirmDeleteUser": "Delete the user {name} ({email}) and all associated data? This cannot be undone.",
     "deleteUserFailed": "Could not delete the user.",
     "userDeleted": "The user has been deleted.",
+    "confirmDeleteRoute": "Delete this route by {skipper}? This cannot be undone.",
+    "confirmDeleteVessel": "Delete the boat {name} (owner {owner}) and its photo? This cannot be undone.",
+    "confirmDeleteIceContact": "Delete the ICE contact {name} added by {skipper}? This cannot be undone.",
+    "routeDeleted": "The route has been deleted.",
+    "vesselDeleted": "The boat has been deleted.",
+    "iceContactDeleted": "The ICE contact has been deleted.",
+    "deleteRouteFailed": "Could not delete the route.",
+    "deleteVesselFailed": "Could not delete the boat.",
+    "deleteIceContactFailed": "Could not delete the ICE contact.",
     "stats": {
       "users": "Users",
       "routes": "Routes",
@@ -1669,6 +1679,22 @@
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.8.0",
+        "date": "2026-07-22",
+        "sections": {
+          "improved": [
+            "Until you've confirmed your email address, your dashboard no longer shows trip-planning buttons that wouldn't work yet, so it's clear that verifying your email is the first step.",
+            "When something you're saving can't go through, the reason now appears right next to the button you pressed and scrolls into view, so it's much harder to miss on a long page."
+          ],
+          "fixed": [
+            "If you move your expected arrival to a later time, we'll now remind you again as that new time approaches, instead of staying quiet because an earlier reminder had already been sent.",
+            "Changing your password now signs you out on every other device, so a session left open elsewhere can't stay active afterwards.",
+            "Once you confirm you've arrived safely after an alert has already gone out, your emergency contact is now sent the all-clear so they know you're accounted for.",
+            "You can no longer remove an emergency contact that a live or planned trip still relies on, and in the rare case a trip is left with no reachable contact, we now alert you directly instead of failing quietly."
+          ]
+        }
+      },
       {
         "version": "v1.7.0",
         "date": "2026-07-20",

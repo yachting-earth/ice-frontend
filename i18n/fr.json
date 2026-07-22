@@ -59,6 +59,7 @@
     "ICE_CONTACT_REQUIRED": "Un contact ICE doit être associé à cette sortie avant qu'elle puisse être activée.",
     "ICE_CONTACT_DEACTIVATED": "Le compte de ce contact ICE a été supprimé ; il ne peut donc plus être utilisé. Choisissez un autre contact ou réinvitez-le.",
     "ICE_CONTACT_UNCONFIRMED": "Le contact ICE de cette sortie n'a pas encore confirmé. Il doit confirmer avant que la sortie puisse être activée.",
+    "ICE_CONTACT_IN_USE": "Impossible de supprimer ce contact : il est assigné à une sortie active ou à venir. Réassignez d'abord le contact ICE de cette sortie.",
     "ICE_TRIP_CONFIRMATION_PENDING": "Le contact ICE de cette sortie n'a pas encore confirmé pouvoir être contact ICE pour cette sortie précise. Elle pourra être activée une fois qu'il l'aura approuvée depuis son compte.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "Le contact ICE de cette sortie a décliné ce rôle pour cette sortie. Choisissez un autre contact avant d'activer.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Cette sortie n'a aucune demande de confirmation ICE en attente.",
@@ -975,6 +976,15 @@
     "confirmDeleteUser": "Supprimer l'utilisateur {name} ({email}) et toutes les données associées ? Cette action est irréversible.",
     "deleteUserFailed": "Impossible de supprimer l'utilisateur.",
     "userDeleted": "L'utilisateur a été supprimé.",
+    "confirmDeleteRoute": "Supprimer cet itinéraire de {skipper} ? Cette action est irréversible.",
+    "confirmDeleteVessel": "Supprimer le navire {name} (propriétaire {owner}) et sa photo ? Cette action est irréversible.",
+    "confirmDeleteIceContact": "Supprimer le contact ICE {name} ajouté par {skipper} ? Cette action est irréversible.",
+    "routeDeleted": "L'itinéraire a été supprimé.",
+    "vesselDeleted": "Le navire a été supprimé.",
+    "iceContactDeleted": "Le contact ICE a été supprimé.",
+    "deleteRouteFailed": "Impossible de supprimer l'itinéraire.",
+    "deleteVesselFailed": "Impossible de supprimer le navire.",
+    "deleteIceContactFailed": "Impossible de supprimer le contact ICE.",
     "stats": {
       "users": "Utilisateurs",
       "routes": "Itinéraires",
@@ -1667,6 +1677,22 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.8.0",
+        "date": "2026-07-22",
+        "sections": {
+          "improved": [
+            "Tant que vous n'avez pas confirmé votre adresse e-mail, votre tableau de bord n'affiche plus les boutons de planification de sortie qui ne fonctionneraient pas encore, afin qu'il soit clair que vérifier votre e-mail est la première étape.",
+            "Lorsque quelque chose que vous enregistrez ne peut pas aboutir, la raison apparaît désormais juste à côté du bouton sur lequel vous avez cliqué et défile dans le champ de vision, ce qui la rend bien plus difficile à manquer sur une longue page."
+          ],
+          "fixed": [
+            "Si vous repoussez votre arrivée prévue à une heure ultérieure, nous vous rappellerons désormais à nouveau à l'approche de ce nouveau moment, au lieu de rester silencieux parce qu'un rappel précédent avait déjà été envoyé.",
+            "Changer votre mot de passe vous déconnecte désormais sur tous les autres appareils, afin qu'une session laissée ouverte ailleurs ne puisse plus rester active ensuite.",
+            "Une fois que vous confirmez votre arrivée en toute sécurité après qu'une alerte a déjà été déclenchée, votre contact d'urgence reçoit désormais le message de fin d'alerte afin de savoir que vous êtes sain et sauf.",
+            "Vous ne pouvez plus supprimer un contact d'urgence dont une sortie en cours ou planifiée dépend encore, et dans le rare cas où une sortie se retrouve sans contact joignable, nous vous alertons désormais directement au lieu d'échouer en silence."
+          ]
+        }
+      },
       {
         "version": "v1.7.0",
         "date": "2026-07-20",

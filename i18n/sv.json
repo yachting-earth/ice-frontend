@@ -59,6 +59,7 @@
     "ICE_CONTACT_REQUIRED": "En nödkontakt måste kopplas till resan innan den kan aktiveras.",
     "ICE_CONTACT_DEACTIVATED": "Nödkontaktens konto har tagits bort och kan inte längre användas. Välj en annan kontakt eller bjud in personen på nytt.",
     "ICE_CONTACT_UNCONFIRMED": "Resans nödkontakt har inte bekräftat ännu. Personen måste bekräfta innan resan kan aktiveras.",
+    "ICE_CONTACT_IN_USE": "Det går inte att radera kontakten – den är kopplad till en pågående eller kommande resa. Byt resans nödkontakt först.",
     "ICE_TRIP_CONFIRMATION_PENDING": "Resans nödkontakt har inte bekräftat att de kan vara nödkontakt för just denna resa ännu. Resan kan aktiveras när de godkänt den från sitt konto.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "Resans nödkontakt avböjde att vara nödkontakt för denna resa. Välj en annan kontakt innan du aktiverar.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Det finns ingen väntande nödkontaktsbekräftelse för denna resa.",
@@ -975,6 +976,15 @@
     "confirmDeleteUser": "Radera användaren {name} ({email}) och all tillhörande data? Detta går inte att ångra.",
     "deleteUserFailed": "Kunde inte radera användaren.",
     "userDeleted": "Användaren har raderats.",
+    "confirmDeleteRoute": "Radera den här rutten från {skipper}? Detta går inte att ångra.",
+    "confirmDeleteVessel": "Radera båten {name} (ägare {owner}) och dess foto? Detta går inte att ångra.",
+    "confirmDeleteIceContact": "Radera nödkontakten {name} som lagts till av {skipper}? Detta går inte att ångra.",
+    "routeDeleted": "Rutten har raderats.",
+    "vesselDeleted": "Båten har raderats.",
+    "iceContactDeleted": "Nödkontakten har raderats.",
+    "deleteRouteFailed": "Kunde inte radera rutten.",
+    "deleteVesselFailed": "Kunde inte radera båten.",
+    "deleteIceContactFailed": "Kunde inte radera nödkontakten.",
     "stats": {
       "users": "Användare",
       "routes": "Rutter",
@@ -1678,6 +1688,22 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.8.0",
+        "date": "2026-07-22",
+        "sections": {
+          "improved": [
+            "Innan du har bekräftat din e-postadress visar din översikt inte längre knappar för att planera resor som ändå inte skulle fungera än, så att det blir tydligt att verifiera e-posten är första steget.",
+            "När något du sparar inte går igenom visas nu förklaringen direkt bredvid knappen du tryckte på och rullas in i vyn, så att den är mycket svårare att missa på en lång sida."
+          ],
+          "fixed": [
+            "Om du flyttar din förväntade ankomst till en senare tid påminner vi dig nu igen när den nya tiden närmar sig, i stället för att vara tysta för att en tidigare påminnelse redan hade skickats.",
+            "När du byter lösenord loggas du nu ut på alla andra enheter, så att en session som lämnats öppen någon annanstans inte kan vara aktiv efteråt.",
+            "När du bekräftat att du kommit fram säkert efter att ett larm redan gått ut får din nödkontakt nu ett faran-över-meddelande så att de vet att du är i säkerhet.",
+            "Du kan inte längre ta bort en nödkontakt som en pågående eller planerad resa fortfarande är beroende av, och i det sällsynta fall en resa blir utan nåbar kontakt varnar vi nu dig direkt i stället för att misslyckas i tysthet."
+          ]
+        }
+      },
       {
         "version": "v1.7.0",
         "date": "2026-07-20",

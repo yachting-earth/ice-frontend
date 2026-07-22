@@ -888,6 +888,20 @@ ul { margin: 0; padding: 0; list-style: none; }
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Compact error note anchored right under the save/submit button that
+   triggered it, so the message doesn't rely on the user noticing a toast
+   elsewhere on the page. Sized to its text, not the full row. */
+.inline-save-error {
+    display: inline-block;
+    width: auto;
+    max-width: 280px;
+    padding: var(--space-2) var(--space-3);
+    margin-top: var(--space-2);
+    font-size: var(--font-size-sm);
+    box-shadow: var(--shadow-sm);
+    animation: toast-in 0.18s ease;
+}
+
 /* ==================== Lightbox ==================== */
 
 .lightbox-trigger { cursor: zoom-in; }

@@ -59,6 +59,7 @@
     "ICE_CONTACT_REQUIRED": "Für diesen Törn muss ein ICE-Kontakt festgelegt werden, bevor er aktiviert werden kann.",
     "ICE_CONTACT_DEACTIVATED": "Das Konto dieses ICE-Kontakts wurde entfernt, daher kann er nicht mehr verwendet werden. Wähle einen anderen Kontakt oder lade ihn erneut ein.",
     "ICE_CONTACT_UNCONFIRMED": "Der ICE-Kontakt dieses Törns hat noch nicht bestätigt. Die Bestätigung ist erforderlich, bevor der Törn aktiviert werden kann.",
+    "ICE_CONTACT_IN_USE": "Dieser Kontakt kann nicht gelöscht werden – er ist einem aktiven oder bevorstehenden Törn zugeordnet. Weisen Sie diesem Törn zuerst einen anderen ICE-Kontakt zu.",
     "ICE_TRIP_CONFIRMATION_PENDING": "Der ICE-Kontakt dieses Törns hat noch nicht bestätigt, für genau diesen Törn ICE-Kontakt sein zu können. Der Törn kann aktiviert werden, sobald die Bestätigung im Konto erfolgt ist.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "Der ICE-Kontakt dieses Törns hat diese Rolle für diesen Törn abgelehnt. Wähle einen anderen Kontakt, bevor du aktivierst.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Für diesen Törn liegt keine offene ICE-Bestätigungsanfrage vor.",
@@ -975,6 +976,15 @@
     "confirmDeleteUser": "Benutzer {name} ({email}) und alle zugehörigen Daten löschen? Dies kann nicht rückgängig gemacht werden.",
     "deleteUserFailed": "Der Benutzer konnte nicht gelöscht werden.",
     "userDeleted": "Der Benutzer wurde gelöscht.",
+    "confirmDeleteRoute": "Diese Route von {skipper} löschen? Dies kann nicht rückgängig gemacht werden.",
+    "confirmDeleteVessel": "Das Boot {name} (Eigner {owner}) und sein Foto löschen? Dies kann nicht rückgängig gemacht werden.",
+    "confirmDeleteIceContact": "Den ICE-Kontakt {name}, hinzugefügt von {skipper}, löschen? Dies kann nicht rückgängig gemacht werden.",
+    "routeDeleted": "Die Route wurde gelöscht.",
+    "vesselDeleted": "Das Boot wurde gelöscht.",
+    "iceContactDeleted": "Der ICE-Kontakt wurde gelöscht.",
+    "deleteRouteFailed": "Die Route konnte nicht gelöscht werden.",
+    "deleteVesselFailed": "Das Boot konnte nicht gelöscht werden.",
+    "deleteIceContactFailed": "Der ICE-Kontakt konnte nicht gelöscht werden.",
     "stats": {
       "users": "Benutzer",
       "routes": "Routen",
@@ -1667,6 +1677,22 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.8.0",
+        "date": "2026-07-22",
+        "sections": {
+          "improved": [
+            "Solange du deine E-Mail-Adresse nicht bestätigt hast, zeigt deine Übersicht keine Schaltflächen zum Planen von Fahrten mehr an, die ohnehin noch nicht funktionieren würden, sodass klar ist, dass das Bestätigen der E-Mail der erste Schritt ist.",
+            "Wenn etwas, das du speicherst, nicht durchgeht, erscheint der Grund jetzt direkt neben der Schaltfläche, die du gedrückt hast, und wird ins Blickfeld gescrollt, sodass er auf einer langen Seite viel schwerer zu übersehen ist."
+          ],
+          "fixed": [
+            "Wenn du deine erwartete Ankunft auf eine spätere Zeit verschiebst, erinnern wir dich jetzt erneut, wenn die neue Zeit näher rückt, statt still zu bleiben, weil eine frühere Erinnerung bereits gesendet wurde.",
+            "Beim Ändern deines Passworts wirst du jetzt auf allen anderen Geräten abgemeldet, sodass eine anderswo offen gelassene Sitzung danach nicht aktiv bleiben kann.",
+            "Sobald du bestätigst, dass du sicher angekommen bist, nachdem bereits ein Alarm ausgelöst wurde, erhält dein Notfallkontakt jetzt die Entwarnung, damit er weiß, dass du in Sicherheit bist.",
+            "Du kannst einen Notfallkontakt nicht mehr entfernen, auf den sich eine laufende oder geplante Fahrt noch stützt, und in dem seltenen Fall, dass eine Fahrt ohne erreichbaren Kontakt bleibt, benachrichtigen wir jetzt dich direkt, statt still zu scheitern."
+          ]
+        }
+      },
       {
         "version": "v1.7.0",
         "date": "2026-07-20",

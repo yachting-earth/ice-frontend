@@ -1,9 +1,12 @@
 const DashboardPage = {
     state: {
-        statusFilter: null
+        statusFilter: null,
+        emailVerified: true
     },
 
     async render(container) {
+        this.container = container;
+
         container.innerHTML = `
             <div class="page">
                 <div class="page-header">
@@ -11,17 +14,20 @@ const DashboardPage = {
                         <h1>${escapeHtml(t('dashboard.title'))}</h1>
                         <div class="page-header__meta">${escapeHtml(t('dashboard.subtitle'))}</div>
                     </div>
-                    <a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>
+                    <div id="new-trip-action"></div>
                 </div>
                 <div id="email-verify-warning"></div>
                 <div class="trip-filters" id="trip-filters"></div>
                 <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('dashboard.loadingTrips'))}</div></div>
             </div>`;
 
-        this.renderFilters(container);
+        // Determine verification state before rendering trip-creation UI, so the
+        // "+ New trip" button, status filters and empty-state hint - none of
+        // which are usable yet - never flash for an unverified account.
+        await this.checkEmailVerified();
+        this.renderVerifiedUi(container);
 
         await this.loadTrips();
-        this.checkEmailVerified();
     },
 
     // Read verification state fresh from the server (the stored session flag
@@ -31,6 +37,7 @@ const DashboardPage = {
         if (!response.success) return;
 
         const verified = !!response.data.email_verified;
+        this.state.emailVerified = verified;
         Auth.updateUser({ email_verified: verified });
 
         const box = document.getElementById('email-verify-warning');
@@ -46,6 +53,26 @@ const DashboardPage = {
         document.getElementById('resend-verify-btn').addEventListener('click', () => this.resendVerification());
     },
 
+    // Shows/hides the "+ New trip" button and status filters based on the
+    // current verification state - hidden while unusable to avoid confusion.
+    renderVerifiedUi(container) {
+        const actionBox = container.querySelector('#new-trip-action');
+        if (actionBox) {
+            actionBox.innerHTML = this.state.emailVerified
+                ? `<a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>`
+                : '';
+        }
+
+        const filterBar = container.querySelector('#trip-filters');
+        if (filterBar) {
+            if (this.state.emailVerified) {
+                this.renderFilters(container);
+            } else {
+                filterBar.innerHTML = '';
+            }
+        }
+    },
+
     async resendVerification() {
         const btn = document.getElementById('resend-verify-btn');
         btn.disabled = true;
@@ -54,9 +81,15 @@ const DashboardPage = {
         const response = await apiRequest('/auth/resend-verification', { method: 'POST' });
 
         if (response.success && response.data.already_verified) {
-            // Verified elsewhere in the meantime - drop the banner.
+            // Verified elsewhere in the meantime - drop the banner and reveal
+            // the trip-creation UI that was hidden while unconfirmed.
             Auth.updateUser({ email_verified: true });
             document.getElementById('email-verify-warning').innerHTML = '';
+            this.state.emailVerified = true;
+            if (this.container) {
+                this.renderVerifiedUi(this.container);
+                await this.loadTrips();
+            }
             showToast(t('dashboard.alreadyVerified'), 'success');
             return;
         }
@@ -112,11 +145,15 @@ const DashboardPage = {
 
         const trips = response.data || [];
         if (trips.length === 0) {
-            listContainer.innerHTML = `
+            // The "create your first trip" hint points at an action that's
+            // hidden until the email is verified, so skip it until then.
+            listContainer.innerHTML = this.state.emailVerified
+                ? `
                 <div class="empty-state">
                     <h3>${escapeHtml(t('dashboard.emptyTitle'))}</h3>
                     <p>${escapeHtml(t('dashboard.emptyBody'))}</p>
-                </div>`;
+                </div>`
+                : '';
             return;
         }
 

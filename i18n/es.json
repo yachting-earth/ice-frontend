@@ -59,6 +59,7 @@
     "ICE_CONTACT_REQUIRED": "Este viaje necesita un contacto ICE asignado antes de poder activarse.",
     "ICE_CONTACT_DEACTIVATED": "La cuenta de este contacto ICE se ha eliminado, por lo que ya no se puede usar. Elige otro contacto o vuelve a invitarlo.",
     "ICE_CONTACT_UNCONFIRMED": "El contacto ICE de este viaje todavía no ha confirmado. Debe confirmar antes de que el viaje pueda activarse.",
+    "ICE_CONTACT_IN_USE": "No se puede eliminar este contacto: está asignado a un viaje activo o próximo. Reasigna primero el contacto ICE de ese viaje.",
     "ICE_TRIP_CONFIRMATION_PENDING": "El contacto ICE de este viaje todavía no ha confirmado poder ser contacto ICE para este viaje concreto. Podrá activarse en cuanto lo apruebe desde su cuenta.",
     "ICE_TRIP_CONFIRMATION_REJECTED": "El contacto ICE de este viaje declinó este papel para este viaje. Elige otro contacto antes de activarlo.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Este viaje no tiene ninguna solicitud de confirmación ICE pendiente.",
@@ -975,6 +976,15 @@
     "confirmDeleteUser": "¿Eliminar al usuario {name} ({email}) y todos los datos asociados? Esta acción no se puede deshacer.",
     "deleteUserFailed": "No se pudo eliminar al usuario.",
     "userDeleted": "El usuario ha sido eliminado.",
+    "confirmDeleteRoute": "¿Eliminar esta ruta de {skipper}? Esta acción no se puede deshacer.",
+    "confirmDeleteVessel": "¿Eliminar la embarcación {name} (propietario {owner}) y su foto? Esta acción no se puede deshacer.",
+    "confirmDeleteIceContact": "¿Eliminar el contacto ICE {name} añadido por {skipper}? Esta acción no se puede deshacer.",
+    "routeDeleted": "La ruta se ha eliminado.",
+    "vesselDeleted": "La embarcación se ha eliminado.",
+    "iceContactDeleted": "El contacto ICE se ha eliminado.",
+    "deleteRouteFailed": "No se pudo eliminar la ruta.",
+    "deleteVesselFailed": "No se pudo eliminar la embarcación.",
+    "deleteIceContactFailed": "No se pudo eliminar el contacto ICE.",
     "stats": {
       "users": "Usuarios",
       "routes": "Rutas",
@@ -1667,6 +1677,22 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.8.0",
+        "date": "2026-07-22",
+        "sections": {
+          "improved": [
+            "Hasta que hayas confirmado tu dirección de correo electrónico, tu panel ya no muestra botones para planificar salidas que todavía no funcionarían, de modo que quede claro que verificar tu correo es el primer paso.",
+            "Cuando algo que guardas no puede completarse, el motivo aparece ahora justo al lado del botón que pulsaste y se desplaza a la vista, así es mucho más difícil pasarlo por alto en una página larga."
+          ],
+          "fixed": [
+            "Si mueves tu llegada prevista a una hora posterior, ahora te avisaremos de nuevo cuando se acerque esa nueva hora, en lugar de quedarnos en silencio porque ya se había enviado un aviso anterior.",
+            "Cambiar tu contraseña ahora cierra tu sesión en todos los demás dispositivos, de modo que una sesión dejada abierta en otro sitio no pueda seguir activa después.",
+            "Una vez que confirmas que has llegado bien después de que ya se haya emitido una alerta, ahora se envía el aviso de que todo está en orden a tu contacto de emergencia para que sepa que estás a salvo.",
+            "Ya no puedes eliminar un contacto de emergencia del que todavía depende una salida activa o planificada, y en el raro caso de que una salida quede sin ningún contacto localizable, ahora te avisamos directamente en lugar de fallar en silencio."
+          ]
+        }
+      },
       {
         "version": "v1.7.0",
         "date": "2026-07-20",

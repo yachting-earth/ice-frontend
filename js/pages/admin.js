@@ -240,6 +240,7 @@ const AdminPage = {
                             <th>${escapeHtml(t('admin.table.tripStatus'))}</th>
                             <th>${escapeHtml(t('admin.table.order'))}</th>
                             <th>${escapeHtml(t('admin.table.created'))}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -247,6 +248,10 @@ const AdminPage = {
                     </tbody>
                 </table>
             </div>`;
+
+        container.querySelectorAll('[data-delete-route]').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleDeleteRoute(btn.dataset.deleteRoute));
+        });
     },
 
     renderRouteRow(route) {
@@ -258,7 +263,24 @@ const AdminPage = {
                 <td>${route.trip_status ? `<span class="badge badge-${escapeHtml(route.trip_status)}">${escapeHtml(route.trip_status)}</span>` : ''}</td>
                 <td>${escapeHtml(String(route.route_order ?? ''))}</td>
                 <td>${escapeHtml(formatDateTime(route.created_at))}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" type="button" data-delete-route="${escapeHtml(String(route.id))}">${escapeHtml(t('common.delete'))}</button>
+                </td>
             </tr>`;
+    },
+
+    async handleDeleteRoute(routeId) {
+        const route = this.state.routes.find((r) => String(r.id) === String(routeId));
+        if (!route) return;
+
+        if (!confirm(t('admin.confirmDeleteRoute', { skipper: route.skipper_name || route.skipper_email || '' }))) return;
+
+        await this.deleteEntity(
+            `/admin/routes/${routeId}`,
+            'routes',
+            t('admin.routeDeleted'),
+            t('admin.deleteRouteFailed')
+        );
     },
 
     renderVesselsTable(container) {
@@ -273,6 +295,7 @@ const AdminPage = {
                             <th>${escapeHtml(t('admin.table.callSign'))}</th>
                             <th>${escapeHtml(t('admin.table.model'))}</th>
                             <th>${escapeHtml(t('admin.table.created'))}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -280,6 +303,10 @@ const AdminPage = {
                     </tbody>
                 </table>
             </div>`;
+
+        container.querySelectorAll('[data-delete-vessel]').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleDeleteVessel(Number(btn.dataset.deleteVessel)));
+        });
     },
 
     renderVesselRow(vessel) {
@@ -291,7 +318,24 @@ const AdminPage = {
                 <td>${escapeHtml(vessel.call_sign || '')}</td>
                 <td>${escapeHtml(vessel.model || '')}</td>
                 <td>${escapeHtml(formatDateTime(vessel.created_at))}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" type="button" data-delete-vessel="${vessel.id}">${escapeHtml(t('common.delete'))}</button>
+                </td>
             </tr>`;
+    },
+
+    async handleDeleteVessel(vesselId) {
+        const vessel = this.state.vessels.find((v) => v.id === vesselId);
+        if (!vessel) return;
+
+        if (!confirm(t('admin.confirmDeleteVessel', { name: vessel.vessel_name || '', owner: vessel.owner_name || vessel.owner_email || '' }))) return;
+
+        await this.deleteEntity(
+            `/admin/vessels/${vesselId}`,
+            'vessels',
+            t('admin.vesselDeleted'),
+            t('admin.deleteVesselFailed')
+        );
     },
 
     renderIceContactsTable(container) {
@@ -308,6 +352,7 @@ const AdminPage = {
                             <th>${escapeHtml(t('admin.table.confirmed'))}</th>
                             <th>${escapeHtml(t('admin.table.skipper'))}</th>
                             <th>${escapeHtml(t('admin.table.created'))}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -315,6 +360,10 @@ const AdminPage = {
                     </tbody>
                 </table>
             </div>`;
+
+        container.querySelectorAll('[data-delete-ice-contact]').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleDeleteIceContact(Number(btn.dataset.deleteIceContact)));
+        });
     },
 
     renderIceContactRow(contact) {
@@ -328,7 +377,43 @@ const AdminPage = {
                 <td>${contact.confirmed_at ? `<span class="badge badge-active">${escapeHtml(t('admin.yes'))}</span>` : `<span class="badge badge-draft">${escapeHtml(t('admin.no'))}</span>`}</td>
                 <td>${escapeHtml(contact.skipper_name || '')}<br><span class="page-header__meta">${escapeHtml(contact.skipper_email || '')}</span></td>
                 <td>${escapeHtml(formatDateTime(contact.created_at))}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" type="button" data-delete-ice-contact="${contact.id}">${escapeHtml(t('common.delete'))}</button>
+                </td>
             </tr>`;
+    },
+
+    async handleDeleteIceContact(contactId) {
+        const contact = this.state.ice_contacts.find((c) => c.id === contactId);
+        if (!contact) return;
+
+        if (!confirm(t('admin.confirmDeleteIceContact', { name: contact.name || '', skipper: contact.skipper_name || contact.skipper_email || '' }))) return;
+
+        await this.deleteEntity(
+            `/admin/ice-contacts/${contactId}`,
+            'ice_contacts',
+            t('admin.iceContactDeleted'),
+            t('admin.deleteIceContactFailed')
+        );
+    },
+
+    // Shared delete flow for the routes/vessels/ice-contacts admin tabs:
+    // DELETE the resource, then refresh the current tab + the stat tiles.
+    // The user tab keeps its own handleDelete() (self-delete guard + a
+    // distinct not-found message), so it isn't routed through here.
+    async deleteEntity(endpoint, tab, successMessage, fallbackMessage) {
+        const alertBox = document.getElementById('admin-alert');
+        const response = await apiRequest(endpoint, { method: 'DELETE' });
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || fallbackMessage))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        showToast(successMessage, 'success');
+        await this.loadTab(tab);
+        await this.loadStats();
     },
 
     // ==================== Systemloggar ====================

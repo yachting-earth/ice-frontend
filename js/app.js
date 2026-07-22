@@ -483,13 +483,77 @@ function setupTopbarMenuToggle() {
     }
 }
 
+// Toasts render fixed in the top-right corner, which is easy to miss on a
+// long page when the button that triggered them (typically a save button)
+// sits far below the fold. To make sure the user actually sees an error, we
+// track the most recently clicked button/submit control and, for error
+// toasts, render the message as a compact note right next to it instead of
+// (not in addition to) the corner toast - a single error shown where the
+// user is already looking, not two competing for attention.
+let lastActionButton = null;
+let lastActionButtonTime = 0;
+const inlineErrorByAnchor = new WeakMap();
+
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button, input[type="submit"], [role="button"]');
+    if (!btn) return;
+    clearInlineErrorNear(btn);
+    lastActionButton = btn;
+    lastActionButtonTime = Date.now();
+}, true);
+
+function clearInlineErrorNear(btn) {
+    if (!btn) return;
+    const anchor = btn.closest('.btn-group') || btn;
+    const existing = inlineErrorByAnchor.get(anchor);
+    if (existing && anchor.parentNode?.contains(existing)) {
+        existing.remove();
+    }
+    inlineErrorByAnchor.delete(anchor);
+}
+
+// Returns true if the message was anchored next to a button, false if there
+// was no recent enough button to anchor to (caller should fall back to a
+// corner toast in that case).
+function showInlineErrorNearButton(message) {
+    const btn = lastActionButton;
+    // Only anchor to a button the user interacted with recently - otherwise
+    // this is a background/unrelated error and there's nothing to anchor to.
+    if (!btn || !document.body.contains(btn) || Date.now() - lastActionButtonTime > 30000) {
+        return false;
+    }
+    const anchor = btn.closest('.btn-group') || btn;
+    let inlineEl = inlineErrorByAnchor.get(anchor);
+    if (!inlineEl || !anchor.parentNode?.contains(inlineEl)) {
+        inlineEl = document.createElement('div');
+        inlineEl.className = 'alert alert-error inline-save-error';
+        anchor.insertAdjacentElement('afterend', inlineEl);
+        inlineErrorByAnchor.set(anchor, inlineEl);
+    }
+    inlineEl.textContent = message;
+    inlineEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return true;
+}
+
 function showToast(message, type = 'info') {
+    if (type === 'error' && showInlineErrorNearButton(message)) {
+        return;
+    }
+
+    // Non-error toasts, and errors with no button to anchor to (e.g. a
+    // background/async failure), still use the corner toast.
     const stack = document.getElementById('toast-stack');
     const el = document.createElement('div');
     el.className = `alert alert-${type}`;
     el.textContent = message;
     stack.appendChild(el);
     setTimeout(() => el.remove(), 5000);
+
+    if (type !== 'error') {
+        // A non-error toast (e.g. a successful save) after the same button
+        // was clicked means whatever previously failed there is now stale.
+        clearInlineErrorNear(lastActionButton);
+    }
 }
 
 // Shared brand mark (topbar, auth cards) - mirrors the landing page's
