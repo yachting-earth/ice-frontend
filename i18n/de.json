@@ -103,7 +103,6 @@
   },
   "trip": {
     "status": {
-      "all": "Alle",
       "draft": "Entwurf",
       "published": "Veröffentlicht",
       "active": "Aktiv",
@@ -1677,6 +1676,24 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.10.0",
+        "date": "2026-07-24",
+        "sections": {
+          "new": [
+            "Damit der Dienst für alle zuverlässig und fair bleibt, haben wir Grenzen dafür eingeführt, wie schnell bestimmte Aktionen wiederholt werden können - ein Konto erstellen, einen neuen Törn starten, Crew einladen und die allgemeine Nutzung der App. Die normale Nutzung ist davon nicht betroffen; du würdest nur eine Meldung wie \"Bitte versuche es gleich noch einmal\" sehen, wenn eine dieser Aktionen ungewöhnlich schnell wiederholt wird."
+          ]
+        }
+      },
+      {
+        "version": "v1.9.0",
+        "date": "2026-07-24",
+        "sections": {
+          "improved": [
+            "Die Törnliste auf deinem Dashboard hat jetzt keine Status-Filterschaltflächen mehr darüber — alle deine Törns werden jetzt sofort angezeigt, ohne dass du nach Entwurf, veröffentlicht, aktiv, abgeschlossen oder storniert filtern musst."
+          ]
+        }
+      },
       {
         "version": "v1.8.1",
         "date": "2026-07-22",

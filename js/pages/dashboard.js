@@ -1,6 +1,5 @@
 const DashboardPage = {
     state: {
-        statusFilter: null,
         emailVerified: true
     },
 
@@ -17,7 +16,6 @@ const DashboardPage = {
                     <div id="new-trip-action"></div>
                 </div>
                 <div id="email-verify-warning"></div>
-                <div class="trip-filters" id="trip-filters"></div>
                 <div id="trip-list-container"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('dashboard.loadingTrips'))}</div></div>
             </div>`;
 
@@ -53,23 +51,13 @@ const DashboardPage = {
         document.getElementById('resend-verify-btn').addEventListener('click', () => this.resendVerification());
     },
 
-    // Shows/hides the "+ New trip" button and status filters based on the
-    // current verification state - hidden while unusable to avoid confusion.
+    // Shows/hides the "+ New trip" button based on the current verification state.
     renderVerifiedUi(container) {
         const actionBox = container.querySelector('#new-trip-action');
         if (actionBox) {
             actionBox.innerHTML = this.state.emailVerified
                 ? `<a class="btn btn-primary" href="#/trips/new">${escapeHtml(t('dashboard.newTrip'))}</a>`
                 : '';
-        }
-
-        const filterBar = container.querySelector('#trip-filters');
-        if (filterBar) {
-            if (this.state.emailVerified) {
-                this.renderFilters(container);
-            } else {
-                filterBar.innerHTML = '';
-            }
         }
     },
 
@@ -104,39 +92,11 @@ const DashboardPage = {
         btn.textContent = t('dashboard.resendLink');
     },
 
-    renderFilters(container) {
-        const filters = [
-            { value: null, label: t('trip.status.all') },
-            { value: 'draft', label: t('trip.status.draft') },
-            { value: 'published', label: t('trip.status.published') },
-            { value: 'active', label: t('trip.status.active') },
-            { value: 'completed', label: t('trip.status.completed') },
-            { value: 'cancelled', label: t('trip.status.cancelled') }
-        ];
-
-        const filterBar = container.querySelector('#trip-filters');
-        filterBar.innerHTML = filters.map((f) => `
-            <button class="btn btn-sm ${this.state.statusFilter === f.value ? 'btn-primary' : 'btn-secondary'}"
-                    type="button" data-status="${f.value ?? ''}">${escapeHtml(f.label)}</button>
-        `).join('');
-
-        filterBar.querySelectorAll('button').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                this.state.statusFilter = btn.dataset.status || null;
-                this.renderFilters(container);
-                this.loadTrips();
-            });
-        });
-    },
-
     async loadTrips() {
         const listContainer = document.getElementById('trip-list-container');
         listContainer.innerHTML = `<div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('dashboard.loadingTrips'))}</div>`;
 
-        const params = new URLSearchParams();
-        if (this.state.statusFilter) params.append('status', this.state.statusFilter);
-
-        const response = await apiRequest(`/trips?${params.toString()}`);
+        const response = await apiRequest('/trips');
 
         if (!response.success) {
             listContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('dashboard.loadFailed')))}</div>`;

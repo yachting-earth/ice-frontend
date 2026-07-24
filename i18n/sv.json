@@ -103,7 +103,6 @@
   },
   "trip": {
     "status": {
-      "all": "Alla",
       "draft": "Utkast",
       "published": "Publicerad",
       "active": "Aktiv",
@@ -1688,6 +1687,24 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.10.0",
+        "date": "2026-07-24",
+        "sections": {
+          "new": [
+            "För att hålla tjänsten pålitlig och rättvis för alla har vi lagt till gränser för hur snabbt vissa åtgärder kan upprepas - att skapa ett konto, starta en ny resa, bjuda in besättning och den allmänna användningen av appen. Vanlig användning påverkas inte; du skulle bara se ett meddelande om att \"försöka igen om en stund\" om något av detta upprepades ovanligt snabbt."
+          ]
+        }
+      },
+      {
+        "version": "v1.9.0",
+        "date": "2026-07-24",
+        "sections": {
+          "improved": [
+            "Reselistan på din instrumentpanel har inte längre statusfilterknappar ovanför den — alla dina resor visas nu direkt, utan att du behöver filtrera efter utkast, publicerad, aktiv, avslutad eller inställd."
+          ]
+        }
+      },
       {
         "version": "v1.8.1",
         "date": "2026-07-22",

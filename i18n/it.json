@@ -103,7 +103,6 @@
   },
   "trip": {
     "status": {
-      "all": "Tutti",
       "draft": "Bozza",
       "published": "Pubblicato",
       "active": "Attivo",
@@ -1677,6 +1676,24 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.10.0",
+        "date": "2026-07-24",
+        "sections": {
+          "new": [
+            "Per mantenere il servizio affidabile ed equo per tutti, abbiamo aggiunto dei limiti alla velocità con cui alcune azioni possono essere ripetute - creare un account, avviare una nuova uscita, invitare l'equipaggio e l'uso generale dell'app. L'uso normale non ne risente; vedresti un messaggio del tipo \"riprova tra poco\" solo se una di queste azioni venisse ripetuta in modo insolitamente rapido."
+          ]
+        }
+      },
+      {
+        "version": "v1.9.0",
+        "date": "2026-07-24",
+        "sections": {
+          "improved": [
+            "L'elenco delle uscite nella tua dashboard non ha più i pulsanti di filtro per stato sopra di esso — ora tutte le tue uscite vengono mostrate subito, senza bisogno di filtrare per bozza, pubblicato, attivo, concluso o annullato."
+          ]
+        }
+      },
       {
         "version": "v1.8.1",
         "date": "2026-07-22",

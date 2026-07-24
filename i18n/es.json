@@ -103,7 +103,6 @@
   },
   "trip": {
     "status": {
-      "all": "Todos",
       "draft": "Borrador",
       "published": "Publicado",
       "active": "Activo",
@@ -1677,6 +1676,24 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.10.0",
+        "date": "2026-07-24",
+        "sections": {
+          "new": [
+            "Para mantener el servicio fiable y justo para todos, hemos añadido límites a la rapidez con la que se pueden repetir ciertas acciones: crear una cuenta, iniciar una nueva travesía, invitar a la tripulación y el uso general de la aplicación. El uso habitual no se ve afectado; solo verías un mensaje de \"inténtalo de nuevo en breve\" si una de estas acciones se repitiera de forma inusualmente rápida."
+          ]
+        }
+      },
+      {
+        "version": "v1.9.0",
+        "date": "2026-07-24",
+        "sections": {
+          "improved": [
+            "La lista de travesías de tu panel ya no tiene botones de filtro por estado encima — ahora todas tus travesías se muestran de inmediato, sin necesidad de filtrar por borrador, publicado, activo, completado o cancelado."
+          ]
+        }
+      },
       {
         "version": "v1.8.1",
         "date": "2026-07-22",

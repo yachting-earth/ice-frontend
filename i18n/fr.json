@@ -103,7 +103,6 @@
   },
   "trip": {
     "status": {
-      "all": "Toutes",
       "draft": "Brouillon",
       "published": "Publiée",
       "active": "En cours",
@@ -1677,6 +1676,24 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.10.0",
+        "date": "2026-07-24",
+        "sections": {
+          "new": [
+            "Pour que le service reste fiable et équitable pour tout le monde, nous avons ajouté des limites à la vitesse à laquelle certaines actions peuvent être répétées - créer un compte, démarrer une nouvelle sortie, inviter des membres d'équipage et l'utilisation générale de l'application. Une utilisation normale n'est pas concernée ; vous ne verriez un message du type « réessayez dans un instant » que si l'une de ces actions était répétée de façon inhabituellement rapide."
+          ]
+        }
+      },
+      {
+        "version": "v1.9.0",
+        "date": "2026-07-24",
+        "sections": {
+          "improved": [
+            "La liste de vos sorties dans votre tableau de bord n'a plus de boutons de filtre par statut au-dessus d'elle — toutes vos sorties s'affichent désormais immédiatement, sans besoin de filtrer par brouillon, publiée, en cours, terminée ou annulée."
+          ]
+        }
+      },
       {
         "version": "v1.8.1",
         "date": "2026-07-22",

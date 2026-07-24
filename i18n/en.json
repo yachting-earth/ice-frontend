@@ -103,7 +103,6 @@
   },
   "trip": {
     "status": {
-      "all": "All",
       "draft": "Draft",
       "published": "Published",
       "active": "Active",
@@ -1679,6 +1678,24 @@
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.10.0",
+        "date": "2026-07-24",
+        "sections": {
+          "new": [
+            "To keep the service reliable and fair for everyone, we've added limits on how quickly certain actions can be repeated - creating an account, starting a new trip, inviting crew, and general use of the app. Everyday use isn't affected; you'd only see a \"try again shortly\" message if one of these was repeated unusually fast."
+          ]
+        }
+      },
+      {
+        "version": "v1.9.0",
+        "date": "2026-07-24",
+        "sections": {
+          "improved": [
+            "The trip list on your dashboard no longer has status-filter buttons above it — all of your trips now show right away, without needing to filter by draft, published, active, completed or cancelled."
+          ]
+        }
+      },
       {
         "version": "v1.8.1",
         "date": "2026-07-22",
