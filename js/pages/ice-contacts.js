@@ -127,6 +127,7 @@ const IceContactsPage = {
                         <span class="crew-status ${confirmed ? 'crew-status--accepted' : 'crew-status--pending'}">
                             ${escapeHtml(confirmed ? t('iceContacts.confirmed') : t('iceContacts.pending'))}
                         </span>
+                        ${isFuture(contact.auto_accept_until) ? `<span class="badge badge-warning">${escapeHtml(t('ice.auto_accept.skipper_badge'))}</span>` : ''}
                     </div>
                     <div class="trip-card__meta">
                         <span>${escapeHtml(contact.relationship || '')}</span>

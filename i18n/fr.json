@@ -65,6 +65,7 @@
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Cette sortie n'a aucune demande de confirmation ICE en attente.",
     "TRIP_LOCKED": "Cette sortie est verrouillée pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence, et ne peut plus être modifiée.",
     "TRIP_NOT_ACTIVE": "L'accès SAR ne peut être demandé que pour une sortie active.",
+    "AUTO_ACCEPT_INVALID_DURATION": "Choisissez 1, 2 ou 3 mois, ou désactivez l'acceptation automatique.",
     "CONTACT_RATE_LIMITED": "Vous avez atteint la limite quotidienne d'envois via le formulaire de contact. Merci de réessayer demain.",
     "CONTACT_TOO_MANY_FILES": "Trop de pièces jointes.",
     "CONTACT_FILE_TOO_LARGE": "L'une de vos pièces jointes est trop volumineuse.",
@@ -697,6 +698,20 @@
     },
     "saveFailed": "Impossible d'enregistrer les modifications.",
     "updated": "Vos informations ont été mises à jour."
+  },
+  "ice": {
+    "auto_accept": {
+      "title": "Accepter automatiquement les nouvelles sorties",
+      "description": "Une fois activé, les nouvelles sorties pour lesquelles vous êtes désigné(e) contact ICE sont confirmées automatiquement, sans que vous ayez à les approuver à chaque fois. Vous serez toujours notifié(e) de chaque sortie.",
+      "enable": "Activer l'acceptation automatique",
+      "disable": "Désactiver l'acceptation automatique",
+      "duration_1_month": "1 mois",
+      "duration_2_months": "2 mois",
+      "duration_3_months": "3 mois",
+      "active_until": "L'acceptation automatique est active jusqu'au {date}.",
+      "expired": "L'acceptation automatique a expiré.",
+      "skipper_badge": "Acceptation automatique active"
+    }
   },
   "icePortal": {
     "invalidLink": "Lien invalide - la sortie ou le code d'accès est manquant. Utilisez le lien fourni dans le message de notification.",
@@ -1676,6 +1691,15 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.11.0",
+        "date": "2026-07-25",
+        "sections": {
+          "new": [
+            "Les articles de blog peuvent désormais être trouvés directement via les moteurs de recherche, et le partage d'un lien vers un article affiche désormais un aperçu avec son titre et son image, au lieu d'un simple lien."
+          ]
+        }
+      },
       {
         "version": "v1.10.0",
         "date": "2026-07-24",

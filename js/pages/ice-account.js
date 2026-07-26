@@ -97,6 +97,23 @@ const IceAccountPage = {
         listContainer.querySelectorAll('[data-edit]').forEach((btn) => {
             btn.addEventListener('click', () => this.startEdit(Number(btn.dataset.edit)));
         });
+
+        this.state.contacts.forEach((c) => this.bindAutoAcceptListeners(c.id));
+    },
+
+    bindAutoAcceptListeners(contactId) {
+        const enableBtn = document.querySelector(`[data-auto-accept-enable="${contactId}"]`);
+        if (enableBtn) {
+            enableBtn.addEventListener('click', () => {
+                const months = Number(document.getElementById(`auto-accept-duration-${contactId}`).value);
+                this.handleAutoAcceptChange(contactId, months);
+            });
+        }
+
+        const disableBtn = document.querySelector(`[data-auto-accept-disable="${contactId}"]`);
+        if (disableBtn) {
+            disableBtn.addEventListener('click', () => this.handleAutoAcceptChange(contactId, 0));
+        }
     },
 
     renderContactCard(contact) {
@@ -113,6 +130,45 @@ const IceAccountPage = {
                 </div>
                 <div id="contact-alert-${contact.id}"></div>
                 ${editing ? this.renderEditForm(contact) : this.renderSummary(contact)}
+                ${this.renderAutoAccept(contact)}
+            </div>`;
+    },
+
+    isAutoAcceptActive(contact) {
+        return isFuture(contact.auto_accept_until);
+    },
+
+    renderAutoAccept(contact) {
+        const active = this.isAutoAcceptActive(contact);
+        const hasExpired = !!contact.auto_accept_until && !active;
+
+        let status = '';
+        if (active) {
+            status = t('ice.auto_accept.active_until', { date: formatDateTime(contact.auto_accept_until) });
+        } else if (hasExpired) {
+            status = t('ice.auto_accept.expired');
+        }
+
+        return `
+            <div class="auto-accept-control" data-auto-accept="${contact.id}">
+                <div class="card-header">
+                    <h3>${escapeHtml(t('ice.auto_accept.title'))}</h3>
+                </div>
+                <p class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(t('ice.auto_accept.description'))}</p>
+                ${status ? `<p>${escapeHtml(status)}</p>` : ''}
+                <div id="auto-accept-alert-${contact.id}"></div>
+                <div class="btn-group">
+                    ${!active ? `
+                        <select id="auto-accept-duration-${contact.id}">
+                            <option value="1">${escapeHtml(t('ice.auto_accept.duration_1_month'))}</option>
+                            <option value="2">${escapeHtml(t('ice.auto_accept.duration_2_months'))}</option>
+                            <option value="3">${escapeHtml(t('ice.auto_accept.duration_3_months'))}</option>
+                        </select>
+                        <button class="btn btn-primary btn-sm" type="button" data-auto-accept-enable="${contact.id}">${escapeHtml(t('ice.auto_accept.enable'))}</button>
+                    ` : `
+                        <button class="btn btn-secondary btn-sm" type="button" data-auto-accept-disable="${contact.id}">${escapeHtml(t('ice.auto_accept.disable'))}</button>
+                    `}
+                </div>
             </div>`;
     },
 
@@ -149,7 +205,6 @@ const IceAccountPage = {
     startEdit(contactId) {
         this.state.editingId = contactId;
         this.rerenderCard(contactId);
-        this.bindEditFormListeners(contactId);
     },
 
     rerenderCard(contactId) {
@@ -164,6 +219,8 @@ const IceAccountPage = {
         } else {
             document.querySelector(`[data-edit="${contactId}"]`).addEventListener('click', () => this.startEdit(contactId));
         }
+
+        this.bindAutoAcceptListeners(contactId);
     },
 
     bindEditFormListeners(contactId) {
@@ -236,6 +293,27 @@ const IceAccountPage = {
         const index = this.state.contacts.findIndex((c) => c.id === contactId);
         this.state.contacts[index] = { ...this.state.contacts[index], ...response.data };
         this.state.editingId = null;
+        this.rerenderCard(contactId);
+        showToast(t('iceAccount.updated'), 'success');
+    },
+
+    async handleAutoAcceptChange(contactId, months) {
+        const alertBox = document.getElementById(`auto-accept-alert-${contactId}`);
+
+        const response = await apiRequest(`/ice-contacts/me/${contactId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ auto_accept_months: months })
+        });
+
+        if (!response.success) {
+            if (alertBox) {
+                alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('iceAccount.saveFailed')))}</div>`;
+            }
+            return;
+        }
+
+        const index = this.state.contacts.findIndex((c) => c.id === contactId);
+        this.state.contacts[index] = { ...this.state.contacts[index], ...response.data };
         this.rerenderCard(contactId);
         showToast(t('iceAccount.updated'), 'success');
     }

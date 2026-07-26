@@ -65,6 +65,7 @@
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Det finns ingen väntande nödkontaktsbekräftelse för denna resa.",
     "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter ett larm utlöst och kan inte längre ändras eller raderas. Resan kommer raderas automatiskt 30 dagar efter den avslutats.",
     "TRIP_NOT_ACTIVE": "SAR-åtkomst kan bara begäras för en aktiv resa.",
+    "AUTO_ACCEPT_INVALID_DURATION": "Välj 1, 2 eller 3 månader, eller stäng av auto-godkännande.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
     "CONTACT_FILE_TOO_LARGE": "En av dina bilagor är för stor.",
@@ -697,6 +698,20 @@
     },
     "saveFailed": "Kunde inte spara ändringarna.",
     "updated": "Dina uppgifter har uppdaterats."
+  },
+  "ice": {
+    "auto_accept": {
+      "title": "Auto-godkänn nya resor",
+      "description": "När det här är aktiverat bekräftas nya resor du tilldelas som nödkontakt för automatiskt, utan att du behöver godkänna varje gång. Du blir fortfarande notifierad om varje resa.",
+      "enable": "Aktivera auto-godkännande",
+      "disable": "Inaktivera auto-godkännande",
+      "duration_1_month": "1 månad",
+      "duration_2_months": "2 månader",
+      "duration_3_months": "3 månader",
+      "active_until": "Auto-godkännande är aktivt till {date}.",
+      "expired": "Auto-godkännande har gått ut.",
+      "skipper_badge": "Auto-godkännande aktivt"
+    }
   },
   "icePortal": {
     "invalidLink": "Ogiltig länk - resa eller åtkomstkod saknas. Använd länken från notifieringsmeddelandet.",
@@ -1687,6 +1702,15 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.11.0",
+        "date": "2026-07-25",
+        "sections": {
+          "new": [
+            "Blogginlägg kan nu hittas direkt via sökmotorer, och att dela en länk till ett inlägg visar nu en förhandsvisning med titel och bild istället för bara en vanlig länk."
+          ]
+        }
+      },
       {
         "version": "v1.10.0",
         "date": "2026-07-24",

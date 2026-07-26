@@ -65,6 +65,7 @@
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "This trip has no outstanding ICE confirmation request.",
     "TRIP_LOCKED": "This trip is locked for maritime safety/traceability reasons following an emergency incident and can no longer be modified.",
     "TRIP_NOT_ACTIVE": "SAR access can only be requested for an active trip.",
+    "AUTO_ACCEPT_INVALID_DURATION": "Choose 1, 2 or 3 months, or turn auto-accept off.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
     "CONTACT_TOO_MANY_FILES": "Too many attachments.",
     "CONTACT_FILE_TOO_LARGE": "One of your attachments is too large.",
@@ -697,6 +698,20 @@
     },
     "saveFailed": "Could not save the changes.",
     "updated": "Your details have been updated."
+  },
+  "ice": {
+    "auto_accept": {
+      "title": "Auto-accept new trips",
+      "description": "When enabled, new trips you're assigned as ICE contact for are automatically confirmed without requiring your approval each time. You'll still be notified about every trip.",
+      "enable": "Enable auto-accept",
+      "disable": "Disable auto-accept",
+      "duration_1_month": "1 month",
+      "duration_2_months": "2 months",
+      "duration_3_months": "3 months",
+      "active_until": "Auto-accept is active until {date}.",
+      "expired": "Auto-accept has expired.",
+      "skipper_badge": "Auto-accept active"
+    }
   },
   "icePortal": {
     "invalidLink": "Invalid link - trip or access code is missing. Use the link from the notification message.",
@@ -1678,6 +1693,15 @@
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.11.0",
+        "date": "2026-07-25",
+        "sections": {
+          "new": [
+            "Blog posts can now be found directly through search engines, and sharing a link to one now shows a preview with its title and image instead of just a plain link."
+          ]
+        }
+      },
       {
         "version": "v1.10.0",
         "date": "2026-07-24",

@@ -226,10 +226,11 @@ const CreateTripPage = {
                 <div class="field">
                     <label for="ice-contact-select">${escapeHtml(t('createTrip.iceContact.selectLabel'))}</label>
                     <select id="ice-contact-select">
-                        ${selectable.map((c) => `<option value="${c.id}" data-confirmed="${c.confirmed_at ? '1' : '0'}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}${!c.confirmed_at ? ` — ${escapeHtml(t('iceContacts.pending'))}` : ''}</option>`).join('')}
+                        ${selectable.map((c) => `<option value="${c.id}" data-confirmed="${c.confirmed_at ? '1' : '0'}" data-auto-accept="${isFuture(c.auto_accept_until) ? '1' : '0'}">${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}${!c.confirmed_at ? ` — ${escapeHtml(t('iceContacts.pending'))}` : ''}</option>`).join('')}
                     </select>
                     <small>${escapeHtml(t('createTrip.iceContact.selectHint'))}</small>
                     <div id="ice-contact-pending-warning" class="alert alert-info" style="display:none; margin-top: var(--space-2);">${escapeHtml(t('createTrip.iceContact.pendingWarning'))}</div>
+                    <span id="ice-contact-auto-accept-badge" class="badge badge-warning" style="display:none; margin-top: var(--space-2);">${escapeHtml(t('ice.auto_accept.skipper_badge'))}</span>
                 </div>` : `<div class="alert alert-info">${escapeHtml(t('createTrip.iceContact.noneRegistered'))}</div>`}
             <button class="btn btn-ghost btn-sm" type="button" id="toggle-new-ice-contact">${escapeHtml(t('createTrip.iceContact.addNew'))}</button>
             <div id="new-ice-contact-form" style="display:${selectable.length > 0 ? 'none' : 'block'}; margin-top: var(--space-3);">
@@ -269,6 +270,8 @@ const CreateTripPage = {
                 const selected = select.options[select.selectedIndex];
                 const warning = document.getElementById('ice-contact-pending-warning');
                 warning.style.display = selected && selected.dataset.confirmed === '0' ? 'block' : 'none';
+                const badge = document.getElementById('ice-contact-auto-accept-badge');
+                badge.style.display = selected && selected.dataset.autoAccept === '1' ? 'inline-flex' : 'none';
             };
             select.addEventListener('change', updatePendingWarning);
             updatePendingWarning();

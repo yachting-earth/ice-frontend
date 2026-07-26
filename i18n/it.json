@@ -65,6 +65,7 @@
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Questo viaggio non ha richieste di conferma ICE in sospeso.",
     "TRIP_LOCKED": "Questo viaggio è bloccato per motivi di sicurezza marittima/tracciabilità in seguito a un'emergenza e non può più essere modificato.",
     "TRIP_NOT_ACTIVE": "L'accesso SAR può essere richiesto solo per un viaggio attivo.",
+    "AUTO_ACCEPT_INVALID_DURATION": "Scegli 1, 2 o 3 mesi, oppure disattiva l'accettazione automatica.",
     "CONTACT_RATE_LIMITED": "Hai raggiunto il limite giornaliero di invii dal modulo di contatto. Riprova domani.",
     "CONTACT_TOO_MANY_FILES": "Troppi allegati.",
     "CONTACT_FILE_TOO_LARGE": "Uno dei tuoi allegati è troppo grande.",
@@ -697,6 +698,20 @@
     },
     "saveFailed": "Impossibile salvare le modifiche.",
     "updated": "I tuoi dati sono stati aggiornati."
+  },
+  "ice": {
+    "auto_accept": {
+      "title": "Accetta automaticamente i nuovi viaggi",
+      "description": "Se attivato, i nuovi viaggi per cui vieni assegnato come contatto ICE vengono confermati automaticamente, senza bisogno di approvarli ogni volta. Riceverai comunque una notifica per ogni viaggio.",
+      "enable": "Attiva accettazione automatica",
+      "disable": "Disattiva accettazione automatica",
+      "duration_1_month": "1 mese",
+      "duration_2_months": "2 mesi",
+      "duration_3_months": "3 mesi",
+      "active_until": "L'accettazione automatica è attiva fino al {date}.",
+      "expired": "L'accettazione automatica è scaduta.",
+      "skipper_badge": "Accettazione automatica attiva"
+    }
   },
   "icePortal": {
     "invalidLink": "Link non valido - manca il viaggio o il codice di accesso. Usa il link ricevuto nel messaggio di notifica.",
@@ -1676,6 +1691,15 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.11.0",
+        "date": "2026-07-25",
+        "sections": {
+          "new": [
+            "Ora i post del blog possono essere trovati direttamente tramite i motori di ricerca, e la condivisione di un link a un post mostra un'anteprima con il suo titolo e la sua immagine, invece di un semplice link."
+          ]
+        }
+      },
       {
         "version": "v1.10.0",
         "date": "2026-07-24",

@@ -206,8 +206,9 @@ const TripDetailPage = {
                         <div class="field">
                             <label for="ice-contact-select">${t('tripDetail.iceContact.changeLabel')}</label>
                             <select id="ice-contact-select">
-                                ${this.selectableIceContacts().map((c) => `<option value="${c.id}" ${String(c.id) === String(trip.ice_contact_id) ? 'selected' : ''}>${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
+                                ${this.selectableIceContacts().map((c) => `<option value="${c.id}" data-auto-accept="${isFuture(c.auto_accept_until) ? '1' : '0'}" ${String(c.id) === String(trip.ice_contact_id) ? 'selected' : ''}>${escapeHtml(c.name)}${c.relationship ? ` (${escapeHtml(c.relationship)})` : ''}</option>`).join('')}
                             </select>
+                            <span id="ice-contact-auto-accept-badge" class="badge badge-warning" style="display:none; margin-top: var(--space-2);">${escapeHtml(t('ice.auto_accept.skipper_badge'))}</span>
                         </div>
                         <button class="btn btn-secondary btn-sm" type="button" id="ice-contact-change-btn" style="align-self:flex-end;">${t('tripDetail.iceContact.changeButton')}</button>
                     </div>` : `
@@ -295,6 +296,16 @@ const TripDetailPage = {
         document.getElementById('add-route-btn')?.addEventListener('click', () => this.handleAddRoute());
         document.getElementById('vessel-change-btn')?.addEventListener('click', () => this.handleChangeVessel());
         document.getElementById('ice-contact-change-btn')?.addEventListener('click', () => this.handleChangeIceContact());
+        const iceContactSelect = document.getElementById('ice-contact-select');
+        if (iceContactSelect) {
+            const updateAutoAcceptBadge = () => {
+                const selected = iceContactSelect.options[iceContactSelect.selectedIndex];
+                const badge = document.getElementById('ice-contact-auto-accept-badge');
+                badge.style.display = selected && selected.dataset.autoAccept === '1' ? 'inline-flex' : 'none';
+            };
+            iceContactSelect.addEventListener('change', updateAutoAcceptBadge);
+            updateAutoAcceptBadge();
+        }
         document.getElementById('schedule-change-btn')?.addEventListener('click', () => this.handleChangeSchedule());
         ['departure-input', 'duration-days-input', 'duration-hours-input', 'duration-minutes-input'].forEach((id) => {
             document.getElementById(id)?.addEventListener('input', () => this.updateSchedulePreview());

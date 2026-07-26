@@ -65,6 +65,7 @@
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Für diesen Törn liegt keine offene ICE-Bestätigungsanfrage vor.",
     "TRIP_LOCKED": "Dieser Törn ist aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt und kann nicht mehr geändert werden.",
     "TRIP_NOT_ACTIVE": "SAR-Zugang kann nur für einen aktiven Törn angefordert werden.",
+    "AUTO_ACCEPT_INVALID_DURATION": "Wähle 1, 2 oder 3 Monate, oder schalte das automatische Akzeptieren aus.",
     "CONTACT_RATE_LIMITED": "Du hast das Tageslimit für Einsendungen über das Kontaktformular erreicht. Bitte versuche es morgen erneut.",
     "CONTACT_TOO_MANY_FILES": "Zu viele Anhänge.",
     "CONTACT_FILE_TOO_LARGE": "Einer deiner Anhänge ist zu groß.",
@@ -697,6 +698,20 @@
     },
     "saveFailed": "Die Änderungen konnten nicht gespeichert werden.",
     "updated": "Deine Daten wurden aktualisiert."
+  },
+  "ice": {
+    "auto_accept": {
+      "title": "Neue Törns automatisch akzeptieren",
+      "description": "Wenn aktiviert, werden neue Törns, für die du als ICE-Kontakt eingetragen wirst, automatisch bestätigt, ohne dass du jedes Mal zustimmen musst. Du wirst weiterhin über jeden Törn benachrichtigt.",
+      "enable": "Automatisches Akzeptieren aktivieren",
+      "disable": "Automatisches Akzeptieren deaktivieren",
+      "duration_1_month": "1 Monat",
+      "duration_2_months": "2 Monate",
+      "duration_3_months": "3 Monate",
+      "active_until": "Automatisches Akzeptieren ist aktiv bis {date}.",
+      "expired": "Automatisches Akzeptieren ist abgelaufen.",
+      "skipper_badge": "Automatisches Akzeptieren aktiv"
+    }
   },
   "icePortal": {
     "invalidLink": "Ungültiger Link - Törn oder Zugangscode fehlt. Verwende den Link aus der Benachrichtigungsnachricht.",
@@ -1676,6 +1691,15 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.11.0",
+        "date": "2026-07-25",
+        "sections": {
+          "new": [
+            "Blogbeiträge lassen sich jetzt direkt über Suchmaschinen finden, und beim Teilen eines Links wird jetzt eine Vorschau mit Titel und Bild angezeigt statt nur eines einfachen Links."
+          ]
+        }
+      },
       {
         "version": "v1.10.0",
         "date": "2026-07-24",

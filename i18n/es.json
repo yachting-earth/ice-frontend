@@ -65,6 +65,7 @@
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Este viaje no tiene ninguna solicitud de confirmación ICE pendiente.",
     "TRIP_LOCKED": "Este viaje está bloqueado por motivos de seguridad marítima y trazabilidad tras un incidente de emergencia, y ya no se puede modificar.",
     "TRIP_NOT_ACTIVE": "El acceso SAR solo puede solicitarse para un viaje activo.",
+    "AUTO_ACCEPT_INVALID_DURATION": "Elige 1, 2 o 3 meses, o desactiva la aceptación automática.",
     "CONTACT_RATE_LIMITED": "Has alcanzado el límite diario de envíos del formulario de contacto. Inténtalo de nuevo mañana.",
     "CONTACT_TOO_MANY_FILES": "Demasiados archivos adjuntos.",
     "CONTACT_FILE_TOO_LARGE": "Uno de tus archivos adjuntos es demasiado grande.",
@@ -697,6 +698,20 @@
     },
     "saveFailed": "No se pudieron guardar los cambios.",
     "updated": "Tus datos se han actualizado."
+  },
+  "ice": {
+    "auto_accept": {
+      "title": "Aceptar viajes automáticamente",
+      "description": "Si está activado, los nuevos viajes para los que se te asigna como contacto ICE se confirman automáticamente, sin necesidad de aprobarlos cada vez. Seguirás recibiendo notificación de cada viaje.",
+      "enable": "Activar aceptación automática",
+      "disable": "Desactivar aceptación automática",
+      "duration_1_month": "1 mes",
+      "duration_2_months": "2 meses",
+      "duration_3_months": "3 meses",
+      "active_until": "La aceptación automática está activa hasta {date}.",
+      "expired": "La aceptación automática ha caducado.",
+      "skipper_badge": "Aceptación automática activa"
+    }
   },
   "icePortal": {
     "invalidLink": "Enlace no válido - falta el viaje o el código de acceso. Usa el enlace del mensaje de notificación.",
@@ -1676,6 +1691,15 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.11.0",
+        "date": "2026-07-25",
+        "sections": {
+          "new": [
+            "Ahora las entradas del blog se pueden encontrar directamente a través de los motores de búsqueda, y al compartir un enlace a una de ellas se muestra una vista previa con su título e imagen, en lugar de un simple enlace."
+          ]
+        }
+      },
       {
         "version": "v1.10.0",
         "date": "2026-07-24",
