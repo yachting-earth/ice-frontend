@@ -1709,6 +1709,7 @@ const EN_INLINE = {
         "date": "2026-07-25",
         "sections": {
           "new": [
+            "If you're someone's emergency contact, you can now choose to automatically approve their trips for up to three months at a time - handy during a sailing season - instead of confirming each trip separately. You'll still be notified every time a trip is approved this way, and you can turn it off whenever you like.",
             "Blog posts can now be found directly through search engines, and sharing a link to one now shows a preview with its title and image instead of just a plain link."
           ]
         }

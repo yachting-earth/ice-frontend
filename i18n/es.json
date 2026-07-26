@@ -1696,6 +1696,7 @@
         "date": "2026-07-25",
         "sections": {
           "new": [
+            "Si eres el contacto de emergencia de alguien, ahora puedes elegir aprobar automáticamente sus travesías durante un máximo de tres meses seguidos - práctico durante una temporada de navegación - en lugar de confirmar cada travesía por separado. Seguirás recibiendo un aviso cada vez que se apruebe una travesía de este modo, y puedes desactivarlo cuando quieras.",
             "Ahora las entradas del blog se pueden encontrar directamente a través de los motores de búsqueda, y al compartir un enlace a una de ellas se muestra una vista previa con su título e imagen, en lugar de un simple enlace."
           ]
         }

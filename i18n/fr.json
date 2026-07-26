@@ -1696,6 +1696,7 @@
         "date": "2026-07-25",
         "sections": {
           "new": [
+            "Si vous êtes le contact d'urgence de quelqu'un, vous pouvez désormais choisir d'approuver automatiquement ses sorties pendant une durée pouvant aller jusqu'à trois mois - pratique pendant une saison de navigation - au lieu de confirmer chaque sortie séparément. Vous serez toujours averti chaque fois qu'une sortie est approuvée de cette façon, et vous pouvez désactiver cette option quand vous le souhaitez.",
             "Les articles de blog peuvent désormais être trouvés directement via les moteurs de recherche, et le partage d'un lien vers un article affiche désormais un aperçu avec son titre et son image, au lieu d'un simple lien."
           ]
         }

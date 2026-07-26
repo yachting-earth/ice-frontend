@@ -1707,6 +1707,7 @@
         "date": "2026-07-25",
         "sections": {
           "new": [
+            "Om du är någons nödkontakt kan du nu välja att automatiskt godkänna deras resor i upp till tre månader i taget - smidigt under en seglingssäsong - istället för att bekräfta varje resa för sig. Du får fortfarande besked varje gång en resa godkänns på det viset, och du kan stänga av det när du vill.",
             "Blogginlägg kan nu hittas direkt via sökmotorer, och att dela en länk till ett inlägg visar nu en förhandsvisning med titel och bild istället för bara en vanlig länk."
           ]
         }
