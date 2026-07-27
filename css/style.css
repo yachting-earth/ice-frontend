@@ -1238,12 +1238,16 @@ ul { margin: 0; padding: 0; list-style: none; }
     z-index: 0;
 }
 
+#route-map {
+    height: 640px;
+}
+
 .route-mode-toggle {
     margin-bottom: var(--space-2);
 }
 
 .route-draw-map {
-    height: 280px;
+    height: 560px;
     cursor: crosshair;
 }
 

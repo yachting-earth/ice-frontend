@@ -70,6 +70,10 @@ function renderRouteMap(containerEl, routes) {
         attribution: '&copy; OpenStreetMap contributors',
         maxZoom: 18
     }).addTo(map);
+    L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenSeaMap contributors',
+        maxZoom: 18
+    }).addTo(map);
 
     const allBounds = [];
 
@@ -120,6 +124,10 @@ function renderRouteDrawMap(containerEl, options = {}) {
     const map = L.map(containerEl).setView([56, 12], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(map);
+    L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenSeaMap contributors',
         maxZoom: 18
     }).addTo(map);
 

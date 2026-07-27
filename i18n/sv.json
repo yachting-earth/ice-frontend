@@ -1703,6 +1703,15 @@
     "sectionFixed": "Fixat",
     "entries": [
       {
+        "version": "v1.11.1",
+        "date": "2026-07-27",
+        "sections": {
+          "improved": [
+            "Vi har rullat ut några mindre designfixar för att göra systemet tydligare."
+          ]
+        }
+      },
+      {
         "version": "v1.11.0",
         "date": "2026-07-25",
         "sections": {

@@ -268,7 +268,7 @@ const SavedRoutesPage = {
                     <div class="trip-card__top">
                         <span class="trip-card__title">${escapeHtml(route.name)}</span>
                     </div>
-                    <div id="saved-route-map-${route.id}" class="map-container" style="height:180px;"></div>
+                    <div id="saved-route-map-${route.id}" class="map-container" style="height:360px;"></div>
                     <div class="field-row" id="saved-route-edit-form-${route.id}" hidden>
                         <div class="field" style="flex:1;">
                             <label for="saved-route-name-input-${route.id}">${escapeHtml(t('savedRoutes.form.nameLabel'))}</label>

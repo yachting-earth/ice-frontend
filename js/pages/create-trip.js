@@ -17,7 +17,7 @@ const CreateTripPage = {
         this.state.drawMaps = {};
 
         container.innerHTML = `
-            <div class="page page--narrow" style="max-width: 640px;">
+            <div class="page">
                 <div class="page-header">
                     <h1>${escapeHtml(t('createTrip.title'))}</h1>
                 </div>

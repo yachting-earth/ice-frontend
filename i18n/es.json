@@ -1692,6 +1692,15 @@
     "sectionFixed": "Corregido",
     "entries": [
       {
+        "version": "v1.11.1",
+        "date": "2026-07-27",
+        "sections": {
+          "improved": [
+            "Hemos publicado algunos pequeños ajustes de diseño para que el sistema resulte más claro."
+          ]
+        }
+      },
+      {
         "version": "v1.11.0",
         "date": "2026-07-25",
         "sections": {
