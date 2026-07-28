@@ -1725,6 +1725,15 @@
     "sectionFixed": "Fixat",
     "entries": [
       {
+        "version": "v1.13.1",
+        "date": "2026-07-28",
+        "sections": {
+          "fixed": [
+            "Att radera en resa som fortfarande pågick gör inte längre att båten räknas som att den är ute på en aktiv resa - du kan starta en ny resa för båten direkt, i stället för att få beskedet att det redan finns en aktiv resa."
+          ]
+        }
+      },
+      {
         "version": "v1.13.0",
         "date": "2026-07-28",
         "sections": {

@@ -1714,6 +1714,15 @@
     "sectionFixed": "Behoben",
     "entries": [
       {
+        "version": "v1.13.1",
+        "date": "2026-07-28",
+        "sections": {
+          "fixed": [
+            "Das Löschen eines noch laufenden Törns führt nicht mehr dazu, dass das Boot weiterhin als auf aktiver Fahrt gilt - du kannst sofort einen neuen Törn für dieses Boot starten, statt die Meldung zu bekommen, dass bereits einer aktiv ist."
+          ]
+        }
+      },
+      {
         "version": "v1.13.0",
         "date": "2026-07-28",
         "sections": {

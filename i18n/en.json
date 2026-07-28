@@ -1716,6 +1716,15 @@
     "sectionFixed": "Fixed",
     "entries": [
       {
+        "version": "v1.13.1",
+        "date": "2026-07-28",
+        "sections": {
+          "fixed": [
+            "Deleting a trip that was still under way no longer leaves the boat counted as being on an active voyage - you can start a new trip for that vessel straight away, instead of being told one is already active."
+          ]
+        }
+      },
+      {
         "version": "v1.13.0",
         "date": "2026-07-28",
         "sections": {

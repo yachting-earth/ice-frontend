@@ -1714,6 +1714,15 @@
     "sectionFixed": "Correzioni",
     "entries": [
       {
+        "version": "v1.13.1",
+        "date": "2026-07-28",
+        "sections": {
+          "fixed": [
+            "Eliminare un viaggio ancora in corso non lascia più l'imbarcazione conteggiata come in navigazione - puoi avviare subito un nuovo viaggio per quella barca, invece di ricevere il messaggio che ne esiste già uno attivo."
+          ]
+        }
+      },
+      {
         "version": "v1.13.0",
         "date": "2026-07-28",
         "sections": {

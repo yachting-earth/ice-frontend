@@ -1714,6 +1714,15 @@
     "sectionFixed": "Corregido",
     "entries": [
       {
+        "version": "v1.13.1",
+        "date": "2026-07-28",
+        "sections": {
+          "fixed": [
+            "Eliminar un viaje que aún estaba en curso ya no deja la embarcación contada como si siguiera navegando - puedes iniciar un nuevo viaje para ese barco de inmediato, en lugar de recibir el aviso de que ya hay uno activo."
+          ]
+        }
+      },
+      {
         "version": "v1.13.0",
         "date": "2026-07-28",
         "sections": {

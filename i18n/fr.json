@@ -1714,6 +1714,15 @@
     "sectionFixed": "Corrections",
     "entries": [
       {
+        "version": "v1.13.1",
+        "date": "2026-07-28",
+        "sections": {
+          "fixed": [
+            "Supprimer une sortie encore en cours ne laisse plus le navire considéré comme étant en navigation - vous pouvez démarrer une nouvelle sortie pour ce bateau immédiatement, au lieu de voir le message indiquant qu'une sortie est déjà active."
+          ]
+        }
+      },
+      {
         "version": "v1.13.0",
         "date": "2026-07-28",
         "sections": {
