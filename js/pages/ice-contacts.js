@@ -43,10 +43,6 @@ const IceContactsPage = {
                                 <label for="contact-email">${escapeHtml(t('common.email'))}</label>
                                 <input type="email" id="contact-email" autocomplete="email">
                             </div>
-                            <div class="field">
-                                <label for="contact-phone">${escapeHtml(t('common.phone'))}</label>
-                                <input type="tel" id="contact-phone" placeholder="${escapeHtml(t('iceContacts.phonePlaceholder'))}">
-                            </div>
                         </div>
                         <button class="btn btn-primary" type="submit" id="contact-submit">${escapeHtml(t('iceContacts.submitAdd'))}</button>
                     </form>
@@ -132,7 +128,7 @@ const IceContactsPage = {
                     <div class="trip-card__meta">
                         <span>${escapeHtml(contact.relationship || '')}</span>
                         <span>${escapeHtml(effectiveEmail)}</span>
-                        <span>${escapeHtml(effectivePhone)}</span>
+                        ${effectivePhone ? `<span>${escapeHtml(effectivePhone)}</span>` : ''}
                     </div>
                     ${linked ? `<div class="trip-card__meta"><small class="text-muted">${escapeHtml(t('iceContacts.managedByAccount'))}</small></div>` : ''}
                 </div>
@@ -169,7 +165,6 @@ const IceContactsPage = {
         document.getElementById('contact-name').value = contact.name || '';
         document.getElementById('contact-relationship').value = contact.relationship || '';
         document.getElementById('contact-email').value = contact.email || '';
-        document.getElementById('contact-phone').value = contact.phone || '';
         document.getElementById('contact-submit').textContent = t('common.saveChanges');
         document.getElementById('contact-cancel').hidden = false;
         document.getElementById('contact-alert').innerHTML = '';
@@ -195,8 +190,7 @@ const IceContactsPage = {
         const error = Validate.name(values.name)
             || (!values.relationship ? t('iceContacts.relationshipRequired') : null)
             || (values.relationship.length > 50 ? t('iceContacts.relationshipTooLong') : null)
-            || Validate.email(values.email)
-            || Validate.phone(values.phone);
+            || Validate.email(values.email);
 
         const alertBox = document.getElementById('contact-alert');
         alertBox.innerHTML = error ? `<div class="alert alert-error">${escapeHtml(error)}</div>` : '';
@@ -207,8 +201,7 @@ const IceContactsPage = {
         const values = {
             name: document.getElementById('contact-name').value.trim(),
             relationship: document.getElementById('contact-relationship').value.trim(),
-            email: document.getElementById('contact-email').value.trim(),
-            phone: document.getElementById('contact-phone').value.trim()
+            email: document.getElementById('contact-email').value.trim()
         };
 
         if (!this.validate(values)) return;

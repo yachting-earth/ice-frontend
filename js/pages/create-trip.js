@@ -249,10 +249,6 @@ const CreateTripPage = {
                         <label for="ice-contact-email">${escapeHtml(t('common.email'))}</label>
                         <input type="email" id="ice-contact-email" autocomplete="email">
                     </div>
-                    <div class="field">
-                        <label for="ice-contact-phone">${escapeHtml(t('common.phone'))}</label>
-                        <input type="tel" id="ice-contact-phone" placeholder="${escapeHtml(t('iceContacts.phonePlaceholder'))}">
-                    </div>
                 </div>
                 <button class="btn btn-secondary btn-sm" type="button" id="save-ice-contact-btn">${escapeHtml(t('createTrip.iceContact.saveButton'))}</button>
             </div>`;
@@ -283,13 +279,11 @@ const CreateTripPage = {
         const name = document.getElementById('ice-contact-name').value.trim();
         const relationship = document.getElementById('ice-contact-relationship').value.trim();
         const email = document.getElementById('ice-contact-email').value.trim();
-        const phone = document.getElementById('ice-contact-phone').value.trim();
 
         const error = Validate.name(name)
             || (!relationship ? t('iceContacts.relationshipRequired') : null)
             || (relationship.length > 50 ? t('iceContacts.relationshipTooLong') : null)
-            || Validate.email(email)
-            || Validate.phone(phone);
+            || Validate.email(email);
         if (error) {
             alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
             return;
@@ -297,7 +291,7 @@ const CreateTripPage = {
 
         const response = await apiRequest('/ice-contacts', {
             method: 'POST',
-            body: JSON.stringify({ name, relationship, email, phone })
+            body: JSON.stringify({ name, relationship, email })
         });
 
         if (!response.success) {

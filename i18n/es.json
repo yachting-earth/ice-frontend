@@ -91,7 +91,6 @@
     "passwordNeedsNumber": "La contraseña debe contener al menos un número",
     "nameRequired": "El nombre es obligatorio",
     "nameTooShort": "El nombre debe tener al menos 2 caracteres",
-    "phoneRequired": "El número de teléfono es obligatorio",
     "phoneInvalid": "Número de teléfono no válido (usa el formato internacional, p. ej. +46701234567)",
     "windyUrlRequired": "El enlace de Windy es obligatorio",
     "windyUrlInvalid": "Enlace de Windy no válido. Debe proceder de windy.com/route-planner",
@@ -649,7 +648,6 @@
     "cancelEdit": "Cancelar edición",
     "relationshipLabel": "Relación",
     "relationshipPlaceholder": "p. ej. cónyuge, hermano, amigo",
-    "phonePlaceholder": "+46701234567",
     "channelLabels": {
       "email": "Correo electrónico",
       "telegram": "Telegram"
@@ -1691,6 +1689,15 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.12.0",
+        "date": "2026-07-28",
+        "sections": {
+          "improved": [
+            "Los patrones ya no necesitan indicar el número de teléfono de su contacto ICE - el contacto ya puede añadir o eliminar su propio número."
+          ]
+        }
+      },
       {
         "version": "v1.11.1",
         "date": "2026-07-27",

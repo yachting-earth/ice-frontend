@@ -91,7 +91,6 @@
     "passwordNeedsNumber": "La password deve contenere almeno un numero",
     "nameRequired": "Il nome è obbligatorio",
     "nameTooShort": "Il nome deve contenere almeno 2 caratteri",
-    "phoneRequired": "Il numero di telefono è obbligatorio",
     "phoneInvalid": "Numero di telefono non valido (usa il formato internazionale, es. +46701234567)",
     "windyUrlRequired": "Il link Windy è obbligatorio",
     "windyUrlInvalid": "Link Windy non valido. Deve provenire da windy.com/route-planner",
@@ -649,7 +648,6 @@
     "cancelEdit": "Annulla modifica",
     "relationshipLabel": "Relazione",
     "relationshipPlaceholder": "es. coniuge, fratello, amico",
-    "phonePlaceholder": "+46701234567",
     "channelLabels": {
       "email": "Email",
       "telegram": "Telegram"
@@ -1691,6 +1689,15 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.12.0",
+        "date": "2026-07-28",
+        "sections": {
+          "improved": [
+            "Gli skipper non devono più inserire il numero di telefono del proprio contatto ICE - ora il contatto può aggiungere o rimuovere autonomamente il proprio numero."
+          ]
+        }
+      },
       {
         "version": "v1.11.1",
         "date": "2026-07-27",

@@ -91,7 +91,6 @@
     "passwordNeedsNumber": "Das Passwort muss mindestens eine Zahl enthalten",
     "nameRequired": "Name ist erforderlich",
     "nameTooShort": "Der Name muss mindestens 2 Zeichen lang sein",
-    "phoneRequired": "Telefonnummer ist erforderlich",
     "phoneInvalid": "Ungültige Telefonnummer (internationales Format verwenden, z. B. +46701234567)",
     "windyUrlRequired": "Windy-Link ist erforderlich",
     "windyUrlInvalid": "Ungültiger Windy-Link. Muss von windy.com/route-planner stammen",
@@ -649,7 +648,6 @@
     "cancelEdit": "Bearbeitung abbrechen",
     "relationshipLabel": "Beziehung",
     "relationshipPlaceholder": "z. B. Ehepartner, Bruder, Freund",
-    "phonePlaceholder": "+46701234567",
     "channelLabels": {
       "email": "E-Mail",
       "telegram": "Telegram"
@@ -1691,6 +1689,15 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.12.0",
+        "date": "2026-07-28",
+        "sections": {
+          "improved": [
+            "Skipper müssen die Telefonnummer ihres ICE-Kontakts nicht mehr angeben - der Kontakt kann seine eigene Nummer jetzt selbst hinzufügen oder entfernen."
+          ]
+        }
+      },
       {
         "version": "v1.11.1",
         "date": "2026-07-27",

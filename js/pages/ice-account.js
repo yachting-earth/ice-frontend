@@ -173,9 +173,10 @@ const IceAccountPage = {
     },
 
     renderSummary(contact) {
+        const phoneSpan = contact.phone ? `<span>${escapeHtml(contact.phone)}</span>` : '';
         return `
             <div class="trip-card__meta">
-                <span>${escapeHtml(contact.phone || '')}</span>
+                ${phoneSpan}
                 <span>${escapeHtml(this.channelLabels()[contact.preferred_channel] || contact.preferred_channel)}</span>
             </div>`;
     },
@@ -184,7 +185,7 @@ const IceAccountPage = {
         return `
             <form class="contact-edit-form" data-contact-form="${contact.id}" novalidate>
                 <div class="field">
-                    <label for="my-phone-${contact.id}">${escapeHtml(t('common.phone'))}</label>
+                    <label for="my-phone-${contact.id}">${escapeHtml(t('common.phone'))} ${escapeHtml(t('common.optional'))}</label>
                     <input type="tel" id="my-phone-${contact.id}" value="${escapeHtml(contact.phone || '')}" placeholder="${escapeHtml(t('iceAccount.phonePlaceholder'))}">
                 </div>
                 <div class="field">

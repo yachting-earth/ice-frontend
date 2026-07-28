@@ -23,8 +23,8 @@ const Validate = {
         return null;
     },
 
-    phone(value, optional = false) {
-        if (!value) return optional ? null : t('validation.phoneRequired');
+    phone(value) {
+        if (!value) return null;
         if (!/^\+?[1-9]\d{1,14}$/.test(value)) return t('validation.phoneInvalid');
         return null;
     },

@@ -65,7 +65,7 @@ const RegisterPage = {
         const acceptTerms = document.getElementById('accept-terms').checked;
 
         const error = Validate.name(name) || Validate.email(email)
-            || Validate.phone(phone, true) || Validate.password(password)
+            || Validate.phone(phone) || Validate.password(password)
             || (password !== confirmPassword ? t('register.passwordMismatch') : null)
             || (!acceptTerms ? t('register.acceptTermsRequired') : null);
 

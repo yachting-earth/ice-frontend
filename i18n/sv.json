@@ -91,7 +91,6 @@
     "passwordNeedsNumber": "Lösenordet måste innehålla minst en siffra",
     "nameRequired": "Namn krävs",
     "nameTooShort": "Namnet måste vara minst 2 tecken",
-    "phoneRequired": "Telefonnummer krävs",
     "phoneInvalid": "Ogiltigt telefonnummer (använd internationellt format, t.ex. +46701234567)",
     "windyUrlRequired": "Windy-länk krävs",
     "windyUrlInvalid": "Ogiltig Windy-länk. Måste vara från windy.com/route-planner",
@@ -649,7 +648,6 @@
     "cancelEdit": "Avbryt ändring",
     "relationshipLabel": "Relation",
     "relationshipPlaceholder": "t.ex. maka, bror, vän",
-    "phonePlaceholder": "+46701234567",
     "channelLabels": {
       "email": "E-post",
       "telegram": "Telegram"
@@ -1702,6 +1700,15 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.12.0",
+        "date": "2026-07-28",
+        "sections": {
+          "improved": [
+            "Skepparen behöver inte längre fylla i sin nödkontakts telefonnummer - kontakten kan nu lägga till eller ta bort sitt eget nummer själv."
+          ]
+        }
+      },
       {
         "version": "v1.11.1",
         "date": "2026-07-27",

@@ -349,7 +349,7 @@ const ProfilePage = {
     },
 
     validate(values) {
-        const error = Validate.name(values.name) || Validate.email(values.email) || Validate.phone(values.phone, true);
+        const error = Validate.name(values.name) || Validate.email(values.email) || Validate.phone(values.phone);
         const alertBox = document.getElementById('profile-alert');
         alertBox.innerHTML = error ? `<div class="alert alert-error">${escapeHtml(error)}</div>` : '';
         return !error;

@@ -102,7 +102,6 @@ const EN_INLINE = {
     "passwordNeedsNumber": "Password must contain at least one number",
     "nameRequired": "Name is required",
     "nameTooShort": "Name must be at least 2 characters",
-    "phoneRequired": "Phone number is required",
     "phoneInvalid": "Invalid phone number (use international format, e.g. +46701234567)",
     "windyUrlRequired": "Windy link is required",
     "windyUrlInvalid": "Invalid Windy link. Must be from windy.com/route-planner",
@@ -660,7 +659,6 @@ const EN_INLINE = {
     "cancelEdit": "Cancel edit",
     "relationshipLabel": "Relationship",
     "relationshipPlaceholder": "e.g. spouse, brother, friend",
-    "phonePlaceholder": "+46701234567",
     "channelLabels": {
       "email": "Email",
       "telegram": "Telegram"
@@ -1704,6 +1702,15 @@ const EN_INLINE = {
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.12.0",
+        "date": "2026-07-28",
+        "sections": {
+          "improved": [
+            "Skippers no longer need to enter their ICE contact's phone number - the contact can now add or remove their own number themselves."
+          ]
+        }
+      },
       {
         "version": "v1.11.1",
         "date": "2026-07-27",

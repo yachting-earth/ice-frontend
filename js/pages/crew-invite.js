@@ -162,7 +162,7 @@ const CrewInvitePage = {
         const createAccountBox = document.getElementById('create-account');
         const createAccount = !!(createAccountBox && createAccountBox.checked);
 
-        let error = Validate.name(name) || Validate.phone(phone, true);
+        let error = Validate.name(name) || Validate.phone(phone);
 
         let password = null;
         let acceptTerms = false;

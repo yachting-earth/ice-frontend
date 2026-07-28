@@ -91,7 +91,6 @@
     "passwordNeedsNumber": "Le mot de passe doit contenir au moins un chiffre",
     "nameRequired": "Le nom est requis",
     "nameTooShort": "Le nom doit contenir au moins 2 caractères",
-    "phoneRequired": "Le numéro de téléphone est requis",
     "phoneInvalid": "Numéro de téléphone invalide (utilisez le format international, ex. +46701234567)",
     "windyUrlRequired": "Le lien Windy est requis",
     "windyUrlInvalid": "Lien Windy invalide. Il doit provenir de windy.com/route-planner",
@@ -649,7 +648,6 @@
     "cancelEdit": "Annuler la modification",
     "relationshipLabel": "Lien de parenté",
     "relationshipPlaceholder": "ex. conjoint(e), frère, ami(e)",
-    "phonePlaceholder": "+46701234567",
     "channelLabels": {
       "email": "E-mail",
       "telegram": "Telegram"
@@ -1691,6 +1689,15 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.12.0",
+        "date": "2026-07-28",
+        "sections": {
+          "improved": [
+            "Les skippers n'ont plus besoin de saisir le numéro de téléphone de leur contact ICE - le contact peut désormais ajouter ou supprimer lui-même son propre numéro."
+          ]
+        }
+      },
       {
         "version": "v1.11.1",
         "date": "2026-07-27",
