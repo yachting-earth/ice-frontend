@@ -16,6 +16,12 @@ const IcePortalPage = {
         ].filter(Boolean).join(' × ');
     },
 
+    // The date is always shown alongside the age, never age alone - a bare
+    // "(46)" isn't enough for SAR to act on.
+    formatDateOfBirth(dateOfBirth) {
+        return `${dateOfBirth} (${calculateAge(dateOfBirth)} ${t('icePortal.crew.ageLabel')})`;
+    },
+
     async render(container, params, query) {
         this.state.tripId = query.get('trip');
         this.state.token = query.get('token');
@@ -92,6 +98,7 @@ const IcePortalPage = {
                             <strong>${escapeHtml(t('common.name'))}:</strong> ${escapeHtml(skipper?.name || '–')}
                             ${skipper?.phone ? ` · <strong>${escapeHtml(t('common.phone'))}:</strong> ${escapeHtml(skipper.phone)}` : ''}
                             ${skipper?.email ? ` · <strong>${escapeHtml(t('common.email'))}:</strong> ${escapeHtml(skipper.email)}` : ''}
+                            ${skipper?.date_of_birth ? ` · <strong>${escapeHtml(t('icePortal.skipper.dateOfBirthLabel'))}:</strong> ${escapeHtml(IcePortalPage.formatDateOfBirth(skipper.date_of_birth))}` : ''}
                         </p>
                     </div>
                 </div>
@@ -238,6 +245,7 @@ const IcePortalPage = {
                         ${c.phone ? `${escapeHtml(t('common.phone'))}: ${escapeHtml(c.phone)}` : ''}
                         ${c.email ? ` · ${escapeHtml(t('common.email'))}: ${escapeHtml(c.email)}` : ''}
                         ${c.ice_contact ? ` · ${escapeHtml(t('icePortal.crew.ownIceContact', { contact: c.ice_contact }))}` : ''}
+                        ${c.date_of_birth ? ` · <strong>${escapeHtml(t('icePortal.crew.dateOfBirthLabel'))}:</strong> ${escapeHtml(IcePortalPage.formatDateOfBirth(c.date_of_birth))}` : ''}
                     </span>
                     ${c.medical_info ? `<span class="crew-row__detail" style="margin-top: var(--space-1); white-space: pre-wrap;"><strong>${escapeHtml(t('icePortal.crew.medicalLabel'))}:</strong> ${escapeHtml(c.medical_info)}</span>` : ''}
                 </div>

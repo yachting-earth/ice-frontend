@@ -99,7 +99,10 @@
     "fileTooLarge": "{name} är för stor (max {maxMb}MB)",
     "invalidFileType": "{name} har en filtyp som inte stöds (endast bilder och PDF)",
     "vesselYearInvalid": "Årsmodell måste vara ett heltal mellan 1900 och {maxYear}",
-    "vesselDimensionInvalid": "{label} måste vara ett positivt tal i meter (max 200)"
+    "vesselDimensionInvalid": "{label} måste vara ett positivt tal i meter (max 200)",
+    "dateOfBirthInvalid": "Ogiltigt födelsedatum (använd ÅÅÅÅ-MM-DD)",
+    "dateOfBirthFuture": "Födelsedatum kan inte ligga i framtiden",
+    "dateOfBirthTooOld": "Födelsedatum kan inte ligga mer än 120 år tillbaka"
   },
   "trip": {
     "status": {
@@ -260,6 +263,8 @@
     "emailLabel": "E-post",
     "phoneLabel": "Telefon (valfritt)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Födelsedatum (valfritt)",
+    "dateOfBirthHint": "Delas endast med sjöräddningen om något händer. Syns inte för andra ombord.",
     "passwordLabel": "Lösenord",
     "passwordHint": "Minst 8 tecken, en stor bokstav och en siffra.",
     "confirmPasswordLabel": "Bekräfta lösenord",
@@ -373,6 +378,8 @@
     "loadFailed": "Kunde inte hämta dina uppgifter.",
     "nameLabel": "Namn",
     "phoneLabel": "Telefon",
+    "dateOfBirthLabel": "Födelsedatum (valfritt)",
+    "dateOfBirthHint": "Delas endast med sjöräddningen om något händer. Syns inte för andra ombord.",
     "emailLabel": "E-post",
     "languageLabel": "Språk",
     "timezoneLabel": "Tidszon",
@@ -443,6 +450,8 @@
     "title": "Skapa ny resa",
     "submit": "Skapa resa",
     "submitting": "Skapar resa...",
+    "dateOfBirthBanner": "Du har inte angett ditt födelsedatum än. Lägg till det på din {profileLink} så att sjöräddningen kan identifiera dig korrekt om den här resan rapporteras försenad.",
+    "dateOfBirthBannerLink": "profil",
     "scheduleConflictNotice": "Obs: en annan resa med samma MMSI-nummer är redan schemalagd under en överlappande tidsperiod.",
     "created": "Resa skapad",
     "iceConfirmationRequested": "Din nödkontakt har redan bekräftat sitt konto, men behöver logga in och godkänna att vara nödkontakt för just den här resan innan den kan aktiveras.",
@@ -583,6 +592,8 @@
     "nameLabel": "Ditt namn",
     "phoneLabel": "Telefonnummer (valfritt)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Födelsedatum (valfritt)",
+    "dateOfBirthHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller skepparens nödkontakt.",
     "iceContactLabel": "Din nödkontakt",
     "iceContactPlaceholder": "t.ex. Erik (make) +46701234568",
     "iceContactHint": "Namn och telefonnummer till någon som ska kontaktas om något händer.",
@@ -730,7 +741,8 @@
       "hidePin": "Dölj PIN"
     },
     "skipper": {
-      "heading": "Skeppare"
+      "heading": "Skeppare",
+      "dateOfBirthLabel": "Födelsedatum"
     },
     "trip": {
       "heading": "Resa",
@@ -764,7 +776,9 @@
       "empty": "Ingen bekräftad besättning registrerad.",
       "unknownName": "Okänd",
       "ownIceContact": "Egen nödkontakt: {contact}",
-      "medicalLabel": "Medicinsk info"
+      "medicalLabel": "Medicinsk info",
+      "dateOfBirthLabel": "Födelsedatum",
+      "ageLabel": "år"
     },
     "iceContact": {
       "heading": "Skepparens nödkontakt (ICE)",
@@ -838,6 +852,14 @@
       "saveButton": "Spara",
       "saved": "Din information har sparats.",
       "saveFailed": "Kunde inte spara din information."
+    },
+    "dateOfBirth": {
+      "heading": "Ditt födelsedatum",
+      "hint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller skepparens nödkontakt.",
+      "saveButton": "Spara",
+      "empty": "Du har inte lagt till något födelsedatum.",
+      "saved": "Ditt födelsedatum har sparats.",
+      "saveFailed": "Kunde inte spara ditt födelsedatum."
     },
     "log": {
       "heading": "Ändringslogg",
@@ -1211,6 +1233,7 @@
       "pending": "⏳ Väntar",
       "changePhoto": "Byt foto",
       "addPhoto": "Lägg till foto",
+      "dateOfBirthMissing": "Födelsedatum saknas",
       "copyLink": "Kopiera länk",
       "choosePhotoFirst": "Välj en bild först.",
       "photoSaveFailed": "Kunde inte spara fotot.",
@@ -1402,6 +1425,7 @@
           "Båtuppgifter - namn, registrering/anropssignal, specifikationer och ett valfritt foto",
           "Reseuppgifter - planerade rutter (tolkade från Windy.com), planerad avgångs-/ankomsttid och marginaltid",
           "Besättningsuppgifter - namn, e-post, telefon och ett valfritt foto för identifieringsändamål",
+          "Födelsedatum - frivilligt, och används endast för att identifiera personer ombord i en verklig nödsituation; visas för sjöräddningen om det behövs, men aldrig för skepparen eller nödkontakten",
           "Nödkontaktuppgifter (\"ICE\") - namn, e-post, telefon och relation till skepparen",
           "Säkerhetsloggar - inloggningsförsök (för att upprätthålla hastighetsbegränsning) och status för avisering"
         ]
@@ -1700,6 +1724,15 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.13.0",
+        "date": "2026-07-28",
+        "sections": {
+          "new": [
+            "Du kan nu ange ditt födelsedatum i din profil, eller när du går med i en resa som besättning, så att sjöräddningen har det till hands om resan någonsin rapporteras försenad."
+          ]
+        }
+      },
       {
         "version": "v1.12.0",
         "date": "2026-07-28",

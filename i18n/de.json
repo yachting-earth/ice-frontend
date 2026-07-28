@@ -99,7 +99,10 @@
     "fileTooLarge": "{name} ist zu groß (max. {maxMb} MB)",
     "invalidFileType": "{name} hat ein nicht unterstütztes Dateiformat (nur Bilder und PDF)",
     "vesselYearInvalid": "Baujahr muss eine ganze Zahl zwischen 1900 und {maxYear} sein",
-    "vesselDimensionInvalid": "{label} muss eine positive Zahl in Metern sein (max. 200)"
+    "vesselDimensionInvalid": "{label} muss eine positive Zahl in Metern sein (max. 200)",
+    "dateOfBirthInvalid": "Ungültiges Geburtsdatum (Format JJJJ-MM-TT)",
+    "dateOfBirthFuture": "Das Geburtsdatum darf nicht in der Zukunft liegen",
+    "dateOfBirthTooOld": "Das Geburtsdatum darf nicht mehr als 120 Jahre zurückliegen"
   },
   "trip": {
     "status": {
@@ -260,6 +263,8 @@
     "emailLabel": "E-Mail",
     "phoneLabel": "Telefon (optional)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Geburtsdatum (optional)",
+    "dateOfBirthHint": "Wird nur mit der Seenotrettung geteilt, falls etwas passiert. Für andere an Bord nicht sichtbar.",
     "passwordLabel": "Passwort",
     "passwordHint": "Mindestens 8 Zeichen, ein Großbuchstabe und eine Zahl.",
     "confirmPasswordLabel": "Passwort bestätigen",
@@ -373,6 +378,8 @@
     "loadFailed": "Deine Daten konnten nicht abgerufen werden.",
     "nameLabel": "Name",
     "phoneLabel": "Telefon",
+    "dateOfBirthLabel": "Geburtsdatum (optional)",
+    "dateOfBirthHint": "Wird nur mit der Seenotrettung geteilt, falls etwas passiert. Für andere an Bord nicht sichtbar.",
     "emailLabel": "E-Mail",
     "languageLabel": "Sprache",
     "timezoneLabel": "Zeitzone",
@@ -443,6 +450,8 @@
     "title": "Neuen Törn erstellen",
     "submit": "Törn erstellen",
     "submitting": "Törn wird erstellt…",
+    "dateOfBirthBanner": "Du hast noch kein Geburtsdatum angegeben. Füge es in deinem {profileLink} hinzu, damit Search and Rescue dich korrekt identifizieren kann, falls dieser Törn als überfällig gemeldet wird.",
+    "dateOfBirthBannerLink": "Profil",
     "scheduleConflictNotice": "Hinweis: Für dieselbe MMSI-Nummer ist bereits ein anderer Törn im selben Zeitraum geplant.",
     "created": "Törn erstellt",
     "iceConfirmationRequested": "Dein ICE-Kontakt hat sein Konto bereits bestätigt, muss sich aber anmelden und bestätigen, für genau diesen Törn ICE-Kontakt zu sein, bevor er aktiviert werden kann.",
@@ -583,6 +592,8 @@
     "nameLabel": "Dein Name",
     "phoneLabel": "Telefonnummer (optional)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Geburtsdatum (optional)",
+    "dateOfBirthHint": "Wird nur im Notfall den Such- und Rettungsbehörden angezeigt - niemals dem Skipper oder dem ICE-Kontakt.",
     "iceContactLabel": "Dein Notfallkontakt",
     "iceContactPlaceholder": "z. B. Erik (Ehemann) +46701234568",
     "iceContactHint": "Name und Telefonnummer einer Person, die im Notfall kontaktiert werden soll.",
@@ -730,7 +741,8 @@
       "hidePin": "PIN verbergen"
     },
     "skipper": {
-      "heading": "Skipper"
+      "heading": "Skipper",
+      "dateOfBirthLabel": "Geburtsdatum"
     },
     "trip": {
       "heading": "Törn",
@@ -764,7 +776,9 @@
       "empty": "Keine bestätigte Crew registriert.",
       "unknownName": "Unbekannt",
       "ownIceContact": "Eigener Notfallkontakt: {contact}",
-      "medicalLabel": "Medizinische Info"
+      "medicalLabel": "Medizinische Info",
+      "dateOfBirthLabel": "Geburtsdatum",
+      "ageLabel": "Jahre"
     },
     "iceContact": {
       "heading": "Notfallkontakt (ICE) des Skippers",
@@ -838,6 +852,14 @@
       "saveButton": "Speichern",
       "saved": "Deine Informationen wurden gespeichert.",
       "saveFailed": "Deine Informationen konnten nicht gespeichert werden."
+    },
+    "dateOfBirth": {
+      "heading": "Dein Geburtsdatum",
+      "hint": "Wird nur im Notfall den Such- und Rettungsbehörden angezeigt - niemals dem Skipper oder dem ICE-Kontakt.",
+      "saveButton": "Speichern",
+      "empty": "Du hast noch kein Geburtsdatum hinzugefügt.",
+      "saved": "Dein Geburtsdatum wurde gespeichert.",
+      "saveFailed": "Dein Geburtsdatum konnte nicht gespeichert werden."
     },
     "log": {
       "heading": "Änderungsprotokoll",
@@ -1211,6 +1233,7 @@
       "pending": "⏳ Ausstehend",
       "changePhoto": "Foto ändern",
       "addPhoto": "Foto hinzufügen",
+      "dateOfBirthMissing": "Geburtsdatum fehlt",
       "copyLink": "Link kopieren",
       "choosePhotoFirst": "Wähle zuerst ein Bild aus.",
       "photoSaveFailed": "Das Foto konnte nicht gespeichert werden.",
@@ -1400,6 +1423,7 @@
           "Bootsdaten - Name, Registrierung/Rufzeichen, Spezifikationen und ein optionales Foto",
           "Törn-Daten - geplante Routen (aus Windy.com übernommen), geplante Abfahrts-/Ankunftszeiten und Kulanzzeit",
           "Crew-Daten - Name, E-Mail, Telefonnummer und ein optionales Foto zur Identifizierung",
+          "Geburtsdatum - freiwillig und wird nur verwendet, um Personen an Bord im Notfall zu identifizieren; wird bei Bedarf den Such- und Rettungsbehörden mitgeteilt, aber niemals dem Skipper oder dem ICE-Kontakt",
           "Notfallkontakt-Daten („ICE“) - Name, E-Mail, Telefonnummer und Beziehung zum Skipper",
           "Sicherheitsprotokolle - Anmeldeversuche (zur Durchsetzung von Ratenbegrenzung) und Zustellstatus von Benachrichtigungen"
         ]
@@ -1689,6 +1713,15 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.13.0",
+        "date": "2026-07-28",
+        "sections": {
+          "new": [
+            "Du kannst jetzt dein Geburtsdatum in deinem Profil angeben, oder wenn du als Crewmitglied einem Törn beitrittst, damit Search and Rescue es zur Hand hat, falls der Törn jemals als überfällig gemeldet wird."
+          ]
+        }
+      },
       {
         "version": "v1.12.0",
         "date": "2026-07-28",

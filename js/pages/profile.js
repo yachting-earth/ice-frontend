@@ -314,6 +314,11 @@ const ProfilePage = {
                     </div>
                 </div>
                 <div class="field">
+                    <label for="profile-date-of-birth">${escapeHtml(t('profile.dateOfBirthLabel'))}</label>
+                    <input type="date" id="profile-date-of-birth" autocomplete="bday">
+                    <small>${escapeHtml(t('profile.dateOfBirthHint'))}</small>
+                </div>
+                <div class="field">
                     <label for="profile-email">${escapeHtml(t('profile.emailLabel'))}</label>
                     <input type="email" id="profile-email" autocomplete="email">
                 </div>
@@ -338,6 +343,7 @@ const ProfilePage = {
         // user-supplied names/emails can never break out of the markup.
         document.getElementById('profile-name').value = this.state.user.name || '';
         document.getElementById('profile-phone').value = this.state.user.phone || '';
+        document.getElementById('profile-date-of-birth').value = this.state.user.date_of_birth || '';
         document.getElementById('profile-email').value = this.state.user.email || '';
         document.getElementById('profile-lang').value = this.state.user.locale || I18n._lang || I18n.DEFAULT;
         document.getElementById('profile-timezone').value = this.state.user.timezone || '';
@@ -349,7 +355,8 @@ const ProfilePage = {
     },
 
     validate(values) {
-        const error = Validate.name(values.name) || Validate.email(values.email) || Validate.phone(values.phone);
+        const error = Validate.name(values.name) || Validate.email(values.email) || Validate.phone(values.phone)
+            || Validate.dateOfBirth(values.dateOfBirth);
         const alertBox = document.getElementById('profile-alert');
         alertBox.innerHTML = error ? `<div class="alert alert-error">${escapeHtml(error)}</div>` : '';
         return !error;
@@ -359,6 +366,7 @@ const ProfilePage = {
         const values = {
             name: document.getElementById('profile-name').value.trim(),
             phone: document.getElementById('profile-phone').value.trim(),
+            dateOfBirth: document.getElementById('profile-date-of-birth').value,
             email: document.getElementById('profile-email').value.trim(),
             locale: document.getElementById('profile-lang').value,
             timezone: document.getElementById('profile-timezone').value
@@ -373,7 +381,7 @@ const ProfilePage = {
             method: 'PUT',
             body: JSON.stringify({
                 name: values.name, email: values.email, phone: values.phone || null,
-                locale: values.locale, timezone: values.timezone || null
+                date_of_birth: values.dateOfBirth, locale: values.locale, timezone: values.timezone || null
             })
         });
 

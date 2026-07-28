@@ -21,6 +21,7 @@ const CreateTripPage = {
                 <div class="page-header">
                     <h1>${escapeHtml(t('createTrip.title'))}</h1>
                 </div>
+                <div id="date-of-birth-banner"></div>
                 <div id="create-trip-alert"></div>
 
                 <div id="pending-crew-card"></div>
@@ -99,7 +100,22 @@ const CreateTripPage = {
 
         this.renderPendingCrewCard();
         this.renderRoutes();
-        await Promise.all([this.loadVessels(), this.loadIceContacts(), this.loadSavedRoutes()]);
+        await Promise.all([this.loadVessels(), this.loadIceContacts(), this.loadSavedRoutes(), this.checkDateOfBirth()]);
+    },
+
+    // Nudges a skipper with no date of birth on file toward #/profile - the
+    // field is optional and never blocks trip creation, it just goes missing
+    // from the manifest search and rescue sees. Mirrors dashboard.js's
+    // verify-email banner pattern.
+    async checkDateOfBirth() {
+        const response = await apiRequest('/user/profile');
+        if (!response.success || response.data.date_of_birth) return;
+
+        const box = document.getElementById('date-of-birth-banner');
+        if (!box) return;
+
+        const profileLink = `<a href="#/profile">${escapeHtml(t('createTrip.dateOfBirthBannerLink'))}</a>`;
+        box.innerHTML = `<div class="alert alert-warning">${t('createTrip.dateOfBirthBanner', { profileLink })}</div>`;
     },
 
     // Shows the address book selection carried over from the "Invite to

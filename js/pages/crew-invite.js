@@ -89,6 +89,11 @@ const CrewInvitePage = {
                         <input type="tel" id="phone" placeholder="${t('crewInvite.phonePlaceholder')}">
                     </div>
                     <div class="field">
+                        <label for="date-of-birth">${t('crewInvite.dateOfBirthLabel')}</label>
+                        <input type="date" id="date-of-birth">
+                        <small>${t('crewInvite.dateOfBirthHint')}</small>
+                    </div>
+                    <div class="field">
                         <label for="ice-contact">${t('crewInvite.iceContactLabel')}</label>
                         <input type="text" id="ice-contact" placeholder="${t('crewInvite.iceContactPlaceholder')}">
                         <small>${t('crewInvite.iceContactHint')}</small>
@@ -155,6 +160,7 @@ const CrewInvitePage = {
 
         const name = document.getElementById('name').value.trim();
         const phone = document.getElementById('phone').value.trim();
+        const dateOfBirth = document.getElementById('date-of-birth').value;
         const iceContact = document.getElementById('ice-contact').value.trim();
         const medicalInfo = document.getElementById('medical-info').value.trim();
         const photoFile = document.getElementById('photo').files[0] || null;
@@ -162,7 +168,7 @@ const CrewInvitePage = {
         const createAccountBox = document.getElementById('create-account');
         const createAccount = !!(createAccountBox && createAccountBox.checked);
 
-        let error = Validate.name(name) || Validate.phone(phone);
+        let error = Validate.name(name) || Validate.phone(phone) || Validate.dateOfBirth(dateOfBirth);
 
         let password = null;
         let acceptTerms = false;
@@ -206,6 +212,7 @@ const CrewInvitePage = {
             body: JSON.stringify({
                 name,
                 phone: phone || undefined,
+                date_of_birth: dateOfBirth,
                 ice_contact: iceContact || undefined,
                 medical_info: medicalInfo || undefined,
                 share_contact: shareContact,

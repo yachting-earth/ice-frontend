@@ -19,6 +19,11 @@ const RegisterPage = {
                             <input type="tel" id="phone" autocomplete="tel" placeholder="${escapeHtml(t('register.phonePlaceholder'))}">
                         </div>
                         <div class="field">
+                            <label for="date-of-birth">${escapeHtml(t('register.dateOfBirthLabel'))}</label>
+                            <input type="date" id="date-of-birth" autocomplete="bday">
+                            <small>${escapeHtml(t('register.dateOfBirthHint'))}</small>
+                        </div>
+                        <div class="field">
                             <label for="password">${escapeHtml(t('register.passwordLabel'))}</label>
                             <input type="password" id="password" autocomplete="new-password" required>
                             <small>${escapeHtml(t('register.passwordHint'))}</small>
@@ -59,13 +64,14 @@ const RegisterPage = {
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
+        const dateOfBirth = document.getElementById('date-of-birth').value;
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm-password').value;
         const website = document.getElementById('website').value;
         const acceptTerms = document.getElementById('accept-terms').checked;
 
         const error = Validate.name(name) || Validate.email(email)
-            || Validate.phone(phone) || Validate.password(password)
+            || Validate.phone(phone) || Validate.dateOfBirth(dateOfBirth) || Validate.password(password)
             || (password !== confirmPassword ? t('register.passwordMismatch') : null)
             || (!acceptTerms ? t('register.acceptTermsRequired') : null);
 
@@ -79,7 +85,7 @@ const RegisterPage = {
 
         const response = await apiRequest('/auth/register', {
             method: 'POST',
-            body: JSON.stringify({ name, email, password, phone: phone || null, website, accept_terms: acceptTerms })
+            body: JSON.stringify({ name, email, password, phone: phone || null, date_of_birth: dateOfBirth, website, accept_terms: acceptTerms })
         });
 
         if (response.success) {

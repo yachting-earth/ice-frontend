@@ -1153,6 +1153,7 @@ const TripDetailPage = {
                         <span class="crew-row__detail">
                             ${c.email ? `${t('common.email')}: ${escapeHtml(c.email)}` : ''}${c.phone ? ` · ${t('common.phone')}: ${escapeHtml(c.phone)}` : ''}
                             ${c.ice_contact ? ` · ${t('tripDetail.crew.iceContactLabel', { contact: escapeHtml(c.ice_contact) })}` : ''}
+                            ${isOwner && !c.has_date_of_birth ? ` · ${escapeHtml(t('tripDetail.crew.dateOfBirthMissing'))}` : ''}
                         </span>
                         ${isSelf ? `
                         <label class="text-muted" style="font-size: var(--font-size-sm); display:block; margin-top: var(--space-1);">

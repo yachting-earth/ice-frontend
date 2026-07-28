@@ -153,6 +153,24 @@ const CrewViewPage = {
                     `}
                 </div>` : ''}
 
+                ${viewerCrew ? `
+                <div class="card">
+                    <h3>${escapeHtml(t('crewView.dateOfBirth.heading'))}</h3>
+                    <p>${escapeHtml(t('crewView.dateOfBirth.hint'))}</p>
+                    ${canEditSharing ? `
+                    <div id="crewview-dob-alert"></div>
+                    <div class="field">
+                        <input type="date" id="crewview-date-of-birth">
+                    </div>
+                    <button class="btn btn-secondary btn-sm" type="button" id="crewview-dob-submit">${escapeHtml(t('crewView.dateOfBirth.saveButton'))}</button>
+                    ` : `
+                    ${viewerCrew.date_of_birth
+                        ? `<p>${escapeHtml(viewerCrew.date_of_birth)}</p>`
+                        : `<p class="text-muted">${escapeHtml(t('crewView.dateOfBirth.empty'))}</p>`}
+                    <p class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(t('crewView.medical.readOnlyNote'))}</p>
+                    `}
+                </div>` : ''}
+
                 <div class="card">
                     <h3>${escapeHtml(t('crewView.log.heading'))}</h3>
                     <div id="crewview-log-container"></div>
@@ -167,6 +185,7 @@ const CrewViewPage = {
         if (canEditSharing) {
             this.setupSharingForm(viewerCrew);
             this.setupMedicalForm(viewerCrew);
+            this.setupDateOfBirthForm(viewerCrew);
         }
     },
 
@@ -344,5 +363,42 @@ const CrewViewPage = {
 
         alertBox.innerHTML = '';
         showToast(t('crewView.medical.saved'), 'success');
+    },
+
+    setupDateOfBirthForm(viewerCrew) {
+        const field = document.getElementById('crewview-date-of-birth');
+        if (!field) return;
+
+        field.value = viewerCrew.date_of_birth || '';
+        document.getElementById('crewview-dob-submit').addEventListener('click', () => this.handleDateOfBirthSubmit());
+    },
+
+    async handleDateOfBirthSubmit() {
+        const alertBox = document.getElementById('crewview-dob-alert');
+        const btn = document.getElementById('crewview-dob-submit');
+
+        const dateOfBirth = document.getElementById('crewview-date-of-birth').value;
+        const error = Validate.dateOfBirth(dateOfBirth);
+        if (error) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
+            return;
+        }
+
+        btn.disabled = true;
+
+        const response = await apiRequest(`/crew/${this.state.viewerCrewId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ date_of_birth: dateOfBirth })
+        });
+
+        btn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('crewView.dateOfBirth.saveFailed')))}</div>`;
+            return;
+        }
+
+        alertBox.innerHTML = '';
+        showToast(t('crewView.dateOfBirth.saved'), 'success');
     }
 };

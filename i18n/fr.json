@@ -99,7 +99,10 @@
     "fileTooLarge": "{name} est trop volumineux (max {maxMb} Mo)",
     "invalidFileType": "{name} a un format non pris en charge (images et PDF uniquement)",
     "vesselYearInvalid": "L'année du modèle doit être un nombre entier compris entre 1900 et {maxYear}",
-    "vesselDimensionInvalid": "{label} doit être un nombre positif en mètres (max 200)"
+    "vesselDimensionInvalid": "{label} doit être un nombre positif en mètres (max 200)",
+    "dateOfBirthInvalid": "Date de naissance invalide (utilisez AAAA-MM-JJ)",
+    "dateOfBirthFuture": "La date de naissance ne peut pas être dans le futur",
+    "dateOfBirthTooOld": "La date de naissance ne peut pas remonter à plus de 120 ans"
   },
   "trip": {
     "status": {
@@ -260,6 +263,8 @@
     "emailLabel": "E-mail",
     "phoneLabel": "Téléphone (facultatif)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Date de naissance (facultatif)",
+    "dateOfBirthHint": "Partagée uniquement avec les secours en cas d'incident. Non visible par les autres personnes à bord.",
     "passwordLabel": "Mot de passe",
     "passwordHint": "Au moins 8 caractères, une majuscule et un chiffre.",
     "confirmPasswordLabel": "Confirmer le mot de passe",
@@ -373,6 +378,8 @@
     "loadFailed": "Impossible de récupérer vos informations.",
     "nameLabel": "Nom",
     "phoneLabel": "Téléphone",
+    "dateOfBirthLabel": "Date de naissance (facultatif)",
+    "dateOfBirthHint": "Partagée uniquement avec les secours en cas d'incident. Non visible par les autres personnes à bord.",
     "emailLabel": "E-mail",
     "languageLabel": "Langue",
     "timezoneLabel": "Fuseau horaire",
@@ -443,6 +450,8 @@
     "title": "Créer une nouvelle sortie",
     "submit": "Créer la sortie",
     "submitting": "Création de la sortie…",
+    "dateOfBirthBanner": "Vous n'avez pas encore renseigné votre date de naissance. Ajoutez-la dans votre {profileLink} afin que les secours puissent vous identifier correctement si cette sortie est signalée en retard.",
+    "dateOfBirthBannerLink": "profil",
     "scheduleConflictNotice": "Remarque : une autre sortie avec le même numéro MMSI est déjà programmée sur une période qui se chevauche.",
     "created": "Sortie créée",
     "iceConfirmationRequested": "Votre contact ICE a déjà confirmé son compte, mais doit se connecter et approuver son rôle de contact ICE pour cette sortie précise avant qu'elle puisse être activée.",
@@ -583,6 +592,8 @@
     "nameLabel": "Votre nom",
     "phoneLabel": "Numéro de téléphone (facultatif)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Date de naissance (facultatif)",
+    "dateOfBirthHint": "Uniquement communiquée aux autorités de secours en cas d'urgence - jamais au skipper ni au contact ICE.",
     "iceContactLabel": "Votre contact d'urgence",
     "iceContactPlaceholder": "ex. Erik (mari) +46701234568",
     "iceContactHint": "Nom et numéro de téléphone d'une personne à contacter en cas d'incident.",
@@ -730,7 +741,8 @@
       "hidePin": "Masquer le PIN"
     },
     "skipper": {
-      "heading": "Skipper"
+      "heading": "Skipper",
+      "dateOfBirthLabel": "Date de naissance"
     },
     "trip": {
       "heading": "Sortie",
@@ -764,7 +776,9 @@
       "empty": "Aucun équipier confirmé enregistré.",
       "unknownName": "Inconnu",
       "ownIceContact": "Contact d'urgence personnel : {contact}",
-      "medicalLabel": "Informations médicales"
+      "medicalLabel": "Informations médicales",
+      "dateOfBirthLabel": "Date de naissance",
+      "ageLabel": "ans"
     },
     "iceContact": {
       "heading": "Contact d'urgence du skipper (ICE)",
@@ -838,6 +852,14 @@
       "saveButton": "Enregistrer",
       "saved": "Vos informations ont été enregistrées.",
       "saveFailed": "Impossible d'enregistrer vos informations."
+    },
+    "dateOfBirth": {
+      "heading": "Votre date de naissance",
+      "hint": "Uniquement communiquée aux autorités de secours en cas d'urgence - jamais au skipper ni au contact ICE.",
+      "saveButton": "Enregistrer",
+      "empty": "Vous n'avez pas ajouté de date de naissance.",
+      "saved": "Votre date de naissance a été enregistrée.",
+      "saveFailed": "Impossible d'enregistrer votre date de naissance."
     },
     "log": {
       "heading": "Journal des modifications",
@@ -1211,6 +1233,7 @@
       "pending": "⏳ En attente",
       "changePhoto": "Changer la photo",
       "addPhoto": "Ajouter une photo",
+      "dateOfBirthMissing": "Date de naissance manquante",
       "copyLink": "Copier le lien",
       "choosePhotoFirst": "Choisissez d'abord une image.",
       "photoSaveFailed": "Impossible d'enregistrer la photo.",
@@ -1400,6 +1423,7 @@
           "Données du navire - nom, immatriculation/indicatif d'appel, caractéristiques, et une photo facultative",
           "Données de sortie - itinéraires prévus (extraits de Windy.com), heures de départ/arrivée prévues, et délai de grâce",
           "Données d'équipage - nom, e-mail, téléphone, et une photo facultative à des fins d'identification",
+          "Date de naissance - facultative, utilisée uniquement pour aider à identifier les personnes à bord en cas d'urgence réelle ; communiquée aux autorités de secours si nécessaire, mais jamais au skipper ni au contact ICE",
           "Données du contact d'urgence (« ICE ») - nom, e-mail, téléphone, et lien de parenté avec le skipper",
           "Journaux de sécurité - tentatives de connexion (pour appliquer la limitation de débit) et statut de remise des notifications"
         ]
@@ -1689,6 +1713,15 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.13.0",
+        "date": "2026-07-28",
+        "sections": {
+          "new": [
+            "Vous pouvez désormais renseigner votre date de naissance dans votre profil, ou en rejoignant une sortie en tant qu'équipier, afin que les secours l'aient à disposition si la sortie est signalée en retard."
+          ]
+        }
+      },
       {
         "version": "v1.12.0",
         "date": "2026-07-28",

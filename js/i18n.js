@@ -110,7 +110,10 @@ const EN_INLINE = {
     "fileTooLarge": "{name} is too large (max {maxMb}MB)",
     "invalidFileType": "{name} has an unsupported file type (images and PDF only)",
     "vesselYearInvalid": "Model year must be a whole number between 1900 and {maxYear}",
-    "vesselDimensionInvalid": "{label} must be a positive number in metres (max 200)"
+    "vesselDimensionInvalid": "{label} must be a positive number in metres (max 200)",
+    "dateOfBirthInvalid": "Invalid date of birth (use YYYY-MM-DD)",
+    "dateOfBirthFuture": "Date of birth cannot be in the future",
+    "dateOfBirthTooOld": "Date of birth cannot be more than 120 years ago"
   },
   "trip": {
     "status": {
@@ -271,6 +274,8 @@ const EN_INLINE = {
     "emailLabel": "Email",
     "phoneLabel": "Phone (optional)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Date of birth (optional)",
+    "dateOfBirthHint": "Only shared with search and rescue if something happens. Not visible to anyone else on board.",
     "passwordLabel": "Password",
     "passwordHint": "At least 8 characters, one uppercase letter and one number.",
     "confirmPasswordLabel": "Confirm password",
@@ -384,6 +389,8 @@ const EN_INLINE = {
     "loadFailed": "Could not fetch your details.",
     "nameLabel": "Name",
     "phoneLabel": "Phone",
+    "dateOfBirthLabel": "Date of birth (optional)",
+    "dateOfBirthHint": "Only shared with search and rescue if something happens. Not visible to anyone else on board.",
     "emailLabel": "Email",
     "languageLabel": "Language",
     "timezoneLabel": "Timezone",
@@ -454,6 +461,8 @@ const EN_INLINE = {
     "title": "Create new trip",
     "submit": "Create trip",
     "submitting": "Creating trip…",
+    "dateOfBirthBanner": "You haven't added your date of birth yet. Add it to your {profileLink} so search and rescue can identify you correctly if this trip is ever reported overdue.",
+    "dateOfBirthBannerLink": "profile",
     "scheduleConflictNotice": "Note: another trip with the same MMSI number is already scheduled during an overlapping time period.",
     "created": "Trip created",
     "iceConfirmationRequested": "Your ICE contact has already confirmed their account, but needs to log in and approve being ICE for this specific trip before it can be activated.",
@@ -594,6 +603,8 @@ const EN_INLINE = {
     "nameLabel": "Your name",
     "phoneLabel": "Phone number (optional)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Date of birth (optional)",
+    "dateOfBirthHint": "Only shown to search and rescue authorities in an emergency - never to the skipper or the ICE contact.",
     "iceContactLabel": "Your emergency contact",
     "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
     "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
@@ -741,7 +752,8 @@ const EN_INLINE = {
       "hidePin": "Hide PIN"
     },
     "skipper": {
-      "heading": "Skipper"
+      "heading": "Skipper",
+      "dateOfBirthLabel": "Date of birth"
     },
     "trip": {
       "heading": "Trip",
@@ -775,7 +787,9 @@ const EN_INLINE = {
       "empty": "No confirmed crew registered.",
       "unknownName": "Unknown",
       "ownIceContact": "Own emergency contact: {contact}",
-      "medicalLabel": "Medical info"
+      "medicalLabel": "Medical info",
+      "dateOfBirthLabel": "Date of birth",
+      "ageLabel": "yrs"
     },
     "iceContact": {
       "heading": "Skipper's emergency contact (ICE)",
@@ -849,6 +863,14 @@ const EN_INLINE = {
       "saveButton": "Save",
       "saved": "Your information has been saved.",
       "saveFailed": "Could not save your information."
+    },
+    "dateOfBirth": {
+      "heading": "Your date of birth",
+      "hint": "Only shown to search and rescue authorities in an emergency - never to the skipper or the ICE contact.",
+      "saveButton": "Save",
+      "empty": "You haven't added your date of birth.",
+      "saved": "Your date of birth has been saved.",
+      "saveFailed": "Could not save your date of birth."
     },
     "log": {
       "heading": "Change log",
@@ -1222,6 +1244,7 @@ const EN_INLINE = {
       "pending": "⏳ Pending",
       "changePhoto": "Change photo",
       "addPhoto": "Add photo",
+      "dateOfBirthMissing": "Date of birth missing",
       "copyLink": "Copy link",
       "choosePhotoFirst": "Choose an image first.",
       "photoSaveFailed": "Could not save the photo.",
@@ -1413,6 +1436,7 @@ const EN_INLINE = {
           "Vessel data - name, registration/call sign, specifications, and an optional photo",
           "Trip data - planned routes (parsed from Windy.com), scheduled departure/arrival times, and grace period",
           "Crew data - name, email, phone, and an optional photo for identification purposes",
+          "Date of birth - optional, and only used to help identify people aboard in a real emergency; shown to search and rescue authorities if needed, but never to the skipper or the ICE contact",
           "Emergency contact (\"ICE\") data - name, email, phone, and relationship to the skipper",
           "Security logs - login attempts (to enforce rate limiting) and notification delivery status"
         ]
@@ -1702,6 +1726,15 @@ const EN_INLINE = {
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.13.0",
+        "date": "2026-07-28",
+        "sections": {
+          "new": [
+            "You can now add your date of birth to your profile, or when you join a trip as crew, so search and rescue have it on hand if a voyage is ever reported overdue."
+          ]
+        }
+      },
       {
         "version": "v1.12.0",
         "date": "2026-07-28",

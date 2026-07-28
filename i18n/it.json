@@ -99,7 +99,10 @@
     "fileTooLarge": "{name} è troppo grande (massimo {maxMb}MB)",
     "invalidFileType": "{name} ha un formato non supportato (solo immagini e PDF)",
     "vesselYearInvalid": "L'anno del modello deve essere un numero intero compreso tra 1900 e {maxYear}",
-    "vesselDimensionInvalid": "{label} deve essere un numero positivo in metri (massimo 200)"
+    "vesselDimensionInvalid": "{label} deve essere un numero positivo in metri (massimo 200)",
+    "dateOfBirthInvalid": "Data di nascita non valida (usa AAAA-MM-GG)",
+    "dateOfBirthFuture": "La data di nascita non può essere nel futuro",
+    "dateOfBirthTooOld": "La data di nascita non può risalire a più di 120 anni fa"
   },
   "trip": {
     "status": {
@@ -260,6 +263,8 @@
     "emailLabel": "Email",
     "phoneLabel": "Telefono (facoltativo)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Data di nascita (facoltativo)",
+    "dateOfBirthHint": "Condivisa solo con il soccorso in mare in caso di emergenza. Non visibile agli altri a bordo.",
     "passwordLabel": "Password",
     "passwordHint": "Almeno 8 caratteri, una lettera maiuscola e un numero.",
     "confirmPasswordLabel": "Conferma password",
@@ -373,6 +378,8 @@
     "loadFailed": "Impossibile recuperare i tuoi dati.",
     "nameLabel": "Nome",
     "phoneLabel": "Telefono",
+    "dateOfBirthLabel": "Data di nascita (facoltativo)",
+    "dateOfBirthHint": "Condivisa solo con il soccorso in mare in caso di emergenza. Non visibile agli altri a bordo.",
     "emailLabel": "Email",
     "languageLabel": "Lingua",
     "timezoneLabel": "Fuso orario",
@@ -443,6 +450,8 @@
     "title": "Crea nuovo viaggio",
     "submit": "Crea viaggio",
     "submitting": "Creazione viaggio…",
+    "dateOfBirthBanner": "Non hai ancora aggiunto la tua data di nascita. Aggiungila nel tuo {profileLink} in modo che i soccorsi possano identificarti correttamente se questo viaggio viene segnalato come in ritardo.",
+    "dateOfBirthBannerLink": "profilo",
     "scheduleConflictNotice": "Nota: è già programmato un altro viaggio con lo stesso numero MMSI in un periodo di tempo che si sovrappone.",
     "created": "Viaggio creato",
     "iceConfirmationRequested": "Il tuo contatto ICE ha già confermato il proprio account, ma deve accedere e approvare il ruolo di contatto ICE per questo specifico viaggio prima che possa essere attivato.",
@@ -583,6 +592,8 @@
     "nameLabel": "Il tuo nome",
     "phoneLabel": "Numero di telefono (facoltativo)",
     "phonePlaceholder": "+46701234567",
+    "dateOfBirthLabel": "Data di nascita (facoltativo)",
+    "dateOfBirthHint": "Mostrata solo alle autorità di soccorso in mare in caso di emergenza - mai allo skipper o al contatto ICE.",
     "iceContactLabel": "Il tuo contatto di emergenza",
     "iceContactPlaceholder": "es. Erik (marito) +46701234568",
     "iceContactHint": "Nome e numero di telefono di qualcuno da contattare in caso di emergenza.",
@@ -730,7 +741,8 @@
       "hidePin": "Nascondi PIN"
     },
     "skipper": {
-      "heading": "Skipper"
+      "heading": "Skipper",
+      "dateOfBirthLabel": "Data di nascita"
     },
     "trip": {
       "heading": "Viaggio",
@@ -764,7 +776,9 @@
       "empty": "Nessun membro dell'equipaggio confermato registrato.",
       "unknownName": "Sconosciuto",
       "ownIceContact": "Proprio contatto di emergenza: {contact}",
-      "medicalLabel": "Informazioni mediche"
+      "medicalLabel": "Informazioni mediche",
+      "dateOfBirthLabel": "Data di nascita",
+      "ageLabel": "anni"
     },
     "iceContact": {
       "heading": "Contatto di emergenza (ICE) dello skipper",
@@ -838,6 +852,14 @@
       "saveButton": "Salva",
       "saved": "Le tue informazioni sono state salvate.",
       "saveFailed": "Impossibile salvare le tue informazioni."
+    },
+    "dateOfBirth": {
+      "heading": "La tua data di nascita",
+      "hint": "Mostrata solo alle autorità di soccorso in mare in caso di emergenza - mai allo skipper o al contatto ICE.",
+      "saveButton": "Salva",
+      "empty": "Non hai ancora aggiunto la tua data di nascita.",
+      "saved": "La tua data di nascita è stata salvata.",
+      "saveFailed": "Impossibile salvare la tua data di nascita."
     },
     "log": {
       "heading": "Registro modifiche",
@@ -1211,6 +1233,7 @@
       "pending": "⏳ In attesa",
       "changePhoto": "Cambia foto",
       "addPhoto": "Aggiungi foto",
+      "dateOfBirthMissing": "Data di nascita mancante",
       "copyLink": "Copia link",
       "choosePhotoFirst": "Scegli prima un'immagine.",
       "photoSaveFailed": "Impossibile salvare la foto.",
@@ -1400,6 +1423,7 @@
           "Dati dell'imbarcazione - nome, immatricolazione/nominativo radio, specifiche e una foto facoltativa",
           "Dati del viaggio - rotte pianificate (elaborate da Windy.com), orari di partenza/arrivo programmati e periodo di tolleranza",
           "Dati dell'equipaggio - nome, email, telefono e una foto facoltativa a scopo identificativo",
+          "Data di nascita - facoltativa, utilizzata solo per aiutare a identificare le persone a bordo in una vera emergenza; mostrata alle autorità di soccorso in mare se necessario, ma mai allo skipper o al contatto ICE",
           "Dati del contatto di emergenza (\"ICE\") - nome, email, telefono e relazione con lo skipper",
           "Log di sicurezza - tentativi di accesso (per applicare limiti di frequenza) e stato di consegna delle notifiche"
         ]
@@ -1689,6 +1713,15 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.13.0",
+        "date": "2026-07-28",
+        "sections": {
+          "new": [
+            "Ora puoi aggiungere la tua data di nascita nel tuo profilo, oppure quando ti unisci a un viaggio come membro dell'equipaggio, così i soccorsi la avranno a disposizione se il viaggio viene segnalato come in ritardo."
+          ]
+        }
+      },
       {
         "version": "v1.12.0",
         "date": "2026-07-28",

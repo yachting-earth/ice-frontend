@@ -133,6 +133,19 @@ function durationSecondsBetween(departureIso, arrivalIso) {
     return Math.round((arrival.getTime() - departure.getTime()) / 1000);
 }
 
+/** Whole years elapsed from a plain YYYY-MM-DD date of birth to today - no
+ *  timezone adjustment, since date_of_birth is a bare date with no time
+ *  component. */
+function calculateAge(dateOfBirth) {
+    const [y, m, d] = dateOfBirth.split('-').map(Number);
+    const today = new Date();
+    let age = today.getFullYear() - y;
+    if (today.getMonth() + 1 < m || (today.getMonth() + 1 === m && today.getDate() < d)) {
+        age--;
+    }
+    return age;
+}
+
 /** Convert duration parts (days/hours/minutes) into a total number of seconds. */
 function durationToSeconds({ days = 0, hours = 0, minutes = 0 } = {}) {
     return (Number(days) || 0) * 86400 + (Number(hours) || 0) * 3600 + (Number(minutes) || 0) * 60;

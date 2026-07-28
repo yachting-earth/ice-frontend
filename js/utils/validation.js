@@ -56,6 +56,22 @@ const Validate = {
         return null;
     },
 
+    dateOfBirth(value) {
+        if (!value) return null;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return t('validation.dateOfBirthInvalid');
+        const [y, m, d] = value.split('-').map(Number);
+        const parsed = new Date(y, m - 1, d);
+        if (parsed.getFullYear() !== y || parsed.getMonth() !== m - 1 || parsed.getDate() !== d) {
+            return t('validation.dateOfBirthInvalid');
+        }
+        const toDateStr = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        const today = new Date();
+        if (value > toDateStr(today)) return t('validation.dateOfBirthFuture');
+        const minDate = new Date(today.getFullYear() - 120, today.getMonth(), today.getDate());
+        if (value < toDateStr(minDate)) return t('validation.dateOfBirthTooOld');
+        return null;
+    },
+
     contactMessage(value) {
         if (!value) return t('validation.messageRequired');
         return null;
