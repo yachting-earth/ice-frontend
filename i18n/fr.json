@@ -489,7 +489,10 @@
       "emergencyBeaconPlaceholder": "p. ex. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Visible par votre contact ICE, l'équipage et les secours en mer - contrairement aux notes, elle n'est jamais masquée à quiconque a accès à ce voyage.",
       "equipmentLabel": "Équipement de sécurité à bord",
-      "epirbHint": "Si coché, indiquez la marque, le modèle et l'identifiant de l'appareil dans le champ balise de détresse ci-dessous.",
+      "epirbHint": "Si coché, vous pouvez indiquer le Hex-ID, l'UIN ou le MMSI-AIS de l'appareil ci-dessous.",
+      "epirbIdLabel": "ID EPIRB/PLB (facultatif)",
+      "epirbIdPlaceholder": "ex. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "Le Hex-ID, l'UIN ou le MMSI-AIS de l'appareil, si connu.",
       "photoLabel": "Photo du navire (facultatif)",
       "photoHint": "Utilisée par les secours pour identifier le navire. JPEG/PNG, 10 Mo max.",
       "saveButton": "Enregistrer le navire",
@@ -760,6 +763,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Balise de détresse : {value}",
+      "epirbId": "ID EPIRB : {value}",
       "equipment": "Équipement : {value}"
     },
     "routes": {
@@ -817,6 +821,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Balise de détresse : {value}",
+      "epirbId": "ID EPIRB : {value}",
       "equipment": "Équipement : {value}"
     },
     "routes": {
@@ -919,7 +924,10 @@
       "emergencyBeaconPlaceholder": "p. ex. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Visible par votre contact ICE, l'équipage et les secours en mer - contrairement aux notes, elle n'est jamais masquée à quiconque a accès à ce voyage.",
       "equipmentLabel": "Équipement de sécurité à bord",
-      "epirbHint": "Si coché, indiquez la marque, le modèle et l'identifiant de l'appareil dans le champ balise de détresse ci-dessous.",
+      "epirbHint": "Si coché, vous pouvez indiquer l'identifiant de l'appareil dans le champ ci-dessous.",
+      "epirbIdLabel": "ID EPIRB (facultatif)",
+      "epirbIdPlaceholder": "p. ex. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "L'identifiant hexadécimal, l'UIN ou le MMSI AIS de l'appareil, si connu.",
       "photoLabel": "Photo du navire (facultatif)",
       "photoHint": "Utilisée par les secours pour identifier le navire. JPEG/PNG, 10 Mo max.",
       "submit": "Enregistrer le navire",
@@ -938,6 +946,7 @@
       "mmsi": "MMSI {mmsi}",
       "callSign": "Indicatif d'appel {callSign}",
       "emergencyBeacon": "Balise de détresse : {value}",
+      "epirbId": "ID EPIRB : {value}",
       "equipment": "Équipement : {value}",
       "editButton": "Modifier"
     },
@@ -1146,6 +1155,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Balise de détresse : {value}",
+      "epirbId": "ID EPIRB : {value}",
       "equipment": "Équipement : {value}",
       "changeLabel": "Changer de navire",
       "changeButton": "Changer de navire",
@@ -1713,6 +1723,15 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.14.0",
+        "date": "2026-07-29",
+        "sections": {
+          "new": [
+            "Vous pouvez désormais renseigner l'ID EPIRB de votre bateau sous la case à cocher EPIRB, afin que les secours puissent le voir si la sortie est signalée en retard."
+          ]
+        }
+      },
       {
         "version": "v1.13.1",
         "date": "2026-07-28",

@@ -179,6 +179,7 @@ const TripDetailPage = {
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
                     ${formatVesselEquipment(vessel) ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted);">${escapeHtml(t('tripDetail.vessel.equipment', { value: formatVesselEquipment(vessel) }))}</p>` : ''}
                     ${vessel?.emergency_beacon ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('tripDetail.vessel.emergencyBeacon', { value: vessel.emergency_beacon }))}</p>` : ''}
+                    ${vessel?.epirb_id ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('tripDetail.vessel.epirbId', { value: vessel.epirb_id }))}</p>` : ''}
                     <div id="vessel-change-alert"></div>
                     ${isOwner && this.state.vessels.length > 1 ? `
                     <div class="field-row" style="margin-top: var(--space-3);">

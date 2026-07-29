@@ -489,7 +489,10 @@
       "emergencyBeaconPlaceholder": "z. B. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Sichtbar für deinen Notfallkontakt, die Crew und Search and Rescue - anders als bei Notizen wird er niemandem mit Zugriff auf diese Reise verborgen.",
       "equipmentLabel": "Sicherheitsausrüstung an Bord",
-      "epirbHint": "Falls markiert, geben Sie Marke, Modell und ID des Geräts im Notfallsender-Feld unten an.",
+      "epirbHint": "Falls markiert, können Sie unten die Hex-ID, UIN oder AIS-MMSI des Geräts angeben.",
+      "epirbIdLabel": "EPIRB/PLB-ID (optional)",
+      "epirbIdPlaceholder": "z. B. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "Die Hex-ID, UIN oder AIS-MMSI des Geräts, falls bekannt.",
       "photoLabel": "Bootsfoto (optional)",
       "photoHint": "Wird von Search and Rescue zur Identifizierung des Boots genutzt. JPEG/PNG, max. 10 MB.",
       "saveButton": "Boot speichern",
@@ -760,6 +763,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "T {value} m",
       "emergencyBeacon": "Notfallsender: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Ausrüstung: {value}"
     },
     "routes": {
@@ -817,6 +821,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "T {value} m",
       "emergencyBeacon": "Notfallsender: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Ausrüstung: {value}"
     },
     "routes": {
@@ -919,7 +924,10 @@
       "emergencyBeaconPlaceholder": "z. B. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Sichtbar für deinen Notfallkontakt, die Crew und Search and Rescue - anders als bei Notizen wird er niemandem mit Zugriff auf diese Reise verborgen.",
       "equipmentLabel": "Sicherheitsausrüstung an Bord",
-      "epirbHint": "Falls markiert, geben Sie Marke, Modell und ID des Geräts im Notfallsender-Feld unten an.",
+      "epirbHint": "Falls markiert, können Sie die ID des Geräts im Feld unten angeben.",
+      "epirbIdLabel": "EPIRB-ID (optional)",
+      "epirbIdPlaceholder": "z. B. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "Die Hex-ID, UIN oder AIS-MMSI des Geräts, falls bekannt.",
       "photoLabel": "Bootsfoto (optional)",
       "photoHint": "Wird von Search and Rescue zur Identifizierung des Boots genutzt. JPEG/PNG, max. 10 MB.",
       "submit": "Boot speichern",
@@ -938,6 +946,7 @@
       "mmsi": "MMSI {mmsi}",
       "callSign": "Rufzeichen {callSign}",
       "emergencyBeacon": "Notfallsender: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Ausrüstung: {value}",
       "editButton": "Bearbeiten"
     },
@@ -1146,6 +1155,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "T {value} m",
       "emergencyBeacon": "Notfallsender: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Ausrüstung: {value}",
       "changeLabel": "Boot wechseln",
       "changeButton": "Boot wechseln",
@@ -1713,6 +1723,15 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.14.0",
+        "date": "2026-07-29",
+        "sections": {
+          "new": [
+            "Du kannst jetzt die EPIRB-ID deines Boots unter dem EPIRB-Kontrollkästchen angeben, damit Search and Rescue sie sehen kann, falls ein Törn jemals als überfällig gemeldet wird."
+          ]
+        }
+      },
       {
         "version": "v1.13.1",
         "date": "2026-07-28",

@@ -82,6 +82,11 @@ const VesselsPage = {
                                 <label for="vessel-eq-epirb">${escapeHtml(t('common.vesselEquipment.epirb'))}</label>
                             </div>
                             <small>${escapeHtml(t('vessels.form.epirbHint'))}</small>
+                            <div class="field" id="vessel-epirb-id-wrapper" hidden>
+                                <label for="vessel-epirb-id">${escapeHtml(t('vessels.form.epirbIdLabel'))}</label>
+                                <input type="text" id="vessel-epirb-id" placeholder="${escapeHtml(t('vessels.form.epirbIdPlaceholder'))}">
+                                <small>${escapeHtml(t('vessels.form.epirbIdHint'))}</small>
+                            </div>
                             <div class="checkbox-field">
                                 <input type="checkbox" id="vessel-eq-vhf">
                                 <label for="vessel-eq-vhf">${escapeHtml(t('common.vesselEquipment.vhf'))}</label>
@@ -118,6 +123,9 @@ const VesselsPage = {
             this.handleSubmit();
         });
         document.getElementById('vessel-cancel').addEventListener('click', () => this.resetForm());
+        document.getElementById('vessel-eq-epirb').addEventListener('change', (e) => {
+            document.getElementById('vessel-epirb-id-wrapper').hidden = !e.target.checked;
+        });
         document.getElementById('vessel-add-toggle').addEventListener('click', () => {
             if (document.getElementById('vessel-form-card').hidden) {
                 this.openForm();
@@ -200,6 +208,7 @@ const VesselsPage = {
                     ${vessel.notes ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(vessel.notes)}</div>` : ''}
                     ${formatVesselEquipment(vessel) ? `<div class="trip-card__meta">${escapeHtml(t('vessels.card.equipment', { value: formatVesselEquipment(vessel) }))}</div>` : ''}
                     ${vessel.emergency_beacon ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(t('vessels.card.emergencyBeacon', { value: vessel.emergency_beacon }))}</div>` : ''}
+                    ${vessel.epirb_id ? `<div class="trip-card__meta" style="white-space:pre-wrap;">${escapeHtml(t('vessels.card.epirbId', { value: vessel.epirb_id }))}</div>` : ''}
                 </div>
                 <div class="trip-card__actions">
                     <button class="btn btn-secondary btn-sm" type="button" data-edit="${vessel.id}">${escapeHtml(t('vessels.card.editButton'))}</button>
@@ -264,6 +273,8 @@ const VesselsPage = {
         document.getElementById('vessel-notes').value = vessel.notes || '';
         document.getElementById('vessel-eq-flares').checked = !!vessel.has_flares;
         document.getElementById('vessel-eq-epirb').checked = !!vessel.has_epirb;
+        document.getElementById('vessel-epirb-id').value = vessel.epirb_id || '';
+        document.getElementById('vessel-epirb-id-wrapper').hidden = !vessel.has_epirb;
         document.getElementById('vessel-eq-vhf').checked = !!vessel.has_vhf;
         document.getElementById('vessel-eq-satphone').checked = !!vessel.has_satellite_phone;
         document.getElementById('vessel-eq-liferaft').checked = !!vessel.has_liferaft;
@@ -287,6 +298,7 @@ const VesselsPage = {
         this.state.photoFile = null;
         document.getElementById('vessel-form').reset();
         document.getElementById('vessel-photo-preview').hidden = true;
+        document.getElementById('vessel-epirb-id-wrapper').hidden = true;
         document.getElementById('vessel-form-title').textContent = t('vessels.form.addTitle');
         document.getElementById('vessel-submit').textContent = t('vessels.form.submit');
         document.getElementById('vessel-cancel').hidden = true;
@@ -311,6 +323,7 @@ const VesselsPage = {
         const notes = document.getElementById('vessel-notes').value.trim();
         const hasFlares = document.getElementById('vessel-eq-flares').checked;
         const hasEpirb = document.getElementById('vessel-eq-epirb').checked;
+        const epirbId = document.getElementById('vessel-epirb-id').value.trim();
         const hasVhf = document.getElementById('vessel-eq-vhf').checked;
         const hasSatellitePhone = document.getElementById('vessel-eq-satphone').checked;
         const hasLiferaft = document.getElementById('vessel-eq-liferaft').checked;
@@ -343,6 +356,7 @@ const VesselsPage = {
             notes: notes || null,
             has_flares: hasFlares,
             has_epirb: hasEpirb,
+            epirb_id: hasEpirb ? (epirbId || null) : null,
             has_vhf: hasVhf,
             has_satellite_phone: hasSatellitePhone,
             has_liferaft: hasLiferaft,

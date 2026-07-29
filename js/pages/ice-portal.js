@@ -127,6 +127,7 @@ const IcePortalPage = {
                     ${vessel?.notes ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(vessel.notes)}</p>` : ''}
                     ${formatVesselEquipment(vessel) ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted);">${escapeHtml(t('icePortal.vessel.equipment', { value: formatVesselEquipment(vessel) }))}</p>` : ''}
                     ${vessel?.emergency_beacon ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('icePortal.vessel.emergencyBeacon', { value: vessel.emergency_beacon }))}</p>` : ''}
+                    ${vessel?.epirb_id ? `<p class="mb-0" style="margin-top: var(--space-2); color: var(--color-text-muted); white-space: pre-wrap;">${escapeHtml(t('icePortal.vessel.epirbId', { value: vessel.epirb_id }))}</p>` : ''}
                 </div>
 
                 ${trip.ice_contacts ? `

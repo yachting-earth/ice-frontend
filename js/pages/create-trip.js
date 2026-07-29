@@ -396,6 +396,11 @@ const CreateTripPage = {
                         <label for="vessel-eq-epirb">${escapeHtml(t('common.vesselEquipment.epirb'))}</label>
                     </div>
                     <small>${escapeHtml(t('createTrip.vessel.epirbHint'))}</small>
+                    <div class="field" id="vessel-epirb-id-wrapper" hidden>
+                        <label for="vessel-epirb-id">${escapeHtml(t('createTrip.vessel.epirbIdLabel'))}</label>
+                        <input type="text" id="vessel-epirb-id" placeholder="${escapeHtml(t('createTrip.vessel.epirbIdPlaceholder'))}">
+                        <small>${escapeHtml(t('createTrip.vessel.epirbIdHint'))}</small>
+                    </div>
                     <div class="checkbox-field">
                         <input type="checkbox" id="vessel-eq-vhf">
                         <label for="vessel-eq-vhf">${escapeHtml(t('common.vesselEquipment.vhf'))}</label>
@@ -429,6 +434,10 @@ const CreateTripPage = {
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
         });
 
+        document.getElementById('vessel-eq-epirb').addEventListener('change', (e) => {
+            document.getElementById('vessel-epirb-id-wrapper').hidden = !e.target.checked;
+        });
+
         document.getElementById('save-vessel-btn').addEventListener('click', () => this.handleAddVessel());
 
         const photoInput = document.getElementById('vessel-photo');
@@ -459,6 +468,7 @@ const CreateTripPage = {
         const notes = document.getElementById('vessel-notes').value.trim();
         const hasFlares = document.getElementById('vessel-eq-flares').checked;
         const hasEpirb = document.getElementById('vessel-eq-epirb').checked;
+        const epirbId = document.getElementById('vessel-epirb-id').value.trim();
         const hasVhf = document.getElementById('vessel-eq-vhf').checked;
         const hasSatellitePhone = document.getElementById('vessel-eq-satphone').checked;
         const hasLiferaft = document.getElementById('vessel-eq-liferaft').checked;
@@ -490,6 +500,7 @@ const CreateTripPage = {
                 notes: notes || null,
                 has_flares: hasFlares,
                 has_epirb: hasEpirb,
+                epirb_id: hasEpirb ? (epirbId || null) : null,
                 has_vhf: hasVhf,
                 has_satellite_phone: hasSatellitePhone,
                 has_liferaft: hasLiferaft,

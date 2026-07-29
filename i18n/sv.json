@@ -489,7 +489,10 @@
       "emergencyBeaconPlaceholder": "t.ex. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Synlig för din nödkontakt, besättningen och sjöräddningen - till skillnad från övrigt döljs den aldrig för någon som har åtkomst till resan.",
       "equipmentLabel": "Säkerhetsutrustning ombord",
-      "epirbHint": "Om ikryssad, ange enhetens märke, modell och ID i nödsändarfältet nedan.",
+      "epirbHint": "Om ikryssad kan du ange enhetens Hex-ID, UIN eller AIS-MMSI nedan.",
+      "epirbIdLabel": "EPIRB/PLB-ID (valfritt)",
+      "epirbIdPlaceholder": "t.ex. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "Enhetens Hex-ID, UIN eller AIS-MMSI, om det är känt.",
       "photoLabel": "Båtfoto (valfritt)",
       "photoHint": "Används av sjöräddningen för att lättare identifiera båten. JPEG/PNG, max 10 MB.",
       "saveButton": "Spara båt",
@@ -760,6 +763,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Nödsändare: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Utrustning: {value}"
     },
     "routes": {
@@ -817,6 +821,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Nödsändare: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Utrustning: {value}"
     },
     "routes": {
@@ -919,7 +924,10 @@
       "emergencyBeaconPlaceholder": "t.ex. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Synlig för din nödkontakt, besättningen och sjöräddningen - till skillnad från övrigt döljs den aldrig för någon som har åtkomst till resan.",
       "equipmentLabel": "Säkerhetsutrustning ombord",
-      "epirbHint": "Om ikryssad, ange enhetens märke, modell och ID i nödsändarfältet nedan.",
+      "epirbHint": "Om ikryssad kan du ange enhetens ID i fältet nedan.",
+      "epirbIdLabel": "EPIRB-ID (valfritt)",
+      "epirbIdPlaceholder": "t.ex. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "Enhetens Hex-ID, UIN eller AIS-MMSI, om känt.",
       "photoLabel": "Båtfoto (valfritt)",
       "photoHint": "Används av sjöräddningen för att lättare identifiera båten. JPEG/PNG, max 10 MB.",
       "submit": "Spara båt",
@@ -938,6 +946,7 @@
       "mmsi": "MMSI {mmsi}",
       "callSign": "Anropssignal {callSign}",
       "emergencyBeacon": "Nödsändare: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Utrustning: {value}",
       "editButton": "Ändra"
     },
@@ -1146,6 +1155,7 @@
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Nödsändare: {value}",
+      "epirbId": "EPIRB-ID: {value}",
       "equipment": "Utrustning: {value}",
       "changeLabel": "Byt båt",
       "changeButton": "Byt båt",
@@ -1724,6 +1734,15 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.14.0",
+        "date": "2026-07-29",
+        "sections": {
+          "new": [
+            "Du kan nu ange båtens EPIRB-ID under EPIRB-kryssrutan, så att sjöräddningen kan se det om en resa någonsin rapporteras försenad."
+          ]
+        }
+      },
       {
         "version": "v1.13.1",
         "date": "2026-07-28",

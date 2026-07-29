@@ -500,7 +500,10 @@ const EN_INLINE = {
       "emergencyBeaconPlaceholder": "e.g. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Visible to your ICE contact, crew and search and rescue - unlike notes, it's never hidden from anyone with access to this trip.",
       "equipmentLabel": "Safety equipment onboard",
-      "epirbHint": "If checked, add the device's make, model and ID in the emergency beacon field below.",
+      "epirbHint": "If checked, you can add the device's Hex-ID, UIN or AIS-MMSI below.",
+      "epirbIdLabel": "EPIRB/PLB ID (optional)",
+      "epirbIdPlaceholder": "e.g. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "The device's Hex-ID, UIN or AIS-MMSI, if known.",
       "photoLabel": "Vessel photo (optional)",
       "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
       "saveButton": "Save vessel",
@@ -771,6 +774,7 @@ const EN_INLINE = {
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Emergency beacon: {value}",
+      "epirbId": "EPIRB ID: {value}",
       "equipment": "Equipment: {value}"
     },
     "routes": {
@@ -828,6 +832,7 @@ const EN_INLINE = {
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Emergency beacon: {value}",
+      "epirbId": "EPIRB ID: {value}",
       "equipment": "Equipment: {value}"
     },
     "routes": {
@@ -930,7 +935,10 @@ const EN_INLINE = {
       "emergencyBeaconPlaceholder": "e.g. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Visible to your ICE contact, crew and search and rescue - unlike notes, it's never hidden from anyone with access to this trip.",
       "equipmentLabel": "Safety equipment onboard",
-      "epirbHint": "If checked, add the device's make, model and ID in the emergency beacon field below.",
+      "epirbHint": "If checked, you can add the device's ID in the field below.",
+      "epirbIdLabel": "EPIRB ID (optional)",
+      "epirbIdPlaceholder": "e.g. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "The device's Hex ID, UIN or AIS MMSI, if known.",
       "photoLabel": "Vessel photo (optional)",
       "photoHint": "Used by search and rescue to identify the vessel. JPEG/PNG, max 10 MB.",
       "submit": "Save vessel",
@@ -949,6 +957,7 @@ const EN_INLINE = {
       "mmsi": "MMSI {mmsi}",
       "callSign": "Call sign {callSign}",
       "emergencyBeacon": "Emergency beacon: {value}",
+      "epirbId": "EPIRB ID: {value}",
       "equipment": "Equipment: {value}",
       "editButton": "Edit"
     },
@@ -1157,6 +1166,7 @@ const EN_INLINE = {
       "dimWidth": "B {value} m",
       "dimDraft": "D {value} m",
       "emergencyBeacon": "Emergency beacon: {value}",
+      "epirbId": "EPIRB ID: {value}",
       "equipment": "Equipment: {value}",
       "changeLabel": "Change vessel",
       "changeButton": "Change vessel",
@@ -1726,6 +1736,15 @@ const EN_INLINE = {
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.14.0",
+        "date": "2026-07-29",
+        "sections": {
+          "new": [
+            "You can now add your boat's EPIRB ID under the EPIRB checkbox, so search and rescue can see it if a voyage is ever reported overdue."
+          ]
+        }
+      },
       {
         "version": "v1.13.1",
         "date": "2026-07-28",

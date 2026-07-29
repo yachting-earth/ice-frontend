@@ -489,7 +489,10 @@
       "emergencyBeaconPlaceholder": "p. ej. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Visible para tu contacto ICE, la tripulación y salvamento marítimo - a diferencia de las notas, nunca se oculta a quien tenga acceso a este viaje.",
       "equipmentLabel": "Equipo de seguridad a bordo",
-      "epirbHint": "Si está marcado, indica la marca, el modelo y el ID del dispositivo en el campo de baliza de emergencia de abajo.",
+      "epirbHint": "Si está marcado, puedes indicar el Hex-ID, UIN o MMSI-AIS del dispositivo a continuación.",
+      "epirbIdLabel": "ID de EPIRB/PLB (opcional)",
+      "epirbIdPlaceholder": "p. ej. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "El Hex-ID, UIN o MMSI-AIS del dispositivo, si se conoce.",
       "photoLabel": "Foto de la embarcación (opcional)",
       "photoHint": "La usan los equipos de búsqueda y rescate para identificar la embarcación. JPEG/PNG, máx. 10 MB.",
       "saveButton": "Guardar embarcación",
@@ -760,6 +763,7 @@
       "dimWidth": "M {value} m",
       "dimDraft": "C {value} m",
       "emergencyBeacon": "Baliza de emergencia: {value}",
+      "epirbId": "ID de EPIRB: {value}",
       "equipment": "Equipo: {value}"
     },
     "routes": {
@@ -817,6 +821,7 @@
       "dimWidth": "M {value} m",
       "dimDraft": "C {value} m",
       "emergencyBeacon": "Baliza de emergencia: {value}",
+      "epirbId": "ID de EPIRB: {value}",
       "equipment": "Equipo: {value}"
     },
     "routes": {
@@ -919,7 +924,10 @@
       "emergencyBeaconPlaceholder": "p. ej. Garmin inReach Mini 2, IMEI 300434...",
       "emergencyBeaconHint": "Visible para tu contacto ICE, la tripulación y salvamento marítimo - a diferencia de las notas, nunca se oculta a quien tenga acceso a este viaje.",
       "equipmentLabel": "Equipo de seguridad a bordo",
-      "epirbHint": "Si está marcado, indica la marca, el modelo y el ID del dispositivo en el campo de baliza de emergencia de abajo.",
+      "epirbHint": "Si está marcado, puedes indicar el ID del dispositivo en el campo de abajo.",
+      "epirbIdLabel": "ID de EPIRB (opcional)",
+      "epirbIdPlaceholder": "p. ej. 1D0E9B2C4A5F6C1",
+      "epirbIdHint": "El ID hexadecimal, UIN o MMSI AIS del dispositivo, si se conoce.",
       "photoLabel": "Foto de la embarcación (opcional)",
       "photoHint": "La usan los equipos de búsqueda y rescate para identificar la embarcación. JPEG/PNG, máx. 10 MB.",
       "submit": "Guardar embarcación",
@@ -938,6 +946,7 @@
       "mmsi": "MMSI {mmsi}",
       "callSign": "Distintivo de llamada {callSign}",
       "emergencyBeacon": "Baliza de emergencia: {value}",
+      "epirbId": "ID de EPIRB: {value}",
       "equipment": "Equipo: {value}",
       "editButton": "Editar"
     },
@@ -1146,6 +1155,7 @@
       "dimWidth": "M {value} m",
       "dimDraft": "C {value} m",
       "emergencyBeacon": "Baliza de emergencia: {value}",
+      "epirbId": "ID de EPIRB: {value}",
       "equipment": "Equipo: {value}",
       "changeLabel": "Cambiar embarcación",
       "changeButton": "Cambiar embarcación",
@@ -1713,6 +1723,15 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.14.0",
+        "date": "2026-07-29",
+        "sections": {
+          "new": [
+            "Ahora puedes indicar el ID de EPIRB de tu embarcación debajo de la casilla de EPIRB, para que los equipos de búsqueda y rescate puedan verlo si el viaje se notifica como retrasado."
+          ]
+        }
+      },
       {
         "version": "v1.13.1",
         "date": "2026-07-28",
