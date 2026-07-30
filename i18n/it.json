@@ -16,6 +16,7 @@
     "password": "Password",
     "name": "Nome",
     "phone": "Telefono",
+    "relationship": "Relazione",
     "optional": "(facoltativo)",
     "gracePeriod": {
       "h1": "1 ora",
@@ -64,7 +65,10 @@
     "ICE_TRIP_CONFIRMATION_REJECTED": "Il contatto ICE di questo viaggio ha rifiutato questo ruolo per questo viaggio. Scegli un altro contatto prima di attivare.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Questo viaggio non ha richieste di conferma ICE in sospeso.",
     "TRIP_LOCKED": "Questo viaggio è bloccato per motivi di sicurezza marittima/tracciabilità in seguito a un'emergenza e non può più essere modificato.",
+    "ACCOUNT_HAS_ACTIVE_TRIP": "Il tuo account non può essere eliminato finché sei skipper o equipaggio su un viaggio pubblicato o attivo. Annulla o completa prima il viaggio.",
+    "ACCOUNT_DELETION_PENDING": "Questo account è stato eliminato e non può più essere utilizzato.",
     "TRIP_NOT_ACTIVE": "L'accesso SAR può essere richiesto solo per un viaggio attivo.",
+    "NO_EMERGENCY_TO_CONFIRM": "Questo viaggio non ha alcun allarme di emergenza da confermare.",
     "AUTO_ACCEPT_INVALID_DURATION": "Scegli 1, 2 o 3 mesi, oppure disattiva l'accettazione automatica.",
     "CONTACT_RATE_LIMITED": "Hai raggiunto il limite giornaliero di invii dal modulo di contatto. Riprova domani.",
     "CONTACT_TOO_MANY_FILES": "Troppi allegati.",
@@ -373,6 +377,10 @@
     "photoHint": "Utilizzata dal soccorso in mare per identificarti come skipper. JPEG/PNG, massimo 10 MB.",
     "photoSaveFailed": "Impossibile salvare la foto.",
     "photoSaved": "La foto è stata salvata.",
+    "photoRemoveButton": "Elimina foto",
+    "photoRemoveConfirm": "Sei sicuro di voler eliminare la tua foto di profilo?",
+    "photoRemoveFailed": "Impossibile eliminare la foto.",
+    "photoRemoved": "La tua foto è stata eliminata.",
     "detailsHeading": "I miei dati",
     "loadingDetails": "Caricamento dei tuoi dati…",
     "loadFailed": "Impossibile recuperare i tuoi dati.",
@@ -380,6 +388,22 @@
     "phoneLabel": "Telefono",
     "dateOfBirthLabel": "Data di nascita (facoltativo)",
     "dateOfBirthHint": "Condivisa solo con il soccorso in mare in caso di emergenza. Non visibile agli altri a bordo.",
+    "emergencyContactHeading": "Contatto di emergenza",
+    "emergencyContactHint": "Chi il soccorso in mare deve contattare a proposito tuo personalmente - distinto dai contatti ICE avvisati se un viaggio è in ritardo.",
+    "emergencyContactNameLabel": "Nome",
+    "emergencyContactPhoneLabel": "Telefono",
+    "emergencyContactRelationshipLabel": "Relazione",
+    "emergencyContactRelationshipPlaceholder": "es. coniuge, fratello, amico",
+    "emergencyContactSubmit": "Salva contatto di emergenza",
+    "emergencyContactSaveFailed": "Impossibile salvare il contatto di emergenza.",
+    "emergencyContactSaved": "Contatto di emergenza salvato.",
+    "medicalHeading": "Informazioni mediche",
+    "medicalLabel": "Informazioni mediche per il soccorso in mare (facoltativo)",
+    "medicalPlaceholder": "es. allergie, farmaci, gruppo sanguigno, condizioni mediche",
+    "medicalHint": "Mostrate solo alle autorità di soccorso in mare in caso di emergenza - mai allo skipper o al contatto ICE.",
+    "medicalSubmit": "Salva informazioni mediche",
+    "medicalSaveFailed": "Impossibile salvare le informazioni mediche.",
+    "medicalSaved": "Informazioni mediche salvate.",
     "emailLabel": "Email",
     "languageLabel": "Lingua",
     "timezoneLabel": "Fuso orario",
@@ -428,7 +452,8 @@
     "deleteCancelButton": "Annulla",
     "passwordRequired": "Inserisci la tua password per confermare.",
     "deleteFailed": "Impossibile eliminare l'account.",
-    "deleted": "Il tuo account è stato eliminato."
+    "deleted": "Il tuo account è stato eliminato.",
+    "deleteDeferred": "Il tuo account è stato disattivato e verrà eliminato definitivamente al termine del periodo di conservazione del tuo viaggio, il {date}. Sei stato disconnesso e non potrai più accedere."
   },
   "telegramLink": {
     "heading": "Collega Telegram",
@@ -598,8 +623,11 @@
     "dateOfBirthLabel": "Data di nascita (facoltativo)",
     "dateOfBirthHint": "Mostrata solo alle autorità di soccorso in mare in caso di emergenza - mai allo skipper o al contatto ICE.",
     "iceContactLabel": "Il tuo contatto di emergenza",
-    "iceContactPlaceholder": "es. Erik (marito) +46701234568",
-    "iceContactHint": "Nome e numero di telefono di qualcuno da contattare in caso di emergenza.",
+    "iceContactHint": "Chi il soccorso in mare deve contattare a proposito tuo personalmente, se succede qualcosa. Salvato nel tuo profilo.",
+    "emergencyContactNameLabel": "Nome",
+    "emergencyContactPhoneLabel": "Telefono",
+    "emergencyContactRelationshipLabel": "Relazione",
+    "emergencyContactRelationshipPlaceholder": "es. coniuge, fratello, amico",
     "medicalLabel": "Informazioni mediche per il soccorso in mare (facoltativo)",
     "medicalPlaceholder": "es. allergie, farmaci, gruppo sanguigno, condizioni mediche",
     "medicalHint": "Mostrate solo alle autorità di soccorso in mare in caso di emergenza - mai allo skipper o al contatto ICE.",
@@ -620,6 +648,7 @@
     "unknownError": "errore sconosciuto",
     "acceptFailed": "Impossibile unirsi al viaggio.",
     "acceptSuccess": "Ora fai parte dell'equipaggio. Buona navigazione e buon rientro!",
+    "readOnlyNotice": "Questo invito è collegato a un account esistente, quindi il tuo nome, telefono, data di nascita, contatto di emergenza e informazioni mediche non sono stati modificati. {loginLink} per modificarli lì.",
     "toOverview": "Alla tua panoramica",
     "crewViewLinkHint": "Salva questo link - ti permette di visualizzare il viaggio e modificare cosa condividi in qualsiasi momento.",
     "crewViewLinkOpen": "Apri vista viaggio",
@@ -743,9 +772,21 @@
       "showPin": "Mostra PIN",
       "hidePin": "Nascondi PIN"
     },
+    "confirmEmergency": {
+      "heading": "Conferma che l'allarme è risolto",
+      "description": "Se hai confermato che lo skipper è al sicuro, inserisci un commento e conferma qui sotto - questo rimuove il blocco di scrittura del viaggio e permette allo skipper di riprenderne la gestione.",
+      "commentLabel": "Commento (obbligatorio)",
+      "commentPlaceholder": "ad es. Chiamato lo skipper, è al sicuro e prosegue il viaggio.",
+      "commentRequired": "Inserisci un commento prima di confermare.",
+      "button": "Conferma allarme risolto",
+      "confirmPrompt": "Confermare che l'allarme di emergenza di questo viaggio è risolto?",
+      "confirmFailed": "Impossibile confermare l'allarme.",
+      "confirmed": "Allarme di emergenza confermato come risolto."
+    },
     "skipper": {
       "heading": "Skipper",
-      "dateOfBirthLabel": "Data di nascita"
+      "dateOfBirthLabel": "Data di nascita",
+      "emergencyContactHeading": "Contatto di emergenza"
     },
     "trip": {
       "heading": "Viaggio",
@@ -1033,14 +1074,16 @@
       "routes": "Rotte",
       "vessels": "Imbarcazioni",
       "iceContacts": "Contatti ICE",
-      "logs": "Log di sistema"
+      "logs": "Log di sistema",
+      "trips": "Viaggi"
     },
     "empty": {
       "users": "Nessun utente",
       "routes": "Nessuna rotta",
       "vessels": "Nessuna imbarcazione",
       "iceContacts": "Nessun contatto ICE",
-      "logs": "Nessun log corrisponde al filtro"
+      "logs": "Nessun log corrisponde al filtro",
+      "trips": "Nessun viaggio corrisponde al filtro"
     },
     "table": {
       "adminHeader": "Amministratore",
@@ -1100,6 +1143,36 @@
         "message": "Messaggio",
         "user": "Utente"
       }
+    },
+    "trips": {
+      "statusLabel": "Stato viaggio",
+      "allStatuses": "Tutti gli stati",
+      "status": {
+        "draft": "Bozza",
+        "published": "Pubblicato",
+        "active": "Attivo",
+        "completed": "Completato",
+        "cancelled": "Annullato"
+      },
+      "unconfirmedIncidentOnly": "Solo incidenti non confermati",
+      "loadFailed": "Impossibile recuperare i viaggi.",
+      "pageInfo": "Pagina {page} di {totalPages} ({total} viaggi)",
+      "incidentConfirmed": "Confermato",
+      "incidentUnconfirmed": "Incidente non confermato",
+      "table": {
+        "vessel": "Imbarcazione",
+        "incident": "Incidente"
+      },
+      "confirmEmergency": {
+        "toggle": "Conferma allarme",
+        "commentLabel": "Commento (obbligatorio)",
+        "commentPlaceholder": "es. Contattato lo skipper telefonicamente tramite il porto, è al sicuro.",
+        "commentRequired": "Inserisci un commento prima di confermare.",
+        "button": "Conferma allarme risolto",
+        "confirmPrompt": "Confermare che l'allarme di emergenza di questo viaggio è risolto?",
+        "confirmFailed": "Impossibile confermare l'allarme.",
+        "confirmed": "Allarme di emergenza confermato come risolto."
+      }
     }
   },
   "tripDetail": {
@@ -1131,6 +1204,18 @@
       "triggerConfirm": "Richiedere ora le credenziali SAR per questo viaggio? Lo skipper verrà avvisato.",
       "triggerFailed": "Impossibile richiedere l'accesso SAR.",
       "triggered": "Credenziali SAR create."
+    },
+    "confirmEmergency": {
+      "heading": "Conferma che l'allarme è risolto",
+      "ownerDescription": "Il contatto ICE di questo viaggio è stato avvisato perché non hai effettuato il check-in in tempo. La conferma rimuove il blocco di scrittura così puoi continuare a gestire il viaggio - non annulla il fatto che sia stato attivato un allarme.",
+      "iceDescription": "Sei stato avvisato di questo viaggio. Se hai confermato che lo skipper è al sicuro, inserisci un commento e conferma qui sotto - questo rimuove il blocco di scrittura del viaggio e permette allo skipper di riprenderne la gestione.",
+      "commentLabel": "Commento (obbligatorio)",
+      "commentPlaceholder": "ad es. Chiamato lo skipper, è al sicuro e prosegue il viaggio.",
+      "commentRequired": "Inserisci un commento prima di confermare.",
+      "button": "Conferma allarme risolto",
+      "confirmPrompt": "Confermare che l'allarme di emergenza di questo viaggio è risolto?",
+      "confirmFailed": "Impossibile confermare l'allarme.",
+      "confirmed": "Allarme di emergenza confermato come risolto."
     },
     "schedule": {
       "heading": "Programma",
@@ -1305,7 +1390,12 @@
       "lead": "Prepara la tua imbarcazione, le rotte, l'equipaggio e il contatto di emergenza prima della partenza. Se non effettui il check-in dopo l'arrivo previsto, il tuo contatto di emergenza designato riceve accesso sicuro alle informazioni che possono aiutare i soccorsi a intervenire più rapidamente.",
       "ctaPrimary": "Crea Account Gratuito",
       "ctaSecondary": "Come Funziona",
-      "badges": ["Gratuito", "Rotte multiple", "GDPR by design", "Portale ICE sicuro"]
+      "badges": [
+        "Gratuito",
+        "Rotte multiple",
+        "GDPR by design",
+        "Portale ICE sicuro"
+      ]
     },
     "notice": {
       "heading": "Importante",
@@ -1316,11 +1406,56 @@
       "heading": "Tutto è pronto prima della partenza",
       "lead": "Un dossier di viaggio completo, assemblato ancora prima di lasciare l'ormeggio.",
       "cards": [
-        { "icon": "ship", "title": "Imbarcazione", "items": ["Foto", "Immatricolazione", "Specifiche", "Identificazione"] },
-        { "icon": "compass", "title": "Viaggio", "items": ["Partenza", "Destinazione", "Arrivo stimato", "Periodo di tolleranza"] },
-        { "icon": "route", "title": "Rotte", "items": ["Rotte multiple", "Importa da GPX/Windy/disegna", "Rotte alternative", "Anteprima mappa interattiva"] },
-        { "icon": "users", "title": "Equipaggio", "items": ["Elenco equipaggio", "Profili individuali", "Foto", "Contatti di emergenza personali"] },
-        { "icon": "shield-check", "title": "Contatto di Emergenza", "items": ["Identità confermata", "Portale sicuro", "Accesso in sola lettura", "Notifica automatica"] }
+        {
+          "icon": "ship",
+          "title": "Imbarcazione",
+          "items": [
+            "Foto",
+            "Immatricolazione",
+            "Specifiche",
+            "Identificazione"
+          ]
+        },
+        {
+          "icon": "compass",
+          "title": "Viaggio",
+          "items": [
+            "Partenza",
+            "Destinazione",
+            "Arrivo stimato",
+            "Periodo di tolleranza"
+          ]
+        },
+        {
+          "icon": "route",
+          "title": "Rotte",
+          "items": [
+            "Rotte multiple",
+            "Importa da GPX/Windy/disegna",
+            "Rotte alternative",
+            "Anteprima mappa interattiva"
+          ]
+        },
+        {
+          "icon": "users",
+          "title": "Equipaggio",
+          "items": [
+            "Elenco equipaggio",
+            "Profili individuali",
+            "Foto",
+            "Contatti di emergenza personali"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "title": "Contatto di Emergenza",
+          "items": [
+            "Identità confermata",
+            "Portale sicuro",
+            "Accesso in sola lettura",
+            "Notifica automatica"
+          ]
+        }
       ]
     },
     "howItWorks": {
@@ -1348,30 +1483,72 @@
       "traditionalLabel": "Piano Tradizionale",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        { "traditional": "Documenti statici", "yachting": "Informazioni di viaggio sempre aggiornate" },
-        { "traditional": "Rotta unica", "yachting": "Rotte multiple" },
-        { "traditional": "Elenco equipaggio essenziale", "yachting": "L'equipaggio mantiene i propri dati" },
-        { "traditional": "Affidato al monitoraggio manuale", "yachting": "Controllo automatico e tracciato" },
-        { "traditional": "Post-it, messaggi e telefonate", "yachting": "Portale sicuro" }
+        {
+          "traditional": "Documenti statici",
+          "yachting": "Informazioni di viaggio sempre aggiornate"
+        },
+        {
+          "traditional": "Rotta unica",
+          "yachting": "Rotte multiple"
+        },
+        {
+          "traditional": "Elenco equipaggio essenziale",
+          "yachting": "L'equipaggio mantiene i propri dati"
+        },
+        {
+          "traditional": "Affidato al monitoraggio manuale",
+          "yachting": "Controllo automatico e tracciato"
+        },
+        {
+          "traditional": "Post-it, messaggi e telefonate",
+          "yachting": "Portale sicuro"
+        }
       ]
     },
     "features": {
       "heading": "Pensato per i viaggi reali",
       "items": [
-        { "icon": "route", "title": "Rotte multiple", "description": "Un viaggio raramente segue un'unica linea retta." },
-        { "icon": "users", "title": "Partecipazione dell'equipaggio", "description": "Ogni membro dell'equipaggio mantiene le proprie informazioni." },
-        { "icon": "shield-check", "title": "Contatto di emergenza verificato", "description": "Il contatto di emergenza conferma il proprio ruolo prima della partenza." }
+        {
+          "icon": "route",
+          "title": "Rotte multiple",
+          "description": "Un viaggio raramente segue un'unica linea retta."
+        },
+        {
+          "icon": "users",
+          "title": "Partecipazione dell'equipaggio",
+          "description": "Ogni membro dell'equipaggio mantiene le proprie informazioni."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Contatto di emergenza verificato",
+          "description": "Il contatto di emergenza conferma il proprio ruolo prima della partenza."
+        }
       ]
     },
     "privacy": {
       "heading": "Privacy by design",
       "lead": "I dati personali di viaggio vengono rimossi automaticamente secondo i principi del GDPR.",
       "lifecycle": [
-        { "icon": "file-plus", "label": "Viaggio creato" },
-        { "icon": "check-circle", "label": "Viaggio concluso" },
-        { "icon": "clock", "label": "Eliminazione soft" },
-        { "icon": "timer", "label": "Rimosso automaticamente dopo 30 giorni" },
-        { "icon": "shield", "label": "Restano solo skipper e imbarcazione" }
+        {
+          "icon": "file-plus",
+          "label": "Viaggio creato"
+        },
+        {
+          "icon": "check-circle",
+          "label": "Viaggio concluso"
+        },
+        {
+          "icon": "clock",
+          "label": "Eliminazione soft"
+        },
+        {
+          "icon": "timer",
+          "label": "Rimosso automaticamente dopo 30 giorni"
+        },
+        {
+          "icon": "shield",
+          "label": "Restano solo skipper e imbarcazione"
+        }
       ]
     },
     "mapDemo": {
@@ -1379,17 +1556,42 @@
       "lead": "Un viaggio può includere diverse rotte pianificate. Ecco un esempio con tre.",
       "note": "Dati dimostrativi — non è la posizione reale di un'imbarcazione.",
       "ariaLabel": "Mappa di esempio che mostra tre rotte di navigazione campione lungo una costa",
-      "routes": ["Stoccolma → Sandhamn", "Sandhamn → Landsort", "Stoccolma → Åland (alternativa)"],
-      "descriptions": ["Rotta principale", "Se il vento gira a ovest", "Se il vento gira a nord e supera i 35 nodi"]
+      "routes": [
+        "Stoccolma → Sandhamn",
+        "Sandhamn → Landsort",
+        "Stoccolma → Åland (alternativa)"
+      ],
+      "descriptions": [
+        "Rotta principale",
+        "Se il vento gira a ovest",
+        "Se il vento gira a nord e supera i 35 nodi"
+      ]
     },
     "worst": {
       "heading": "Se accade il peggio",
       "insteadTitle": "Invece di…",
-      "insteadItems": ["Cercare vecchie email", "Provare a ricordare chi era a bordo", "Cercare screenshot delle rotte", "Indovinare i contatti di emergenza"],
+      "insteadItems": [
+        "Cercare vecchie email",
+        "Provare a ricordare chi era a bordo",
+        "Cercare screenshot delle rotte",
+        "Indovinare i contatti di emergenza"
+      ],
       "haveTitle": "Il tuo contatto di emergenza ha già",
-      "haveItems": ["Imbarcazione", "Rotte", "Equipaggio", "Foto", "Contatti di emergenza", "Dettagli del viaggio"],
+      "haveItems": [
+        "Imbarcazione",
+        "Rotte",
+        "Equipaggio",
+        "Foto",
+        "Contatti di emergenza",
+        "Dettagli del viaggio"
+      ],
       "readyTitle": "Pronto da fornire a",
-      "readyItems": ["Guardia Costiera", "Polizia", "Centro di Coordinamento del Soccorso", "Compagnia assicurativa"],
+      "readyItems": [
+        "Guardia Costiera",
+        "Polizia",
+        "Centro di Coordinamento del Soccorso",
+        "Compagnia assicurativa"
+      ],
       "readyNote": "Il contatto di emergenza decide quando condividere le informazioni, e con chi."
     },
     "finalCta": {
@@ -1414,7 +1616,7 @@
   },
   "privacy": {
     "title": "Privacy e GDPR",
-    "lastUpdated": "Ultimo aggiornamento: 14 luglio 2026",
+    "lastUpdated": "Ultimo aggiornamento: 30 luglio 2026",
     "intro": "Questa pagina spiega quali dati personali raccoglie Yachting Earth ICE, perché, per quanto tempo vengono conservati e quali diritti hai su di essi ai sensi del GDPR.",
     "sections": [
       {
@@ -1429,21 +1631,26 @@
           "Raccogliamo solo ciò che serve al sistema per preparare un viaggio e, in caso di problemi, per far arrivare le informazioni corrette alla persona giusta."
         ],
         "list": [
-          "Dati dell'account - email, nome, telefono e una password (memorizzata solo come hash bcrypt, mai in chiaro)",
+          "Dati dell'account - email, nome, telefono e una password (memorizzata solo come hash bcrypt, mai in chiaro) - oppure, per un membro dell'equipaggio invitato solo via email, un profilo senza password che può essere trasformato in un account completo in seguito",
           "Dati dell'imbarcazione - nome, immatricolazione/nominativo radio, specifiche e una foto facoltativa",
           "Dati del viaggio - rotte pianificate (elaborate da Windy.com), orari di partenza/arrivo programmati e periodo di tolleranza",
           "Dati dell'equipaggio - nome, email, telefono e una foto facoltativa a scopo identificativo",
           "Data di nascita - facoltativa, utilizzata solo per aiutare a identificare le persone a bordo in una vera emergenza; mostrata alle autorità di soccorso in mare se necessario, ma mai allo skipper o al contatto ICE",
-          "Dati del contatto di emergenza (\"ICE\") - nome, email, telefono e relazione con lo skipper",
+          "Il tuo contatto di emergenza personale - nome, telefono e relazione; chi i soccorsi devono chiamare riguardo a te in particolare in caso di problemi. Inserito una sola volta nel tuo profilo e usato per ogni viaggio a cui partecipi - distinto dal contatto ICE qui sotto",
+          "Informazioni mediche - facoltative, riservate ai soccorsi (es. allergie, farmaci, patologie). Inserite una sola volta nel tuo profilo; mai mostrate allo skipper o al contatto ICE",
+          "Dati del contatto ICE (\"in caso di emergenza\") - nome, email, telefono e relazione con lo skipper; chi il sistema avvisa se un viaggio risulta in ritardo",
           "Log di sicurezza - tentativi di accesso (per applicare limiti di frequenza) e stato di consegna delle notifiche"
         ]
       },
       {
         "heading": "Perché li trattiamo",
-        "body": ["Ogni categoria di dati viene trattata su una di queste basi giuridiche:"],
+        "body": [
+          "Ogni categoria di dati viene trattata su una di queste basi giuridiche:"
+        ],
         "list": [
           "Contratto - dati dell'account, dell'imbarcazione e del viaggio, affinché il sistema possa fare ciò per cui ti sei iscritto",
-          "Consenso esplicito - dati del contatto di emergenza",
+          "Consenso esplicito - il tuo contatto di emergenza personale e i dati del contatto ICE",
+          "Consenso esplicito, come categoria particolare di dati sanitari ai sensi dell'articolo 9 del GDPR, oltre a interessi vitali - informazioni mediche, comunicate solo alle autorità di soccorso in una vera emergenza",
           "Interesse legittimo - caricamento delle foto dell'equipaggio a scopo identificativo, e log di sicurezza e registri di consegna delle notifiche, per mantenere il sistema affidabile e resistente agli abusi"
         ]
       },
@@ -1451,14 +1658,18 @@
         "heading": "Per quanto tempo li conserviamo",
         "body": [
           "Un viaggio concluso o annullato viene eliminato in modo soft immediatamente - scompare dalla vista dello skipper, dell'equipaggio e del contatto di emergenza - e poi eliminato definitivamente (hard delete), insieme alle sue rotte, ai dati dell'equipaggio, alle foto, al registro modifiche, alle notifiche e ai token di accesso, da un'operazione di pulizia giornaliera 30 giorni dopo.",
-          "Gli account utente registrati e le imbarcazioni non vengono toccati da questo processo - viene interessato solo il dato del viaggio stesso. Puoi eliminare il tuo account e i suoi dati in qualsiasi momento dalla pagina del tuo profilo.",
+          "Gli account utente registrati e le imbarcazioni non vengono toccati da questo processo - viene interessato solo il dato del viaggio stesso. Il tuo contatto di emergenza personale e le tue informazioni mediche sono memorizzati sul tuo account anziché su un singolo viaggio, quindi vengono conservati finché il tuo account esiste, non solo per i 30 giorni di quel viaggio.",
+          "Se smetti di usare il tuo account, viene anonimizzato - non eliminato - dopo 18 mesi di inattività: inviamo prima un avviso via email e, se non accedi di nuovo entro 30 giorni da quell'avviso, il tuo nome, telefono, data di nascita, contatto di emergenza, informazioni mediche e foto vengono cancellati permanentemente. Il record dell'account stesso viene conservato, così i tuoi viaggi passati restano comprensibili, e accedere in qualsiasi momento annulla questo processo. Un account ancora necessario per un viaggio in corso non viene mai anonimizzato in questo modo.",
+          "Puoi eliminare il tuo account in qualsiasi momento dalla pagina del tuo profilo - di solito è immediato. Se sei ancora skipper o equipaggio su un viaggio pubblicato o attivo, l'eliminazione viene rifiutata finché quel viaggio non termina o viene annullato. Se il tuo viaggio è appena terminato ed è ancora all'interno del suo periodo di conservazione di 30 giorni, l'eliminazione viene invece rimandata: il tuo account viene disattivato immediatamente - vieni disconnesso e non puoi accedere di nuovo - e viene rimosso definitivamente al termine di quel periodo.",
           "Anche gli account dei contatti di emergenza vengono conservati indefinitamente per impostazione predefinita, poiché il contatto potrebbe dover accedere di nuovo per un viaggio futuro, ma un contatto può scegliere - da \"Il mio account ICE\" - di far eliminare automaticamente il proprio account una volta che non è più collegato ad alcun viaggio attuale o futuro.",
           "I messaggi inviati tramite il modulo di contatto (il tuo nome, la tua email e il testo del messaggio) vengono conservati per 18 mesi da quando li invii, poi eliminati definitivamente. Questo periodo di 18 mesi decorre autonomamente e non viene abbreviato eliminando il tuo account - se elimini il tuo account, i tuoi messaggi passati vengono comunque conservati fino alla fine del loro periodo di 18 mesi, a meno che non li eliminiamo prima. Potremmo eliminare un messaggio prima dei 18 mesi, ad esempio una volta risolta una richiesta."
         ]
       },
       {
         "heading": "I tuoi diritti",
-        "body": ["Ai sensi del GDPR puoi:"],
+        "body": [
+          "Ai sensi del GDPR puoi:"
+        ],
         "list": [
           "Accedere ai dati personali che deteniamo su di te",
           "Correggere dati inesatti - la maggior parte puoi modificarli direttamente dal tuo profilo",
@@ -1482,7 +1693,9 @@
       },
       {
         "heading": "Con chi condividiamo i dati",
-        "body": ["Non vendiamo né condividiamo mai i tuoi dati con inserzionisti pubblicitari. I dati raggiungono solo:"],
+        "body": [
+          "Non vendiamo né condividiamo mai i tuoi dati con inserzionisti pubblicitari. I dati raggiungono solo:"
+        ],
         "list": [
           "Mailgun - per la consegna delle email transazionali (notifiche di viaggio, inviti, avvisi)",
           "Telegram - per la consegna delle notifiche, dove abilitato",
@@ -1540,7 +1753,9 @@
       },
       {
         "heading": "Uso consentito",
-        "body": ["Accetti di non:"],
+        "body": [
+          "Accetti di non:"
+        ],
         "list": [
           "Utilizzare il sistema per scopi illeciti o per molestare, impersonare o ingannare un'altra persona",
           "Aggiungere un membro dell'equipaggio o un contatto di emergenza senza un motivo ragionevole per ritenere che acconsentano a essere contattati riguardo al viaggio",
@@ -1706,7 +1921,7 @@
           },
           {
             "q": "Posso eliminare il mio account?",
-            "a": "Sì, in qualsiasi momento dalla pagina del tuo profilo."
+            "a": "Sì, dalla pagina del tuo profilo - di solito immediatamente. Se sei ancora skipper o equipaggio su un viaggio pubblicato o attivo, l'eliminazione viene rifiutata finché quel viaggio non termina o viene annullato. Se il tuo viaggio è appena terminato ed è ancora entro il periodo di conservazione di 30 giorni, l'eliminazione viene invece rinviata: il tuo account viene disattivato immediatamente - vieni disconnesso e non puoi più accedere - e rimosso definitivamente al termine di quel periodo. Questo è diverso da ciò che accade se smetti semplicemente di usare l'app: dopo 18 mesi di inattività il tuo account viene reso anonimo, non eliminato, così che i dati dei viaggi passati continuino ad avere senso."
           },
           {
             "q": "I miei dati vengono condivisi con qualcuno?",
@@ -1723,6 +1938,21 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.15.0",
+        "date": "2026-07-30",
+        "sections": {
+          "new": [
+            "Il tuo contatto di emergenza e le tue informazioni mediche ora si trovano nel tuo profilo: inseriscili una sola volta e saranno presenti in ogni viaggio a cui partecipi come equipaggio, invece di doverli reinserire ogni volta.",
+            "Se il tuo contatto di emergenza è stato avvisato perché un viaggio risultava in ritardo, ora tu o il tuo contatto di emergenza potete confermare dalla pagina del viaggio che va tutto bene, il che rimuove il blocco in scrittura applicato al viaggio dopo un allarme."
+          ],
+          "improved": [
+            "L'eliminazione del tuo account è più chiara quando è coinvolto un viaggio: viene rifiutata finché sei ancora necessario per un viaggio in corso, e se a impedirla è solo il normale periodo di conservazione dei dati, viene invece rimandata - vieni disconnesso subito e l'eliminazione si completa automaticamente al termine di quel periodo.",
+            "Creare un account accettando un invito come equipaggio non richiede più di verificare il tuo indirizzo e-mail separatamente: aver cliccato sul link nell'invito ha già dimostrato che l'indirizzo è tuo.",
+            "Ora puoi semplicemente eliminare la tua foto, invece di poterla solo sostituire con una nuova."
+          ]
+        }
+      },
       {
         "version": "v1.14.0",
         "date": "2026-07-29",

@@ -16,6 +16,7 @@
     "password": "Mot de passe",
     "name": "Nom",
     "phone": "Téléphone",
+    "relationship": "Relation",
     "optional": "(facultatif)",
     "gracePeriod": {
       "h1": "1 heure",
@@ -64,7 +65,10 @@
     "ICE_TRIP_CONFIRMATION_REJECTED": "Le contact ICE de cette sortie a décliné ce rôle pour cette sortie. Choisissez un autre contact avant d'activer.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Cette sortie n'a aucune demande de confirmation ICE en attente.",
     "TRIP_LOCKED": "Cette sortie est verrouillée pour des raisons de sécurité maritime et de traçabilité suite à un incident d'urgence, et ne peut plus être modifiée.",
+    "ACCOUNT_HAS_ACTIVE_TRIP": "Votre compte ne peut pas être supprimé tant que vous êtes skipper ou équipier sur une sortie publiée ou active. Annulez ou terminez d'abord la sortie.",
+    "ACCOUNT_DELETION_PENDING": "Ce compte a été supprimé et ne peut plus être utilisé.",
     "TRIP_NOT_ACTIVE": "L'accès SAR ne peut être demandé que pour une sortie active.",
+    "NO_EMERGENCY_TO_CONFIRM": "Cette sortie n'a aucune alarme d'urgence à confirmer.",
     "AUTO_ACCEPT_INVALID_DURATION": "Choisissez 1, 2 ou 3 mois, ou désactivez l'acceptation automatique.",
     "CONTACT_RATE_LIMITED": "Vous avez atteint la limite quotidienne d'envois via le formulaire de contact. Merci de réessayer demain.",
     "CONTACT_TOO_MANY_FILES": "Trop de pièces jointes.",
@@ -373,6 +377,10 @@
     "photoHint": "Utilisée par les secours pour vous identifier en tant que skipper. JPEG/PNG, 10 Mo max.",
     "photoSaveFailed": "Impossible d'enregistrer la photo.",
     "photoSaved": "La photo a été enregistrée.",
+    "photoRemoveButton": "Supprimer la photo",
+    "photoRemoveConfirm": "Êtes-vous sûr de vouloir supprimer votre photo de profil ?",
+    "photoRemoveFailed": "Impossible de supprimer la photo.",
+    "photoRemoved": "Votre photo a été supprimée.",
     "detailsHeading": "Mes informations",
     "loadingDetails": "Chargement de vos informations…",
     "loadFailed": "Impossible de récupérer vos informations.",
@@ -380,6 +388,22 @@
     "phoneLabel": "Téléphone",
     "dateOfBirthLabel": "Date de naissance (facultatif)",
     "dateOfBirthHint": "Partagée uniquement avec les secours en cas d'incident. Non visible par les autres personnes à bord.",
+    "emergencyContactHeading": "Contact d'urgence",
+    "emergencyContactHint": "La personne que les secours doivent appeler à propos de vous personnellement - distincte des contacts ICE alertés en cas de retard d'un voyage.",
+    "emergencyContactNameLabel": "Nom",
+    "emergencyContactPhoneLabel": "Téléphone",
+    "emergencyContactRelationshipLabel": "Lien de parenté",
+    "emergencyContactRelationshipPlaceholder": "ex. conjoint(e), frère, ami(e)",
+    "emergencyContactSubmit": "Enregistrer le contact d'urgence",
+    "emergencyContactSaveFailed": "Impossible d'enregistrer votre contact d'urgence.",
+    "emergencyContactSaved": "Contact d'urgence enregistré.",
+    "medicalHeading": "Informations médicales",
+    "medicalLabel": "Informations médicales pour les secours (facultatif)",
+    "medicalPlaceholder": "ex. allergies, médicaments, groupe sanguin, pathologies",
+    "medicalHint": "Uniquement communiquées aux autorités de secours en cas d'urgence - jamais au skipper ni au contact ICE.",
+    "medicalSubmit": "Enregistrer les informations médicales",
+    "medicalSaveFailed": "Impossible d'enregistrer vos informations médicales.",
+    "medicalSaved": "Informations médicales enregistrées.",
     "emailLabel": "E-mail",
     "languageLabel": "Langue",
     "timezoneLabel": "Fuseau horaire",
@@ -428,7 +452,8 @@
     "deleteCancelButton": "Annuler",
     "passwordRequired": "Saisissez votre mot de passe pour confirmer.",
     "deleteFailed": "Impossible de supprimer le compte.",
-    "deleted": "Votre compte a été supprimé."
+    "deleted": "Votre compte a été supprimé.",
+    "deleteDeferred": "Votre compte a été désactivé et sera définitivement supprimé une fois la période de conservation de votre sortie terminée, le {date}. Vous avez été déconnecté et ne pouvez plus vous reconnecter."
   },
   "telegramLink": {
     "heading": "Lier Telegram",
@@ -598,8 +623,11 @@
     "dateOfBirthLabel": "Date de naissance (facultatif)",
     "dateOfBirthHint": "Uniquement communiquée aux autorités de secours en cas d'urgence - jamais au skipper ni au contact ICE.",
     "iceContactLabel": "Votre contact d'urgence",
-    "iceContactPlaceholder": "ex. Erik (mari) +46701234568",
-    "iceContactHint": "Nom et numéro de téléphone d'une personne à contacter en cas d'incident.",
+    "iceContactHint": "La personne que les secours doivent appeler à propos de vous personnellement, en cas d'incident. Enregistré dans votre profil.",
+    "emergencyContactNameLabel": "Nom",
+    "emergencyContactPhoneLabel": "Téléphone",
+    "emergencyContactRelationshipLabel": "Lien de parenté",
+    "emergencyContactRelationshipPlaceholder": "ex. conjoint(e), frère, ami(e)",
     "medicalLabel": "Informations médicales pour les secours (facultatif)",
     "medicalPlaceholder": "ex. allergies, médicaments, groupe sanguin, pathologies",
     "medicalHint": "Uniquement communiquées aux autorités de secours en cas d'urgence - jamais au skipper ni au contact ICE.",
@@ -620,6 +648,7 @@
     "unknownError": "erreur inconnue",
     "acceptFailed": "Impossible de rejoindre la sortie.",
     "acceptSuccess": "Vous faites maintenant partie de l'équipage. Bonne route et bon vent !",
+    "readOnlyNotice": "Cette invitation est liée à un compte existant, votre nom, téléphone, date de naissance, contact d'urgence et informations médicales n'ont donc pas été modifiés. {loginLink} pour les modifier là-bas.",
     "toOverview": "Vers votre aperçu",
     "crewViewLinkHint": "Conservez ce lien - il vous permet de consulter la sortie et de modifier ce que vous partagez à tout moment.",
     "crewViewLinkOpen": "Ouvrir la vue de la sortie",
@@ -743,9 +772,21 @@
       "showPin": "Afficher le PIN",
       "hidePin": "Masquer le PIN"
     },
+    "confirmEmergency": {
+      "heading": "Confirmer que l'alarme est résolue",
+      "description": "Si vous avez confirmé que le skipper est en sécurité, indiquez un commentaire et confirmez ci-dessous - cela lève le verrou d'écriture de la sortie et permet au skipper de reprendre sa gestion.",
+      "commentLabel": "Commentaire (obligatoire)",
+      "commentPlaceholder": "ex. Appelé le skipper, il/elle est en sécurité et poursuit la sortie.",
+      "commentRequired": "Saisissez un commentaire avant de confirmer.",
+      "button": "Confirmer que l'alarme est résolue",
+      "confirmPrompt": "Confirmer que l'alarme d'urgence de cette sortie est résolue ?",
+      "confirmFailed": "Impossible de confirmer l'alarme.",
+      "confirmed": "Alarme d'urgence confirmée résolue."
+    },
     "skipper": {
       "heading": "Skipper",
-      "dateOfBirthLabel": "Date de naissance"
+      "dateOfBirthLabel": "Date de naissance",
+      "emergencyContactHeading": "Contact d'urgence"
     },
     "trip": {
       "heading": "Sortie",
@@ -1033,14 +1074,16 @@
       "routes": "Itinéraires",
       "vessels": "Navires",
       "iceContacts": "Contacts ICE",
-      "logs": "Journaux système"
+      "logs": "Journaux système",
+      "trips": "Sorties"
     },
     "empty": {
       "users": "Aucun utilisateur",
       "routes": "Aucun itinéraire",
       "vessels": "Aucun navire",
       "iceContacts": "Aucun contact ICE",
-      "logs": "Aucun journal ne correspond au filtre"
+      "logs": "Aucun journal ne correspond au filtre",
+      "trips": "Aucune sortie ne correspond au filtre"
     },
     "table": {
       "adminHeader": "Admin",
@@ -1100,6 +1143,36 @@
         "message": "Message",
         "user": "Utilisateur"
       }
+    },
+    "trips": {
+      "statusLabel": "Statut de la sortie",
+      "allStatuses": "Tous les statuts",
+      "status": {
+        "draft": "Brouillon",
+        "published": "Publiée",
+        "active": "Active",
+        "completed": "Terminée",
+        "cancelled": "Annulée"
+      },
+      "unconfirmedIncidentOnly": "Incidents non confirmés uniquement",
+      "loadFailed": "Impossible de récupérer les sorties.",
+      "pageInfo": "Page {page} sur {totalPages} ({total} sorties)",
+      "incidentConfirmed": "Confirmé",
+      "incidentUnconfirmed": "Incident non confirmé",
+      "table": {
+        "vessel": "Navire",
+        "incident": "Incident"
+      },
+      "confirmEmergency": {
+        "toggle": "Confirmer l'alarme",
+        "commentLabel": "Commentaire (obligatoire)",
+        "commentPlaceholder": "ex. Skipper joint par téléphone via le port, il est en sécurité.",
+        "commentRequired": "Saisissez un commentaire avant de confirmer.",
+        "button": "Confirmer l'alarme résolue",
+        "confirmPrompt": "Confirmer que l'alarme d'urgence de cette sortie est résolue ?",
+        "confirmFailed": "Impossible de confirmer l'alarme.",
+        "confirmed": "Alarme d'urgence confirmée comme résolue."
+      }
     }
   },
   "tripDetail": {
@@ -1131,6 +1204,18 @@
       "triggerConfirm": "Demander maintenant les identifiants SAR de cette sortie ? Le skipper en sera informé.",
       "triggerFailed": "Impossible de demander l'accès SAR.",
       "triggered": "Les identifiants SAR ont été créés."
+    },
+    "confirmEmergency": {
+      "heading": "Confirmer que l'alarme est résolue",
+      "ownerDescription": "Le contact ICE de cette sortie a été alerté car vous ne vous êtes pas signalé à temps. La confirmation lève le verrou d'écriture pour que vous puissiez continuer à gérer la sortie - elle n'annule pas le fait qu'une alarme a été déclenchée.",
+      "iceDescription": "Vous avez été alerté au sujet de cette sortie. Si vous avez confirmé que le skipper est en sécurité, indiquez un commentaire et confirmez ci-dessous - cela lève le verrou d'écriture de la sortie et permet au skipper de reprendre sa gestion.",
+      "commentLabel": "Commentaire (obligatoire)",
+      "commentPlaceholder": "ex. Appelé le skipper, il/elle est en sécurité et poursuit la sortie.",
+      "commentRequired": "Saisissez un commentaire avant de confirmer.",
+      "button": "Confirmer que l'alarme est résolue",
+      "confirmPrompt": "Confirmer que l'alarme d'urgence de cette sortie est résolue ?",
+      "confirmFailed": "Impossible de confirmer l'alarme.",
+      "confirmed": "Alarme d'urgence confirmée résolue."
     },
     "schedule": {
       "heading": "Horaire",
@@ -1305,7 +1390,12 @@
       "lead": "Préparez votre navire, vos itinéraires, votre équipage et votre contact d'urgence avant le départ. Si vous ne confirmez pas votre arrivée après l'heure prévue, votre contact d'urgence désigné reçoit un accès sécurisé aux informations qui peuvent aider les secours à intervenir plus rapidement.",
       "ctaPrimary": "Créer un compte gratuit",
       "ctaSecondary": "Comment ça marche",
-      "badges": ["Gratuit", "Itinéraires multiples", "RGPD dès la conception", "Portail ICE sécurisé"]
+      "badges": [
+        "Gratuit",
+        "Itinéraires multiples",
+        "RGPD dès la conception",
+        "Portail ICE sécurisé"
+      ]
     },
     "notice": {
       "heading": "Important",
@@ -1316,11 +1406,56 @@
       "heading": "Tout est prêt avant le départ",
       "lead": "Un dossier de voyage complet, constitué avant même de quitter le quai.",
       "cards": [
-        { "icon": "ship", "title": "Navire", "items": ["Photo", "Immatriculation", "Caractéristiques", "Identification"] },
-        { "icon": "compass", "title": "Voyage", "items": ["Départ", "Destination", "Arrivée estimée", "Délai de grâce"] },
-        { "icon": "route", "title": "Itinéraires", "items": ["Itinéraires multiples", "Import depuis GPX/Windy/tracé manuel", "Itinéraires alternatifs", "Aperçu cartographique interactif"] },
-        { "icon": "users", "title": "Équipage", "items": ["Liste d'équipage", "Profils individuels", "Photos", "Contacts d'urgence personnels"] },
-        { "icon": "shield-check", "title": "Contact d'urgence", "items": ["Identité confirmée", "Portail sécurisé", "Accès en lecture seule", "Notification automatique"] }
+        {
+          "icon": "ship",
+          "title": "Navire",
+          "items": [
+            "Photo",
+            "Immatriculation",
+            "Caractéristiques",
+            "Identification"
+          ]
+        },
+        {
+          "icon": "compass",
+          "title": "Voyage",
+          "items": [
+            "Départ",
+            "Destination",
+            "Arrivée estimée",
+            "Délai de grâce"
+          ]
+        },
+        {
+          "icon": "route",
+          "title": "Itinéraires",
+          "items": [
+            "Itinéraires multiples",
+            "Import depuis GPX/Windy/tracé manuel",
+            "Itinéraires alternatifs",
+            "Aperçu cartographique interactif"
+          ]
+        },
+        {
+          "icon": "users",
+          "title": "Équipage",
+          "items": [
+            "Liste d'équipage",
+            "Profils individuels",
+            "Photos",
+            "Contacts d'urgence personnels"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "title": "Contact d'urgence",
+          "items": [
+            "Identité confirmée",
+            "Portail sécurisé",
+            "Accès en lecture seule",
+            "Notification automatique"
+          ]
+        }
       ]
     },
     "howItWorks": {
@@ -1348,30 +1483,72 @@
       "traditionalLabel": "Plan traditionnel",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        { "traditional": "Documents statiques", "yachting": "Informations de voyage vivantes" },
-        { "traditional": "Itinéraire unique", "yachting": "Itinéraires multiples" },
-        { "traditional": "Liste d'équipage sommaire", "yachting": "L'équipage tient ses propres informations à jour" },
-        { "traditional": "Repose sur une surveillance manuelle", "yachting": "Contrôle automatique et tracé" },
-        { "traditional": "Post-it, SMS et appels", "yachting": "Portail sécurisé" }
+        {
+          "traditional": "Documents statiques",
+          "yachting": "Informations de voyage vivantes"
+        },
+        {
+          "traditional": "Itinéraire unique",
+          "yachting": "Itinéraires multiples"
+        },
+        {
+          "traditional": "Liste d'équipage sommaire",
+          "yachting": "L'équipage tient ses propres informations à jour"
+        },
+        {
+          "traditional": "Repose sur une surveillance manuelle",
+          "yachting": "Contrôle automatique et tracé"
+        },
+        {
+          "traditional": "Post-it, SMS et appels",
+          "yachting": "Portail sécurisé"
+        }
       ]
     },
     "features": {
       "heading": "Conçu pour de vrais voyages",
       "items": [
-        { "icon": "route", "title": "Itinéraires multiples", "description": "Un voyage suit rarement une seule ligne droite." },
-        { "icon": "users", "title": "Participation de l'équipage", "description": "Chaque équipier tient ses propres informations à jour." },
-        { "icon": "shield-check", "title": "Contact d'urgence vérifié", "description": "Le contact d'urgence confirme son rôle avant le départ." }
+        {
+          "icon": "route",
+          "title": "Itinéraires multiples",
+          "description": "Un voyage suit rarement une seule ligne droite."
+        },
+        {
+          "icon": "users",
+          "title": "Participation de l'équipage",
+          "description": "Chaque équipier tient ses propres informations à jour."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Contact d'urgence vérifié",
+          "description": "Le contact d'urgence confirme son rôle avant le départ."
+        }
       ]
     },
     "privacy": {
       "heading": "Confidentialité dès la conception",
       "lead": "Les données personnelles de voyage sont automatiquement supprimées conformément aux principes du RGPD.",
       "lifecycle": [
-        { "icon": "file-plus", "label": "Voyage créé" },
-        { "icon": "check-circle", "label": "Voyage terminé" },
-        { "icon": "clock", "label": "Suppression logique" },
-        { "icon": "timer", "label": "Suppression automatique après 30 jours" },
-        { "icon": "shield", "label": "Seuls le skipper et le navire subsistent" }
+        {
+          "icon": "file-plus",
+          "label": "Voyage créé"
+        },
+        {
+          "icon": "check-circle",
+          "label": "Voyage terminé"
+        },
+        {
+          "icon": "clock",
+          "label": "Suppression logique"
+        },
+        {
+          "icon": "timer",
+          "label": "Suppression automatique après 30 jours"
+        },
+        {
+          "icon": "shield",
+          "label": "Seuls le skipper et le navire subsistent"
+        }
       ]
     },
     "mapDemo": {
@@ -1379,17 +1556,42 @@
       "lead": "Un voyage peut comporter plusieurs itinéraires prévus. Voici un exemple avec trois.",
       "note": "Données de démonstration — pas une position de navire réelle.",
       "ariaLabel": "Carte d'exemple montrant trois itinéraires de navigation le long d'une côte",
-      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternative)"],
-      "descriptions": ["Itinéraire principal", "Si le vent tourne à l'ouest", "Si le vent tourne au nord et dépasse 35 nœuds"]
+      "routes": [
+        "Stockholm → Sandhamn",
+        "Sandhamn → Landsort",
+        "Stockholm → Åland (alternative)"
+      ],
+      "descriptions": [
+        "Itinéraire principal",
+        "Si le vent tourne à l'ouest",
+        "Si le vent tourne au nord et dépasse 35 nœuds"
+      ]
     },
     "worst": {
       "heading": "Si le pire arrive",
       "insteadTitle": "Au lieu de…",
-      "insteadItems": ["Fouiller de vieux e-mails", "Essayer de se souvenir de qui était à bord", "Chercher des captures d'écran d'itinéraires", "Deviner les contacts d'urgence"],
+      "insteadItems": [
+        "Fouiller de vieux e-mails",
+        "Essayer de se souvenir de qui était à bord",
+        "Chercher des captures d'écran d'itinéraires",
+        "Deviner les contacts d'urgence"
+      ],
       "haveTitle": "Votre contact d'urgence dispose déjà de",
-      "haveItems": ["Navire", "Itinéraires", "Équipage", "Photos", "Contacts d'urgence", "Détails du voyage"],
+      "haveItems": [
+        "Navire",
+        "Itinéraires",
+        "Équipage",
+        "Photos",
+        "Contacts d'urgence",
+        "Détails du voyage"
+      ],
       "readyTitle": "Prêt à transmettre à",
-      "readyItems": ["Garde-côtes", "Police", "Centre de coordination de sauvetage", "Compagnie d'assurance"],
+      "readyItems": [
+        "Garde-côtes",
+        "Police",
+        "Centre de coordination de sauvetage",
+        "Compagnie d'assurance"
+      ],
       "readyNote": "Le contact d'urgence décide quand partager l'information, et avec qui."
     },
     "finalCta": {
@@ -1414,7 +1616,7 @@
   },
   "privacy": {
     "title": "Confidentialité & RGPD",
-    "lastUpdated": "Dernière mise à jour : 14 juillet 2026",
+    "lastUpdated": "Dernière mise à jour : 30 juillet 2026",
     "intro": "Cette page explique quelles données personnelles Yachting Earth ICE collecte, pourquoi, combien de temps elles sont conservées, et les droits dont vous disposez sur elles au titre du RGPD.",
     "sections": [
       {
@@ -1429,21 +1631,26 @@
           "Nous ne collectons que ce dont le système a besoin pour préparer un voyage et, en cas de problème, faire parvenir la bonne information à la bonne personne."
         ],
         "list": [
-          "Données de compte - e-mail, nom, téléphone, et un mot de passe (stocké uniquement sous forme de hachage bcrypt, jamais en clair)",
+          "Données de compte - e-mail, nom, téléphone, et un mot de passe (stocké uniquement sous forme de hachage bcrypt, jamais en clair) - ou, pour un équipier invité uniquement par e-mail, un profil sans mot de passe qui peut être transformé plus tard en compte complet",
           "Données du navire - nom, immatriculation/indicatif d'appel, caractéristiques, et une photo facultative",
           "Données de sortie - itinéraires prévus (extraits de Windy.com), heures de départ/arrivée prévues, et délai de grâce",
           "Données d'équipage - nom, e-mail, téléphone, et une photo facultative à des fins d'identification",
           "Date de naissance - facultative, utilisée uniquement pour aider à identifier les personnes à bord en cas d'urgence réelle ; communiquée aux autorités de secours si nécessaire, mais jamais au skipper ni au contact ICE",
-          "Données du contact d'urgence (« ICE ») - nom, e-mail, téléphone, et lien de parenté avec le skipper",
+          "Votre contact d'urgence personnel - nom, téléphone, et lien de parenté ; qui les secours doivent appeler à votre sujet spécifiquement en cas de problème. Renseigné une seule fois sur votre profil et utilisé pour chaque sortie à laquelle vous participez - distinct du contact ICE ci-dessous",
+          "Informations médicales - facultatives, réservées aux secours (allergies, médicaments, pathologies, etc.). Renseignées une seule fois sur votre profil ; jamais montrées au skipper ni au contact ICE",
+          "Données du contact ICE (« en cas d'urgence ») - nom, e-mail, téléphone, et lien de parenté avec le skipper ; qui le système alerte si une sortie est en retard",
           "Journaux de sécurité - tentatives de connexion (pour appliquer la limitation de débit) et statut de remise des notifications"
         ]
       },
       {
         "heading": "Pourquoi nous les traitons",
-        "body": ["Chaque catégorie de données est traitée sur l'une de ces bases légales :"],
+        "body": [
+          "Chaque catégorie de données est traitée sur l'une de ces bases légales :"
+        ],
         "list": [
           "Contrat - données de compte, de navire et de sortie, afin que le système puisse remplir sa mission",
-          "Consentement explicite - coordonnées du contact d'urgence",
+          "Consentement explicite - votre contact d'urgence personnel et les coordonnées du contact ICE",
+          "Consentement explicite, en tant que catégorie particulière de données de santé au sens de l'article 9 du RGPD, ainsi qu'intérêts vitaux - informations médicales, uniquement communiquées aux secours en cas d'urgence réelle",
           "Intérêt légitime - téléchargement de photos d'équipage à des fins d'identification, ainsi que journaux de sécurité et registres de remise des notifications, pour garantir la fiabilité du système et sa résistance aux abus"
         ]
       },
@@ -1451,14 +1658,18 @@
         "heading": "Combien de temps nous les conservons",
         "body": [
           "Une sortie terminée ou annulée est immédiatement supprimée de manière logique - elle disparaît de la vue du skipper, de l'équipage et du contact d'urgence - puis définitivement supprimée (suppression physique), avec ses itinéraires, ses enregistrements d'équipage, ses photos, son journal d'audit, ses notifications et ses jetons d'accès, par une tâche de nettoyage quotidienne 30 jours plus tard.",
-          "Les comptes utilisateurs enregistrés et les navires ne sont pas concernés par ce processus - seules les données propres à la sortie le sont. Vous pouvez supprimer votre compte et ses données à tout moment depuis votre page de profil.",
+          "Les comptes utilisateurs enregistrés et les navires ne sont pas concernés par ce processus - seules les données propres à la sortie le sont. Votre contact d'urgence personnel et vos informations médicales sont stockés sur votre compte plutôt que sur une sortie en particulier, et sont donc conservés aussi longtemps que votre compte existe - pas seulement pendant les 30 jours de cette sortie.",
+          "Si vous cessez d'utiliser votre compte, il est anonymisé - et non supprimé - après 18 mois d'inactivité : nous envoyons d'abord un avertissement par e-mail, et si vous ne vous reconnectez pas dans les 30 jours suivant cet avertissement, votre nom, téléphone, date de naissance, contact d'urgence, informations médicales et photo sont définitivement effacés. Le compte lui-même est conservé, afin que vos sorties passées restent cohérentes, et toute connexion annule ce processus. Un compte encore nécessaire pour une sortie en cours n'est jamais anonymisé de cette façon.",
+          "Vous pouvez supprimer votre compte à tout moment depuis votre page de profil - c'est généralement immédiat. Si vous êtes encore skipper ou équipier sur une sortie publiée ou active, la suppression est refusée tant que cette sortie n'est pas terminée ou annulée. Si votre sortie vient de se terminer et se trouve encore dans sa période de rétention de 30 jours, la suppression est reportée à la place : votre compte est désactivé immédiatement - vous êtes déconnecté et ne pouvez plus vous reconnecter - et il est définitivement supprimé une fois cette période écoulée.",
           "Les comptes des contacts d'urgence sont également conservés indéfiniment par défaut, car le contact peut avoir besoin de se reconnecter pour une future sortie, mais un contact peut choisir - depuis « Mon compte ICE » - de faire supprimer automatiquement son compte une fois qu'il n'est plus lié à aucune sortie en cours ou à venir.",
           "Les messages envoyés via le formulaire de contact (votre nom, votre e-mail et le texte du message) sont conservés 18 mois à compter de leur envoi, puis définitivement supprimés. Cette période de 18 mois suit son propre cours et n'est pas raccourcie par la suppression de votre compte - si vous supprimez votre compte, vos messages passés sont conservés jusqu'à la fin de leur propre période de 18 mois, sauf si nous les supprimons plus tôt. Nous pouvons supprimer un message avant 18 mois, par exemple une fois qu'une demande est résolue."
         ]
       },
       {
         "heading": "Vos droits",
-        "body": ["Au titre du RGPD, vous pouvez :"],
+        "body": [
+          "Au titre du RGPD, vous pouvez :"
+        ],
         "list": [
           "Accéder aux données personnelles que nous détenons à votre sujet",
           "Corriger des données inexactes - vous pouvez modifier la plupart d'entre elles directement depuis votre profil",
@@ -1482,7 +1693,9 @@
       },
       {
         "heading": "Avec qui nous partageons les données",
-        "body": ["Nous ne vendons ni ne partageons jamais vos données avec des annonceurs. Les données ne sont accessibles qu'à :"],
+        "body": [
+          "Nous ne vendons ni ne partageons jamais vos données avec des annonceurs. Les données ne sont accessibles qu'à :"
+        ],
         "list": [
           "Mailgun - pour la remise des e-mails transactionnels (notifications de sortie, invitations, alertes)",
           "Telegram - pour la remise des notifications, lorsque ce canal est activé",
@@ -1540,7 +1753,9 @@
       },
       {
         "heading": "Utilisation acceptable",
-        "body": ["Vous acceptez de ne pas :"],
+        "body": [
+          "Vous acceptez de ne pas :"
+        ],
         "list": [
           "Utiliser le système à des fins illégales, pour harceler, usurper l'identité ou tromper autrui",
           "Ajouter un équipier ou un contact d'urgence sans motif raisonnable de croire qu'il consent à être contacté au sujet de la sortie",
@@ -1706,7 +1921,7 @@
           },
           {
             "q": "Puis-je supprimer mon compte ?",
-            "a": "Oui, à tout moment depuis votre page de profil."
+            "a": "Oui, depuis votre page de profil - généralement immédiatement. Si vous êtes encore skipper ou équipier sur une sortie publiée ou active, la suppression est refusée jusqu'à ce que cette sortie soit terminée ou annulée. Si votre sortie vient de se terminer et se trouve encore dans sa période de conservation de 30 jours, la suppression est reportée à la place : votre compte est désactivé immédiatement - vous êtes déconnecté et ne pouvez plus vous reconnecter - puis définitivement supprimé une fois cette période écoulée. C'est différent de ce qui se passe si vous cessez simplement d'utiliser l'application : après 18 mois d'inactivité, votre compte est anonymisé, et non supprimé, afin que l'historique des sorties passées reste cohérent."
           },
           {
             "q": "Mes données sont-elles partagées avec quelqu'un ?",
@@ -1723,6 +1938,21 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.15.0",
+        "date": "2026-07-30",
+        "sections": {
+          "new": [
+            "Votre contact d'urgence et vos informations médicales figurent désormais sur votre profil : renseignez-les une seule fois et ils seront présents pour chaque sortie à laquelle vous participez en tant qu'équipier, au lieu de devoir les ressaisir à chaque fois.",
+            "Si votre contact d'urgence a été alerté parce qu'une sortie était en retard, vous ou votre contact d'urgence pouvez désormais confirmer depuis la page de la sortie que tout va bien, ce qui lève le verrou d'écriture posé sur la sortie après une alerte."
+          ],
+          "improved": [
+            "La suppression de votre compte est plus claire lorsqu'une sortie est concernée : elle est refusée tant que vous êtes encore nécessaire sur une sortie en cours, et si seule la période de conservation habituelle fait obstacle, elle est reportée à la place - vous êtes déconnecté immédiatement et la suppression se termine automatiquement une fois cette période écoulée.",
+            "Créer un compte en acceptant une invitation d'équipier ne vous demande plus de vérifier votre adresse e-mail séparément - le clic sur le lien de l'invitation a déjà prouvé que l'adresse vous appartient.",
+            "Vous pouvez désormais supprimer votre photo simplement, au lieu de pouvoir uniquement la remplacer par une nouvelle."
+          ]
+        }
+      },
       {
         "version": "v1.14.0",
         "date": "2026-07-29",

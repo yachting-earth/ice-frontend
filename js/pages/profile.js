@@ -26,6 +26,7 @@ const ProfilePage = {
                             <label for="profile-photo">${escapeHtml(t('profile.photoChangeLabel'))}</label>
                             <input type="file" id="profile-photo" accept="image/jpeg,image/png">
                             <small>${escapeHtml(t('profile.photoHint'))}</small>
+                            <button class="btn btn-ghost" type="button" id="photo-remove-btn" hidden>${escapeHtml(t('profile.photoRemoveButton'))}</button>
                         </div>
                     </div>
 
@@ -34,6 +35,46 @@ const ProfilePage = {
                         <div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('profile.loadingDetails'))}</div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>${escapeHtml(t('profile.emergencyContactHeading'))}</h2>
+                    </div>
+                    <p>${escapeHtml(t('profile.emergencyContactHint'))}</p>
+                    <div id="emergency-contact-alert"></div>
+                    <form id="emergency-contact-form" novalidate>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="emergency-contact-name">${escapeHtml(t('profile.emergencyContactNameLabel'))}</label>
+                                <input type="text" id="emergency-contact-name" autocomplete="name">
+                            </div>
+                            <div class="field">
+                                <label for="emergency-contact-relationship">${escapeHtml(t('profile.emergencyContactRelationshipLabel'))}</label>
+                                <input type="text" id="emergency-contact-relationship" maxlength="50" placeholder="${escapeHtml(t('profile.emergencyContactRelationshipPlaceholder'))}">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="emergency-contact-phone">${escapeHtml(t('profile.emergencyContactPhoneLabel'))}</label>
+                            <input type="tel" id="emergency-contact-phone" autocomplete="tel" placeholder="${escapeHtml(t('register.phonePlaceholder'))}">
+                        </div>
+                        <button class="btn btn-primary" type="submit" id="emergency-contact-submit">${escapeHtml(t('profile.emergencyContactSubmit'))}</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>${escapeHtml(t('profile.medicalHeading'))}</h2>
+                    </div>
+                    <div id="medical-alert"></div>
+                    <form id="medical-form" novalidate>
+                        <div class="field">
+                            <label for="medical-info">${escapeHtml(t('profile.medicalLabel'))}</label>
+                            <textarea id="medical-info" rows="3" maxlength="2000" placeholder="${escapeHtml(t('profile.medicalPlaceholder'))}"></textarea>
+                            <small>${escapeHtml(t('profile.medicalHint'))}</small>
+                        </div>
+                        <button class="btn btn-primary" type="submit" id="medical-submit">${escapeHtml(t('profile.medicalSubmit'))}</button>
+                    </form>
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <h2>${escapeHtml(t('profile.channelHeading'))}</h2>
@@ -121,7 +162,22 @@ const ProfilePage = {
                 bindLightboxImages(document);
             }
         });
+        document.getElementById('photo-remove-btn').addEventListener('click', () => {
+            if (confirm(t('profile.photoRemoveConfirm'))) {
+                this.handleRemovePhoto();
+            }
+        });
         document.getElementById('profile-channel').addEventListener('change', (e) => this.handleChannelChange(e.target.value));
+
+        document.getElementById('emergency-contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleEmergencyContactSubmit();
+        });
+
+        document.getElementById('medical-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleMedicalSubmit();
+        });
 
         document.getElementById('password-form').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -272,6 +328,7 @@ const ProfilePage = {
 
     async loadOwnPhoto() {
         const preview = document.getElementById('profile-photo-preview');
+        const removeBtn = document.getElementById('photo-remove-btn');
         try {
             const response = await fetch(`${CONFIG.API_BASE_URL}/users/${Auth.getUser().id}/photo`, {
                 headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
@@ -279,8 +336,32 @@ const ProfilePage = {
             if (!response.ok) return;
             preview.src = URL.createObjectURL(await response.blob());
             preview.hidden = false;
+            removeBtn.hidden = false;
             bindLightboxImages(document);
         } catch (err) { /* leave the preview hidden */ }
+    },
+
+    async handleRemovePhoto() {
+        const removeBtn = document.getElementById('photo-remove-btn');
+        const preview = document.getElementById('profile-photo-preview');
+        const photoAlertBox = document.getElementById('photo-alert');
+        removeBtn.disabled = true;
+
+        const response = await apiRequest('/user/photo', { method: 'DELETE' });
+
+        removeBtn.disabled = false;
+
+        if (!response.success) {
+            photoAlertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.photoRemoveFailed')))}</div>`;
+            return;
+        }
+
+        photoAlertBox.innerHTML = '';
+        preview.hidden = true;
+        removeBtn.hidden = true;
+        Auth.updateUser({ picture: String(Date.now()) });
+        renderTopbar();
+        showToast(t('profile.photoRemoved'), 'success');
     },
 
     async loadProfile() {
@@ -294,9 +375,21 @@ const ProfilePage = {
 
         this.state.user = response.data;
         this.renderForm();
+        this.renderEmergencyContactForm();
+        this.renderMedicalForm();
         const channel = response.data.preferred_channel || 'email';
         document.getElementById('profile-channel').value = channel;
         this.updateTelegramWidgetVisibility(channel);
+    },
+
+    renderEmergencyContactForm() {
+        document.getElementById('emergency-contact-name').value = this.state.user.emergency_contact_name || '';
+        document.getElementById('emergency-contact-phone').value = this.state.user.emergency_contact_phone || '';
+        document.getElementById('emergency-contact-relationship').value = this.state.user.emergency_contact_relationship || '';
+    },
+
+    renderMedicalForm() {
+        document.getElementById('medical-info').value = this.state.user.medical_info || '';
     },
 
     renderForm() {
@@ -436,6 +529,65 @@ const ProfilePage = {
         showToast(t('profile.saved'), 'success');
     },
 
+    async handleEmergencyContactSubmit() {
+        const name = document.getElementById('emergency-contact-name').value.trim();
+        const phone = document.getElementById('emergency-contact-phone').value.trim();
+        const relationship = document.getElementById('emergency-contact-relationship').value.trim();
+        const alertBox = document.getElementById('emergency-contact-alert');
+
+        const error = Validate.phone(phone);
+        if (error) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(error)}</div>`;
+            return;
+        }
+
+        const submitBtn = document.getElementById('emergency-contact-submit');
+        submitBtn.disabled = true;
+
+        const response = await apiRequest('/user/profile', {
+            method: 'PUT',
+            body: JSON.stringify({
+                emergency_contact_name: name,
+                emergency_contact_phone: phone,
+                emergency_contact_relationship: relationship
+            })
+        });
+
+        submitBtn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.emergencyContactSaveFailed')))}</div>`;
+            return;
+        }
+
+        this.state.user = response.data;
+        alertBox.innerHTML = '';
+        showToast(t('profile.emergencyContactSaved'), 'success');
+    },
+
+    async handleMedicalSubmit() {
+        const medicalInfo = document.getElementById('medical-info').value.trim();
+        const alertBox = document.getElementById('medical-alert');
+        const submitBtn = document.getElementById('medical-submit');
+        submitBtn.disabled = true;
+
+        const response = await apiRequest('/user/profile', {
+            method: 'PUT',
+            body: JSON.stringify({ medical_info: medicalInfo })
+        });
+
+        submitBtn.disabled = false;
+
+        if (!response.success) {
+            alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('profile.medicalSaveFailed')))}</div>`;
+            return;
+        }
+
+        this.state.user = response.data;
+        alertBox.innerHTML = '';
+        showToast(t('profile.medicalSaved'), 'success');
+    },
+
     async handleChangePassword() {
         const currentPassword = document.getElementById('current-password').value;
         const newPassword = document.getElementById('new-password').value;
@@ -514,8 +666,15 @@ const ProfilePage = {
             return;
         }
 
+        // Deferred (T-21, #521): the account is deactivated, not gone yet -
+        // still no session left to keep around, but the toast has to say so
+        // rather than claiming the account is already deleted.
+        const toastMessage = response.success && response.data && response.data.deferred
+            ? t('profile.deleteDeferred', { date: formatDateTime(response.data.purge_after) })
+            : t('profile.deleted');
+
         Auth.clear();
         location.hash = '#/login';
-        showToast(t('profile.deleted'), 'success');
+        showToast(toastMessage, 'success');
     }
 };

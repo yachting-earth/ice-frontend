@@ -16,6 +16,7 @@
     "password": "Password",
     "name": "Name",
     "phone": "Phone",
+    "relationship": "Relationship",
     "optional": "(optional)",
     "gracePeriod": {
       "h1": "1 hour",
@@ -64,7 +65,10 @@
     "ICE_TRIP_CONFIRMATION_REJECTED": "This trip's ICE contact declined to be ICE for this trip. Assign a different contact before activating.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "This trip has no outstanding ICE confirmation request.",
     "TRIP_LOCKED": "This trip is locked for maritime safety/traceability reasons following an emergency incident and can no longer be modified.",
+    "ACCOUNT_HAS_ACTIVE_TRIP": "Your account can't be deleted while you're the skipper or crew on a trip that's published or active. Cancel or complete the trip first.",
+    "ACCOUNT_DELETION_PENDING": "This account has been deleted and can no longer be used.",
     "TRIP_NOT_ACTIVE": "SAR access can only be requested for an active trip.",
+    "NO_EMERGENCY_TO_CONFIRM": "This trip has no emergency alarm to confirm.",
     "AUTO_ACCEPT_INVALID_DURATION": "Choose 1, 2 or 3 months, or turn auto-accept off.",
     "CONTACT_RATE_LIMITED": "You've reached the daily limit for contact form submissions. Please try again tomorrow.",
     "CONTACT_TOO_MANY_FILES": "Too many attachments.",
@@ -373,6 +377,10 @@
     "photoHint": "Used by search and rescue to identify you as skipper. JPEG/PNG, max 10 MB.",
     "photoSaveFailed": "Could not save the photo.",
     "photoSaved": "The photo has been saved.",
+    "photoRemoveButton": "Remove photo",
+    "photoRemoveConfirm": "Are you sure you want to delete your profile photo?",
+    "photoRemoveFailed": "Could not delete the photo.",
+    "photoRemoved": "Your photo has been removed.",
     "detailsHeading": "My details",
     "loadingDetails": "Loading your details…",
     "loadFailed": "Could not fetch your details.",
@@ -380,6 +388,22 @@
     "phoneLabel": "Phone",
     "dateOfBirthLabel": "Date of birth (optional)",
     "dateOfBirthHint": "Only shared with search and rescue if something happens. Not visible to anyone else on board.",
+    "emergencyContactHeading": "Emergency contact",
+    "emergencyContactHint": "Who search and rescue should call about you personally, separate from the ICE contacts alerted if a trip goes overdue.",
+    "emergencyContactNameLabel": "Name",
+    "emergencyContactPhoneLabel": "Phone",
+    "emergencyContactRelationshipLabel": "Relationship",
+    "emergencyContactRelationshipPlaceholder": "e.g. spouse, brother, friend",
+    "emergencyContactSubmit": "Save emergency contact",
+    "emergencyContactSaveFailed": "Could not save your emergency contact.",
+    "emergencyContactSaved": "Emergency contact saved.",
+    "medicalHeading": "Medical information",
+    "medicalLabel": "Medical information for search and rescue (optional)",
+    "medicalPlaceholder": "e.g. allergies, medications, blood type, medical conditions",
+    "medicalHint": "Only shown to search and rescue authorities in an emergency - never to the skipper or the ICE contact.",
+    "medicalSubmit": "Save medical information",
+    "medicalSaveFailed": "Could not save your medical information.",
+    "medicalSaved": "Medical information saved.",
     "emailLabel": "Email",
     "languageLabel": "Language",
     "timezoneLabel": "Timezone",
@@ -428,7 +452,8 @@
     "deleteCancelButton": "Cancel",
     "passwordRequired": "Enter your password to confirm.",
     "deleteFailed": "Could not delete the account.",
-    "deleted": "Your account has been deleted."
+    "deleted": "Your account has been deleted.",
+    "deleteDeferred": "Your account has been deactivated and will be permanently deleted once your trip's retention period ends, on {date}. You've been signed out and can't log back in."
   },
   "telegramLink": {
     "heading": "Link Telegram",
@@ -598,8 +623,11 @@
     "dateOfBirthLabel": "Date of birth (optional)",
     "dateOfBirthHint": "Only shown to search and rescue authorities in an emergency - never to the skipper or the ICE contact.",
     "iceContactLabel": "Your emergency contact",
-    "iceContactPlaceholder": "e.g. Erik (husband) +46701234568",
-    "iceContactHint": "Name and phone number of someone who should be contacted if something happens.",
+    "iceContactHint": "Who search and rescue should call about you personally, if something happens. Saved to your profile.",
+    "emergencyContactNameLabel": "Name",
+    "emergencyContactPhoneLabel": "Phone",
+    "emergencyContactRelationshipLabel": "Relationship",
+    "emergencyContactRelationshipPlaceholder": "e.g. spouse, brother, friend",
     "medicalLabel": "Medical information for search and rescue (optional)",
     "medicalPlaceholder": "e.g. allergies, medications, blood type, medical conditions",
     "medicalHint": "Only shown to search and rescue authorities in an emergency - never to the skipper or the ICE contact.",
@@ -620,6 +648,7 @@
     "unknownError": "unknown error",
     "acceptFailed": "Could not join the trip.",
     "acceptSuccess": "You are now part of the crew. Have a pleasant and safe trip!",
+    "readOnlyNotice": "This invitation is linked to an existing account, so your name, phone, date of birth, emergency contact and medical information were not changed. {loginLink} to edit them there.",
     "toOverview": "To your overview",
     "crewViewLinkHint": "Save this link - it lets you view the trip and change what you share at any time.",
     "crewViewLinkOpen": "Open trip view",
@@ -743,9 +772,21 @@
       "showPin": "Show PIN",
       "hidePin": "Hide PIN"
     },
+    "confirmEmergency": {
+      "heading": "Confirm the alarm is resolved",
+      "description": "If you've confirmed the skipper is safe, record a comment and confirm below - this clears the trip's write lock and lets the skipper resume managing it.",
+      "commentLabel": "Comment (required)",
+      "commentPlaceholder": "e.g. Called the skipper, they're safe and continuing.",
+      "commentRequired": "Enter a comment before confirming.",
+      "button": "Confirm alarm resolved",
+      "confirmPrompt": "Confirm this trip's emergency alarm is resolved?",
+      "confirmFailed": "Could not confirm the alarm.",
+      "confirmed": "Emergency alarm confirmed resolved."
+    },
     "skipper": {
       "heading": "Skipper",
-      "dateOfBirthLabel": "Date of birth"
+      "dateOfBirthLabel": "Date of birth",
+      "emergencyContactHeading": "Emergency contact"
     },
     "trip": {
       "heading": "Trip",
@@ -1033,14 +1074,16 @@
       "routes": "Routes",
       "vessels": "Vessels",
       "iceContacts": "ICE contacts",
-      "logs": "System logs"
+      "logs": "System logs",
+      "trips": "Trips"
     },
     "empty": {
       "users": "No users",
       "routes": "No routes",
       "vessels": "No vessels",
       "iceContacts": "No ICE contacts",
-      "logs": "No logs match the filter"
+      "logs": "No logs match the filter",
+      "trips": "No trips match the filter"
     },
     "table": {
       "adminHeader": "Admin",
@@ -1100,6 +1143,36 @@
         "message": "Message",
         "user": "User"
       }
+    },
+    "trips": {
+      "statusLabel": "Trip status",
+      "allStatuses": "All statuses",
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "active": "Active",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "unconfirmedIncidentOnly": "Unconfirmed incidents only",
+      "loadFailed": "Could not fetch trips.",
+      "pageInfo": "Page {page} of {totalPages} ({total} trips)",
+      "incidentConfirmed": "Confirmed",
+      "incidentUnconfirmed": "Unconfirmed incident",
+      "table": {
+        "vessel": "Vessel",
+        "incident": "Incident"
+      },
+      "confirmEmergency": {
+        "toggle": "Confirm alarm",
+        "commentLabel": "Comment (required)",
+        "commentPlaceholder": "e.g. Reached the skipper by phone via the marina, they are safe.",
+        "commentRequired": "Enter a comment before confirming.",
+        "button": "Confirm alarm resolved",
+        "confirmPrompt": "Confirm this trip's emergency alarm is resolved?",
+        "confirmFailed": "Could not confirm the alarm.",
+        "confirmed": "Emergency alarm confirmed resolved."
+      }
     }
   },
   "tripDetail": {
@@ -1131,6 +1204,18 @@
       "triggerConfirm": "Request SAR access credentials for this trip now? The skipper will be notified.",
       "triggerFailed": "Could not request SAR access.",
       "triggered": "SAR access credentials created."
+    },
+    "confirmEmergency": {
+      "heading": "Confirm the alarm is resolved",
+      "ownerDescription": "This trip's ICE contact was alerted because you didn't check in on time. Confirming clears the write lock so you can continue managing the trip - it does not undo the fact that an alarm was raised.",
+      "iceDescription": "You've been alerted about this trip. If you've confirmed the skipper is safe, record a comment and confirm below - this clears the trip's write lock and lets the skipper resume managing it.",
+      "commentLabel": "Comment (required)",
+      "commentPlaceholder": "e.g. Called the skipper, they're safe and continuing.",
+      "commentRequired": "Enter a comment before confirming.",
+      "button": "Confirm alarm resolved",
+      "confirmPrompt": "Confirm this trip's emergency alarm is resolved?",
+      "confirmFailed": "Could not confirm the alarm.",
+      "confirmed": "Emergency alarm confirmed resolved."
     },
     "schedule": {
       "heading": "Schedule",
@@ -1416,7 +1501,7 @@
   },
   "privacy": {
     "title": "Privacy & GDPR",
-    "lastUpdated": "Last updated: 14 July 2026",
+    "lastUpdated": "Last updated: 30 July 2026",
     "intro": "This page explains what personal data Yachting Earth ICE collects, why, how long it is kept, and the rights you have over it under GDPR.",
     "sections": [
       {
@@ -1431,12 +1516,14 @@
           "We only collect what the system needs to prepare a voyage and, if something goes wrong, to get the right information to the right person."
         ],
         "list": [
-          "Account data - email, name, phone, and a password (stored only as a bcrypt hash, never in plain text)",
+          "Account data - email, name, phone, and a password (stored only as a bcrypt hash, never in plain text) - or, for crew invited only by email, a password-less profile that can be turned into a full account later",
           "Vessel data - name, registration/call sign, specifications, and an optional photo",
           "Trip data - planned routes (parsed from Windy.com), scheduled departure/arrival times, and grace period",
           "Crew data - name, email, phone, and an optional photo for identification purposes",
           "Date of birth - optional, and only used to help identify people aboard in a real emergency; shown to search and rescue authorities if needed, but never to the skipper or the ICE contact",
-          "Emergency contact (\"ICE\") data - name, email, phone, and relationship to the skipper",
+          "Your personal emergency contact - name, phone, and relationship; who search and rescue should call about you specifically if something happens. Set once on your profile and used on every trip you're on - separate from the ICE contact below",
+          "Medical information - optional, for search and rescue only (e.g. allergies, medications, conditions). Set once on your profile; never shown to the skipper or the ICE contact",
+          "ICE (\"In Case of Emergency\") contact data - name, email, phone, and relationship to the skipper; who the system alerts if a trip goes overdue",
           "Security logs - login attempts (to enforce rate limiting) and notification delivery status"
         ]
       },
@@ -1445,7 +1532,8 @@
         "body": ["Each category of data is processed on one of these legal bases:"],
         "list": [
           "Contract - account, vessel and trip data, so the system can do what you signed up for",
-          "Explicit consent - emergency contact details",
+          "Explicit consent - your personal emergency contact and the ICE contact details",
+          "Explicit consent, as a special category of health data under GDPR Article 9, plus vital interests - medical information, only ever disclosed to search and rescue authorities in a genuine emergency",
           "Legitimate interest - crew photo uploads for identification purposes, and security logs and notification delivery records, to keep the system reliable and abuse-resistant"
         ]
       },
@@ -1453,7 +1541,9 @@
         "heading": "How long we keep it",
         "body": [
           "A completed or cancelled trip is soft-deleted immediately - it disappears from the skipper's, crew's and emergency contact's view - and then permanently (hard-)deleted, along with its routes, crew records, photos, audit log, notifications and access tokens, by a daily cleanup job 30 days later.",
-          "Registered user accounts and vessels are not touched by this process - only the trip's own data is. You can delete your account and its data at any time from your profile page.",
+          "Registered user accounts and vessels are not touched by this process - only the trip's own data is. Your personal emergency contact and medical information live on your account rather than on any one trip, so they're kept for as long as your account exists, not just for that trip's 30 days.",
+          "If you stop using your account, it is anonymised - not deleted - after 18 months of inactivity: we email a warning first, and if you haven't logged back in within 30 days of that warning, your name, phone, date of birth, emergency contact, medical information and photo are permanently cleared. The account record itself is kept, so your past trips still make sense, and logging in at any point cancels this. An account still needed for a trip in progress is never anonymised this way.",
+          "You can delete your account at any time from your profile page - this is usually immediate. If you're still the skipper or crew on a trip that's published or active, deletion is refused until that trip is finished or cancelled. If your trip has just ended and is still inside its 30-day retention window, deletion is deferred instead: your account is deactivated immediately - you're signed out and can't log back in - and it's permanently removed once that window closes.",
           "Emergency contact accounts are also kept indefinitely by default, since the contact may need to sign back in for a future trip, but a contact can opt in - from \"My ICE account\" - to have their account deleted automatically once it is no longer linked to any current or future trip.",
           "Messages sent through the contact form (your name, email, and message text) are kept for 18 months from when you send them, then permanently deleted. This 18-month period runs on its own and is not shortened by deleting your account - if you delete your account, your past messages are still kept until their own 18-month period ends, unless we delete them sooner. We may delete a message earlier than 18 months, for example once a request is resolved."
         ]
@@ -1708,7 +1798,7 @@
           },
           {
             "q": "Can I delete my account?",
-            "a": "Yes, at any time from your profile page."
+            "a": "Yes, from your profile page - it's usually immediate. If you're still the skipper or crew on a trip that's published or active, deletion is refused until that trip is finished or cancelled. If your trip has just ended and is still inside its 30-day retention window, deletion is deferred instead: your account is deactivated straight away - you're signed out and can't log back in - and it's permanently removed once that window closes. This is separate from what happens if you simply stop using the app: after 18 months of inactivity your account is anonymised, not deleted, so past trip records still make sense."
           },
           {
             "q": "Is my data shared with anyone?",
@@ -1725,6 +1815,21 @@
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.15.0",
+        "date": "2026-07-30",
+        "sections": {
+          "new": [
+            "Your emergency contact and medical information now live on your profile - set them once and they'll be there on every trip you join as crew, instead of having to re-enter them each time.",
+            "If your emergency contact was alerted because a trip went overdue, you or your emergency contact can now confirm from the trip page that everything is fine, which lifts the write-lock placed on the trip after an alert."
+          ],
+          "improved": [
+            "Deleting your account is clearer when a trip is involved: it's refused while you're still needed on a trip that's under way, and if only the standard data-retention window is in the way, it's deferred instead - you're signed out right away and the deletion finishes automatically once that window closes.",
+            "Creating an account while accepting a crew invitation no longer asks you to verify your email address separately - clicking the link in the invitation already proved the address is yours.",
+            "You can now remove your profile photo on its own, instead of only being able to replace it with a new one."
+          ]
+        }
+      },
       {
         "version": "v1.14.0",
         "date": "2026-07-29",

@@ -73,6 +73,16 @@ const IcePortalPage = {
                     </div>
                 </div>
 
+                ${role === 'ice' && trip.is_emergency_incident && !trip.emergency_confirmed_at ? `
+                <div class="card">
+                    <h3>${escapeHtml(t('icePortal.confirmEmergency.heading'))}</h3>
+                    <p class="text-muted">${escapeHtml(t('icePortal.confirmEmergency.description'))}</p>
+                    <div id="confirm-emergency-alert"></div>
+                    <label for="confirm-emergency-comment">${t('icePortal.confirmEmergency.commentLabel')}</label>
+                    <textarea id="confirm-emergency-comment" rows="3" maxlength="2000" placeholder="${escapeHtml(t('icePortal.confirmEmergency.commentPlaceholder'))}"></textarea>
+                    <button type="button" class="btn btn-primary no-print" id="portal-confirm-emergency-btn" style="margin-top: var(--space-2);">${escapeHtml(t('icePortal.confirmEmergency.button'))}</button>
+                </div>` : ''}
+
                 ${sarAccess ? `
                 <div class="card">
                     <h3>${escapeHtml(t('icePortal.sarAccess.heading'))}</h3>
@@ -101,6 +111,18 @@ const IcePortalPage = {
                             ${skipper?.date_of_birth ? ` · <strong>${escapeHtml(t('icePortal.skipper.dateOfBirthLabel'))}:</strong> ${escapeHtml(IcePortalPage.formatDateOfBirth(skipper.date_of_birth))}` : ''}
                         </p>
                     </div>
+                    ${trip?.skipper_emergency_contact ? `
+                    <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="margin-bottom: var(--space-2);">
+                            <strong>${escapeHtml(t('icePortal.skipper.emergencyContactHeading'))}</strong>
+                        </p>
+                        <p class="mb-0" style="margin-left: var(--space-3);">
+                            ${trip.skipper_emergency_contact.name ? `<strong>${escapeHtml(t('common.name'))}:</strong> ${escapeHtml(trip.skipper_emergency_contact.name)}` : ''}
+                            ${trip.skipper_emergency_contact.phone ? `${trip.skipper_emergency_contact.name ? ' · ' : ''}<strong>${escapeHtml(t('common.phone'))}:</strong> ${escapeHtml(trip.skipper_emergency_contact.phone)}` : ''}
+                            ${trip.skipper_emergency_contact.relationship ? `${(trip.skipper_emergency_contact.name || trip.skipper_emergency_contact.phone) ? ' · ' : ''}<strong>${escapeHtml(t('common.relationship'))}:</strong> ${escapeHtml(trip.skipper_emergency_contact.relationship)}` : ''}
+                        </p>
+                    </div>
+                    ` : ''}
                 </div>
 
                 <div class="card">
@@ -173,6 +195,7 @@ const IcePortalPage = {
         bindLightboxImages(container);
 
         document.getElementById('portal-print-btn').addEventListener('click', () => window.print());
+        document.getElementById('portal-confirm-emergency-btn')?.addEventListener('click', () => this.handleConfirmEmergency());
 
         const expandImagesBtn = document.getElementById('portal-expand-images-btn');
         if (expandImagesBtn) {
@@ -269,5 +292,34 @@ const IcePortalPage = {
                     <span class="change-log__time">${formatDateTime(entry.changed_at, { withSeconds: role === 'sar' })}</span>
                     <span class="change-log__text">${escapeHtml(entry.message || entry.action)}${role === 'sar' && entry.ip ? ` · ${escapeHtml(t('icePortal.log.ip', { ip: entry.ip }))}` : ''}</span>
                 </div>`).join('')}</div>`;
+    },
+
+    // Guest ICE contacts have no JWT - the ice_read_only token from the
+    // portal URL is the only credential, so it rides along as ?token=
+    // exactly like every read on this page (see render()).
+    async handleConfirmEmergency() {
+        const alertBox = document.getElementById('confirm-emergency-alert');
+        const comment = (document.getElementById('confirm-emergency-comment')?.value || '').trim();
+
+        if (!comment) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('icePortal.confirmEmergency.commentRequired'))}</div>`;
+            return;
+        }
+        if (!confirm(t('icePortal.confirmEmergency.confirmPrompt'))) return;
+
+        const response = await apiRequest(`/trips/${this.state.tripId}/confirm-emergency?token=${encodeURIComponent(this.state.token)}`, {
+            method: 'POST',
+            body: JSON.stringify({ comment })
+        });
+        if (!response.success) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('icePortal.confirmEmergency.confirmFailed')))}</div>`;
+            return;
+        }
+        showToast(t('icePortal.confirmEmergency.confirmed'), 'success');
+        await this.render(
+            document.getElementById('page-content'),
+            {},
+            new URLSearchParams({ trip: this.state.tripId, token: this.state.token })
+        );
     }
 };

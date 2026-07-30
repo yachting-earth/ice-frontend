@@ -16,6 +16,7 @@
     "password": "Passwort",
     "name": "Name",
     "phone": "Telefon",
+    "relationship": "Beziehung",
     "optional": "(optional)",
     "gracePeriod": {
       "h1": "1 Stunde",
@@ -64,7 +65,10 @@
     "ICE_TRIP_CONFIRMATION_REJECTED": "Der ICE-Kontakt dieses Törns hat diese Rolle für diesen Törn abgelehnt. Wähle einen anderen Kontakt, bevor du aktivierst.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Für diesen Törn liegt keine offene ICE-Bestätigungsanfrage vor.",
     "TRIP_LOCKED": "Dieser Törn ist aus Gründen der maritimen Sicherheit/Nachverfolgbarkeit nach einem Notfall gesperrt und kann nicht mehr geändert werden.",
+    "ACCOUNT_HAS_ACTIVE_TRIP": "Dein Konto kann nicht gelöscht werden, solange du Skipper oder Crew auf einem Törn bist, der veröffentlicht oder aktiv ist. Beende oder storniere den Törn zuerst.",
+    "ACCOUNT_DELETION_PENDING": "Dieses Konto wurde gelöscht und kann nicht mehr verwendet werden.",
     "TRIP_NOT_ACTIVE": "SAR-Zugang kann nur für einen aktiven Törn angefordert werden.",
+    "NO_EMERGENCY_TO_CONFIRM": "Für diesen Törn gibt es keinen Notfallalarm zu bestätigen.",
     "AUTO_ACCEPT_INVALID_DURATION": "Wähle 1, 2 oder 3 Monate, oder schalte das automatische Akzeptieren aus.",
     "CONTACT_RATE_LIMITED": "Du hast das Tageslimit für Einsendungen über das Kontaktformular erreicht. Bitte versuche es morgen erneut.",
     "CONTACT_TOO_MANY_FILES": "Zu viele Anhänge.",
@@ -373,6 +377,10 @@
     "photoHint": "Wird von Search and Rescue genutzt, um dich als Skipper zu identifizieren. JPEG/PNG, max. 10 MB.",
     "photoSaveFailed": "Das Foto konnte nicht gespeichert werden.",
     "photoSaved": "Das Foto wurde gespeichert.",
+    "photoRemoveButton": "Foto löschen",
+    "photoRemoveConfirm": "Bist du sicher, dass du dein Profilfoto löschen möchtest?",
+    "photoRemoveFailed": "Das Foto konnte nicht gelöscht werden.",
+    "photoRemoved": "Dein Foto wurde gelöscht.",
     "detailsHeading": "Meine Daten",
     "loadingDetails": "Deine Daten werden geladen…",
     "loadFailed": "Deine Daten konnten nicht abgerufen werden.",
@@ -380,6 +388,22 @@
     "phoneLabel": "Telefon",
     "dateOfBirthLabel": "Geburtsdatum (optional)",
     "dateOfBirthHint": "Wird nur mit der Seenotrettung geteilt, falls etwas passiert. Für andere an Bord nicht sichtbar.",
+    "emergencyContactHeading": "Notfallkontakt",
+    "emergencyContactHint": "Wer von der Seenotrettung über dich persönlich kontaktiert werden soll - getrennt von den ICE-Kontakten, die bei einer überfälligen Reise alarmiert werden.",
+    "emergencyContactNameLabel": "Name",
+    "emergencyContactPhoneLabel": "Telefon",
+    "emergencyContactRelationshipLabel": "Beziehung",
+    "emergencyContactRelationshipPlaceholder": "z. B. Ehepartner, Bruder, Freund",
+    "emergencyContactSubmit": "Notfallkontakt speichern",
+    "emergencyContactSaveFailed": "Notfallkontakt konnte nicht gespeichert werden.",
+    "emergencyContactSaved": "Notfallkontakt gespeichert.",
+    "medicalHeading": "Medizinische Informationen",
+    "medicalLabel": "Medizinische Informationen für Search and Rescue (optional)",
+    "medicalPlaceholder": "z. B. Allergien, Medikamente, Blutgruppe, Vorerkrankungen",
+    "medicalHint": "Wird nur im Notfall den Such- und Rettungsbehörden angezeigt - niemals dem Skipper oder dem ICE-Kontakt.",
+    "medicalSubmit": "Medizinische Informationen speichern",
+    "medicalSaveFailed": "Medizinische Informationen konnten nicht gespeichert werden.",
+    "medicalSaved": "Medizinische Informationen gespeichert.",
     "emailLabel": "E-Mail",
     "languageLabel": "Sprache",
     "timezoneLabel": "Zeitzone",
@@ -428,7 +452,8 @@
     "deleteCancelButton": "Abbrechen",
     "passwordRequired": "Gib dein Passwort ein, um zu bestätigen.",
     "deleteFailed": "Das Konto konnte nicht gelöscht werden.",
-    "deleted": "Dein Konto wurde gelöscht."
+    "deleted": "Dein Konto wurde gelöscht.",
+    "deleteDeferred": "Dein Konto wurde deaktiviert und wird endgültig gelöscht, sobald die Aufbewahrungsfrist deines Törns endet, am {date}. Du wurdest abgemeldet und kannst dich nicht mehr anmelden."
   },
   "telegramLink": {
     "heading": "Telegram verknüpfen",
@@ -598,8 +623,11 @@
     "dateOfBirthLabel": "Geburtsdatum (optional)",
     "dateOfBirthHint": "Wird nur im Notfall den Such- und Rettungsbehörden angezeigt - niemals dem Skipper oder dem ICE-Kontakt.",
     "iceContactLabel": "Dein Notfallkontakt",
-    "iceContactPlaceholder": "z. B. Erik (Ehemann) +46701234568",
-    "iceContactHint": "Name und Telefonnummer einer Person, die im Notfall kontaktiert werden soll.",
+    "iceContactHint": "Wer von der Seenotrettung über dich persönlich kontaktiert werden soll, falls etwas passiert. Wird in deinem Profil gespeichert.",
+    "emergencyContactNameLabel": "Name",
+    "emergencyContactPhoneLabel": "Telefon",
+    "emergencyContactRelationshipLabel": "Beziehung",
+    "emergencyContactRelationshipPlaceholder": "z. B. Ehepartner, Bruder, Freund",
     "medicalLabel": "Medizinische Informationen für Search and Rescue (optional)",
     "medicalPlaceholder": "z. B. Allergien, Medikamente, Blutgruppe, Vorerkrankungen",
     "medicalHint": "Wird nur im Notfall den Such- und Rettungsbehörden angezeigt - niemals dem Skipper oder dem ICE-Kontakt.",
@@ -620,6 +648,7 @@
     "unknownError": "unbekannter Fehler",
     "acceptFailed": "Der Beitritt zum Törn ist fehlgeschlagen.",
     "acceptSuccess": "Du bist jetzt Teil der Crew. Gute Fahrt und allzeit sichere Rückkehr!",
+    "readOnlyNotice": "Diese Einladung ist mit einem bestehenden Konto verknüpft, daher wurden dein Name, deine Telefonnummer, dein Geburtsdatum, dein Notfallkontakt und deine medizinischen Informationen nicht geändert. {loginLink}, um sie dort zu bearbeiten.",
     "toOverview": "Zu deiner Übersicht",
     "crewViewLinkHint": "Speichere diesen Link - er ermöglicht dir jederzeit die Ansicht des Törns und die Verwaltung deiner Freigaben.",
     "crewViewLinkOpen": "Törn-Ansicht öffnen",
@@ -743,9 +772,21 @@
       "showPin": "PIN anzeigen",
       "hidePin": "PIN verbergen"
     },
+    "confirmEmergency": {
+      "heading": "Bestätigen, dass der Alarm aufgelöst ist",
+      "description": "Wenn du bestätigt hast, dass der Skipper sicher ist, gib unten einen Kommentar ein und bestätige - das hebt die Schreibsperre des Törns auf und lässt den Skipper ihn wieder verwalten.",
+      "commentLabel": "Kommentar (erforderlich)",
+      "commentPlaceholder": "z. B. Skipper angerufen, ist sicher und setzt die Fahrt fort.",
+      "commentRequired": "Gib einen Kommentar ein, bevor du bestätigst.",
+      "button": "Bestätigen, dass der Alarm aufgelöst ist",
+      "confirmPrompt": "Bestätigen, dass der Notfallalarm dieses Törns aufgelöst ist?",
+      "confirmFailed": "Der Alarm konnte nicht bestätigt werden.",
+      "confirmed": "Notfallalarm als aufgelöst bestätigt."
+    },
     "skipper": {
       "heading": "Skipper",
-      "dateOfBirthLabel": "Geburtsdatum"
+      "dateOfBirthLabel": "Geburtsdatum",
+      "emergencyContactHeading": "Notfallkontakt"
     },
     "trip": {
       "heading": "Törn",
@@ -1033,14 +1074,16 @@
       "routes": "Routen",
       "vessels": "Boote",
       "iceContacts": "ICE-Kontakte",
-      "logs": "Systemprotokolle"
+      "logs": "Systemprotokolle",
+      "trips": "Törns"
     },
     "empty": {
       "users": "Keine Benutzer",
       "routes": "Keine Routen",
       "vessels": "Keine Boote",
       "iceContacts": "Keine ICE-Kontakte",
-      "logs": "Keine Protokolle entsprechen dem Filter"
+      "logs": "Keine Protokolle entsprechen dem Filter",
+      "trips": "Keine Törns entsprechen dem Filter"
     },
     "table": {
       "adminHeader": "Admin",
@@ -1100,6 +1143,36 @@
         "message": "Nachricht",
         "user": "Benutzer"
       }
+    },
+    "trips": {
+      "statusLabel": "Törn-Status",
+      "allStatuses": "Alle Status",
+      "status": {
+        "draft": "Entwurf",
+        "published": "Veröffentlicht",
+        "active": "Aktiv",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert"
+      },
+      "unconfirmedIncidentOnly": "Nur unbestätigte Alarme",
+      "loadFailed": "Törns konnten nicht abgerufen werden.",
+      "pageInfo": "Seite {page} von {totalPages} ({total} Törns)",
+      "incidentConfirmed": "Bestätigt",
+      "incidentUnconfirmed": "Unbestätigter Alarm",
+      "table": {
+        "vessel": "Boot",
+        "incident": "Alarm"
+      },
+      "confirmEmergency": {
+        "toggle": "Alarm bestätigen",
+        "commentLabel": "Kommentar (erforderlich)",
+        "commentPlaceholder": "z.B. Skipper telefonisch über die Marina erreicht, ist sicher.",
+        "commentRequired": "Bitte einen Kommentar eingeben, bevor Sie bestätigen.",
+        "button": "Alarm als gelöst bestätigen",
+        "confirmPrompt": "Bestätigen, dass der Notfallalarm dieses Törns behoben ist?",
+        "confirmFailed": "Der Alarm konnte nicht bestätigt werden.",
+        "confirmed": "Notfallalarm als behoben bestätigt."
+      }
     }
   },
   "tripDetail": {
@@ -1131,6 +1204,18 @@
       "triggerConfirm": "Jetzt Zugangsdaten für SAR zu diesem Törn anfordern? Der Skipper wird benachrichtigt.",
       "triggerFailed": "SAR-Zugang konnte nicht angefordert werden.",
       "triggered": "SAR-Zugangsdaten wurden erstellt."
+    },
+    "confirmEmergency": {
+      "heading": "Bestätigen, dass der Alarm aufgelöst ist",
+      "ownerDescription": "Der ICE-Kontakt dieses Törns wurde alarmiert, weil du dich nicht rechtzeitig gemeldet hast. Die Bestätigung hebt die Schreibsperre auf, sodass du den Törn weiter verwalten kannst - sie macht die Tatsache, dass ein Alarm ausgelöst wurde, nicht ungeschehen.",
+      "iceDescription": "Du wurdest über diesen Törn alarmiert. Wenn du bestätigt hast, dass der Skipper sicher ist, gib unten einen Kommentar ein und bestätige - das hebt die Schreibsperre des Törns auf und lässt den Skipper ihn wieder verwalten.",
+      "commentLabel": "Kommentar (erforderlich)",
+      "commentPlaceholder": "z. B. Skipper angerufen, ist sicher und setzt die Fahrt fort.",
+      "commentRequired": "Gib einen Kommentar ein, bevor du bestätigst.",
+      "button": "Bestätigen, dass der Alarm aufgelöst ist",
+      "confirmPrompt": "Bestätigen, dass der Notfallalarm dieses Törns aufgelöst ist?",
+      "confirmFailed": "Der Alarm konnte nicht bestätigt werden.",
+      "confirmed": "Notfallalarm als aufgelöst bestätigt."
     },
     "schedule": {
       "heading": "Zeitplan",
@@ -1305,7 +1390,12 @@
       "lead": "Bereite dein Boot, deine Routen, Crew und deinen Notfallkontakt vor dem Auslaufen vor. Meldest du dich nach der geplanten Ankunft nicht zurück, erhält dein festgelegter Notfallkontakt sicheren Zugriff auf die Informationen, die den Rettungsdiensten helfen können, schneller zu reagieren.",
       "ctaPrimary": "Kostenloses Konto erstellen",
       "ctaSecondary": "So funktioniert's",
-      "badges": ["Kostenlos nutzbar", "Mehrere Routen", "DSGVO by design", "Sicheres ICE-Portal"]
+      "badges": [
+        "Kostenlos nutzbar",
+        "Mehrere Routen",
+        "DSGVO by design",
+        "Sicheres ICE-Portal"
+      ]
     },
     "notice": {
       "heading": "Wichtiger Hinweis",
@@ -1316,11 +1406,56 @@
       "heading": "Alles ist vor dem Auslaufen vorbereitet",
       "lead": "Ein vollständiges Törn-Dossier, zusammengestellt, bevor du überhaupt ablegst.",
       "cards": [
-        { "icon": "ship", "title": "Boot", "items": ["Foto", "Registrierung", "Spezifikationen", "Identifikation"] },
-        { "icon": "compass", "title": "Törn", "items": ["Abfahrt", "Zielort", "Voraussichtliche Ankunft", "Kulanzzeit"] },
-        { "icon": "route", "title": "Routen", "items": ["Mehrere Routen", "Import aus GPX/Windy/Zeichnen", "Routenalternativen", "Interaktive Kartenvorschau"] },
-        { "icon": "users", "title": "Crew", "items": ["Crew-Liste", "Individuelle Profile", "Fotos", "Persönliche Notfallkontakte"] },
-        { "icon": "shield-check", "title": "Notfallkontakt", "items": ["Identität bestätigt", "Sicheres Portal", "Nur-Lese-Zugriff", "Automatische Benachrichtigung"] }
+        {
+          "icon": "ship",
+          "title": "Boot",
+          "items": [
+            "Foto",
+            "Registrierung",
+            "Spezifikationen",
+            "Identifikation"
+          ]
+        },
+        {
+          "icon": "compass",
+          "title": "Törn",
+          "items": [
+            "Abfahrt",
+            "Zielort",
+            "Voraussichtliche Ankunft",
+            "Kulanzzeit"
+          ]
+        },
+        {
+          "icon": "route",
+          "title": "Routen",
+          "items": [
+            "Mehrere Routen",
+            "Import aus GPX/Windy/Zeichnen",
+            "Routenalternativen",
+            "Interaktive Kartenvorschau"
+          ]
+        },
+        {
+          "icon": "users",
+          "title": "Crew",
+          "items": [
+            "Crew-Liste",
+            "Individuelle Profile",
+            "Fotos",
+            "Persönliche Notfallkontakte"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "title": "Notfallkontakt",
+          "items": [
+            "Identität bestätigt",
+            "Sicheres Portal",
+            "Nur-Lese-Zugriff",
+            "Automatische Benachrichtigung"
+          ]
+        }
       ]
     },
     "howItWorks": {
@@ -1348,30 +1483,72 @@
       "traditionalLabel": "Klassischer Plan",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        { "traditional": "Statische Dokumente", "yachting": "Lebendige Törn-Informationen" },
-        { "traditional": "Eine einzelne Route", "yachting": "Mehrere Routen" },
-        { "traditional": "Einfache Crew-Liste", "yachting": "Crew pflegt eigene Daten" },
-        { "traditional": "Manuelle Überwachung nötig", "yachting": "Automatische, protokollierte Kontrolle" },
-        { "traditional": "Klebezettel, SMS und Anrufe", "yachting": "Sicheres Portal" }
+        {
+          "traditional": "Statische Dokumente",
+          "yachting": "Lebendige Törn-Informationen"
+        },
+        {
+          "traditional": "Eine einzelne Route",
+          "yachting": "Mehrere Routen"
+        },
+        {
+          "traditional": "Einfache Crew-Liste",
+          "yachting": "Crew pflegt eigene Daten"
+        },
+        {
+          "traditional": "Manuelle Überwachung nötig",
+          "yachting": "Automatische, protokollierte Kontrolle"
+        },
+        {
+          "traditional": "Klebezettel, SMS und Anrufe",
+          "yachting": "Sicheres Portal"
+        }
       ]
     },
     "features": {
       "heading": "Gemacht für echte Törns",
       "items": [
-        { "icon": "route", "title": "Mehrere Routen", "description": "Ein Törn folgt selten nur einer geraden Linie." },
-        { "icon": "users", "title": "Crew-Beteiligung", "description": "Jedes Crew-Mitglied pflegt seine eigenen Daten." },
-        { "icon": "shield-check", "title": "Bestätigter Notfallkontakt", "description": "Der Notfallkontakt bestätigt seine Rolle vor dem Auslaufen." }
+        {
+          "icon": "route",
+          "title": "Mehrere Routen",
+          "description": "Ein Törn folgt selten nur einer geraden Linie."
+        },
+        {
+          "icon": "users",
+          "title": "Crew-Beteiligung",
+          "description": "Jedes Crew-Mitglied pflegt seine eigenen Daten."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Bestätigter Notfallkontakt",
+          "description": "Der Notfallkontakt bestätigt seine Rolle vor dem Auslaufen."
+        }
       ]
     },
     "privacy": {
       "heading": "Datenschutz by design",
       "lead": "Persönliche Törn-Daten werden nach DSGVO-Grundsätzen automatisch entfernt.",
       "lifecycle": [
-        { "icon": "file-plus", "label": "Törn erstellt" },
-        { "icon": "check-circle", "label": "Törn abgeschlossen" },
-        { "icon": "clock", "label": "Soft gelöscht" },
-        { "icon": "timer", "label": "Nach 30 Tagen automatisch entfernt" },
-        { "icon": "shield", "label": "Nur Skipper und Boot bleiben erhalten" }
+        {
+          "icon": "file-plus",
+          "label": "Törn erstellt"
+        },
+        {
+          "icon": "check-circle",
+          "label": "Törn abgeschlossen"
+        },
+        {
+          "icon": "clock",
+          "label": "Soft gelöscht"
+        },
+        {
+          "icon": "timer",
+          "label": "Nach 30 Tagen automatisch entfernt"
+        },
+        {
+          "icon": "shield",
+          "label": "Nur Skipper und Boot bleiben erhalten"
+        }
       ]
     },
     "mapDemo": {
@@ -1379,17 +1556,42 @@
       "lead": "Ein Törn kann mehrere geplante Routen umfassen. Hier ein Beispiel mit drei.",
       "note": "Demonstrationsdaten — keine Live-Position eines Boots.",
       "ariaLabel": "Beispielkarte mit drei beispielhaften Segelrouten entlang einer Küste",
-      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"],
-      "descriptions": ["Hauptroute", "Falls der Wind auf West dreht", "Falls der Wind auf Nord dreht und über 35 Knoten auffrischt"]
+      "routes": [
+        "Stockholm → Sandhamn",
+        "Sandhamn → Landsort",
+        "Stockholm → Åland (alternativ)"
+      ],
+      "descriptions": [
+        "Hauptroute",
+        "Falls der Wind auf West dreht",
+        "Falls der Wind auf Nord dreht und über 35 Knoten auffrischt"
+      ]
     },
     "worst": {
       "heading": "Wenn es hart auf hart kommt",
       "insteadTitle": "Statt…",
-      "insteadItems": ["Alte E-Mails zu durchsuchen", "Sich zu erinnern, wer an Bord war", "Nach Routen-Screenshots zu suchen", "Notfallkontakte zu erraten"],
+      "insteadItems": [
+        "Alte E-Mails zu durchsuchen",
+        "Sich zu erinnern, wer an Bord war",
+        "Nach Routen-Screenshots zu suchen",
+        "Notfallkontakte zu erraten"
+      ],
       "haveTitle": "Dein Notfallkontakt hat bereits",
-      "haveItems": ["Boot", "Routen", "Crew", "Fotos", "Notfallkontakte", "Törn-Details"],
+      "haveItems": [
+        "Boot",
+        "Routen",
+        "Crew",
+        "Fotos",
+        "Notfallkontakte",
+        "Törn-Details"
+      ],
       "readyTitle": "Bereit zur Weitergabe an",
-      "readyItems": ["Küstenwache", "Polizei", "Seenotleitung", "Versicherung"],
+      "readyItems": [
+        "Küstenwache",
+        "Polizei",
+        "Seenotleitung",
+        "Versicherung"
+      ],
       "readyNote": "Der Notfallkontakt entscheidet, wann die Informationen geteilt werden und mit wem."
     },
     "finalCta": {
@@ -1414,7 +1616,7 @@
   },
   "privacy": {
     "title": "Datenschutz & DSGVO",
-    "lastUpdated": "Zuletzt aktualisiert: 14. Juli 2026",
+    "lastUpdated": "Zuletzt aktualisiert: 30. Juli 2026",
     "intro": "Diese Seite erklärt, welche personenbezogenen Daten Yachting Earth ICE erhebt, warum, wie lange sie gespeichert werden und welche Rechte du gemäß DSGVO darüber hast.",
     "sections": [
       {
@@ -1429,21 +1631,26 @@
           "Wir erheben nur das, was das System benötigt, um einen Törn vorzubereiten und - falls etwas schiefgeht - die richtigen Informationen an die richtige Person weiterzugeben."
         ],
         "list": [
-          "Kontodaten - E-Mail, Name, Telefonnummer und ein Passwort (nur als bcrypt-Hash gespeichert, niemals im Klartext)",
+          "Kontodaten - E-Mail, Name, Telefonnummer und ein Passwort (nur als bcrypt-Hash gespeichert, niemals im Klartext) - oder, bei Crew, die nur per E-Mail eingeladen wurde, ein passwortloses Profil, das später in ein vollständiges Konto umgewandelt werden kann",
           "Bootsdaten - Name, Registrierung/Rufzeichen, Spezifikationen und ein optionales Foto",
           "Törn-Daten - geplante Routen (aus Windy.com übernommen), geplante Abfahrts-/Ankunftszeiten und Kulanzzeit",
           "Crew-Daten - Name, E-Mail, Telefonnummer und ein optionales Foto zur Identifizierung",
           "Geburtsdatum - freiwillig und wird nur verwendet, um Personen an Bord im Notfall zu identifizieren; wird bei Bedarf den Such- und Rettungsbehörden mitgeteilt, aber niemals dem Skipper oder dem ICE-Kontakt",
-          "Notfallkontakt-Daten („ICE“) - Name, E-Mail, Telefonnummer und Beziehung zum Skipper",
+          "Dein persönlicher Notfallkontakt - Name, Telefonnummer und Beziehung; wer im Notfall speziell über dich angerufen werden soll. Wird einmal in deinem Profil hinterlegt und gilt für jeden Törn, an dem du teilnimmst - getrennt vom ICE-Kontakt unten",
+          "Medizinische Informationen - freiwillig, nur für Such- und Rettungsbehörden (z. B. Allergien, Medikamente, Erkrankungen). Einmal in deinem Profil hinterlegt; wird niemals dem Skipper oder dem ICE-Kontakt angezeigt",
+          "ICE-Kontaktdaten („Notfallkontakt“) - Name, E-Mail, Telefonnummer und Beziehung zum Skipper; wer vom System benachrichtigt wird, falls ein Törn überfällig ist",
           "Sicherheitsprotokolle - Anmeldeversuche (zur Durchsetzung von Ratenbegrenzung) und Zustellstatus von Benachrichtigungen"
         ]
       },
       {
         "heading": "Warum wir sie verarbeiten",
-        "body": ["Jede Datenkategorie wird auf einer dieser Rechtsgrundlagen verarbeitet:"],
+        "body": [
+          "Jede Datenkategorie wird auf einer dieser Rechtsgrundlagen verarbeitet:"
+        ],
         "list": [
           "Vertrag - Konto-, Boots- und Törn-Daten, damit das System das tun kann, wofür du dich angemeldet hast",
-          "Ausdrückliche Einwilligung - Notfallkontaktdaten",
+          "Ausdrückliche Einwilligung - dein persönlicher Notfallkontakt und die ICE-Kontaktdaten",
+          "Ausdrückliche Einwilligung, als besondere Kategorie von Gesundheitsdaten gemäß Art. 9 DSGVO, sowie lebenswichtige Interessen - medizinische Informationen, die nur in einem echten Notfall an Such- und Rettungsbehörden weitergegeben werden",
           "Berechtigtes Interesse - Crew-Fotos zur Identifizierung sowie Sicherheitsprotokolle und Zustellnachweise von Benachrichtigungen, um das System zuverlässig und missbrauchsresistent zu halten"
         ]
       },
@@ -1451,14 +1658,18 @@
         "heading": "Wie lange wir sie speichern",
         "body": [
           "Ein abgeschlossener oder stornierter Törn wird sofort soft-gelöscht - er verschwindet aus der Ansicht von Skipper, Crew und Notfallkontakt - und wird anschließend zusammen mit seinen Routen, Crew-Datensätzen, Fotos, Änderungsprotokollen, Benachrichtigungen und Zugangstoken 30 Tage später durch einen täglichen Aufräumjob endgültig (hart) gelöscht.",
-          "Registrierte Benutzerkonten und Boote sind von diesem Vorgang nicht betroffen - nur die Daten des Törns selbst. Du kannst dein Konto und dessen Daten jederzeit über deine Profilseite löschen.",
+          "Registrierte Benutzerkonten und Boote sind von diesem Vorgang nicht betroffen - nur die Daten des Törns selbst. Dein persönlicher Notfallkontakt und deine medizinischen Informationen werden auf deinem Konto statt an einem einzelnen Törn gespeichert und bleiben daher so lange erhalten, wie dein Konto besteht - nicht nur für die 30 Tage dieses Törns.",
+          "Wenn du dein Konto nicht mehr nutzt, wird es nach 18 Monaten Inaktivität anonymisiert - nicht gelöscht: Wir senden zunächst eine Warnung per E-Mail, und falls du dich nicht innerhalb von 30 Tagen nach dieser Warnung wieder anmeldest, werden Name, Telefonnummer, Geburtsdatum, Notfallkontakt, medizinische Informationen und Foto dauerhaft entfernt. Der Kontodatensatz selbst bleibt erhalten, damit deine früheren Törns weiterhin nachvollziehbar sind, und jede Anmeldung bricht diesen Vorgang ab. Ein Konto, das noch für einen laufenden Törn benötigt wird, wird auf diese Weise niemals anonymisiert.",
+          "Du kannst dein Konto jederzeit über deine Profilseite löschen - das geschieht meist sofort. Bist du noch Skipper oder Crew auf einem Törn, der veröffentlicht oder aktiv ist, wird die Löschung abgelehnt, bis dieser Törn beendet oder storniert ist. Ist dein Törn gerade erst beendet und befindet sich noch innerhalb seiner 30-tägigen Aufbewahrungsfrist, wird die Löschung stattdessen aufgeschoben: Dein Konto wird sofort deaktiviert - du wirst abgemeldet und kannst dich nicht erneut anmelden - und endgültig entfernt, sobald diese Frist abgelaufen ist.",
           "Notfallkontakt-Konten werden standardmäßig ebenfalls unbegrenzt aufbewahrt, da der Kontakt sich für einen künftigen Törn erneut anmelden können muss - ein Kontakt kann sich jedoch unter „Mein ICE-Konto“ dafür entscheiden, sein Konto automatisch löschen zu lassen, sobald es mit keinem aktuellen oder künftigen Törn mehr verknüpft ist.",
           "Über das Kontaktformular gesendete Nachrichten (Name, E-Mail-Adresse und Nachrichtentext) werden 18 Monate ab dem Versand aufbewahrt und dann endgültig gelöscht. Dieser Zeitraum von 18 Monaten läuft unabhängig und wird nicht durch das Löschen deines Kontos verkürzt - löschst du dein Konto, werden deine bisherigen Nachrichten dennoch bis zum Ablauf ihrer eigenen 18-Monats-Frist aufbewahrt, sofern wir sie nicht früher löschen. Wir können eine Nachricht auch vor Ablauf der 18 Monate löschen, zum Beispiel sobald eine Anfrage abgeschlossen ist."
         ]
       },
       {
         "heading": "Deine Rechte",
-        "body": ["Gemäß DSGVO kannst du:"],
+        "body": [
+          "Gemäß DSGVO kannst du:"
+        ],
         "list": [
           "Auf die personenbezogenen Daten zugreifen, die wir über dich gespeichert haben",
           "Unrichtige Daten korrigieren - die meisten davon kannst du direkt über deine Profilseite bearbeiten",
@@ -1482,7 +1693,9 @@
       },
       {
         "heading": "Mit wem wir Daten teilen",
-        "body": ["Wir verkaufen oder teilen deine Daten niemals mit Werbetreibenden. Daten erreichen ausschließlich:"],
+        "body": [
+          "Wir verkaufen oder teilen deine Daten niemals mit Werbetreibenden. Daten erreichen ausschließlich:"
+        ],
         "list": [
           "Mailgun - zur Zustellung transaktionaler E-Mails (Törn-Benachrichtigungen, Einladungen, Alarme)",
           "Telegram - zur Zustellung von Benachrichtigungen, sofern aktiviert",
@@ -1540,7 +1753,9 @@
       },
       {
         "heading": "Zulässige Nutzung",
-        "body": ["Du verpflichtest dich, Folgendes zu unterlassen:"],
+        "body": [
+          "Du verpflichtest dich, Folgendes zu unterlassen:"
+        ],
         "list": [
           "Das System für rechtswidrige Zwecke oder zur Belästigung, Nachahmung oder Täuschung einer anderen Person zu nutzen",
           "Ein Crew-Mitglied oder einen Notfallkontakt hinzuzufügen, ohne begründeten Anlass zur Annahme, dass diese Person damit einverstanden ist, bezüglich des Törns kontaktiert zu werden",
@@ -1706,7 +1921,7 @@
           },
           {
             "q": "Kann ich mein Konto löschen?",
-            "a": "Ja, jederzeit über deine Profilseite."
+            "a": "Ja, über deine Profilseite - meist sofort. Wenn du noch Skipper oder Crew auf einem Törn bist, der veröffentlicht oder aktiv ist, wird die Löschung verweigert, bis dieser Törn beendet oder storniert wurde. Wenn dein Törn gerade erst beendet wurde und sich noch innerhalb seiner 30-tägigen Aufbewahrungsfrist befindet, wird die Löschung stattdessen aufgeschoben: Dein Konto wird sofort deaktiviert - du wirst abgemeldet und kannst dich nicht mehr anmelden - und endgültig entfernt, sobald diese Frist abläuft. Das ist etwas anderes als das, was passiert, wenn du die App einfach nicht mehr nutzt: Nach 18 Monaten Inaktivität wird dein Konto anonymisiert statt gelöscht, damit vergangene Törn-Aufzeichnungen weiterhin nachvollziehbar bleiben."
           },
           {
             "q": "Werden meine Daten mit jemandem geteilt?",
@@ -1723,6 +1938,21 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.15.0",
+        "date": "2026-07-30",
+        "sections": {
+          "new": [
+            "Dein Notfallkontakt und deine medizinischen Informationen befinden sich jetzt in deinem Profil - trage sie einmal ein, und sie sind bei jedem Törn dabei, an dem du als Crew teilnimmst, statt sie jedes Mal neu eingeben zu müssen.",
+            "Wenn dein Notfallkontakt benachrichtigt wurde, weil ein Törn überfällig war, könnt ihr - du oder dein Notfallkontakt - jetzt auf der Törn-Seite bestätigen, dass alles in Ordnung ist, wodurch die Schreibsperre aufgehoben wird, die nach einem Alarm auf den Törn gelegt wird."
+          ],
+          "improved": [
+            "Das Löschen deines Kontos ist klarer, wenn ein Törn beteiligt ist: Es wird abgelehnt, solange du noch auf einem laufenden Törn gebraucht wirst, und wenn nur die übliche Aufbewahrungsfrist im Weg steht, wird es stattdessen aufgeschoben - du wirst sofort abgemeldet, und die Löschung wird automatisch abgeschlossen, sobald diese Frist abgelaufen ist.",
+            "Wenn du beim Annehmen einer Crew-Einladung ein Konto erstellst, musst du deine E-Mail-Adresse nicht mehr separat bestätigen - der Klick auf den Link in der Einladung hat bereits bewiesen, dass die Adresse dir gehört.",
+            "Du kannst dein Foto jetzt einfach löschen, statt es nur durch ein neues ersetzen zu können."
+          ]
+        }
+      },
       {
         "version": "v1.14.0",
         "date": "2026-07-29",

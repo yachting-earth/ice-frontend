@@ -334,7 +334,11 @@ const CrewViewPage = {
 
     // The medical field is only ever returned to the crew member's own row
     // (and to SAR) - see TripHandler::detail() - so viewerCrew.medical_info
-    // is safe to prefill here.
+    // is safe to prefill here. Saving writes to the profile
+    // (PUT /user/profile), not to trip_crew - a linked crew member's own
+    // medical_info lives there now (epic #501, T-09/#515); canEditSharing
+    // (this form's own gate) already requires the viewer to be logged in as
+    // that account.
     setupMedicalForm(viewerCrew) {
         const field = document.getElementById('crewview-medical-info');
         if (!field) return;
@@ -350,7 +354,7 @@ const CrewViewPage = {
 
         const medicalInfo = document.getElementById('crewview-medical-info').value.trim();
 
-        const response = await apiRequest(`/crew/${this.state.viewerCrewId}`, {
+        const response = await apiRequest('/user/profile', {
             method: 'PUT',
             body: JSON.stringify({ medical_info: medicalInfo })
         });
@@ -366,6 +370,11 @@ const CrewViewPage = {
         showToast(t('crewView.medical.saved'), 'success');
     },
 
+    // Saving writes to the profile (PUT /user/profile), not to trip_crew -
+    // Crew::update() no longer writes date_of_birth once linked (epic #501,
+    // T-09/#515), which every accepted crew member is; canEditSharing (this
+    // form's own gate) already requires the viewer to be logged in as that
+    // account.
     setupDateOfBirthForm(viewerCrew) {
         const field = document.getElementById('crewview-date-of-birth');
         if (!field) return;
@@ -387,7 +396,7 @@ const CrewViewPage = {
 
         btn.disabled = true;
 
-        const response = await apiRequest(`/crew/${this.state.viewerCrewId}`, {
+        const response = await apiRequest('/user/profile', {
             method: 'PUT',
             body: JSON.stringify({ date_of_birth: dateOfBirth })
         });

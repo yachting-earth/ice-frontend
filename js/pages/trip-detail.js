@@ -88,6 +88,15 @@ const TripDetailPage = {
                 ${role === 'ice' && trip.ice_trip_confirmation_status === 'approved' ? `<div class="alert alert-info">${escapeHtml(t('tripDetail.iceConfirmation.iceApprovedNote'))}</div>` : ''}
                 ${role === 'ice' && trip.ice_trip_confirmation_status === 'rejected' ? `<div class="alert alert-warning">${escapeHtml(t('tripDetail.iceConfirmation.iceRejectedNote'))}</div>` : ''}
 
+                ${role === 'ice' && trip.is_emergency_incident && !trip.emergency_confirmed_at ? `<div class="card">
+                    <h3>${escapeHtml(t('tripDetail.confirmEmergency.heading'))}</h3>
+                    <p class="text-muted">${escapeHtml(t('tripDetail.confirmEmergency.iceDescription'))}</p>
+                    <div id="confirm-emergency-alert"></div>
+                    <label for="confirm-emergency-comment">${t('tripDetail.confirmEmergency.commentLabel')}</label>
+                    <textarea id="confirm-emergency-comment" rows="3" maxlength="2000" placeholder="${escapeHtml(t('tripDetail.confirmEmergency.commentPlaceholder'))}"></textarea>
+                    <button class="btn btn-primary" type="button" id="confirm-emergency-btn" style="margin-top: var(--space-2);">${escapeHtml(t('tripDetail.confirmEmergency.button'))}</button>
+                </div>` : ''}
+
                 ${role === 'ice' ? `<div class="card">
                     <h3>${t('tripDetail.sarAccess.heading')}</h3>
                     ${sarAccess ? `
@@ -314,6 +323,7 @@ const TripDetailPage = {
         document.getElementById('trigger-sar-access-btn')?.addEventListener('click', () => this.handleTriggerSarAccess());
         document.getElementById('ice-confirmation-approve-btn')?.addEventListener('click', () => this.handleRespondIceConfirmation('approve'));
         document.getElementById('ice-confirmation-reject-btn')?.addEventListener('click', () => this.handleRespondIceConfirmation('reject'));
+        this.bindConfirmEmergencyButton();
 
         const sarPinToggle = document.getElementById('trip-sar-pin-toggle');
         if (sarPinToggle) {
@@ -730,6 +740,22 @@ const TripDetailPage = {
         const deleteBtnLabel = t('tripDetail.actions.deleteButton');
         const deleteBtnHtml = `<button class="btn btn-danger" type="button" id="delete-trip-btn">${deleteBtnLabel}</button>`;
 
+        // Emergency Lock (Trip::isLocked()): once the ICE contact has been
+        // alerted and the alarm hasn't been confirmed resolved yet, the
+        // skipper's only way out (besides "Verify arrival") is to confirm
+        // it here - see TripHandler::confirmEmergency(). Can apply to any
+        // status, not just active (e.g. a completed-but-unconfirmed trip
+        // is still locked for crew/route/photo writes).
+        const emergencyLocked = trip.is_emergency_incident && !trip.emergency_confirmed_at;
+        const confirmEmergencyHtml = emergencyLocked ? `
+            <div class="alert alert-warning">
+                <p>${escapeHtml(t('tripDetail.confirmEmergency.ownerDescription'))}</p>
+                <div id="confirm-emergency-alert"></div>
+                <label for="confirm-emergency-comment">${t('tripDetail.confirmEmergency.commentLabel')}</label>
+                <textarea id="confirm-emergency-comment" rows="3" maxlength="2000" placeholder="${escapeHtml(t('tripDetail.confirmEmergency.commentPlaceholder'))}"></textarea>
+                <button class="btn btn-primary" type="button" id="confirm-emergency-btn" style="margin-top: var(--space-2);">${escapeHtml(t('tripDetail.confirmEmergency.button'))}</button>
+            </div>` : '';
+
         if (trip.status === 'draft' || trip.status === 'published') {
             // Per-trip ICE approval (separate from the contact's one-time
             // roster confirmation) blocks activation until the assigned
@@ -766,6 +792,7 @@ const TripDetailPage = {
                         </div>
                     </div>
                     <button class="btn btn-primary" type="button" id="verify-btn">${t('tripDetail.actions.verifyButton')}</button>
+                    ${confirmEmergencyHtml}
                     <div id="delete-trip-alert"></div>
                     ${deleteBtnHtml}
                 </div>`;
@@ -781,9 +808,18 @@ const TripDetailPage = {
         actionsCard.innerHTML = `
             <h3>${t('tripDetail.actions.heading')}</h3>
             <p class="text-muted">${t('tripDetail.actions.inactiveHint', { status: t('trip.status.' + trip.status).toLowerCase() })}</p>
+            ${confirmEmergencyHtml}
             <div id="delete-trip-alert"></div>
             ${deleteBtnHtml}`;
         document.getElementById('delete-trip-btn').addEventListener('click', () => this.handleDeleteTrip());
+    },
+
+    // Bound once from renderPage() after both the owner actions-card and
+    // the ICE-role card have been rendered - only one of the two ever
+    // contains a #confirm-emergency-btn (isOwner and role === 'ice' are
+    // mutually exclusive), so this is always at most a single listener.
+    bindConfirmEmergencyButton() {
+        document.getElementById('confirm-emergency-btn')?.addEventListener('click', () => this.handleConfirmEmergency());
     },
 
     renderRoutes(routes, isOwner = true) {
@@ -1341,6 +1377,28 @@ const TripDetailPage = {
             return;
         }
         showToast(t('tripDetail.sarAccess.triggered'), 'success');
+        await this.load(document.getElementById('page-content'));
+    },
+
+    async handleConfirmEmergency() {
+        const alertBox = document.getElementById('confirm-emergency-alert');
+        const comment = (document.getElementById('confirm-emergency-comment')?.value || '').trim();
+
+        if (!comment) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('tripDetail.confirmEmergency.commentRequired'))}</div>`;
+            return;
+        }
+        if (!confirm(t('tripDetail.confirmEmergency.confirmPrompt'))) return;
+
+        const response = await apiRequest(`/trips/${this.state.tripId}/confirm-emergency`, {
+            method: 'POST',
+            body: JSON.stringify({ comment })
+        });
+        if (!response.success) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('tripDetail.confirmEmergency.confirmFailed')))}</div>`;
+            return;
+        }
+        showToast(t('tripDetail.confirmEmergency.confirmed'), 'success');
         await this.load(document.getElementById('page-content'));
     },
 

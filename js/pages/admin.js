@@ -10,7 +10,8 @@ const AdminPage = {
             routes: t('admin.stats.routes'),
             vessels: t('admin.stats.vessels'),
             ice_contacts: t('admin.stats.iceContacts'),
-            logs: t('admin.stats.logs')
+            logs: t('admin.stats.logs'),
+            trips: t('admin.stats.trips')
         };
     },
 
@@ -20,8 +21,13 @@ const AdminPage = {
             routes: { endpoint: '/admin/routes', title: t('admin.stats.routes'), emptyText: t('admin.empty.routes') },
             vessels: { endpoint: '/admin/vessels', title: t('admin.stats.vessels'), emptyText: t('admin.empty.vessels') },
             ice_contacts: { endpoint: '/admin/ice-contacts', title: t('admin.stats.iceContacts'), emptyText: t('admin.empty.iceContacts') },
-            logs: { title: t('admin.stats.logs'), emptyText: t('admin.empty.logs') }
+            logs: { title: t('admin.stats.logs'), emptyText: t('admin.empty.logs') },
+            trips: { title: t('admin.stats.trips'), emptyText: t('admin.empty.trips') }
         };
+    },
+
+    tripStatusOptions() {
+        return ['draft', 'published', 'active', 'completed', 'cancelled'];
     },
 
     logLevelLabels() {
@@ -62,6 +68,13 @@ const AdminPage = {
             page: 1,
             pagination: { page: 1, per_page: 50, total: 0, total_pages: 1 },
             searchDebounce: null
+        },
+        trips: {
+            items: [],
+            filters: { status: '', unconfirmed_incident: false },
+            page: 1,
+            pagination: { page: 1, per_page: 50, total: 0, total_pages: 1 },
+            confirmingId: null
         }
     },
 
@@ -137,6 +150,11 @@ const AdminPage = {
 
         if (tab === 'logs') {
             await this.loadLogs(1);
+            return;
+        }
+
+        if (tab === 'trips') {
+            await this.loadTrips(1);
             return;
         }
 
@@ -565,5 +583,199 @@ const AdminPage = {
         const nextBtn = document.getElementById('log-next-page');
         if (prevBtn) prevBtn.addEventListener('click', () => this.loadLogs(page - 1));
         if (nextBtn) nextBtn.addEventListener('click', () => this.loadLogs(page + 1));
+    },
+
+    // ==================== Resor (T-19, issue #518) ====================
+    //
+    // The "contact an admin" escape hatch into a stuck emergency alarm:
+    // AdminHandler::listTrips() backs this list, and
+    // AdminHandler::confirmEmergency() backs the inline confirm form below
+    // (same writer + audit action as the skipper/ICE path in
+    // trip-detail.js/ice-portal.js, just admin-sourced).
+
+    async loadTrips(page) {
+        const container = document.getElementById('admin-section-container');
+        const isFirstRender = !container.querySelector('#trip-filters-bar');
+
+        if (isFirstRender) {
+            const statusOptions = this.tripStatusOptions();
+
+            container.innerHTML = `
+                <div id="trip-filters-bar" class="log-filters">
+                    <div class="field">
+                        <label for="trip-status">${escapeHtml(t('admin.trips.statusLabel'))}</label>
+                        <select id="trip-status">
+                            <option value="">${escapeHtml(t('admin.trips.allStatuses'))}</option>
+                            ${statusOptions.map((status) => `
+                                <option value="${status}" ${this.state.trips.filters.status === status ? 'selected' : ''}>${escapeHtml(t('admin.trips.status.' + status))}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="trip-unconfirmed-incident" ${this.state.trips.filters.unconfirmed_incident ? 'checked' : ''}>
+                        <label for="trip-unconfirmed-incident">${escapeHtml(t('admin.trips.unconfirmedIncidentOnly'))}</label>
+                    </div>
+                </div>
+                <div id="trip-results"><div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('common.loading'))}</div></div>
+                <div id="trip-pagination"></div>`;
+
+            document.getElementById('trip-status').addEventListener('change', (event) => {
+                this.state.trips.filters.status = event.target.value;
+                this.loadTrips(1);
+            });
+
+            document.getElementById('trip-unconfirmed-incident').addEventListener('change', (event) => {
+                this.state.trips.filters.unconfirmed_incident = event.target.checked;
+                this.loadTrips(1);
+            });
+        }
+
+        const resultsContainer = document.getElementById('trip-results');
+        resultsContainer.innerHTML = `<div class="loading-state"><span class="spinner"></span> ${escapeHtml(t('common.loading'))}</div>`;
+
+        const params = new URLSearchParams();
+        params.set('page', String(page));
+        if (this.state.trips.filters.status) params.set('status', this.state.trips.filters.status);
+        if (this.state.trips.filters.unconfirmed_incident) params.set('unconfirmed_incident', '1');
+
+        const response = await apiRequest(`/admin/trips?${params.toString()}`);
+
+        if (!response.success) {
+            resultsContainer.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('admin.trips.loadFailed')))}</div>`;
+            document.getElementById('trip-pagination').innerHTML = '';
+            return;
+        }
+
+        this.state.trips.items = response.data.trips || [];
+        this.state.trips.pagination = response.data.pagination || { page: 1, per_page: 50, total: 0, total_pages: 1 };
+        this.state.trips.page = this.state.trips.pagination.page;
+
+        this.renderTripsTable(resultsContainer);
+        this.renderTripsPagination();
+    },
+
+    renderTripsTable(container) {
+        if (this.state.trips.items.length === 0) {
+            container.innerHTML = `<div class="empty-state"><h3>${escapeHtml(this.tabConfig().trips.emptyText)}</h3></div>`;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="table-scroll">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>${escapeHtml(t('admin.table.skipper'))}</th>
+                            <th>${escapeHtml(t('admin.trips.table.vessel'))}</th>
+                            <th>${escapeHtml(t('admin.table.tripStatus'))}</th>
+                            <th>${escapeHtml(t('admin.table.departure'))}</th>
+                            <th>${escapeHtml(t('admin.table.arrival'))}</th>
+                            <th>${escapeHtml(t('admin.trips.table.incident'))}</th>
+                            <th>${escapeHtml(t('admin.table.created'))}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${this.state.trips.items.map((trip) => this.renderTripRow(trip)).join('')}
+                    </tbody>
+                </table>
+            </div>`;
+
+        container.querySelectorAll('[data-confirm-emergency-toggle]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const tripId = btn.dataset.confirmEmergencyToggle;
+                this.state.trips.confirmingId = this.state.trips.confirmingId === tripId ? null : tripId;
+                this.renderTripsTable(container);
+            });
+        });
+
+        container.querySelectorAll('[data-confirm-emergency-submit]').forEach((btn) => {
+            btn.addEventListener('click', () => this.handleConfirmEmergency(btn.dataset.confirmEmergencySubmit));
+        });
+    },
+
+    renderTripRow(trip) {
+        const unconfirmedIncident = trip.is_emergency_incident && !trip.emergency_confirmed_at;
+
+        const incidentBadge = !trip.is_emergency_incident
+            ? ''
+            : trip.emergency_confirmed_at
+                ? `<span class="badge badge-active">${escapeHtml(t('admin.trips.incidentConfirmed'))}</span>`
+                : `<span class="badge badge-warning">${escapeHtml(t('admin.trips.incidentUnconfirmed'))}</span>`;
+
+        const confirmBlock = unconfirmedIncident && this.state.trips.confirmingId === trip.id ? `
+            <tr>
+                <td colspan="8">
+                    <div class="card">
+                        <div id="trip-confirm-alert-${escapeHtml(trip.id)}"></div>
+                        <label for="trip-confirm-comment-${escapeHtml(trip.id)}">${escapeHtml(t('admin.trips.confirmEmergency.commentLabel'))}</label>
+                        <textarea id="trip-confirm-comment-${escapeHtml(trip.id)}" rows="2" maxlength="2000" placeholder="${escapeHtml(t('admin.trips.confirmEmergency.commentPlaceholder'))}"></textarea>
+                        <button class="btn btn-primary btn-sm" type="button" data-confirm-emergency-submit="${escapeHtml(trip.id)}" style="margin-top: var(--space-2);">${escapeHtml(t('admin.trips.confirmEmergency.button'))}</button>
+                    </div>
+                </td>
+            </tr>` : '';
+
+        return `
+            <tr>
+                <td>${escapeHtml(trip.skipper_name || '')}<br><span class="page-header__meta">${escapeHtml(trip.skipper_email || '')}</span></td>
+                <td>${escapeHtml(trip.vessel_name || '')}</td>
+                <td><span class="badge badge-${escapeHtml(trip.status)}">${escapeHtml(trip.status)}</span></td>
+                <td>${escapeHtml(formatDateTime(trip.departure_scheduled))}</td>
+                <td>${escapeHtml(formatDateTime(trip.arrival_scheduled))}</td>
+                <td>${incidentBadge}</td>
+                <td>${escapeHtml(formatDateTime(trip.created_at))}</td>
+                <td>
+                    ${unconfirmedIncident ? `<button class="btn btn-secondary btn-sm" type="button" data-confirm-emergency-toggle="${escapeHtml(trip.id)}">${escapeHtml(t('admin.trips.confirmEmergency.toggle'))}</button>` : ''}
+                </td>
+            </tr>
+            ${confirmBlock}`;
+    },
+
+    async handleConfirmEmergency(tripId) {
+        const alertBox = document.getElementById(`trip-confirm-alert-${tripId}`);
+        const comment = (document.getElementById(`trip-confirm-comment-${tripId}`)?.value || '').trim();
+
+        if (!comment) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(t('admin.trips.confirmEmergency.commentRequired'))}</div>`;
+            return;
+        }
+        if (!confirm(t('admin.trips.confirmEmergency.confirmPrompt'))) return;
+
+        const response = await apiRequest(`/admin/trips/${tripId}/confirm-emergency`, {
+            method: 'POST',
+            body: JSON.stringify({ comment })
+        });
+
+        if (!response.success) {
+            if (alertBox) alertBox.innerHTML = `<div class="alert alert-error">${escapeHtml(response.code ? t.error(response.code) : (response.error || t('admin.trips.confirmEmergency.confirmFailed')))}</div>`;
+            return;
+        }
+
+        this.state.trips.confirmingId = null;
+        showToast(t('admin.trips.confirmEmergency.confirmed'), 'success');
+        await this.loadTrips(this.state.trips.page);
+        await this.loadStats();
+    },
+
+    renderTripsPagination() {
+        const container = document.getElementById('trip-pagination');
+        const { page, total, total_pages: totalPages } = this.state.trips.pagination;
+
+        if (total === 0) {
+            container.innerHTML = '';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="pagination">
+                <button class="btn btn-secondary btn-sm" type="button" id="trip-prev-page" ${page <= 1 ? 'disabled' : ''}>${escapeHtml(t('admin.logs.prevPage'))}</button>
+                <span class="pagination__info">${escapeHtml(t('admin.trips.pageInfo', { page, totalPages, total }))}</span>
+                <button class="btn btn-secondary btn-sm" type="button" id="trip-next-page" ${page >= totalPages ? 'disabled' : ''}>${escapeHtml(t('admin.logs.nextPage'))}</button>
+            </div>`;
+
+        const prevBtn = document.getElementById('trip-prev-page');
+        const nextBtn = document.getElementById('trip-next-page');
+        if (prevBtn) prevBtn.addEventListener('click', () => this.loadTrips(page - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => this.loadTrips(page + 1));
     }
 };

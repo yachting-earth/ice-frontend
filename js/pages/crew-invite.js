@@ -34,6 +34,10 @@ const CrewInvitePage = {
         // Logged in: the crew record is linked to the account automatically.
         // Not logged in: offer to create an account (password) on the
         // invited email, or continue as a one-off temp crew member.
+        // Not logged in: a users row is created either way now (full
+        // account if "create-account" is ticked, otherwise a password-less
+        // guest profile - #507), so terms consent is required regardless of
+        // that checkbox and isn't nested inside the password-only fields.
         const accountSection = authed
             ? `<div class="alert alert-info">
                    ${t('crewInvite.accountSection.loggedIn', { name: escapeHtml(user.name || user.email || '') })}
@@ -52,13 +56,13 @@ const CrewInvitePage = {
                        <label for="account-password-confirm">${t('crewInvite.accountSection.confirmPasswordLabel')}</label>
                        <input type="password" id="account-password-confirm" autocomplete="new-password">
                    </div>
-                   <div class="checkbox-field">
-                       <input type="checkbox" id="accept-terms">
-                       <label for="accept-terms">${t('crewInvite.accountSection.acceptTerms', {
-                           termsLink: `<a href="#/terms" target="_blank" rel="noopener">${escapeHtml(t('crewInvite.accountSection.termsLink'))}</a>`,
-                           privacyLink: `<a href="#/privacy" target="_blank" rel="noopener">${escapeHtml(t('crewInvite.accountSection.privacyLink'))}</a>`
-                       })}</label>
-                   </div>
+               </div>
+               <div class="checkbox-field">
+                   <input type="checkbox" id="accept-terms">
+                   <label for="accept-terms">${t('crewInvite.accountSection.acceptTerms', {
+                       termsLink: `<a href="#/terms" target="_blank" rel="noopener">${escapeHtml(t('crewInvite.accountSection.termsLink'))}</a>`,
+                       privacyLink: `<a href="#/privacy" target="_blank" rel="noopener">${escapeHtml(t('crewInvite.accountSection.privacyLink'))}</a>`
+                   })}</label>
                </div>
                <p class="text-muted" style="font-size: var(--font-size-sm);">
                    ${t('crewInvite.accountSection.haveAccount', { loginLink: `<a href="#/login">${t('crewInvite.loginLink')}</a>` })}
@@ -94,9 +98,22 @@ const CrewInvitePage = {
                         <small>${t('crewInvite.dateOfBirthHint')}</small>
                     </div>
                     <div class="field">
-                        <label for="ice-contact">${t('crewInvite.iceContactLabel')}</label>
-                        <input type="text" id="ice-contact" placeholder="${t('crewInvite.iceContactPlaceholder')}">
+                        <label>${t('crewInvite.iceContactLabel')}</label>
                         <small>${t('crewInvite.iceContactHint')}</small>
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="emergency-contact-name">${t('crewInvite.emergencyContactNameLabel')}</label>
+                                <input type="text" id="emergency-contact-name" autocomplete="name">
+                            </div>
+                            <div class="field">
+                                <label for="emergency-contact-relationship">${t('crewInvite.emergencyContactRelationshipLabel')}</label>
+                                <input type="text" id="emergency-contact-relationship" maxlength="50" placeholder="${t('crewInvite.emergencyContactRelationshipPlaceholder')}">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="emergency-contact-phone">${t('crewInvite.emergencyContactPhoneLabel')}</label>
+                            <input type="tel" id="emergency-contact-phone" autocomplete="tel">
+                        </div>
                     </div>
                     <div class="field">
                         <label for="medical-info">${t('crewInvite.medicalLabel')}</label>
@@ -161,24 +178,33 @@ const CrewInvitePage = {
         const name = document.getElementById('name').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const dateOfBirth = document.getElementById('date-of-birth').value;
-        const iceContact = document.getElementById('ice-contact').value.trim();
+        const emergencyContactName = document.getElementById('emergency-contact-name').value.trim();
+        const emergencyContactPhone = document.getElementById('emergency-contact-phone').value.trim();
+        const emergencyContactRelationship = document.getElementById('emergency-contact-relationship').value.trim();
         const medicalInfo = document.getElementById('medical-info').value.trim();
         const photoFile = document.getElementById('photo').files[0] || null;
 
         const createAccountBox = document.getElementById('create-account');
         const createAccount = !!(createAccountBox && createAccountBox.checked);
 
-        let error = Validate.name(name) || Validate.phone(phone) || Validate.dateOfBirth(dateOfBirth);
+        // Only present when not logged in - a users row is created either
+        // way (full account or guest profile), so terms consent is
+        // required regardless of the create-account checkbox (#507)
+        const acceptTermsBox = document.getElementById('accept-terms');
+        const acceptTerms = !!(acceptTermsBox && acceptTermsBox.checked);
+
+        let error = Validate.name(name) || Validate.phone(phone) || Validate.dateOfBirth(dateOfBirth) || Validate.phone(emergencyContactPhone);
 
         let password = null;
-        let acceptTerms = false;
         if (!error && createAccount) {
             password = document.getElementById('account-password').value;
             const confirm = document.getElementById('account-password-confirm').value;
-            acceptTerms = document.getElementById('accept-terms').checked;
             error = Validate.password(password)
-                || (password !== confirm ? t('crewInvite.passwordMismatch') : null)
-                || (!acceptTerms ? t('crewInvite.acceptTermsRequired') : null);
+                || (password !== confirm ? t('crewInvite.passwordMismatch') : null);
+        }
+
+        if (!error && acceptTermsBox && !acceptTerms) {
+            error = t('crewInvite.acceptTermsRequired');
         }
 
         if (error) {
@@ -213,13 +239,15 @@ const CrewInvitePage = {
                 name,
                 phone: phone || undefined,
                 date_of_birth: dateOfBirth,
-                ice_contact: iceContact || undefined,
+                emergency_contact_name: emergencyContactName || undefined,
+                emergency_contact_phone: emergencyContactPhone || undefined,
+                emergency_contact_relationship: emergencyContactRelationship || undefined,
                 medical_info: medicalInfo || undefined,
                 share_contact: shareContact,
                 share_emergency_contact: shareEmergencyContact,
                 create_account: createAccount || undefined,
                 password: createAccount ? password : undefined,
-                accept_terms: createAccount ? acceptTerms : undefined
+                accept_terms: acceptTermsBox ? acceptTerms : undefined
             })
         });
 
@@ -235,12 +263,21 @@ const CrewInvitePage = {
             renderTopbar();
         }
 
+        // Case C (#507): the invited address already has an account we're
+        // not proven to own, so the server linked the row read-only and
+        // wrote none of the submitted personal fields - point at sign-in
+        // instead of the normal success message.
+        const readOnly = !!response.data.read_only;
+        const successMessage = readOnly
+            ? t('crewInvite.readOnlyNotice', { loginLink: `<a href="#/login">${t('crewInvite.loginLink')}</a>` })
+            : t('crewInvite.acceptSuccess');
+
         document.getElementById('accept-form').outerHTML = `
-            <div class="alert alert-success">
-                ${t('crewInvite.acceptSuccess')}${escapeHtml(photoWarning)}
+            <div class="alert ${readOnly ? 'alert-info' : 'alert-success'}">
+                ${successMessage}${escapeHtml(photoWarning)}
                 ${response.data.auth_token ? `<br><a href="#/dashboard">${t('crewInvite.toOverview')}</a>` : ''}
             </div>
-            ${response.data.crew_view_link ? `
+            ${response.data.crew_view_link && !readOnly ? `
             <div class="invite-summary">
                 <p>${t('crewInvite.crewViewLinkHint')}</p>
                 <div class="btn-group">

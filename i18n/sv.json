@@ -16,6 +16,7 @@
     "password": "Lösenord",
     "name": "Namn",
     "phone": "Telefon",
+    "relationship": "Relation",
     "optional": "(valfritt)",
     "gracePeriod": {
       "h1": "1 timme",
@@ -64,7 +65,10 @@
     "ICE_TRIP_CONFIRMATION_REJECTED": "Resans nödkontakt avböjde att vara nödkontakt för denna resa. Välj en annan kontakt innan du aktiverar.",
     "ICE_TRIP_CONFIRMATION_NOT_PENDING": "Det finns ingen väntande nödkontaktsbekräftelse för denna resa.",
     "TRIP_LOCKED": "Resan är låst av sjösäkerhets- och spårbarhetsskäl efter ett larm utlöst och kan inte längre ändras eller raderas. Resan kommer raderas automatiskt 30 dagar efter den avslutats.",
+    "ACCOUNT_HAS_ACTIVE_TRIP": "Ditt konto kan inte raderas medan du är skeppare eller besättning på en resa som är publicerad eller aktiv. Avbryt eller avsluta resan först.",
+    "ACCOUNT_DELETION_PENDING": "Det här kontot har raderats och kan inte längre användas.",
     "TRIP_NOT_ACTIVE": "SAR-åtkomst kan bara begäras för en aktiv resa.",
+    "NO_EMERGENCY_TO_CONFIRM": "Den här resan har inget nödlarm att bekräfta.",
     "AUTO_ACCEPT_INVALID_DURATION": "Välj 1, 2 eller 3 månader, eller stäng av auto-godkännande.",
     "CONTACT_RATE_LIMITED": "Du har nått dagens gräns för inskick via kontaktformuläret. Försök igen imorgon.",
     "CONTACT_TOO_MANY_FILES": "För många bilagor.",
@@ -373,6 +377,10 @@
     "photoHint": "Används av sjöräddningen för att identifiera dig som skeppare. JPEG/PNG, max 10 MB.",
     "photoSaveFailed": "Kunde inte spara fotot.",
     "photoSaved": "Fotot har sparats.",
+    "photoRemoveButton": "Ta bort foto",
+    "photoRemoveConfirm": "Är du säker på att du vill ta bort ditt profilfoto?",
+    "photoRemoveFailed": "Kunde inte ta bort fotot.",
+    "photoRemoved": "Ditt foto har tagits bort.",
     "detailsHeading": "Mina uppgifter",
     "loadingDetails": "Laddar dina uppgifter…",
     "loadFailed": "Kunde inte hämta dina uppgifter.",
@@ -380,6 +388,22 @@
     "phoneLabel": "Telefon",
     "dateOfBirthLabel": "Födelsedatum (valfritt)",
     "dateOfBirthHint": "Delas endast med sjöräddningen om något händer. Syns inte för andra ombord.",
+    "emergencyContactHeading": "Nödkontakt",
+    "emergencyContactHint": "Vem sjöräddningen ska ringa om dig personligen - skilt från de ICE-kontakter som larmas om en resa blir försenad.",
+    "emergencyContactNameLabel": "Namn",
+    "emergencyContactPhoneLabel": "Telefon",
+    "emergencyContactRelationshipLabel": "Relation",
+    "emergencyContactRelationshipPlaceholder": "t.ex. maka, bror, vän",
+    "emergencyContactSubmit": "Spara nödkontakt",
+    "emergencyContactSaveFailed": "Kunde inte spara din nödkontakt.",
+    "emergencyContactSaved": "Nödkontakt sparad.",
+    "medicalHeading": "Medicinsk information",
+    "medicalLabel": "Medicinsk information för sjöräddningen (valfritt)",
+    "medicalPlaceholder": "t.ex. allergier, mediciner, blodgrupp, sjukdomar",
+    "medicalHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller skepparens nödkontakt.",
+    "medicalSubmit": "Spara medicinsk information",
+    "medicalSaveFailed": "Kunde inte spara din medicinska information.",
+    "medicalSaved": "Medicinsk information sparad.",
     "emailLabel": "E-post",
     "languageLabel": "Språk",
     "timezoneLabel": "Tidszon",
@@ -428,7 +452,8 @@
     "deleteCancelButton": "Avbryt",
     "passwordRequired": "Ange ditt lösenord för att bekräfta.",
     "deleteFailed": "Kunde inte ta bort kontot.",
-    "deleted": "Ditt konto har tagits bort."
+    "deleted": "Ditt konto har tagits bort.",
+    "deleteDeferred": "Ditt konto har inaktiverats och kommer att raderas permanent när din resas lagringsperiod löper ut, den {date}. Du har loggats ut och kan inte logga in igen."
   },
   "telegramLink": {
     "heading": "Koppla Telegram",
@@ -598,8 +623,11 @@
     "dateOfBirthLabel": "Födelsedatum (valfritt)",
     "dateOfBirthHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller skepparens nödkontakt.",
     "iceContactLabel": "Din nödkontakt",
-    "iceContactPlaceholder": "t.ex. Erik (make) +46701234568",
-    "iceContactHint": "Namn och telefonnummer till någon som ska kontaktas om något händer.",
+    "iceContactHint": "Vem sjöräddningen ska ringa om dig personligen, om något händer. Sparas på din profil.",
+    "emergencyContactNameLabel": "Namn",
+    "emergencyContactPhoneLabel": "Telefon",
+    "emergencyContactRelationshipLabel": "Relation",
+    "emergencyContactRelationshipPlaceholder": "t.ex. maka, bror, vän",
     "medicalLabel": "Medicinsk information för sjöräddningen (valfritt)",
     "medicalPlaceholder": "t.ex. allergier, mediciner, blodgrupp, sjukdomar",
     "medicalHint": "Visas endast för sjöräddningen vid en nödsituation - aldrig för skepparen eller skepparens nödkontakt.",
@@ -620,6 +648,7 @@
     "unknownError": "okänt fel",
     "acceptFailed": "Kunde inte gå med i resan.",
     "acceptSuccess": "Du är nu med i besättningen. Ha en trevlig och säker resa!",
+    "readOnlyNotice": "Denna inbjudan är kopplad till ett befintligt konto, så ditt namn, telefonnummer, födelsedatum, nödkontakt och medicinsk information ändrades inte. {loginLink} för att redigera dem där.",
     "toOverview": "Till din översikt",
     "crewViewLinkHint": "Spara den här länken - den låter dig se resan och ändra vad du delar när som helst.",
     "crewViewLinkOpen": "Öppna resevy",
@@ -743,9 +772,21 @@
       "showPin": "Visa PIN",
       "hidePin": "Dölj PIN"
     },
+    "confirmEmergency": {
+      "heading": "Bekräfta att larmet är löst",
+      "description": "Om du har bekräftat att skepparen är säker, skriv en kommentar och bekräfta nedan - det tar bort resans skrivlås och låter skepparen fortsätta hantera den.",
+      "commentLabel": "Kommentar (obligatorisk)",
+      "commentPlaceholder": "t.ex. Ringde skepparen, de är säkra och fortsätter.",
+      "commentRequired": "Ange en kommentar innan du bekräftar.",
+      "button": "Bekräfta att larmet är löst",
+      "confirmPrompt": "Bekräfta att resans nödlarm är löst?",
+      "confirmFailed": "Kunde inte bekräfta larmet.",
+      "confirmed": "Nödlarmet bekräftat löst."
+    },
     "skipper": {
       "heading": "Skeppare",
-      "dateOfBirthLabel": "Födelsedatum"
+      "dateOfBirthLabel": "Födelsedatum",
+      "emergencyContactHeading": "Nödstilfällskontakt"
     },
     "trip": {
       "heading": "Resa",
@@ -1033,14 +1074,16 @@
       "routes": "Rutter",
       "vessels": "Båtar",
       "iceContacts": "Nödkontakter",
-      "logs": "Systemloggar"
+      "logs": "Systemloggar",
+      "trips": "Resor"
     },
     "empty": {
       "users": "Inga användare",
       "routes": "Inga rutter",
       "vessels": "Inga båtar",
       "iceContacts": "Inga nödkontakter",
-      "logs": "Inga loggar matchar filtret"
+      "logs": "Inga loggar matchar filtret",
+      "trips": "Inga resor matchar filtret"
     },
     "table": {
       "adminHeader": "Admin",
@@ -1100,6 +1143,36 @@
         "message": "Meddelande",
         "user": "Användare"
       }
+    },
+    "trips": {
+      "statusLabel": "Resestatus",
+      "allStatuses": "Alla statusar",
+      "status": {
+        "draft": "Utkast",
+        "published": "Publicerad",
+        "active": "Aktiv",
+        "completed": "Avslutad",
+        "cancelled": "Avbruten"
+      },
+      "unconfirmedIncidentOnly": "Endast obekräftade larm",
+      "loadFailed": "Kunde inte hämta resor.",
+      "pageInfo": "Sida {page} av {totalPages} ({total} resor)",
+      "incidentConfirmed": "Bekräftad",
+      "incidentUnconfirmed": "Obekräftat larm",
+      "table": {
+        "vessel": "Båt",
+        "incident": "Larm"
+      },
+      "confirmEmergency": {
+        "toggle": "Bekräfta larm",
+        "commentLabel": "Kommentar (obligatorisk)",
+        "commentPlaceholder": "t.ex. Nådde skepparen via telefon genom hamnen, de är säkra.",
+        "commentRequired": "Ange en kommentar innan du bekräftar.",
+        "button": "Bekräfta larm löst",
+        "confirmPrompt": "Bekräfta att den här resans nödlarm är löst?",
+        "confirmFailed": "Kunde inte bekräfta larmet.",
+        "confirmed": "Nödlarmet har bekräftats som löst."
+      }
     }
   },
   "tripDetail": {
@@ -1131,6 +1204,18 @@
       "triggerConfirm": "Begära inloggningsuppgifter för SAR till den här resan nu? Skepparen meddelas.",
       "triggerFailed": "Kunde inte begära SAR-åtkomst.",
       "triggered": "SAR-uppgifter har skapats."
+    },
+    "confirmEmergency": {
+      "heading": "Bekräfta att larmet är löst",
+      "ownerDescription": "Resans ICE-kontakt larmades eftersom du inte checkade in i tid. En bekräftelse tar bort skrivlåset så att du kan fortsätta hantera resan - det ändrar inte det faktum att ett larm utlöstes.",
+      "iceDescription": "Du har larmats om den här resan. Om du har bekräftat att skepparen är säker, skriv en kommentar och bekräfta nedan - det tar bort resans skrivlås och låter skepparen fortsätta hantera den.",
+      "commentLabel": "Kommentar (obligatorisk)",
+      "commentPlaceholder": "t.ex. Ringde skepparen, de är säkra och fortsätter.",
+      "commentRequired": "Ange en kommentar innan du bekräftar.",
+      "button": "Bekräfta att larmet är löst",
+      "confirmPrompt": "Bekräfta att resans nödlarm är löst?",
+      "confirmFailed": "Kunde inte bekräfta larmet.",
+      "confirmed": "Nödlarmet bekräftat löst."
     },
     "schedule": {
       "heading": "Tidsschema",
@@ -1305,7 +1390,12 @@
       "lead": "Förbered din båt, dina rutter, besättning och nödkontakt innan avfärd. Om du inte checkar in efter din planerade ankomst larmas din utsedda nödkontakt och får säker åtkomst till information som kan hjälpa räddningstjänsten agera snabbare.",
       "ctaPrimary": "Skapa gratis konto",
       "ctaSecondary": "Så fungerar det",
-      "badges": ["Gratis att använda", "Flera rutter", "GDPR från grunden", "Säker ICE-portal"]
+      "badges": [
+        "Gratis att använda",
+        "Flera rutter",
+        "GDPR från grunden",
+        "Säker ICE-portal"
+      ]
     },
     "notice": {
       "heading": "Viktigt",
@@ -1316,11 +1406,56 @@
       "heading": "Allt förbereds innan avfärd",
       "lead": "En komplett reseakt, sammanställd innan du ens lämnar bryggan.",
       "cards": [
-        { "icon": "ship", "title": "Båt", "items": ["Foto", "Registrering", "Specifikationer", "Identifikation"] },
-        { "icon": "compass", "title": "Resa", "items": ["Avgång", "Destination", "Beräknad ankomst", "Marginaltid"] },
-        { "icon": "route", "title": "Rutter", "items": ["Flera rutter", "Import från GPX/Windy/Rita", "Alternativa rutter", "Interaktiv kartförhandsvisning"] },
-        { "icon": "users", "title": "Besättning", "items": ["Besättningslista", "Individuella profiler", "Foton", "Personliga nödkontakter"] },
-        { "icon": "shield-check", "title": "Nödkontakt ICE", "items": ["Bekräftad kontaktperson", "Säker portal", "Skrivskyddad åtkomst", "Automatisk avisering"] }
+        {
+          "icon": "ship",
+          "title": "Båt",
+          "items": [
+            "Foto",
+            "Registrering",
+            "Specifikationer",
+            "Identifikation"
+          ]
+        },
+        {
+          "icon": "compass",
+          "title": "Resa",
+          "items": [
+            "Avgång",
+            "Destination",
+            "Beräknad ankomst",
+            "Marginaltid"
+          ]
+        },
+        {
+          "icon": "route",
+          "title": "Rutter",
+          "items": [
+            "Flera rutter",
+            "Import från GPX/Windy/Rita",
+            "Alternativa rutter",
+            "Interaktiv kartförhandsvisning"
+          ]
+        },
+        {
+          "icon": "users",
+          "title": "Besättning",
+          "items": [
+            "Besättningslista",
+            "Individuella profiler",
+            "Foton",
+            "Personliga nödkontakter"
+          ]
+        },
+        {
+          "icon": "shield-check",
+          "title": "Nödkontakt ICE",
+          "items": [
+            "Bekräftad kontaktperson",
+            "Säker portal",
+            "Skrivskyddad åtkomst",
+            "Automatisk avisering"
+          ]
+        }
       ]
     },
     "howItWorks": {
@@ -1348,32 +1483,82 @@
       "traditionalLabel": "Traditionell färdplan",
       "yachtingLabel": "Yachting Earth",
       "rows": [
-        { "traditional": "Pappersdokument", "yachting": "Levande reseinformation" },
-        { "traditional": "En enda rutt", "yachting": "Flera rutter" },
-        { "traditional": "Statisk besättningslista", "yachting": "Besättningen underhåller sina egna uppgifter" },
-        { "traditional": "Förlitar sig på manuell övervakning", "yachting": "Automatisk kontroll" },
-        { "traditional": "Postit/SMS/samtal", "yachting": "Säker portal" }
+        {
+          "traditional": "Pappersdokument",
+          "yachting": "Levande reseinformation"
+        },
+        {
+          "traditional": "En enda rutt",
+          "yachting": "Flera rutter"
+        },
+        {
+          "traditional": "Statisk besättningslista",
+          "yachting": "Besättningen underhåller sina egna uppgifter"
+        },
+        {
+          "traditional": "Förlitar sig på manuell övervakning",
+          "yachting": "Automatisk kontroll"
+        },
+        {
+          "traditional": "Postit/SMS/samtal",
+          "yachting": "Säker portal"
+        }
       ]
     },
     "features": {
       "heading": "Byggt för verkliga resor",
       "items": [
-        { "icon": "route", "title": "Flera rutter", "description": "En resa följer sällan en enda rak linje." },
-        { "icon": "users", "title": "Besättningens medverkan", "description": "Varje besättningsmedlem underhåller sin egen information." },
-        { "icon": "shield-check", "title": "Bekräftad nödkontakt", "description": "Nödkontakten bekräftar sin roll innan avfärd." },
-        { "icon": "life-buoy", "title": "Åtkomst för sjöräddningen (SAR)", "description": "Om en resa blir försenad kan sjöräddningen slå upp resan direkt med ett referensnummer och en PIN-kod - inget konto eller app krävs." },
-        { "icon": "user-plus", "title": "Inget konto krävs för besättningen", "description": "Besättningen kan bjudas in och bekräfta sina egna uppgifter, bild och personliga nödkontakt enbart via e-post - att skapa ett konto är valfritt." }
+        {
+          "icon": "route",
+          "title": "Flera rutter",
+          "description": "En resa följer sällan en enda rak linje."
+        },
+        {
+          "icon": "users",
+          "title": "Besättningens medverkan",
+          "description": "Varje besättningsmedlem underhåller sin egen information."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Bekräftad nödkontakt",
+          "description": "Nödkontakten bekräftar sin roll innan avfärd."
+        },
+        {
+          "icon": "life-buoy",
+          "title": "Åtkomst för sjöräddningen (SAR)",
+          "description": "Om en resa blir försenad kan sjöräddningen slå upp resan direkt med ett referensnummer och en PIN-kod - inget konto eller app krävs."
+        },
+        {
+          "icon": "user-plus",
+          "title": "Inget konto krävs för besättningen",
+          "description": "Besättningen kan bjudas in och bekräfta sina egna uppgifter, bild och personliga nödkontakt enbart via e-post - att skapa ett konto är valfritt."
+        }
       ]
     },
     "privacy": {
       "heading": "Integritet redan från start",
       "lead": "Personlig reseinformation tas automatiskt bort enligt GDPR-principerna.",
       "lifecycle": [
-        { "icon": "file-plus", "label": "Resa skapad" },
-        { "icon": "check-circle", "label": "Resa avslutad" },
-        { "icon": "clock", "label": "Mjukt raderad" },
-        { "icon": "timer", "label": "Automatiskt borttagen efter 30 dagar" },
-        { "icon": "shield", "label": "Endast skeppare och båt kvarstår" }
+        {
+          "icon": "file-plus",
+          "label": "Resa skapad"
+        },
+        {
+          "icon": "check-circle",
+          "label": "Resa avslutad"
+        },
+        {
+          "icon": "clock",
+          "label": "Mjukt raderad"
+        },
+        {
+          "icon": "timer",
+          "label": "Automatiskt borttagen efter 30 dagar"
+        },
+        {
+          "icon": "shield",
+          "label": "Endast skeppare och båt kvarstår"
+        }
       ]
     },
     "mapDemo": {
@@ -1381,17 +1566,42 @@
       "lead": "En resa kan innehålla flera planerade rutter. Här är ett exempel med tre.",
       "note": "Demonstrationsdata — inte båtens faktiska position.",
       "ariaLabel": "Exempelkarta som visar tre exempel på segelrutter längs en kust",
-      "routes": ["Stockholm → Sandhamn", "Sandhamn → Landsort", "Stockholm → Åland (alternativ)"],
-      "descriptions": ["Huvudrutt", "Om vinden vrider västlig", "Om vinden vrider nordlig och ökar över 35 knop"]
+      "routes": [
+        "Stockholm → Sandhamn",
+        "Sandhamn → Landsort",
+        "Stockholm → Åland (alternativ)"
+      ],
+      "descriptions": [
+        "Huvudrutt",
+        "Om vinden vrider västlig",
+        "Om vinden vrider nordlig och ökar över 35 knop"
+      ]
     },
     "worst": {
       "heading": "Om det värsta skulle hända",
       "insteadTitle": "Istället för att…",
-      "insteadItems": ["Leta i gamla mejl", "Försöka minnas vem som var ombord", "Leta efter ruttskärmdumpar", "Gissa nödkontakter"],
+      "insteadItems": [
+        "Leta i gamla mejl",
+        "Försöka minnas vem som var ombord",
+        "Leta efter ruttskärmdumpar",
+        "Gissa nödkontakter"
+      ],
       "haveTitle": "Din nödkontakt har redan",
-      "haveItems": ["Båt", "Rutter", "Besättning", "Foton", "Nödkontakter", "Reseuppgifter"],
+      "haveItems": [
+        "Båt",
+        "Rutter",
+        "Besättning",
+        "Foton",
+        "Nödkontakter",
+        "Reseuppgifter"
+      ],
       "readyTitle": "Redo att lämna till",
-      "readyItems": ["Kustbevakningen", "Polisen", "Sjöräddningscentralen", "Försäkringsbolaget"],
+      "readyItems": [
+        "Kustbevakningen",
+        "Polisen",
+        "Sjöräddningscentralen",
+        "Försäkringsbolaget"
+      ],
       "readyNote": "Nödkontakten avgör när informationen ska delas, och med vem."
     },
     "finalCta": {
@@ -1416,7 +1626,7 @@
   },
   "privacy": {
     "title": "Integritet och GDPR",
-    "lastUpdated": "Senast uppdaterad: 14 juli 2026",
+    "lastUpdated": "Senast uppdaterad: 30 juli 2026",
     "intro": "Den här sidan förklarar vilka personuppgifter Yachting Earth ICE samlar in, varför, hur länge de sparas, och vilka rättigheter du har enligt GDPR.",
     "sections": [
       {
@@ -1431,21 +1641,26 @@
           "Vi samlar bara in det systemet behöver för att förbereda en resa och, om något går fel, för att få rätt information till rätt person."
         ],
         "list": [
-          "Kontouppgifter - e-post, namn, telefon och ett lösenord (sparas endast som en bcrypt-hash, aldrig i klartext)",
+          "Kontouppgifter - e-post, namn, telefon och ett lösenord (sparas endast som en bcrypt-hash, aldrig i klartext) - eller, för besättning som endast bjudits in via e-post, en lösenordslös profil som senare kan omvandlas till ett fullständigt konto",
           "Båtuppgifter - namn, registrering/anropssignal, specifikationer och ett valfritt foto",
           "Reseuppgifter - planerade rutter (tolkade från Windy.com), planerad avgångs-/ankomsttid och marginaltid",
           "Besättningsuppgifter - namn, e-post, telefon och ett valfritt foto för identifieringsändamål",
           "Födelsedatum - frivilligt, och används endast för att identifiera personer ombord i en verklig nödsituation; visas för sjöräddningen om det behövs, men aldrig för skepparen eller nödkontakten",
-          "Nödkontaktuppgifter (\"ICE\") - namn, e-post, telefon och relation till skepparen",
+          "Din personliga nödkontakt - namn, telefon och relation; vem sjöräddningen ska ringa om dig specifikt om något händer. Anges en gång på din profil och används på varje resa du är med på - skild från ICE-kontakten nedan",
+          "Medicinsk information - frivillig, endast för sjöräddningen (t.ex. allergier, mediciner, tillstånd). Anges en gång på din profil; visas aldrig för skepparen eller ICE-kontakten",
+          "ICE-kontaktuppgifter (\"vid nödsituation\") - namn, e-post, telefon och relation till skepparen; vem systemet larmar om en resa blir försenad",
           "Säkerhetsloggar - inloggningsförsök (för att upprätthålla hastighetsbegränsning) och status för avisering"
         ]
       },
       {
         "heading": "Varför vi behandlar dem",
-        "body": ["Varje kategori av uppgifter behandlas på en av dessa rättsliga grunder:"],
+        "body": [
+          "Varje kategori av uppgifter behandlas på en av dessa rättsliga grunder:"
+        ],
         "list": [
           "Avtal - konto-, båt- och reseuppgifter, så att systemet kan göra det du registrerade dig för",
-          "Uttryckligt samtycke - nödkontaktuppgifter",
+          "Uttryckligt samtycke - din personliga nödkontakt och ICE-kontaktens uppgifter",
+          "Uttryckligt samtycke, som en särskild kategori av hälsouppgifter enligt GDPR artikel 9, samt grundläggande intressen - medicinsk information, som endast lämnas ut till sjöräddningen i en verklig nödsituation",
           "Berättigat intresse - uppladdning av besättningsfoton för identifieringsändamål, samt säkerhetsloggar och aviseringshistorik, för att hålla systemet pålitligt och skyddat mot missbruk"
         ]
       },
@@ -1453,14 +1668,18 @@
         "heading": "Hur länge vi sparar dem",
         "body": [
           "En avslutad eller avbruten resa mjukraderas omedelbart - den försvinner från skepparens, besättningens och nödkontaktens vy - och raderas sedan permanent, tillsammans med sina rutter, besättningsposter, foton, ändringslogg, aviseringar och åtkomsttoken, av ett dagligt städjobb 30 dagar senare.",
-          "Registrerade användarkonton och båtar påverkas inte av detta - endast resans egna data. Du kan radera ditt konto och dess data när som helst från din profilsida.",
+          "Registrerade användarkonton och båtar påverkas inte av detta - endast resans egna data. Din personliga nödkontakt och medicinska information sparas på ditt konto istället för på en enskild resa, så de sparas så länge ditt konto finns kvar, inte bara under resans 30 dagar.",
+          "Om du slutar använda ditt konto anonymiseras det - raderas inte - efter 18 månaders inaktivitet: vi skickar först en varning via e-post, och om du inte har loggat in igen inom 30 dagar efter den varningen rensas ditt namn, telefonnummer, födelsedatum, nödkontakt, medicinska information och foto permanent. Själva kontoposten sparas, så att dina tidigare resor fortfarande går att förstå, och att logga in när som helst avbryter detta. Ett konto som fortfarande behövs för en pågående resa anonymiseras aldrig på detta sätt.",
+          "Du kan radera ditt konto när som helst från din profilsida - det sker oftast omedelbart. Om du fortfarande är skeppare eller besättning på en resa som är publicerad eller aktiv nekas raderingen tills den resan är avslutad eller avbruten. Om din resa nyss har avslutats och fortfarande är inom sin 30-dagars lagringsperiod skjuts raderingen istället upp: ditt konto inaktiveras omedelbart - du loggas ut och kan inte logga in igen - och det tas bort permanent när den perioden löper ut.",
           "Nödkontaktkonton sparas också på obestämd tid som standard, eftersom kontakten kan behöva logga in igen inför en framtida resa, men en kontakt kan välja - från \"Mitt ICE-konto\" - att få sitt konto automatiskt raderat när det inte längre är kopplat till någon aktuell eller framtida resa.",
           "Meddelanden som skickas via kontaktformuläret (ditt namn, e-post och meddelandetext) sparas i 18 månader från att du skickar dem, och raderas sedan permanent. Denna 18-månadersperiod löper på egen hand och förkortas inte av att du raderar ditt konto - om du raderar ditt konto sparas dina tidigare meddelanden ändå tills deras egen 18-månadersperiod löper ut, om vi inte raderar dem tidigare. Vi kan radera ett meddelande innan 18 månader har gått, till exempel när ett ärende är löst."
         ]
       },
       {
         "heading": "Dina rättigheter",
-        "body": ["Enligt GDPR kan du:"],
+        "body": [
+          "Enligt GDPR kan du:"
+        ],
         "list": [
           "Få tillgång till de personuppgifter vi har om dig",
           "Rätta felaktiga uppgifter - de flesta kan du redigera direkt från din profil",
@@ -1484,7 +1703,9 @@
       },
       {
         "heading": "Vilka vi delar uppgifter med",
-        "body": ["Vi säljer eller delar aldrig dina uppgifter med annonsörer. Uppgifter når endast:"],
+        "body": [
+          "Vi säljer eller delar aldrig dina uppgifter med annonsörer. Uppgifter når endast:"
+        ],
         "list": [
           "Mailgun - för att leverera transaktionell e-post (aviseringar, inbjudningar, larm)",
           "Telegram - för att leverera aviseringar, där aktiverat",
@@ -1542,7 +1763,9 @@
       },
       {
         "heading": "Tillåten användning",
-        "body": ["Du åtar dig att inte:"],
+        "body": [
+          "Du åtar dig att inte:"
+        ],
         "list": [
           "Använda systemet för olagliga ändamål eller för att trakassera, utge dig för att vara, eller vilseleda någon annan person",
           "Lägga till en besättningsmedlem eller nödkontakt utan rimlig grund att tro att de samtycker till att kontaktas om resan",
@@ -1717,7 +1940,7 @@
           },
           {
             "q": "Kan jag radera mitt konto?",
-            "a": "Ja, när som helst från din profilsida."
+            "a": "Ja, från din profilsida - vanligtvis omedelbart. Om du fortfarande är skeppare eller besättning på en resa som är publicerad eller aktiv nekas raderingen tills resan är avslutad eller avbruten. Om din resa nyss avslutats och fortfarande är inom sin 30-dagars lagringsperiod skjuts raderingen i stället upp: ditt konto inaktiveras direkt - du loggas ut och kan inte logga in igen - och tas bort permanent när perioden löper ut. Det här skiljer sig från vad som händer om du helt enkelt slutar använda appen: efter 18 månaders inaktivitet anonymiseras ditt konto, i stället för att raderas, så att tidigare reseuppgifter fortfarande går att förstå."
           },
           {
             "q": "Delas mina uppgifter med någon?",
@@ -1734,6 +1957,21 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.15.0",
+        "date": "2026-07-30",
+        "sections": {
+          "new": [
+            "Din nödkontakt och medicinska information finns nu på din profil - ange dem en gång så följer de med på varje resa du går med i som besättning, istället för att behöva anges på nytt varje gång.",
+            "Om din nödkontakt larmades för att en resa blev försenad kan du eller din nödkontakt nu bekräfta från resesidan att allt är bra, vilket häver skrivlåset som läggs på resan efter ett larm."
+          ],
+          "improved": [
+            "Att radera ditt konto är tydligare när en resa är inblandad: det nekas medan du fortfarande behövs på en resa som pågår, och om det bara är den vanliga lagringsperioden som är i vägen skjuts det upp istället - du loggas ut direkt och raderingen slutförs automatiskt när den perioden löper ut.",
+            "Att skapa ett konto när du tackar ja till en besättningsinbjudan kräver inte längre att du verifierar din e-postadress separat - att du klickade på länken i inbjudan har redan bevisat att adressen är din.",
+            "Du kan nu ta bort ditt foto helt, istället för att bara kunna ersätta det med ett nytt."
+          ]
+        }
+      },
       {
         "version": "v1.14.0",
         "date": "2026-07-29",
