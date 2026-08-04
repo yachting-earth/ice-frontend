@@ -814,7 +814,8 @@
       "alternate": "Rotta alternativa {order}",
       "mapLabel": "Rotta {order}",
       "noMap": "Nessuna rotta da visualizzare",
-      "downloadGpx": "Scarica GPX"
+      "downloadGpx": "Scarica GPX",
+      "downloadRouteGpx": "Scarica GPX"
     },
     "crew": {
       "heading": "Equipaggio a bordo",
@@ -1938,6 +1939,15 @@
     "sectionImproved": "Miglioramenti",
     "sectionFixed": "Correzioni",
     "entries": [
+      {
+        "version": "v1.16.0",
+        "date": "2026-08-04",
+        "sections": {
+          "new": [
+            "I soccorsi marittimi possono ora scaricare ogni rotta pianificata dallo skipper come file GPX individuale direttamente dal portale di emergenza, oltre al file combinato, in modo che una rotta possa essere utilizzata separatamente nel software di navigazione."
+          ]
+        }
+      },
       {
         "version": "v1.15.0",
         "date": "2026-07-30",

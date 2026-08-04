@@ -189,7 +189,7 @@ const IcePortalPage = {
                 </div>
             </div>`;
 
-        this.renderRoutes(routes);
+        this.renderRoutes(routes, role);
         this.renderCrew(crew);
         this.renderLog(audit_log, role);
         bindLightboxImages(container);
@@ -220,18 +220,26 @@ const IcePortalPage = {
         }
     },
 
-    renderRoutes(routes) {
+    renderRoutes(routes, role) {
         const list = document.getElementById('portal-routes-list');
 
         if (!routes || routes.length === 0) {
             list.innerHTML = `<p class="text-muted">${escapeHtml(t('icePortal.routes.empty'))}</p>`;
         } else {
-            list.innerHTML = routes.map((r) => `
+            const token = encodeURIComponent(this.state.token);
+            list.innerHTML = routes.map((r) => {
+                const hasGeometry = parseWktLineString(r.geometry_wkt).length > 1;
+                const downloadBtn = role === 'sar' && hasGeometry
+                    ? `<a class="btn btn-secondary no-print" style="margin-top: var(--space-2);" href="${CONFIG.API_BASE_URL}/trips/${encodeURIComponent(this.state.tripId)}/routes/${encodeURIComponent(r.id)}/gpx?token=${token}" download>${escapeHtml(t('icePortal.routes.downloadRouteGpx'))}</a>`
+                    : '';
+                return `
                 <div class="route-item">
                     <div class="route-item__title">${escapeHtml(r.route_order === 1 ? t('icePortal.routes.primary') : t('icePortal.routes.alternate', { order: r.route_order }))}</div>
                     ${r.reason ? `<div class="text-muted" style="font-size: var(--font-size-sm);">${escapeHtml(r.reason)}</div>` : ''}
+                    ${downloadBtn}
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         const mapEl = document.getElementById('portal-route-map');

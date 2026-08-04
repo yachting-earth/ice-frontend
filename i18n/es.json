@@ -814,7 +814,8 @@
       "alternate": "Ruta alternativa {order}",
       "mapLabel": "Ruta {order}",
       "noMap": "No hay ninguna ruta que mostrar",
-      "downloadGpx": "Descargar GPX"
+      "downloadGpx": "Descargar GPX",
+      "downloadRouteGpx": "Descargar GPX"
     },
     "crew": {
       "heading": "Tripulación a bordo",
@@ -1938,6 +1939,15 @@
     "sectionImproved": "Mejorado",
     "sectionFixed": "Corregido",
     "entries": [
+      {
+        "version": "v1.16.0",
+        "date": "2026-08-04",
+        "sections": {
+          "new": [
+            "Los equipos de búsqueda y rescate ahora pueden descargar cada una de las rutas planificadas del patrón como un archivo GPX independiente directamente desde el portal de emergencias, además del archivo combinado, de modo que una ruta pueda utilizarse por separado en software de navegación."
+          ]
+        }
+      },
       {
         "version": "v1.15.0",
         "date": "2026-07-30",

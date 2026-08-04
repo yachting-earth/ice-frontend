@@ -814,7 +814,8 @@
       "alternate": "Alternativ rutt {order}",
       "mapLabel": "Rutt {order}",
       "noMap": "Ingen rutt att visa",
-      "downloadGpx": "Ladda ner GPX"
+      "downloadGpx": "Ladda ner GPX",
+      "downloadRouteGpx": "Ladda ner GPX"
     },
     "crew": {
       "heading": "Besättning ombord",
@@ -1957,6 +1958,15 @@
     "sectionImproved": "Förbättrat",
     "sectionFixed": "Fixat",
     "entries": [
+      {
+        "version": "v1.16.0",
+        "date": "2026-08-04",
+        "sections": {
+          "new": [
+            "Sjöräddningen kan nu ladda ner varje planerad väg från skepparen som en egen GPX-fil direkt från nödportalen, utöver den kombinerade filen, så att en väg kan användas separat i navigeringsprogram."
+          ]
+        }
+      },
       {
         "version": "v1.15.0",
         "date": "2026-07-30",

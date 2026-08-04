@@ -825,7 +825,8 @@ const EN_INLINE = {
       "alternate": "Alternate route {order}",
       "mapLabel": "Route {order}",
       "noMap": "No route to display",
-      "downloadGpx": "Download GPX"
+      "downloadGpx": "Download GPX",
+      "downloadRouteGpx": "Download GPX"
     },
     "crew": {
       "heading": "Crew aboard",
@@ -1826,6 +1827,15 @@ const EN_INLINE = {
     "sectionImproved": "Improved",
     "sectionFixed": "Fixed",
     "entries": [
+      {
+        "version": "v1.16.0",
+        "date": "2026-08-04",
+        "sections": {
+          "new": [
+            "Search and rescue can now download each of the skipper's planned routes as its own GPX file straight from the emergency portal, in addition to the combined file, so a route can be dropped into navigation software on its own."
+          ]
+        }
+      },
       {
         "version": "v1.15.0",
         "date": "2026-07-30",

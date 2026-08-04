@@ -814,7 +814,8 @@
       "alternate": "Itinéraire alternatif {order}",
       "mapLabel": "Itinéraire {order}",
       "noMap": "Aucun itinéraire à afficher",
-      "downloadGpx": "Télécharger le GPX"
+      "downloadGpx": "Télécharger le GPX",
+      "downloadRouteGpx": "Télécharger le GPX"
     },
     "crew": {
       "heading": "Équipage à bord",
@@ -1938,6 +1939,15 @@
     "sectionImproved": "Améliorations",
     "sectionFixed": "Corrections",
     "entries": [
+      {
+        "version": "v1.16.0",
+        "date": "2026-08-04",
+        "sections": {
+          "new": [
+            "Les secours en mer peuvent désormais télécharger chacune des routes planifiées du skipper en tant que fichier GPX individuel directement à partir du portail d'urgence, en plus du fichier combiné, de sorte qu'une route peut être importée dans un logiciel de navigation indépendamment."
+          ]
+        }
+      },
       {
         "version": "v1.15.0",
         "date": "2026-07-30",

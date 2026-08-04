@@ -814,7 +814,8 @@
       "alternate": "Alternative Route {order}",
       "mapLabel": "Route {order}",
       "noMap": "Keine Route zum Anzeigen",
-      "downloadGpx": "GPX herunterladen"
+      "downloadGpx": "GPX herunterladen",
+      "downloadRouteGpx": "GPX herunterladen"
     },
     "crew": {
       "heading": "Crew an Bord",
@@ -1938,6 +1939,15 @@
     "sectionImproved": "Verbessert",
     "sectionFixed": "Behoben",
     "entries": [
+      {
+        "version": "v1.16.0",
+        "date": "2026-08-04",
+        "sections": {
+          "new": [
+            "Die Seenotrettung kann jetzt jede geplante Route des Skippers als eigene GPX-Datei direkt aus dem Notfallportal herunterladen, zusätzlich zu der kombinierten Datei, sodass eine Route separat in Navigationssoftware verwendet werden kann."
+          ]
+        }
+      },
       {
         "version": "v1.15.0",
         "date": "2026-07-30",
